@@ -1,84 +1,127 @@
+#' Build a graph object from a data frame
+#'
+#' @param df Data frame.
+#'   Edge list with columns \code{from}, \code{to}, and optionally \code{weight}.
+#'   If \code{weight} is absent, an unweighted graph is constructed.
+#' @param node_annotation Data frame, optional.
+#'    Node metadata table to annotate vertices; must contain a column matching
+#'    node IDs in \code{df} (e.g., \code{node} or \code{name}). Additional
+#'    columns are attached as vertex attributes.
+#' @param directed Logical (default: \code{FALSE}).
+#'   Whether edges between nodes are directed.
+#' @param method Character string.
+#'   Community detection method; one of
+#'   \code{"cluster_fast_greedy"}, \code{"cluster_walktrap"},
+#'   \code{"cluster_edge_betweenness"}, \code{"cluster_spinglass"}.
+#' @param top_modules Integer.
+#'   Number of top-ranked modules to select.
+#' @param seed Integer, optional.
+#'   Random seed for reproducibility; if \code{NULL}, no seed is set.
+#'
+#' @returns An graph object representing the correlation network.
+#' Node/edge attributes include correlation statistics and (optionally) module labels.
+#' @export
+#'
+#'
+#' @examples
+#' #' # Minimal example edge list
+#' df <- data.frame(
+#'   from   = c("A","A","B","C","D"),
+#'   to     = c("B","C","C","D","E"),
+#'   weight = c(0.8, 0.6, 0.7, 0.9, 0.5)
+#' )
+#'
+#' # Optional node annotations
+#' ann <- data.frame(
+#'   name = c("A","B","C","D","E"),
+#'   group = c("g1","g1","g2","g2","g2")
+#' )
+#'
+#' set.seed(2025)
+#' g <- build_graph_from_df(
+#'   df,
+#'   node_annotation = NULL,
+#'   directed = FALSE,
+#'   method = "cluster_fast_greedy",
+#'   top_modules = 5,
+#'   seed = 1115
+#' )
+#' g
 build_graph_from_df <- function(df,
                                 node_annotation = NULL,
                                 directed = F,
                                 method = "cluster_fast_greedy",
-                                top_module = 15,
-                                seed = 2025){
-  # test
-  df = NULL
-  node_annotation = NULL
-  directed = F
-  top_module = 15
-  
-  
+                                top_modules = 15,
+                                seed = 1115){
+
   set.seed(seed)
- 
+
   # 构建igraph对象
-  g <- graph_from_data_frame(
+  g <- igraph::graph_from_data_frame(
     d = df,
     vertices = node_annotation,
     directed = directed
   )
-  
+
   # 删除自相关
-  g <- simplify(g)
-  
+  g <- igraph::simplify(g)
+
   # 删除孤立节点
-  g <- delete_vertices(g, which(degree(g)==0))
-  
+  g <- igraph::delete_vertices(g, which(igraph::degree(g)==0))
+
   ## 设置网络的weight，为计算模块性做准备
-  E(g)$correlation <- E(g)$weight
-  E(g)$weight <- abs(E(g)$weight)
-  
+  igraph::E(g)$correlation <- igraph::E(g)$weight
+  igraph::E(g)$weight <- abs(igraph::E(g)$weight)
+
   # 模块化
   if (method == "cluster_fast_greedy") {
-    V(g)$modularity <- membership(cluster_fast_greedy(g))
-    V(g)$modularity2 <- as.character(V(g)$modularity)
+    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_fast_greedy(g))
+    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
   }
-  
+
   if (method == "cluster_walktrap") {
-    V(g)$modularity <- membership(cluster_walktrap(g))
-    V(g)$modularity2 <- as.character(V(g)$modularity)
+    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_walktrap(g))
+    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
   }
-  
+
   if (method == "cluster_edge_betweenness") {
-    V(g)$modularity <- membership(cluster_edge_betweenness(g))
-    V(g)$modularity2 <- as.character(V(g)$modularity)
+    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_edge_betweenness(g))
+    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
   }
-  
+
   if (method == "cluster_spinglass") {
-    V(g)$modularity <- membership(cluster_spinglass(g))
-    V(g)$modularity2 <- as.character(V(g)$modularity)
+    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_spinglass(g))
+    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
   }
-  
-  table(V(g)$modularity2) %>% sort(., decreasing = T) 
-  
+
+  table(igraph::V(g)$modularity2) %>% sort(., decreasing = T)
+
   # max model length
-  max_model <- length(table(V(g)$modularity2) %>% sort(., decreasing = T))
-  
-  if (max_model < top_module) {
-    
+  max_model <- length(table(igraph::V(g)$modularity2) %>% sort(., decreasing = T))
+
+  if (max_model < top_modules) {
+
     message(paste("The max module in network is", max_model, "we use the", max_model, " modules for next analysis"))
-    modularity_top_15 <- V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:top_module] %>% names()
-    
-  }else if (max_model < top_module) {
-    
-    modularity_top_15 <- V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:top_module] %>% names()
+    modularity_top_15 <- igraph::V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:max_model] %>% names()
+
+  }else if (max_model > top_modules) {
+
+    modularity_top_15 <- igraph::V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:top_modules] %>% names()
   }
-  
-  
-  
-  V(g)$modularity2 <- ifelse(V(g)$modularity2 %in% modularity_top_15, V(g)$modularity2, "Others")
-  
+
+
+
+  igraph::V(g)$modularity2 <- ifelse(igraph::V(g)$modularity2 %in% modularity_top_15, igraph::V(g)$modularity2, "Others")
+
   # 构建ggraph对象
-  graph_obj <- as_tbl_graph(g) %>%
+  graph_obj <- tidygraph::as_tbl_graph(g) %>%
     tidygraph::mutate(modularity = factor(modularity),
                       modularity2 = factor(modularity2),
                       modularity3 = as.character(modularity2),
-                      degree = centrality_degree(mode = "out"),
-                      strength = centrality_degree(weights = weight) 
+                      degree = tidygraph::centrality_degree(mode = "out"),
+                      strength = tidygraph::centrality_degree(weights = weight)
     ) %>%
-    tidygraph::arrange(modularity2, desc(degree)) 
-  
+    tidygraph::arrange(modularity2, desc(degree))
+
   return(graph_obj)
 }

@@ -1,16 +1,29 @@
-Package: ggNetView
 Type: Package
+Package: ggNetView
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
-  )
+Authors@R: 
+    person("Yue", "Liu", , "yueliu1115@163.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6180-8068"))
 Description: More about what it does (maybe more than one line).
     Continuation lines should be indented.
-License: What license is it under?
+License: MIT + file LICENSE
+Imports: 
+    dplyr,
+    ggnewscale,
+    ggplot2,
+    ggraph,
+    igraph,
+    magrittr,
+    mascarade,
+    multtest,
+    purrr,
+    readr,
+    tibble,
+    tidygraph,
+    utils,
+    vegan,
+    WGCNA
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.3.2
