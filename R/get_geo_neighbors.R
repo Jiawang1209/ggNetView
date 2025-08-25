@@ -65,8 +65,8 @@ get_neighbors <- function(ly, k = 5, idx = NULL, coord = NULL, seed = NULL, tol 
 module_layout <- function(graph_obj, layout, center = T, idx = NULL, shrink = 1){
   # 从graph对象中提取出数据
   node_df <- graph_obj %>%
-    activate(nodes) %>%
-    as_tibble()
+    tidygraph::activate(nodes) %>%
+    tidygraph::as_tibble()
 
   # 按照模块进行排序
   node_df %>%

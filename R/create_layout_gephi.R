@@ -16,13 +16,13 @@ create_layout_gephi <- function(graph_obj, node_add = 7, r=0.1){
 
   # 获取节点
   node_df <- graph_obj %>%
-    activate(nodes) %>%
-    as_tibble()
+    tidygraph::activate(nodes) %>%
+    tidygraph::as_tibble()
 
   # 获取边
   graph_obj %>%
-    activate(edges) %>%
-    as_tibble()
+    tidygraph::activate(edges) %>%
+    tidygraph::as_tibble()
 
   # 节点个数
   n <- dim(node_df)[1]
@@ -79,7 +79,7 @@ create_layout_gephi <- function(graph_obj, node_add = 7, r=0.1){
     ly_tmp <- data.frame(x = x,
                          y = y)
 
-    ly <- bind_rows(ly,ly_tmp)
+    ly <- dplyr::bind_rows(ly,ly_tmp)
 
   }
 

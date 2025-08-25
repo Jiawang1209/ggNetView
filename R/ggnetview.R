@@ -41,7 +41,7 @@ ggNetView <- function(graph_obj,
 
   # 首先拿到布局函数
   func_name <- paste0("create_layout_", layout)
-  lay_func <- getFromNamespace(func_name, "ggNetPlot")  # 从全局环境找对应函数
+  lay_func <- utils::getFromNamespace(func_name, "ggNetView")  # 从全局环境找对应函数
 
   # 获取布局
   ly1 = lay_func(graph_obj = graph_obj, node_add = node_add, r = r)
