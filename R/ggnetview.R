@@ -78,7 +78,10 @@ ggNetView <- function(graph_obj,
   if (isFALSE(label) & isTRUE(add_outer)) {
 
     maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
-                              clusters=ly1_1[["graph_obj"]] %>% activate(nodes) %>% as_tibble() %>% dplyr::pull(modularity3))
+                              clusters=ly1_1[["graph_obj"]] %>%
+                                tidygraph::activate(nodes) %>%
+                                tidygraph::as_tibble() %>%
+                                dplyr::pull(modularity3))
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = 0.2, colour = "grey70") +
