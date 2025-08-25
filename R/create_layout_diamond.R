@@ -1,15 +1,27 @@
+#' Create diamind layout
+#'
+#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
+#'   The network object to be visualized.
+#' @param node_add Integer (default = 7).
+#'   Number of nodes to add in each layer of the layout.
+#' @param r Numeric (default = 1).
+#'   Radius increment for concentric or layered layouts.
+#'
+#' @returns layout.
+#'
+#' @description internal function
+#' @keywords internal
+#'
+#' @examples NULL
 create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
-  # test
-  graph_obj = graph_obj
-  node_add = 7
-  r = 0.1
+
   # 获取节点数
   node_df <- graph_obj %>%
     tidygraph::activate(nodes) %>%
     tibble::as_tibble()
   # 节点个数
   n <- dim(node_df)[1]
-  
+
   # # 每圈点数分配：与原先 circle_layout 一致
   # ring_counts <- function(n, node_add){
   #   counts <- 1
@@ -28,14 +40,14 @@ create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
   #   }
   #   return(counts)
   # }
-  
-  
+
+
   # 获取到layout的具体信息 每一层，有多少个点
   # layout_df_info <- data.frame(
   #   number_circle = seq_along(ring_counts(n, node_add)),
   #   number = ring_counts(n, node_add)
   # )
-  
+
   # 这里有一个立即调用函数的版本， 不需要再次调用函数，直接可以运行
   ring_counts <- (function(n, node_add){
     counts <- 1        # 初始中心点 1 个
@@ -54,16 +66,16 @@ create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
     }
     counts
   })(n, node_add)
-  
 
-  
+
+
   layout_df_info <- data.frame(
     number_circle = seq_along(ring_counts),
     number = ring_counts
   )
-  
+
   layout_df_info
-  
+
   # 将 [0,1) 上的参数 u 均匀映射到菱形四条边（每条边长度占 1/4）
   diamond_param_to_xy <- function(u, radius){
     # u 可以是向量
@@ -91,12 +103,12 @@ create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
     y[idx3] <-  radius * t[idx3]
     data.frame(x = x, y = y)
   }
-  
+
   # 逐圈生成坐标
   ly <- data.frame(x = 0, y = 0)  # 第一圈：中心点
   # 用一个逐圈累加的偏移，打散竖直/水平重合
   offset_accum <- 0
-  
+
   for (index in 2:nrow(layout_df_info)) {
     m <- layout_df_info$number[index]
     radius <- (index - 1) * r
@@ -107,6 +119,6 @@ create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
     coords <- diamond_param_to_xy(u, radius)
     ly <- dplyr::bind_rows(ly, coords)
   }
-  
+
   return(ly)
 }

@@ -22,7 +22,6 @@ Imports:
     tibble,
     tidygraph,
     utils,
-    vegan,
     WGCNA
 Encoding: UTF-8
 LazyData: true
