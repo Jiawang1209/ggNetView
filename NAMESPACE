@@ -3,5 +3,6 @@
 export("%>%")
 export(build_graph_from_df)
 export(build_graph_from_mat)
+export(build_graph_from_wgcna)
 export(ggNetView)
 importFrom(magrittr,"%>%")
