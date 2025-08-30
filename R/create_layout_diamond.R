@@ -6,6 +6,11 @@
 #'   Number of nodes to add in each layer of the layout.
 #' @param r Numeric (default = 1).
 #'   Radius increment for concentric or layered layouts.
+#' @param orientation Character string.
+#'   custom orientation; one of
+#'   "up","down","left","right"
+#' @param angle Integer  (default = 0).
+#'  change  orientation angle
 #'
 #' @returns layout.
 #'
@@ -13,7 +18,19 @@
 #' @keywords internal
 #'
 #' @examples NULL
-create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
+create_layout_diamond <- function(
+    graph_obj,
+    node_add = 7,
+    r = 0.1,
+    orientation = c("up","down","left","right"),
+    angle = 0 # 在 orientation 基础上的微调（弧度）
+    ){
+
+  # 旋转角度
+  orientation <- match.arg(orientation)
+  base_angle <- switch(orientation,
+                       up = 0, right = -pi/2, down = pi, left = pi/2)
+  theta_shift <- base_angle + angle
 
   # 获取节点数
   node_df <- graph_obj %>%
@@ -119,6 +136,16 @@ create_layout_diamond <- function(graph_obj, node_add = 7, r = 0.1){
     coords <- diamond_param_to_xy(u, radius)
     ly <- dplyr::bind_rows(ly, coords)
   }
+
+  # 开始旋转
+  # 统一旋转（绕原点）
+  if (theta_shift != 0) {
+    Rm <- matrix(c(cos(theta_shift), -sin(theta_shift),
+                   sin(theta_shift),  cos(theta_shift)), nrow = 2)
+    xy <- as.matrix(ly[, c("x","y")])
+    ly[, c("x","y")] <- t(Rm %*% t(xy))
+  }
+
 
   return(ly)
 }

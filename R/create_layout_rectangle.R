@@ -7,13 +7,33 @@
 #' @param r Numeric (default = 1).
 #'   Radius increment for concentric or layered layouts.
 #' @param ratio Numeric (default = 1.5).
+#' @param orientation Character string.
+#'   custom orientation; one of
+#'   "up","down","left","right"
+#' @param angle Integer  (default = 0).
+#'  change  orientation angle
 #'
 #' @returns Layout
 #' @description internal function
 #' @keywords internal
 #'
 #' @examples NULL
-create_layout_rectangle <- function(graph_obj, node_add = 7, r = 0.1, ratio = 1.5){
+create_layout_rectangle <- function(
+    graph_obj,
+    node_add = 7,
+    r = 0.1,
+    ratio = 1.5,
+    orientation = c("up","down","left","right"),
+    angle = 0 # 在 orientation 基础上的微调（弧度）
+){
+
+  # 旋转角度
+  orientation <- match.arg(orientation)
+  base_angle <- switch(orientation,
+                       up = 0, right = -pi/2, down = pi, left = pi/2)
+  theta_shift <- base_angle + angle
+
+
   # graph 的节点数
   node_df <- graph_obj %>%
     tidygraph::activate(nodes) %>%
@@ -111,6 +131,15 @@ create_layout_rectangle <- function(graph_obj, node_add = 7, r = 0.1, ratio = 1.
 
     coords <- rectangle_param_to_xy(u, a = half_width, b = half_height)
     ly <- dplyr::bind_rows(ly, coords)
+  }
+
+  # 开始旋转
+  # 统一旋转（绕原点）
+  if (theta_shift != 0) {
+    Rm <- matrix(c(cos(theta_shift), -sin(theta_shift),
+                   sin(theta_shift),  cos(theta_shift)), nrow = 2)
+    xy <- as.matrix(ly[, c("x","y")])
+    ly[, c("x","y")] <- t(Rm %*% t(xy))
   }
 
   ly

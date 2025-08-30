@@ -4,7 +4,15 @@
 \alias{create_layout_petal}
 \title{Create petal layout}
 \usage{
-create_layout_petal(graph_obj, node_add = 7, r = 0.1, petals = 6, amp = 0.35)
+create_layout_petal(
+  graph_obj,
+  node_add = 7,
+  r = 0.1,
+  petals = 6,
+  amp = 0.35,
+  orientation = c("up", "down", "left", "right"),
+  angle = 0
+)
 }
 \arguments{
 \item{graph_obj}{An graph object from build_graph_from_mat or build_graph_from_df.
@@ -19,6 +27,13 @@ Radius increment for concentric or layered layouts.}
 \item{petals}{Numeric (default = 6).}
 
 \item{amp}{Numeric (default = 0.35).}
+
+\item{orientation}{Character string.
+custom orientation; one of
+"up","down","left","right"}
+
+\item{angle}{Integer  (default = 0).
+change  orientation angle}
 }
 \value{
 Layout

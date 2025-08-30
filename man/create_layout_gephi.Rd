@@ -4,7 +4,13 @@
 \alias{create_layout_gephi}
 \title{Create gephi layout}
 \usage{
-create_layout_gephi(graph_obj, node_add = 7, r = 0.1)
+create_layout_gephi(
+  graph_obj,
+  node_add = 7,
+  r = 0.1,
+  orientation = c("up", "down", "left", "right"),
+  angle = 0
+)
 }
 \arguments{
 \item{graph_obj}{An graph object from build_graph_from_mat or build_graph_from_df.
@@ -15,6 +21,13 @@ Number of nodes to add in each layer of the layout.}
 
 \item{r}{Numeric (default = 1).
 Radius increment for concentric or layered layouts.}
+
+\item{orientation}{Character string.
+custom orientation; one of
+"up","down","left","right"}
+
+\item{angle}{Integer  (default = 0).
+change  orientation angle}
 }
 \value{
 layout.

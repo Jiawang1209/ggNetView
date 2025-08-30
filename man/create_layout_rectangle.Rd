@@ -4,7 +4,14 @@
 \alias{create_layout_rectangle}
 \title{Create rectangle layout}
 \usage{
-create_layout_rectangle(graph_obj, node_add = 7, r = 0.1, ratio = 1.5)
+create_layout_rectangle(
+  graph_obj,
+  node_add = 7,
+  r = 0.1,
+  ratio = 1.5,
+  orientation = c("up", "down", "left", "right"),
+  angle = 0
+)
 }
 \arguments{
 \item{graph_obj}{An graph object from build_graph_from_mat or build_graph_from_df.
@@ -17,6 +24,13 @@ Number of nodes to add in each layer of the layout.}
 Radius increment for concentric or layered layouts.}
 
 \item{ratio}{Numeric (default = 1.5).}
+
+\item{orientation}{Character string.
+custom orientation; one of
+"up","down","left","right"}
+
+\item{angle}{Integer  (default = 0).
+change  orientation angle}
 }
 \value{
 Layout

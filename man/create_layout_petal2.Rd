@@ -11,7 +11,9 @@ create_layout_petal2(
   petals = 6,
   amp = 0.35,
   inner_rings = 2,
-  transition_rings = 0
+  transition_rings = 0,
+  orientation = c("up", "down", "left", "right"),
+  angle = 0
 )
 }
 \arguments{

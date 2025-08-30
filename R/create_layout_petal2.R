@@ -21,9 +21,18 @@ create_layout_petal2 <- function(graph_obj,
                                  r = 0.1,
                                  petals = 6,
                                  amp = 0.35,
-                                 inner_rings = 2,          # 有多少“内圈”保持纯圆形（不含中心点）
-                                 transition_rings = 0      # 从圆形过渡到花瓣需要的圈数（0=立即切换）
+                                 inner_rings = 2, # 有多少“内圈”保持纯圆形（不含中心点）
+                                 transition_rings = 0,  # 从圆形过渡到花瓣需要的圈数（0=立即切换）
+                                 orientation = c("up","down","left","right"),
+                                 angle = 0 # 在 orientation 基础上的微调（弧度）
 ){
+  # 旋转角度
+  orientation <- match.arg(orientation)
+  base_angle <- switch(orientation,
+                       up = 0, right = -pi/2, down = pi, left = pi/2)
+  theta_shift <- base_angle + angle
+
+
   # 内圈同心圆 + 外圈花瓣（可选平滑过渡），严格对称、无偏移
   # 节点数
   node_df <- graph_obj %>%
@@ -77,6 +86,16 @@ create_layout_petal2 <- function(graph_obj,
 
     ly <- dplyr::bind_rows(ly, data.frame(x = x, y = y))
   }
+
+  # 开始旋转
+  # 统一旋转（绕原点）
+  if (theta_shift != 0) {
+    Rm <- matrix(c(cos(theta_shift), -sin(theta_shift),
+                   sin(theta_shift),  cos(theta_shift)), nrow = 2)
+    xy <- as.matrix(ly[, c("x","y")])
+    ly[, c("x","y")] <- t(Rm %*% t(xy))
+  }
+
 
   return(ly)
 }
