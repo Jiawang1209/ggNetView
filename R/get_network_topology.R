@@ -38,14 +38,14 @@ get_network_topology <- function(graph_obj){
   fast_greedy_com <- igraph::cluster_fast_greedy(ig)
   fast_greedy_com_modularity <- igraph::modularity(fast_greedy_com)
 
-  walktrap_com <- igraph::cluster_walktrap(ig)
-  walktrap_com_modularity <- igraph::modularity(walktrap_com)
-
-  edge_betweenness_com <- igraph::cluster_edge_betweenness(ig)
-  edge_betweenness_com_modularity <- igraph::modularity(edge_betweenness_com)
-
-  spinglass_com <- igraph::cluster_spinglass(ig)
-  spinglass_com_modularity <- igraph::modularity(spinglass_com)
+  # walktrap_com <- igraph::cluster_walktrap(ig)
+  # walktrap_com_modularity <- igraph::modularity(walktrap_com)
+  #
+  # edge_betweenness_com <- igraph::cluster_edge_betweenness(ig)
+  # edge_betweenness_com_modularity <- igraph::modularity(edge_betweenness_com)
+  #
+  # spinglass_com <- igraph::cluster_spinglass(ig)
+  # spinglass_com_modularity <- igraph::modularity(spinglass_com)
 
 
   out <- data.frame(
@@ -57,10 +57,10 @@ get_network_topology <- function(graph_obj){
     betweenness_vals = betweenness_vals,
     closeness_vals = closeness_vals,
     eigen_vals = eigen_vals,
-    fast_greedy_com_modularity = fast_greedy_com_modularity,
-    walktrap_com_modularity = walktrap_com_modularity,
-    edge_betweenness_com_modularity = edge_betweenness_com_modularity,
-    spinglass_com_modularity = spinglass_com_modularity
+    fast_greedy_com_modularity = fast_greedy_com_modularity
+    # walktrap_com_modularity = walktrap_com_modularity,
+    # edge_betweenness_com_modularity = edge_betweenness_com_modularity,
+    # spinglass_com_modularity = spinglass_com_modularity
   )
 
   return(out)
