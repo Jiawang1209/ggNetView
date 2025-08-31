@@ -13,7 +13,9 @@ ggNetView(
   idx = NULL,
   shrink = 1,
   label = F,
-  add_outer = F
+  add_outer = F,
+  orientation = c("up", "down", "left", "right"),
+  angle = 0
 )
 }
 \arguments{
@@ -47,6 +49,13 @@ Whether to display node labels in the center points}
 
 \item{add_outer}{Logical (default = FALSE).
 Whether to add an outer circle/border around the layout.}
+
+\item{orientation}{Character string.
+custom orientation; one of
+"up","down","left","right"}
+
+\item{angle}{Integer  (default = 0).
+change  orientation angle}
 }
 \value{
 A ggplot object representing the network visualization.
