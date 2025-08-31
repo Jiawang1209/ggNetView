@@ -51,7 +51,7 @@ ggNetView <- function(graph_obj,
   lay_func <- utils::getFromNamespace(func_name, "ggNetView")  # 从全局环境找对应函数
 
   # 获取布局
-  ly1 = lay_func(graph_obj = graph_obj, node_add = node_add, r = r)
+  ly1 = lay_func(graph_obj = graph_obj, node_add = node_add, r = r, orientation = orientation, angle = angle)
 
   # 圆形布局 添加模块化 获取模块
   ly1_1 <- module_layout(graph_obj,
