@@ -1,6 +1,15 @@
+#' Create network topology
+#'
+#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
+#'   The network object to be visualized.
+#'
+#' @returns data frame of network topolog
+#' @export
+#'
+#' @examples NULL
 get_network_topology <- function(graph_obj){
   # 生成igraph对象
-  ig <- tidygraph::as.igraph(g)
+  ig <- tidygraph::as.igraph(graph_obj)
 
   # 计算常见的拓扑属性
   # 节点度
