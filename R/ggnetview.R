@@ -23,6 +23,11 @@
 #'   Whether to display node labels in the center points
 #' @param add_outer  Logical (default = FALSE).
 #'   Whether to add an outer circle/border around the layout.
+#' @param orientation Character string.
+#'   custom orientation; one of
+#'   "up","down","left","right"
+#' @param angle Integer  (default = 0).
+#'  change  orientation angle
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -36,7 +41,9 @@ ggNetView <- function(graph_obj,
                       idx = NULL,
                       shrink = 1,
                       label = F,
-                      add_outer = F
+                      add_outer = F,
+                      orientation = c("up","down","left","right"),
+                      angle = 0 # 在 orientation 基础上的微调（弧度）
                       ){
 
   # 首先拿到布局函数
