@@ -28,6 +28,8 @@
 #'   "up","down","left","right"
 #' @param angle Integer  (default = 0).
 #'  change  orientation angle
+#' @param split Numeric (default = 1).
+#'   split factor applied to the center points.
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -40,6 +42,7 @@ ggNetView <- function(graph_obj,
                       center = T,
                       idx = NULL,
                       shrink = 1,
+                      split = 1,
                       label = F,
                       add_outer = F,
                       orientation = c("up","down","left","right"),
@@ -58,7 +61,8 @@ ggNetView <- function(graph_obj,
                          layout = ly1,
                          center = center,
                          idx = idx,
-                         shrink = shrink)
+                         shrink = shrink,
+                         split = split)
 
   # 可视化结果
 
