@@ -13,6 +13,7 @@ Imports:
     ggnewscale,
     ggplot2,
     ggraph,
+    ggrepel,
     igraph,
     magrittr,
     mascarade,

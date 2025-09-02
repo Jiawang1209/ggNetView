@@ -103,6 +103,28 @@ ggNetView <- function(graph_obj,
       )
   }
 
+  # label = T add_outer = F
+  if (isTRUE(label) & isFALSE(add_outer)) {
+
+    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
+                                 name = "modularity") +
+      ggplot2::coord_equal(clip = "off") +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        aspect.ratio = 1,
+        plot.margin = margin(1,1,1,1,"cm")
+      )
+  }
+
   # label = F add_outer = T
   if (isFALSE(label) & isTRUE(add_outer)) {
 
@@ -146,6 +168,58 @@ ggNetView <- function(graph_obj,
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
                         name = "modularity") +
+
+      ggplot2::coord_equal(clip = "off") +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        aspect.ratio = 1,
+        plot.margin = margin(1,1,1,1,"cm")
+      )
+  }
+
+  # label = T add_outer = T
+  if (isTRUE(label) & isTRUE(add_outer)) {
+
+    maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
+                                         clusters=ly1_1[["graph_obj"]] %>%
+                                           tidygraph::activate(nodes) %>%
+                                           tidygraph::as_tibble() %>%
+                                           dplyr::pull(modularity3))
+
+    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
+                                 name = "modularity") +
+      ggnewscale::new_scale_fill() +
+      ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
+                            mapping = aes(x = x, y = y, group=group, fill = group, color = group),
+                            linewidth = outerwidth,
+                            linetype = outerlinetype,
+                            alpha = outeralpha,
+                            show.legend = F) +
+      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                             '#bdbdbd',
+                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                             '#ffff99','#b15928'),
+                                  name = "modularity") +
+      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
+                                 name = "modularity") +
 
       ggplot2::coord_equal(clip = "off") +
       ggplot2::theme_void() +

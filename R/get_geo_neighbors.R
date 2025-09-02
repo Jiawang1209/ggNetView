@@ -51,7 +51,8 @@ get_neighbors <- function(ly, k = 5, idx = NULL, coord = NULL, seed = NULL, tol 
   )
   focal <- data.frame(
     node = idx_used,  # 如果用 coord 且多点重合，可能 NA
-    x = fx, y = fy
+    x = fx,
+    y = fy
   )
 
   if (nrow(neighbors) < k) {
@@ -417,7 +418,17 @@ module_layout <- function(graph_obj,
 
   ly_final <- do.call(rbind, neighbors_list)
 
+  # combine
+
+  graph_ly_final <- dplyr::bind_cols(
+    ly_final,
+    graph_obj_sort %>%
+      tidygraph::activate(nodes) %>%
+      tidygraph::as_tibble()
+  )
+
   return(list(layout = ly_final,
-              graph_obj = graph_obj_sort))
+              graph_obj = graph_obj_sort,
+              graph_ly_final = graph_ly_final))
 }
 
