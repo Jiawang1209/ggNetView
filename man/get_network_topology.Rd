@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_network_topology.R
 \name{get_network_topology}
 \alias{get_network_topology}
-\title{Create network topolog}
+\title{Create network topology}
 \usage{
 get_network_topology(graph_obj)
 }
@@ -14,7 +14,7 @@ The network object to be visualized.}
 data frame of network topolog
 }
 \description{
-Create network topolog
+Create network topology
 }
 \examples{
 NULL

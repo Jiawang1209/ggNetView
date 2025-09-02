@@ -12,8 +12,14 @@ ggNetView(
   center = T,
   idx = NULL,
   shrink = 1,
+  split = 1,
   label = F,
+  linealpha = 0.25,
+  linecolor = "grey70",
   add_outer = F,
+  outerwidth = 1.25,
+  outerlinetype = 2,
+  outeralpha = 0.5,
   orientation = c("up", "down", "left", "right"),
   angle = 0
 )
@@ -44,11 +50,29 @@ Index of nodes to be emphasized or centered in the layout}
 \item{shrink}{Numeric (default = 1).
 Shrinkage factor applied to the center points.}
 
+\item{split}{Numeric (default = 1).
+split factor applied to the center points.}
+
 \item{label}{Logical (default = FALSE).
 Whether to display node labels in the center points}
 
+\item{linealpha}{Integer  (default = 0.25).
+change  line alpha}
+
+\item{linecolor}{Character  (default = "grey70").
+change  line color}
+
 \item{add_outer}{Logical (default = FALSE).
 Whether to add an outer circle/border around the layout.}
+
+\item{outerwidth}{Integer  (default = 1.25).
+change  outer linewidth}
+
+\item{outerlinetype}{Integer  (default = 2).
+change  outer linetype}
+
+\item{outeralpha}{Integer  (default = 0.5).
+change  outer alpha}
 
 \item{orientation}{Character string.
 custom orientation; one of
