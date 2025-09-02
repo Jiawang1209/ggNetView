@@ -44,7 +44,12 @@ ggNetView <- function(graph_obj,
                       shrink = 1,
                       split = 1,
                       label = F,
+                      linealpha = 0.25,
+                      linecolor = "grey70",
                       add_outer = F,
+                      outerwidth = 1.25,
+                      outerlinetype = 2,
+                      outeralpha = 0.5
                       orientation = c("up","down","left","right"),
                       angle = 0 # 在 orientation 基础上的微调（弧度）
                       ){
@@ -70,7 +75,7 @@ ggNetView <- function(graph_obj,
   if (isFALSE(label) & isFALSE(add_outer)) {
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = 0.2, colour = "grey70") +
+      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                    '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
@@ -95,7 +100,7 @@ ggNetView <- function(graph_obj,
                                 dplyr::pull(modularity3))
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = 0.2, colour = "grey70") +
+      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                    '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
@@ -105,9 +110,9 @@ ggNetView <- function(graph_obj,
       ggnewscale::new_scale_fill() +
       ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
                    mapping = aes(x = x, y = y, group=group, fill = group, color = group),
-                   linewidth = 1.25, linetype = 2,
-                   # color = "#000000",
-                   alpha = 0.5,
+                   linewidth = outerwidth,
+                   linetype = outerlinetype,
+                   alpha = outeralpha,
                    show.legend = F) +
       ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                     '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
