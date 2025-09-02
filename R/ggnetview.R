@@ -54,6 +54,7 @@ ggNetView <- function(graph_obj,
                       shrink = 1,
                       split = 1,
                       label = F,
+                      labelsize = 10,
                       linealpha = 0.25,
                       linecolor = "grey70",
                       add_outer = F,
@@ -112,9 +113,20 @@ ggNetView <- function(graph_obj,
       ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
                                  dplyr::distinct(modularity3, .keep_all = T) %>%
                                  dplyr::filter(modularity3 != "Others"),
-                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3))
+                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3),
+                                             color = modularity2),
+                               size = labelsize,
+                               show.legend = F
                                  ) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
+                                 name = "modularity") +
+      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
                                             '#bdbdbd',
@@ -205,9 +217,20 @@ ggNetView <- function(graph_obj,
       ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
                                  dplyr::distinct(modularity3, .keep_all = T) %>%
                                  dplyr::filter(modularity3 != "Others"),
-                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3))
-      ) +
+                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3),
+                                             color = modularity2),
+                               size = labelsize,
+                               show.legend = F) +
+      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                             '#bdbdbd',
+                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                             '#ffff99','#b15928'),
+                                  name = "modularity")
       ggnewscale::new_scale_fill() +
+      ggnewscale::new_scale_color() +
       ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
                             mapping = aes(x = x, y = y, group=group, fill = group, color = group),
                             linewidth = outerwidth,
