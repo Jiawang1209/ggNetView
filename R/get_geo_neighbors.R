@@ -168,7 +168,32 @@ module_layout <- function(graph_obj, layout, center = TRUE, idx = NULL,
     "none"
   }
 
-  # ……（前面 node_df 排序的部分和你原来一样，这里略过）……
+    # 从graph对象中提取出数据
+    node_df <- graph_obj %>%
+      tidygraph::activate(nodes) %>%
+      tidygraph::as_tibble()
+
+    # 按照模块进行排序
+    node_df %>%
+      dplyr::count(modularity3, name = "size") %>%
+      dplyr::arrange(desc(size)) %>%
+      dplyr::mutate(modularity4 = factor(modularity3,
+                                         levels = c(setdiff(modularity3, "Others"), "Others"),
+                                         ordered = T)) %>%
+      dplyr::arrange(modularity4) %>%
+      dplyr::mutate(modularity4 = as.character(modularity4)) %>%
+      dplyr::pull(modularity4) -> mod_levels
+
+    node_df_sorted <- node_df %>%
+      tidygraph::mutate(modularity3 = factor(modularity3, levels = mod_levels)) %>%
+      tidygraph::arrange(modularity3, desc(degree))
+
+    node_df_sorted_number <- node_df_sorted %>%
+      dplyr::count(modularity3)
+
+    graph_obj_sort <- graph_obj %>%
+      tidygraph::mutate(modularity3 = factor(modularity3, levels = mod_levels, ordered = T)) %>%
+      tidygraph::arrange(modularity3)
 
   # 缩放函数1：绕首点（shrink 用）
   scale_anchor_first <- function(df_xy, factor) {
@@ -193,7 +218,6 @@ module_layout <- function(graph_obj, layout, center = TRUE, idx = NULL,
     df
   }
 
-  # ……（layout 规范化、neighbors 循环前准备同样不变）……
 
   neighbors_list <- vector("list", length = nrow(node_df_sorted_number))
   ly_sub <- layout; if (is.matrix(ly_sub)) ly_sub <- as.data.frame(ly_sub)
