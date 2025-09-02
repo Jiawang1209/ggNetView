@@ -49,7 +49,7 @@ ggNetView <- function(graph_obj,
                       add_outer = F,
                       outerwidth = 1.25,
                       outerlinetype = 2,
-                      outeralpha = 0.5
+                      outeralpha = 0.5,
                       orientation = c("up","down","left","right"),
                       angle = 0 # 在 orientation 基础上的微调（弧度）
                       ){
