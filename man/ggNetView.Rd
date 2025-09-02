@@ -14,6 +14,7 @@ ggNetView(
   shrink = 1,
   split = 1,
   label = F,
+  labelsize = 10,
   linealpha = 0.25,
   linecolor = "grey70",
   add_outer = F,
@@ -55,6 +56,9 @@ split factor applied to the center points.}
 
 \item{label}{Logical (default = FALSE).
 Whether to display node labels in the center points}
+
+\item{labelsize}{Integer  (default = 10).
+change  label size}
 
 \item{linealpha}{Integer  (default = 0.25).
 change  line alpha}
