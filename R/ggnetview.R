@@ -109,6 +109,11 @@ ggNetView <- function(graph_obj,
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
+                                 dplyr::distinct(modularity3, .keep_all = T) %>%
+                                 dplyr::filter(modularity3 != "Others"),
+                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3))
+                                 ) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -197,6 +202,11 @@ ggNetView <- function(graph_obj,
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
                                  name = "modularity") +
+      ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
+                                 dplyr::distinct(modularity3, .keep_all = T) %>%
+                                 dplyr::filter(modularity3 != "Others"),
+                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3))
+      ) +
       ggnewscale::new_scale_fill() +
       ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
                             mapping = aes(x = x, y = y, group=group, fill = group, color = group),
