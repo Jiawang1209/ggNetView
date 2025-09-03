@@ -15,6 +15,8 @@ ggNetView(
   split = 1,
   label = F,
   labelsize = 10,
+  labelsegmentsize = 1,
+  labelsegmentalpha = 1,
   linealpha = 0.25,
   linecolor = "grey70",
   add_outer = F,
@@ -59,6 +61,12 @@ Whether to display node labels in the center points}
 
 \item{labelsize}{Integer  (default = 10).
 change  label size}
+
+\item{labelsegmentsize}{Integer  (default = 1).
+change  label segment size}
+
+\item{labelsegmentalpha}{Integer  (default = 1).
+change  label segment alpha}
 
 \item{linealpha}{Integer  (default = 0.25).
 change  line alpha}

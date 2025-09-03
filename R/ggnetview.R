@@ -42,6 +42,10 @@
 #'  change  outer alpha
 #' @param labelsize Integer  (default = 10).
 #'  change  label size
+#' @param labelsegmentsize Integer  (default = 1).
+#'  change  label segment size
+#' @param labelsegmentalpha Integer  (default = 1).
+#'  change  label segment alpha
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -57,6 +61,8 @@ ggNetView <- function(graph_obj,
                       split = 1,
                       label = F,
                       labelsize = 10,
+                      labelsegmentsize = 1,
+                      labelsegmentalpha = 1,
                       linealpha = 0.25,
                       linecolor = "grey70",
                       add_outer = F,
@@ -72,7 +78,11 @@ ggNetView <- function(graph_obj,
   lay_func <- utils::getFromNamespace(func_name, "ggNetView")  # 从全局环境找对应函数
 
   # 获取布局
-  ly1 = lay_func(graph_obj = graph_obj, node_add = node_add, r = r, orientation = orientation, angle = angle)
+  ly1 = lay_func(graph_obj = graph_obj,
+                 node_add = node_add,
+                 r = r,
+                 orientation = orientation,
+                 angle = angle)
 
   # 圆形布局 添加模块化 获取模块
   ly1_1 <- module_layout(graph_obj,
@@ -83,7 +93,6 @@ ggNetView <- function(graph_obj,
                          split = split)
 
   # 可视化结果
-
   # label = F add_outer = F
   if (isFALSE(label) & isFALSE(add_outer)) {
 
@@ -109,15 +118,49 @@ ggNetView <- function(graph_obj,
   # label = T add_outer = F
   if (isTRUE(label) & isFALSE(add_outer)) {
 
+    # compute label location
+    xr <- range(ly1_1[["layout"]]$x)
+    yr <- range(ly1_1[["layout"]]$y)
+    x_mid <- median(ly1_1[["layout"]]$x)
+    dx <- diff(xr) * 0.12
+    pad <- dx * 1.2
+
+    # lab df
+    lab_df <- ly1_1[["graph_ly_final"]] %>%
+      dplyr::distinct(modularity3, .keep_all = T) %>%
+      dplyr::filter(modularity3 != "Others") %>%
+      dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
+      dplyr::group_by(side) %>%
+      dplyr::arrange(y, .by_group = TRUE) %>%
+      dplyr::mutate(
+        y_rank   = row_number(),
+        y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
+        x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
+        nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
+        nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
+        hjust    = dplyr::if_else(side == "left", 1, 0)
+      ) %>%
+      dplyr::ungroup()
+
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
-      ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
-                                 dplyr::distinct(modularity3, .keep_all = T) %>%
-                                 dplyr::filter(modularity3 != "Others"),
-                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3),
+      ggrepel::geom_text_repel(data = lab_df,
+                               mapping = aes(x = x,
+                                             y = y,
+                                             label = paste0("Module", modularity3),
                                              color = modularity2),
                                size = labelsize,
+                               nudge_x = lab_df$nudge_x,
+                               nudge_y = lab_df$nudge_y,
+                               hjust   = lab_df$hjust,
+                               min.segment.length = 0,
+                               segment.size = labelsegmentsize,
+                               segment.alpha = labelsegmentalpha,
+                               max.overlaps = Inf,
+                               box.padding = 0.15,
+                               point.padding = 0.15,
+                               force = 0.05,
                                show.legend = F
                                  ) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
@@ -199,6 +242,30 @@ ggNetView <- function(graph_obj,
   # label = T add_outer = T
   if (isTRUE(label) & isTRUE(add_outer)) {
 
+    # compute label location
+    xr <- range(ly1_1[["layout"]]$x)
+    yr <- range(ly1_1[["layout"]]$y)
+    x_mid <- median(ly1_1[["layout"]]$x)
+    dx <- diff(xr) * 0.12
+    pad <- dx * 1.2
+
+    # lab df
+    lab_df <- ly1_1[["graph_ly_final"]] %>%
+      dplyr::distinct(modularity3, .keep_all = T) %>%
+      dplyr::filter(modularity3 != "Others") %>%
+      dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
+      dplyr::group_by(side) %>%
+      dplyr::arrange(y, .by_group = TRUE) %>%
+      dplyr::mutate(
+        y_rank   = row_number(),
+        y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
+        x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
+        nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
+        nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
+        hjust    = dplyr::if_else(side == "left", 1, 0)
+      ) %>%
+      dplyr::ungroup()
+
     maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
                                          clusters=ly1_1[["graph_obj"]] %>%
                                            tidygraph::activate(nodes) %>%
@@ -208,13 +275,24 @@ ggNetView <- function(graph_obj,
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
-      ggrepel::geom_text_repel(data = ly1_1[["graph_ly_final"]] %>%
-                                 dplyr::distinct(modularity3, .keep_all = T) %>%
-                                 dplyr::filter(modularity3 != "Others"),
-                               mapping = aes(x = x, y = y, label = paste0("Module", modularity3),
+      ggrepel::geom_text_repel(data = lab_df,
+                               mapping = aes(x = x,
+                                             y = y,
+                                             label = paste0("Module", modularity3),
                                              color = modularity2),
                                size = labelsize,
-                               show.legend = F) +
+                               nudge_x = lab_df$nudge_x,
+                               nudge_y = lab_df$nudge_y,
+                               hjust   = lab_df$hjust,
+                               min.segment.length = 0,
+                               segment.size = labelsegmentsize,
+                               segment.alpha = labelsegmentalpha,
+                               max.overlaps = Inf,
+                               box.padding = 0.15,
+                               point.padding = 0.15,
+                               force = 0.05,
+                               show.legend = F
+      ) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',

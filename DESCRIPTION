@@ -20,6 +20,7 @@ Imports:
     multtest,
     purrr,
     readr,
+    scales,
     tibble,
     tidygraph,
     utils,
