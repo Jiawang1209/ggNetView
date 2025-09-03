@@ -179,10 +179,12 @@ ggNetView <- function(graph_obj,
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
                                  name = "modularity") +
-      ggplot2::coord_equal(clip = "off") +
+      ggplot2::coord_equal(clip = "off",
+                           xlim = c(xr[1] - pad, xr[2] + pad),
+                           ylim = yr) +
       ggplot2::theme_void() +
       ggplot2::theme(
-        aspect.ratio = 1,
+        aspect.ratio = 0.8,
         plot.margin = margin(1,1,1,1,"cm")
       )
   }
@@ -334,10 +336,12 @@ ggNetView <- function(graph_obj,
                                             '#ffff99','#b15928'),
                                  name = "modularity") +
 
-      ggplot2::coord_equal(clip = "off") +
+      ggplot2::coord_equal(clip = "off",
+                           xlim = c(xr[1] - pad, xr[2] + pad),
+                           ylim = yr) +
       ggplot2::theme_void() +
       ggplot2::theme(
-        aspect.ratio = 1,
+        aspect.ratio = 0.8,
         plot.margin = margin(1,1,1,1,"cm")
       )
   }
