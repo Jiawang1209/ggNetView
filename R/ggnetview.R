@@ -100,12 +100,12 @@ ggNetView <- function(graph_obj,
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
       ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                   '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                   '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                   '#bdbdbd',
-                                   '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                   '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                   '#ffff99','#b15928'),
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
                         name = "modularity") +
       ggplot2::coord_equal(clip = "off") +
       ggplot2::theme_void() +
@@ -172,12 +172,12 @@ ggNetView <- function(graph_obj,
                                             '#ffff99','#b15928'),
                                  name = "modularity") +
       ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
+                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                             '#bdbdbd',
+                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                             '#ffff99','#b15928'),
                                  name = "modularity") +
       ggplot2::coord_equal(clip = "off",
                            xlim = c(xr[1] - pad, xr[2] + pad),
