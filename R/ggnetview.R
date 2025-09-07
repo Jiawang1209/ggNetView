@@ -63,6 +63,7 @@ ggNetView <- function(graph_obj,
                       shrink = 1,
                       split = 1,
                       label = F,
+                      nodelabsize = 5,
                       labelsize = 10,
                       labelsegmentsize = 1,
                       labelsegmentalpha = 1,
@@ -367,7 +368,7 @@ ggNetView <- function(graph_obj,
             y = 1.1 * y,
             label = name,
             angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
-        size = 2.5, hjust = 'outward'
+        size = nodelabsize, hjust = 'outward'
       ) +
       ggplot2::scale_shape_manual(values = 20:25) +
       # scale_edge_color_gradientn(colors = c("#74add1","#abd9e9","#ffffbf","#fdae61","#f46d43"))+
