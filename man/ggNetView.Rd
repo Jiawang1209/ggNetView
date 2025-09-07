@@ -15,6 +15,7 @@ ggNetView(
   shrink = 1,
   split = 1,
   label = F,
+  nodelabsize = 5,
   labelsize = 10,
   labelsegmentsize = 1,
   labelsegmentalpha = 1,
@@ -62,6 +63,9 @@ split factor applied to the center points.}
 
 \item{label}{Logical (default = FALSE).
 Whether to display node labels in the center points}
+
+\item{nodelabsize}{Integer  (default = 5).
+change  node label size}
 
 \item{labelsize}{Integer  (default = 10).
 change  label size}

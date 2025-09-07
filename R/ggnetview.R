@@ -48,6 +48,8 @@
 #'  change  label segment alpha
 #' @param ring_n Integer  (default = NULL).
 #'  change  ring number in multipy ring layout
+#' @param nodelabsize Integer  (default = 5).
+#'  change  node label size
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
