@@ -46,6 +46,8 @@
 #'  change  label segment size
 #' @param labelsegmentalpha Integer  (default = 1).
 #'  change  label segment alpha
+#' @param ring_n Integer  (default = NULL).
+#'  change  ring number in multipy ring layout
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -54,6 +56,7 @@
 ggNetView <- function(graph_obj,
                       layout = NULL,
                       node_add = 7,
+                      ring_n = NULL,
                       r = 1,
                       center = T,
                       idx = NULL,
@@ -77,12 +80,21 @@ ggNetView <- function(graph_obj,
   func_name <- paste0("create_layout_", layout)
   lay_func <- utils::getFromNamespace(func_name, "ggNetView")  # 从全局环境找对应函数
 
+  if (func_name == "create_layout_rings") {
+    ly1 = lay_func(graph_obj = graph_obj,
+                   r = r,
+                   ring_n = ring_n,
+                   orientation = orientation,
+                   angle = angle)
+  }else{
+    ly1 = lay_func(graph_obj = graph_obj,
+                   node_add = node_add,
+                   r = r,
+                   orientation = orientation,
+                   angle = angle)
+  }
   # 获取布局
-  ly1 = lay_func(graph_obj = graph_obj,
-                 node_add = node_add,
-                 r = r,
-                 orientation = orientation,
-                 angle = angle)
+
 
   # 圆形布局 添加模块化 获取模块
   ly1_1 <- module_layout(graph_obj,
@@ -344,6 +356,36 @@ ggNetView <- function(graph_obj,
         aspect.ratio = 0.8,
         plot.margin = margin(1,1,1,1,"cm")
       )
+  }
+
+  if (func_name == "create_layout_rings") {
+    p1_1 <- ggraph::ggraph(ly1)  +
+      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+      ggraph::geom_node_point(aes(fill = group, size = degree), shape = 21) +
+      ggraph::geom_node_text(
+        aes(x = 1.1 * x,
+            y = 1.1 * y,
+            label = name,
+            angle = -((-node_angle(x, y) + 90) %% 180) + 90),
+        size = 2.5, hjust = 'outward'
+      ) +
+      ggplot2::scale_shape_manual(values = 20:25) +
+      # scale_edge_color_gradientn(colors = c("#74add1","#abd9e9","#ffffbf","#fdae61","#f46d43"))+
+      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                            '#bdbdbd',
+                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                            '#ffff99','#b15928'),
+                                 name = "Group") +
+      ggraph::scale_edge_width(range = c(0.1, 1)) +
+      ggplot2::coord_equal(clip = "off") +
+      ggraph::theme_graph() +
+      ggplot2::theme(
+        plot.title = element_text(hjust = 0.5, family = "bold")
+      )
+
   }
 
   return(p1_1)

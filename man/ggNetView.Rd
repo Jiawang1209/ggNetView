@@ -8,6 +8,7 @@ ggNetView(
   graph_obj,
   layout = NULL,
   node_add = 7,
+  ring_n = NULL,
   r = 1,
   center = T,
   idx = NULL,
@@ -40,6 +41,9 @@ custom layouts; one of
 
 \item{node_add}{Integer (default = 7).
 Number of nodes to add in each layer of the layout.}
+
+\item{ring_n}{Integer  (default = NULL).
+change  ring number in multipy ring layout}
 
 \item{r}{Numeric (default = 1).
 Radius increment for concentric or layered layouts.}
