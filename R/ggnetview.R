@@ -366,7 +366,7 @@ ggNetView <- function(graph_obj,
         aes(x = 1.1 * x,
             y = 1.1 * y,
             label = name,
-            angle = -((-node_angle(x, y) + 90) %% 180) + 90),
+            angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
         size = 2.5, hjust = 'outward'
       ) +
       ggplot2::scale_shape_manual(values = 20:25) +
