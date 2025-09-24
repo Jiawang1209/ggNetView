@@ -9,17 +9,14 @@
 #'    columns are attached as vertex attributes.
 #' @param directed Logical (default: \code{FALSE}).
 #'   Whether edges between nodes are directed.
-#' @param method Character string.
-#'   Community detection method; one of
-#'   \code{"cluster_fast_greedy"}, \code{"cluster_walktrap"},
-#'   \code{"cluster_edge_betweenness"}, \code{"cluster_spinglass"}.
 #' @param top_modules Integer.
 #'   Number of top-ranked modules to select.
 #' @param seed Integer, optional.
 #'   Random seed for reproducibility; if \code{NULL}, no seed is set.
-#'
+#' @param module.method Character
+#'   Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"
 #' @returns An graph object representing the correlation network.
-#' Node/edge attributes include correlation statistics and (optionally) module labels.
+#'   Node/edge attributes include correlation statistics and (optionally) module labels.
 #' @export
 #'
 #'
@@ -50,7 +47,7 @@
 build_graph_from_df <- function(df,
                                 node_annotation = NULL,
                                 directed = F,
-                                method = "cluster_fast_greedy",
+                                module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
                                 top_modules = 15,
                                 seed = 1115){
 
@@ -74,25 +71,16 @@ build_graph_from_df <- function(df,
   igraph::E(g)$weight <- abs(igraph::E(g)$weight)
 
   # 模块化
-  if (method == "cluster_fast_greedy") {
-    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_fast_greedy(g))
-    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
-  }
+  membership_vec <- switch(
+    module.method,
+    Fast_greedy = igraph::membership(igraph::cluster_fast_greedy(g)),
+    Walktrap = igraph::membership(igraph::cluster_walktrap(g)),
+    Edge_betweenness = igraph::membership(igraph::cluster_edge_betweenness(g)),
+    Spinglass = igraph::membership(igraph::cluster_spinglass(g))
+  )
 
-  if (method == "cluster_walktrap") {
-    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_walktrap(g))
-    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
-  }
-
-  if (method == "cluster_edge_betweenness") {
-    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_edge_betweenness(g))
-    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
-  }
-
-  if (method == "cluster_spinglass") {
-    igraph::V(g)$modularity <- igraph::membership(igraph::cluster_spinglass(g))
-    igraph::V(g)$modularity2 <- as.character(igraph::V(g)$modularity)
-  }
+  igraph::V(g)$modularity  <- membership_vec
+  igraph::V(g)$modularity2 <- as.character(membership_vec)
 
   table(igraph::V(g)$modularity2) %>% sort(., decreasing = T)
 
@@ -104,12 +92,10 @@ build_graph_from_df <- function(df,
     message(paste("The max module in network is", max_model, "we use the", max_model, " modules for next analysis"))
     modularity_top_15 <- igraph::V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:max_model] %>% names()
 
-  }else if (max_model > top_modules) {
+  }else if (max_model >= top_modules) {
 
     modularity_top_15 <- igraph::V(g)$modularity2 %>% table() %>% sort(., decreasing = T) %>% .[1:top_modules] %>% names()
   }
-
-
 
   igraph::V(g)$modularity2 <- ifelse(igraph::V(g)$modularity2 %in% modularity_top_15, igraph::V(g)$modularity2, "Others")
 
@@ -118,8 +104,9 @@ build_graph_from_df <- function(df,
     tidygraph::mutate(modularity = factor(modularity),
                       modularity2 = factor(modularity2),
                       modularity3 = as.character(modularity2),
-                      degree = tidygraph::centrality_degree(mode = "out"),
-                      strength = tidygraph::centrality_degree(weights = weight)
+                      Modularity = modularity2,
+                      Segree = tidygraph::centrality_degree(mode = "out"),
+                      Strength = tidygraph::centrality_degree(weights = weight)
     ) %>%
     tidygraph::arrange(modularity2, desc(degree))
 

@@ -16,6 +16,7 @@
 #' @examples NULL
 build_graph_from_wgcna <- function(wgcna_tom,
                                    module = NULL,
+                                   node_annotation = NULL,
                                    directed = F,
                                    seed = 1115){
 
@@ -28,14 +29,32 @@ build_graph_from_wgcna <- function(wgcna_tom,
     directed = directed
   )
 
-  graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
-    tidygraph::left_join(module, by = c("name" = "ID")) %>%
-    tidygraph::mutate(modularity2 = factor(Module),
-                      modularity2 = factor(modularity2),
-                      modularity3 = as.character(modularity2),
-                      degree = tidygraph::centrality_degree(mode = "out"),
-                      strength = tidygraph::centrality_degree(weights = weight)) %>%
-    tidygraph::arrange(modularity2, desc(degree))
+  if (is.null(node_annotation)) {
+    graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
+      tidygraph::left_join(module, by = c("name" = "ID")) %>%
+      tidygraph::mutate(modularity2 = factor(Module),
+                        modularity2 = factor(modularity2),
+                        modularity3 = as.character(modularity2),
+                        Modularity = modularity2,
+                        Segree = tidygraph::centrality_degree(mode = "out"),
+                        Strength = tidygraph::centrality_degree(weights = weight)
+      ) %>%
+      tidygraph::arrange(modularity2, desc(degree))
+  }else{
+    # 构建ggraph对象
+    graph_obj <- tidygraph::as_tbl_graph(g) %>%
+      tidygraph::mutate(modularity = factor(modularity),
+                        modularity2 = factor(modularity2),
+                        modularity3 = as.character(modularity2),
+                        Modularity = modularity2,
+                        Degree = tidygraph::centrality_degree(mode = "out"),
+                        Strength = tidygraph::centrality_degree(weights = weight)
+      ) %>%
+      tidygraph::arrange(Modularity, desc(Degree)) %>%
+      tidygraph::left_join(node_annotation %>%
+                             purrr::set_names(c("name", colnames(node_annotation)[-1])),
+                           by = "name")
+  }
 
   return(graph_obj)
 }

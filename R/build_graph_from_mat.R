@@ -16,7 +16,7 @@
 #' Corelation adjust pvalue methods contains "Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"
 #' @param module.method Character
 #' Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"
-#' @param annotation Data Frame
+#' @param node_annotation Data Frame
 #' The annotation file of nodes in network
 #'
 #' @returns An graph object representing the correlation network.
@@ -42,7 +42,7 @@ build_graph_from_mat <- function(mat,
                                  cor.method = c("pearson", "kendall", "spearman"),
                                  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"),
                                  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
-                                 annotation = NULL,
+                                 node_annotation = NULL,
                                  top_modules = 15,
                                  seed = 1115){
   # argument check
@@ -160,7 +160,7 @@ build_graph_from_mat <- function(mat,
 
   igraph::V(g)$modularity2 <- ifelse(igraph::V(g)$modularity2 %in% modularity_top_15, igraph::V(g)$modularity2, "Others")
 
-  if (is.null(annotation)) {
+  if (is.null(node_annotation)) {
     # 构建ggraph对象
     graph_obj <- tidygraph::as_tbl_graph(g) %>%
       tidygraph::mutate(modularity = factor(modularity),
@@ -182,8 +182,8 @@ build_graph_from_mat <- function(mat,
                         Strength = tidygraph::centrality_degree(weights = weight)
                         ) %>%
       tidygraph::arrange(Modularity, desc(Degree)) %>%
-      tidygraph::left_join(annotation %>%
-                             purrr::set_names(c("name", colnames(annotation)[-1])),
+      tidygraph::left_join(node_annotation %>%
+                             purrr::set_names(c("name", colnames(node_annotation)[-1])),
                            by = "name")
   }
 
