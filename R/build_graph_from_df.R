@@ -3,10 +3,8 @@
 #' @param df Data frame.
 #'   Edge list with columns \code{from}, \code{to}, and optionally \code{weight}.
 #'   If \code{weight} is absent, an unweighted graph is constructed.
-#' @param node_annotation Data frame, optional.
-#'    Node metadata table to annotate vertices; must contain a column matching
-#'    node IDs in \code{df} (e.g., \code{node} or \code{name}). Additional
-#'    columns are attached as vertex attributes.
+#' @param node_annotation Data Frame
+#' The annotation file of nodes in network
 #' @param directed Logical (default: \code{FALSE}).
 #'   Whether edges between nodes are directed.
 #' @param top_modules Integer.

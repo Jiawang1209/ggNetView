@@ -7,6 +7,8 @@
 #'   Whether edges between nodes are directed.
 #' @param seed Integer, optional.
 #'   Random seed for reproducibility; if \code{NULL}, no seed is set.
+#' @param node_annotation Data Frame
+#' The annotation file of nodes in network
 #'
 #' @returns An graph object representing the correlation network.
 #' Node/edge attributes from WGCNA TOM matrix (optionally) module labels.

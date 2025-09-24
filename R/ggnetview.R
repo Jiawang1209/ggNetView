@@ -50,6 +50,8 @@
 #'  change  ring number in multipy ring layout
 #' @param nodelabsize Integer  (default = 5).
 #'  change  node label size
+#' @param group.by Character   (default = "Modularity").
+#' change variable for group
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -64,6 +66,7 @@ ggNetView <- function(graph_obj,
                       idx = NULL,
                       shrink = 1,
                       split = 1,
+                      group.by = "Modularity",
                       label = F,
                       nodelabsize = 5,
                       labelsize = 10,
@@ -113,7 +116,7 @@ ggNetView <- function(graph_obj,
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = degree), alpha = 0.9, shape = 21) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -159,12 +162,12 @@ ggNetView <- function(graph_obj,
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = degree), alpha = 0.9, shape = 21) +
       ggrepel::geom_text_repel(data = lab_df,
                                mapping = aes(x = x,
                                              y = y,
                                              label = paste0("Module", modularity3),
-                                             color = modularity2),
+                                             color = .data[[group.by]]),
                                size = labelsize,
                                nudge_x = lab_df$nudge_x,
                                nudge_y = lab_df$nudge_y,
@@ -215,7 +218,7 @@ ggNetView <- function(graph_obj,
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = degree), alpha = 0.9, shape = 21) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -291,7 +294,7 @@ ggNetView <- function(graph_obj,
 
     p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
       ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = modularity2, size = degree), alpha = 0.9, shape = 21) +
+      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = degree), alpha = 0.9, shape = 21) +
       ggrepel::geom_text_repel(data = lab_df,
                                mapping = aes(x = x,
                                              y = y,
