@@ -8,7 +8,11 @@ build_graph_from_mat(
   mat,
   r.threshold = 0.7,
   p.threshold = 0.05,
-  method = "cluster_fast_greedy",
+  cor.method = c("pearson", "kendall", "spearman"),
+  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
+    "TSBH"),
+  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
+  node_annotation = NULL,
   top_modules = 15,
   seed = 1115
 )
@@ -23,10 +27,16 @@ Correlation coefficient threshold; edges are kept only if |r| >= r.threshold.}
 \item{p.threshold}{Numeric.
 Significance threshold for correlations; edges are kept only if p < p.threshold.}
 
-\item{method}{Character string.
-Community detection method; one of
-\code{"cluster_fast_greedy"}, \code{"cluster_walktrap"},
-\code{"cluster_edge_betweenness"}, \code{"cluster_spinglass"}.}
+\item{cor.method}{Charecter.
+Correlation analysis methods contains "pearson", "kendall", "spearman"}
+
+\item{proc}{Corelation adjust pvalue methods contains "Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"}
+
+\item{module.method}{Character
+Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"}
+
+\item{node_annotation}{Data Frame
+The annotation file of nodes in network}
 
 \item{top_modules}{Integer.
 Number of top-ranked modules to retain}

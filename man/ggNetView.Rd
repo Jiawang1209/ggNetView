@@ -14,6 +14,7 @@ ggNetView(
   idx = NULL,
   shrink = 1,
   split = 1,
+  group.by = "Modularity",
   label = F,
   nodelabsize = 5,
   labelsize = 10,
@@ -60,6 +61,9 @@ Shrinkage factor applied to the center points.}
 
 \item{split}{Numeric (default = 1).
 split factor applied to the center points.}
+
+\item{group.by}{Character   (default = "Modularity").
+change variable for group}
 
 \item{label}{Logical (default = FALSE).
 Whether to display node labels in the center points}

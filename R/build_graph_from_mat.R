@@ -90,14 +90,13 @@ build_graph_from_mat <- function(mat,
     stop("`seed` must be a single numeric.", call. = FALSE)
   }
   seed <- as.integer(seed)
-  if (!is.logical(progress) || length(progress) != 1L) {
-    stop("`progress` must be a single TRUE/FALSE.", call. = FALSE)
-  }
-  if (!is.null(annotation)) {
-    if (!is.data.frame(annotation)) {
+
+
+  if (!is.null(node_annotation)) {
+    if (!is.data.frame(node_annotation)) {
       stop("`annotation` must be a data.frame / tibble.", call. = FALSE)
     }
-    if (ncol(annotation) < 2) {
+    if (ncol(node_annotation) < 2) {
       stop("`annotation` requires at least two columns (the first is the name, the rest are the annotation columns to be merged).", call. = FALSE)
     }
   }

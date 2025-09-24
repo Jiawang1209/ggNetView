@@ -8,7 +8,7 @@ build_graph_from_df(
   df,
   node_annotation = NULL,
   directed = F,
-  method = "cluster_fast_greedy",
+  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
   top_modules = 15,
   seed = 1115
 )
@@ -18,18 +18,14 @@ build_graph_from_df(
 Edge list with columns \code{from}, \code{to}, and optionally \code{weight}.
 If \code{weight} is absent, an unweighted graph is constructed.}
 
-\item{node_annotation}{Data frame, optional.
-Node metadata table to annotate vertices; must contain a column matching
-node IDs in \code{df} (e.g., \code{node} or \code{name}). Additional
-columns are attached as vertex attributes.}
+\item{node_annotation}{Data Frame
+The annotation file of nodes in network}
 
 \item{directed}{Logical (default: \code{FALSE}).
 Whether edges between nodes are directed.}
 
-\item{method}{Character string.
-Community detection method; one of
-\code{"cluster_fast_greedy"}, \code{"cluster_walktrap"},
-\code{"cluster_edge_betweenness"}, \code{"cluster_spinglass"}.}
+\item{module.method}{Character
+Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"}
 
 \item{top_modules}{Integer.
 Number of top-ranked modules to select.}
@@ -39,7 +35,7 @@ Random seed for reproducibility; if \code{NULL}, no seed is set.}
 }
 \value{
 An graph object representing the correlation network.
-Node/edge attributes include correlation statistics and (optionally) module labels.
+  Node/edge attributes include correlation statistics and (optionally) module labels.
 }
 \description{
 Build a graph object from a data frame

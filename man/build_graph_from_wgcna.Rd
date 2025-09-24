@@ -4,12 +4,21 @@
 \alias{build_graph_from_wgcna}
 \title{Build a graph object from WGCNA result}
 \usage{
-build_graph_from_wgcna(wgcna_tom, module = NULL, directed = F, seed = 1115)
+build_graph_from_wgcna(
+  wgcna_tom,
+  module = NULL,
+  node_annotation = NULL,
+  directed = F,
+  seed = 1115
+)
 }
 \arguments{
 \item{wgcna_tom}{WGCNA TOM matrix.}
 
 \item{module}{Module data frame}
+
+\item{node_annotation}{Data Frame
+The annotation file of nodes in network}
 
 \item{directed}{Logical (default: \code{FALSE}).
 Whether edges between nodes are directed.}
