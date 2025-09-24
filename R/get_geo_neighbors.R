@@ -331,7 +331,7 @@ module_layout <- function(graph_obj,
   # 3) 模块内按度数排（仅用于统计数量）
   node_df_sorted <- node_df %>%
     tidygraph::mutate(modularity3 = factor(modularity3, levels = mod_levels)) %>%
-    tidygraph::arrange(modularity3, dplyr::desc(degree))
+    tidygraph::arrange(modularity3, dplyr::desc(Degree))
 
   # 4) 每模块节点数
   node_df_sorted_number <- node_df_sorted %>%
