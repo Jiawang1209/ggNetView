@@ -1,4 +1,9 @@
-get_neighbors <- function(ly, k = 5, idx = NULL, coord = NULL, seed = NULL, tol = 1e-12) {
+get_neighbors <- function(ly,
+                          k = 5,
+                          idx = NULL,
+                          coord = NULL,
+                          seed = 1115,
+                          tol = 1e-12) {
   # ly: data.frame，至少包含 x, y 两列
   # k:  需要的邻居个数（包含中心点本身）
   # idx: 指定中心点行号（可选）
@@ -8,8 +13,10 @@ get_neighbors <- function(ly, k = 5, idx = NULL, coord = NULL, seed = NULL, tol 
 
   stopifnot(all(c("x","y") %in% names(ly)))
   stopifnot(is.numeric(ly$x), is.numeric(ly$y))
-  n <- nrow(ly); if (n < 1) stop("ly requires at least one point.")
-  if (!is.null(seed) && is.null(idx) && is.null(coord)) set.seed(seed)
+  n <- nrow(ly)
+  if (n < 1) stop("ly requires at least one point.")
+
+  set.seed(seed)
 
   # 1) 确定中心 (fx, fy)，以及与中心重合的点们
   # 如果 coord 不是空的
@@ -283,8 +290,10 @@ module_layout <- function(graph_obj,
                           center = TRUE,
                           idx = NULL,
                           shrink = 1,
-                          split = NULL){
+                          split = NULL,
+                          seed = 1115){
 
+  set.seed(seed)
   # --- 工具函数：围绕子集第一个点做整体缩放（保留你原逻辑） ---
   shrink_rings_global <- function(df, shrink = shrink) {
     anchor <- c(df$x[1], df$y[1])

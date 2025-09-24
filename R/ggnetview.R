@@ -124,7 +124,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                        name = "modularity") +
+                        name = group.by) +
       ggplot2::coord_equal(clip = "off") +
       ggplot2::theme_void() +
       ggplot2::theme(
@@ -188,7 +188,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                                 name = "modularity") +
+                                 name = group.by) +
       ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -196,7 +196,7 @@ ggNetView <- function(graph_obj,
                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                              '#ffff99','#b15928'),
-                                 name = "modularity") +
+                                 name = group.by) +
       ggplot2::coord_equal(clip = "off",
                            xlim = c(xr[1] - pad, xr[2] + pad),
                            ylim = yr) +
@@ -226,7 +226,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                        name = "modularity") +
+                        name = group.by) +
       ggnewscale::new_scale_fill() +
       ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
                    mapping = aes(x = x, y = y, group=group, fill = group, color = group),
@@ -241,7 +241,7 @@ ggNetView <- function(graph_obj,
                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                              '#ffff99','#b15928'),
-                         name = "modularity") +
+                         name = group.by) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -249,7 +249,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                        name = "modularity") +
+                        name = group.by) +
 
       ggplot2::coord_equal(clip = "off") +
       ggplot2::theme_void() +
@@ -320,7 +320,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                                 name = "modularity") +
+                                 name = group.by) +
       ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -328,7 +328,7 @@ ggNetView <- function(graph_obj,
                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                              '#ffff99','#b15928'),
-                                  name = "modularity") +
+                                  name = group.by) +
       ggnewscale::new_scale_fill() +
       ggnewscale::new_scale_color() +
       ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
@@ -344,7 +344,7 @@ ggNetView <- function(graph_obj,
                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                              '#ffff99','#b15928'),
-                                  name = "modularity") +
+                                  name = group.by) +
       ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
@@ -352,8 +352,7 @@ ggNetView <- function(graph_obj,
                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
                                             '#ffff99','#b15928'),
-                                 name = "modularity") +
-
+                                 name = group.by) +
       ggplot2::coord_equal(clip = "off",
                            xlim = c(xr[1] - pad, xr[2] + pad),
                            ylim = yr) +
