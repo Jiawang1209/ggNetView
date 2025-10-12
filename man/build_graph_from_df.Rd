@@ -41,27 +41,6 @@ An graph object representing the correlation network.
 Build a graph object from a data frame
 }
 \examples{
-#' # Minimal example edge list
-df <- data.frame(
-  from   = c("A","A","B","C","D"),
-  to     = c("B","C","C","D","E"),
-  weight = c(0.8, 0.6, 0.7, 0.9, 0.5)
-)
+NULL
 
-# Optional node annotations
-ann <- data.frame(
-  name = c("A","B","C","D","E"),
-  group = c("g1","g1","g2","g2","g2")
-)
-
-set.seed(2025)
-g <- build_graph_from_df(
-  df,
-  node_annotation = NULL,
-  directed = FALSE,
-  method = "cluster_fast_greedy",
-  top_modules = 5,
-  seed = 1115
-)
-g
 }

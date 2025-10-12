@@ -8,7 +8,9 @@ build_graph_from_mat(
   mat,
   r.threshold = 0.7,
   p.threshold = 0.05,
+  method = c("WGCNA", "SpiecEasi", "SPARCC"),
   cor.method = c("pearson", "kendall", "spearman"),
+  SpiecEasi.method = c("mb", "glasso"),
   proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
     "TSBH"),
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
@@ -27,8 +29,14 @@ Correlation coefficient threshold; edges are kept only if |r| >= r.threshold.}
 \item{p.threshold}{Numeric.
 Significance threshold for correlations; edges are kept only if p < p.threshold.}
 
+\item{method}{Charecter.
+Relationship analysis methods contains "WGCNA", "SpiecEasi", "SPARCC"}
+
 \item{cor.method}{Charecter.
 Correlation analysis methods contains "pearson", "kendall", "spearman"}
+
+\item{SpiecEasi.method}{Charecter.
+SpiecEasi methods contains "mb", "glasso"}
 
 \item{proc}{Corelation adjust pvalue methods contains "Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"}
 
@@ -52,15 +60,5 @@ Node/edge attributes include correlation statistics and (optionally) module labe
 Build a graph object from raw matrix for correlation analysis
 }
 \examples{
-set.seed(1115)
-mat1 <- matrix(rnorm(10000), nrow = 100)  # 100 samples x 100 variables
-g <- build_graph_from_mat(
-  mat = mat1,
-  r.threshold = 0.7,
-  p.threshold = 0.05,
-  method = "cluster_fast_greedy",
-  top_modules = 15,
-  seed = 1115
-)
-g
+NULL
 }

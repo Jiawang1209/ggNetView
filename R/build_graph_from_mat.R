@@ -18,33 +18,30 @@
 #' Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"
 #' @param node_annotation Data Frame
 #' The annotation file of nodes in network
+#' @param method Charecter.
+#' Relationship analysis methods contains "WGCNA", "SpiecEasi", "SPARCC"
+#' @param SpiecEasi.method Charecter.
+#' SpiecEasi methods contains "mb", "glasso"
 #'
 #' @returns An graph object representing the correlation network.
 #' Node/edge attributes include correlation statistics and (optionally) module labels.
 #'
 #' @export
 #'
-#' @examples
-#' set.seed(1115)
-#' mat1 <- matrix(rnorm(10000), nrow = 100)  # 100 samples x 100 variables
-#' g <- build_graph_from_mat(
-#'   mat = mat1,
-#'   r.threshold = 0.7,
-#'   p.threshold = 0.05,
-#'   method = "cluster_fast_greedy",
-#'   top_modules = 15,
-#'   seed = 1115
-#' )
-#' g
+#' @examples NULL
+
 build_graph_from_mat <- function(mat,
                                  r.threshold = 0.7,
                                  p.threshold = 0.05,
+                                 method = c("WGCNA", "SpiecEasi", "SPARCC"),
                                  cor.method = c("pearson", "kendall", "spearman"),
+                                 SpiecEasi.method = c("mb", "glasso"),
                                  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"),
                                  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
                                  node_annotation = NULL,
                                  top_modules = 15,
                                  seed = 1115){
+
   # argument check
   if (is.data.frame(mat)){
     mat <- as.matrix(mat)
@@ -103,31 +100,76 @@ build_graph_from_mat <- function(mat,
 
   set.seed(seed)
 
-  # WGCNA 计算相关性
-  occor <- WGCNA::corAndPvalue(t(mat), method = 'pearson')
-  mtadj <- multtest::mt.rawp2adjp(unlist(occor$p),proc=proc)
-  adpcor <- mtadj$adjp[order(mtadj$index),2]
-  occor.p <- matrix(adpcor, dim(t(mat))[2])
-  # R and pvalue
-  occor.r <- occor$cor
-  diag(occor.r) <- 0
-  occor.r[occor.p > p.threshold | abs(occor.r) < r.threshold] = 0
-  occor.r[is.na(occor.r)]=0
+  # calculate correlation
 
-  # 构建igraph对象
-  g <- igraph::graph_from_adjacency_matrix(occor.r, weighted = TRUE, mode = 'undirected')
+  # WGCNA
+  if (method == "WGCNA") {
+    # WGCNA for correlation
+    occor <- WGCNA::corAndPvalue(t(mat), method = cor.method)
+    mtadj <- multtest::mt.rawp2adjp(unlist(occor$p),proc=proc)
+    adpcor <- mtadj$adjp[order(mtadj$index),2]
+    occor.p <- matrix(adpcor, dim(t(mat))[2])
 
-  # 删除自相关
+    # R and pvalue
+    occor.r <- occor$cor
+    diag(occor.r) <- 0
+    occor.r[occor.p > p.threshold | abs(occor.r) < r.threshold] = 0
+    occor.r[is.na(occor.r)]=0
+
+    # create igraph object
+    g <- igraph::graph_from_adjacency_matrix(occor.r, weighted = TRUE, mode = 'undirected')
+  }
+
+  # SpiecEasi
+  if (method == "SpiecEasi") {
+    # SpiecEasi for correlation
+    SpiecEasi_obj <- SpiecEasi::spiec.easi(as.matrix(t(mat)),
+                                           method = SpiecEasi.method,
+                                           lambda.min.ratio=1e-2,
+                                           nlambda=20,
+                                           pulsar.params=list(rep.num=50)
+                                           )
+
+    # return adjacency matrix
+    am <- SpiecEasi::getRefit(SpiecEasi_obj)
+
+    rownames(am) <- rownames(mat)
+    colnames(am) <- rownames(mat)
+
+    # Create igraph objects
+    g <- igraph::graph_from_adjacency_matrix(am, weighted = TRUE, mode = 'undirected')
+  }
+
+  # SparCC
+  if (method == "SparCC") {
+    # Sparcc for correlation
+    SparCC_obj <- SpiecEasi::sparcc(as.matrix(t(mat)))
+
+    SparCC_graph <- abs(SparCC_obj$Cor) >= r.threshold
+
+    diag(SparCC_graph) <- 0
+
+    rownames(SparCC_graph) <- rownames(mat)
+    colnames(SparCC_graph) <- rownames(mat)
+
+    SparCC_graph <- Matrix::Matrix(SparCC_graph, sparse=TRUE)
+
+    # Create igraph objects
+    g <- igraph::graph_from_adjacency_matrix(SparCC_graph, weighted = TRUE, mode = 'undirected')
+  }
+
+
+  # remove self correlation
   g <- igraph::simplify(g)
 
-  # 删除孤立节点
+  # delect single node
   g <- igraph::delete_vertices(g, which(igraph::degree(g)==0))
 
-  ## 设置网络的weight，为计算模块性做准备
+  ## set weight
   igraph::E(g)$correlation <- igraph::E(g)$weight
   igraph::E(g)$weight <- abs(igraph::E(g)$weight)
 
-  # 模块化
+  # membership
   membership_vec <- switch(
     module.method,
     Fast_greedy = igraph::membership(igraph::cluster_fast_greedy(g)),
@@ -138,9 +180,6 @@ build_graph_from_mat <- function(mat,
 
   igraph::V(g)$modularity  <- membership_vec
   igraph::V(g)$modularity2 <- as.character(membership_vec)
-
-
-
 
   table(igraph::V(g)$modularity2) %>% sort(., decreasing = T)
 
@@ -160,7 +199,7 @@ build_graph_from_mat <- function(mat,
   igraph::V(g)$modularity2 <- ifelse(igraph::V(g)$modularity2 %in% modularity_top_15, igraph::V(g)$modularity2, "Others")
 
   if (is.null(node_annotation)) {
-    # 构建ggraph对象
+    # create ggraph_obj
     graph_obj <- tidygraph::as_tbl_graph(g) %>%
       tidygraph::mutate(modularity = factor(modularity),
                         modularity2 = factor(modularity2),
@@ -171,7 +210,7 @@ build_graph_from_mat <- function(mat,
                         ) %>%
       tidygraph::arrange(Modularity, desc(Degree))
   }else{
-    # 构建ggraph对象
+    # create ggraph_obj
     graph_obj <- tidygraph::as_tbl_graph(g) %>%
       tidygraph::mutate(modularity = factor(modularity),
                         modularity2 = factor(modularity2),

@@ -52,6 +52,8 @@
 #'  change  node label size
 #' @param group.by Character   (default = "Modularity").
 #' change variable for group
+#' @param remove   Logical (default = FALSE).
+#' delect nodes that are not modules
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -75,6 +77,7 @@ ggNetView <- function(graph_obj,
                       linealpha = 0.25,
                       linecolor = "grey70",
                       add_outer = F,
+                      remove = F,
                       outerwidth = 1.25,
                       outerlinetype = 2,
                       outeralpha = 0.5,
@@ -110,7 +113,25 @@ ggNetView <- function(graph_obj,
                          shrink = shrink,
                          split = split)
 
+  # module info
+  module_info <- levels(ly1_1$graph_ly_final$Modularity)
+  module_info <- module_info[module_info!="Others"]
+
   # 可视化结果
+  if (isFALSE(remove)) {
+    ly1_1 <- ly1_1
+  }else{
+
+    ly1_1[["graph_ly_final"]] <- ly1_1[["graph_ly_final"]] %>%
+      dplyr::filter(as.character(Modularity) %in% module_info)
+
+    ly1_1[["graph_obj"]] <- ly1_1[["graph_obj"]] %>%
+      tidygraph::filter(name %in% ly1_1[["graph_ly_final"]]$name)
+
+
+    ly1_1[["layout"]] <- dplyr::select(ly1_1[["graph_ly_final"]], x, y)
+  }
+
   # label = F add_outer = F
   if (isFALSE(label) & isFALSE(add_outer)) {
 

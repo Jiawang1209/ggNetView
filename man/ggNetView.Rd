@@ -23,6 +23,7 @@ ggNetView(
   linealpha = 0.25,
   linecolor = "grey70",
   add_outer = F,
+  remove = F,
   outerwidth = 1.25,
   outerlinetype = 2,
   outeralpha = 0.5,
@@ -88,6 +89,9 @@ change  line color}
 
 \item{add_outer}{Logical (default = FALSE).
 Whether to add an outer circle/border around the layout.}
+
+\item{remove}{Logical (default = FALSE).
+delect nodes that are not modules}
 
 \item{outerwidth}{Integer  (default = 1.25).
 change  outer linewidth}
