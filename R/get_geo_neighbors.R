@@ -47,7 +47,7 @@ get_neighbors <- function(ly,
   need_self <- length(self_pick)
   k_self <- min(need_self, k)
   k_other <- max(0, k - k_self)
-  nn_idx <- c(head(self_pick, k_self), head(others, k_other))
+  nn_idx <- c(utils::head(self_pick, k_self), utils::head(others, k_other))
 
   # 5) 输出
   neighbors <- data.frame(

@@ -73,7 +73,7 @@ build_graph_from_mat <- function(mat,
 
   if (!all(proc %in% allowed_proc)) {
     bad <- proc[!proc %in% allowed_proc]
-    stop(sprintf("`proc` contains unsupported method: %s。Supported: %s",
+    stop(sprintf("`proc` contains unsupported method: %s, Supported: %s",
                  paste(bad, collapse = ", "),
                  paste(allowed_proc, collapse = ", ")),
          call. = FALSE)

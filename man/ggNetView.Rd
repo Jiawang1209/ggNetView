@@ -14,7 +14,7 @@ ggNetView(
   idx = NULL,
   shrink = 1,
   split = 1,
-  group.by = "Modularity",
+  group.by = NULL,
   label = F,
   nodelabsize = 5,
   labelsize = 10,
@@ -27,7 +27,7 @@ ggNetView(
   outerwidth = 1.25,
   outerlinetype = 2,
   outeralpha = 0.5,
-  orientation = c("up", "down", "left", "right"),
+  orientation = "up",
   angle = 0
 )
 }

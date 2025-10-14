@@ -89,7 +89,7 @@ gglink_heatmaps <- function(
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)
         ) %>%
-        na.omit()
+        stats::na.omit()
 
       cor_self_p <- cor_self_p %>%
         tibble::rownames_to_column(var = "ID") %>%
@@ -100,7 +100,7 @@ gglink_heatmaps <- function(
                       Type = factor(Type, levels = rev(unique(Type)), ordered = T),
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)) %>%
-        na.omit() %>%
+        stats::na.omit() %>%
         dplyr::mutate(p_signif = case_when(
           Pvalue > 0.05 ~ "",
           Pvalue > 0.01 & Pvalue < 0.05 ~ "*",
@@ -154,7 +154,7 @@ gglink_heatmaps <- function(
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)
         ) %>%
-        na.omit()
+        stats::na.omit()
 
       cor_self_p <- cor_self_p %>%
         tibble::rownames_to_column(var = "ID") %>%
@@ -165,7 +165,7 @@ gglink_heatmaps <- function(
                       Type = factor(Type, levels = unique(Type), ordered = T),
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)) %>%
-        na.omit() %>%
+        stats::na.omit() %>%
         dplyr::mutate(p_signif = case_when(
           Pvalue > 0.05 ~ "",
           Pvalue > 0.01 & Pvalue < 0.05 ~ "*",
@@ -204,7 +204,7 @@ gglink_heatmaps <- function(
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)
         ) %>%
-        na.omit()
+        stats::na.omit()
 
       cor_self_p <- cor_self_p %>%
         tibble::rownames_to_column(var = "ID") %>%
@@ -215,7 +215,7 @@ gglink_heatmaps <- function(
                       Type = factor(Type, levels = unique(Type), ordered = T),
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)) %>%
-        na.omit() %>%
+        stats::na.omit() %>%
         dplyr::mutate(p_signif = case_when(
           Pvalue > 0.05 ~ "",
           Pvalue > 0.01 & Pvalue < 0.05 ~ "*",
@@ -255,7 +255,7 @@ gglink_heatmaps <- function(
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)
         ) %>%
-        na.omit()
+        stats::na.omit()
 
       cor_self_p <- cor_self_p %>%
         tibble::rownames_to_column(var = "ID") %>%
@@ -266,7 +266,7 @@ gglink_heatmaps <- function(
                       Type = factor(Type, levels = rev(unique(Type)), ordered = T),
                       ID2 = as.numeric(ID),
                       Type2 = as.numeric(Type)) %>%
-        na.omit() %>%
+        stats::na.omit() %>%
         dplyr::mutate(p_signif = case_when(
           Pvalue > 0.05 ~ "",
           Pvalue > 0.01 & Pvalue < 0.05 ~ "*",

@@ -68,7 +68,7 @@ ggNetView <- function(graph_obj,
                       idx = NULL,
                       shrink = 1,
                       split = 1,
-                      group.by = "Modularity",
+                      group.by = NULL,
                       label = F,
                       nodelabsize = 5,
                       labelsize = 10,
@@ -81,7 +81,7 @@ ggNetView <- function(graph_obj,
                       outerwidth = 1.25,
                       outerlinetype = 2,
                       outeralpha = 0.5,
-                      orientation = c("up","down","left","right"),
+                      orientation = "up",
                       angle = 0 # 在 orientation 基础上的微调（弧度）
                       ){
 
@@ -102,316 +102,372 @@ ggNetView <- function(graph_obj,
                    orientation = orientation,
                    angle = angle)
   }
-  # 获取布局
 
-
-  # 圆形布局 添加模块化 获取模块
-  ly1_1 <- module_layout(graph_obj,
-                         layout = ly1,
-                         center = center,
-                         idx = idx,
-                         shrink = shrink,
-                         split = split)
-
-  # module info
-  module_info <- levels(ly1_1$graph_ly_final$Modularity)
-  module_info <- module_info[module_info!="Others"]
-
-  # 可视化结果
-  if (isFALSE(remove)) {
-    ly1_1 <- ly1_1
-  }else{
-
-    ly1_1[["graph_ly_final"]] <- ly1_1[["graph_ly_final"]] %>%
-      dplyr::filter(as.character(Modularity) %in% module_info)
-
-    ly1_1[["graph_obj"]] <- ly1_1[["graph_obj"]] %>%
-      tidygraph::filter(name %in% ly1_1[["graph_ly_final"]]$name)
-
-
-    ly1_1[["layout"]] <- dplyr::select(ly1_1[["graph_ly_final"]], x, y)
-  }
-
-  # label = F add_outer = F
-  if (isFALSE(label) & isFALSE(add_outer)) {
-
-    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                        name = group.by) +
-      ggplot2::coord_equal(clip = "off") +
-      ggplot2::theme_void() +
-      ggplot2::theme(
-        aspect.ratio = 1,
-        plot.margin = margin(1,1,1,1,"cm")
-      )
-  }
-
-  # label = T add_outer = F
-  if (isTRUE(label) & isFALSE(add_outer)) {
-
-    # compute label location
-    xr <- range(ly1_1[["layout"]]$x)
-    yr <- range(ly1_1[["layout"]]$y)
-    x_mid <- median(ly1_1[["layout"]]$x)
-    dx <- diff(xr) * 0.12
-    pad <- dx * 1.2
-
-    # lab df
-    lab_df <- ly1_1[["graph_ly_final"]] %>%
-      dplyr::distinct(modularity3, .keep_all = T) %>%
-      dplyr::filter(modularity3 != "Others") %>%
-      dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
-      dplyr::group_by(side) %>%
-      dplyr::arrange(y, .by_group = TRUE) %>%
-      dplyr::mutate(
-        y_rank   = row_number(),
-        y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
-        x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
-        nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
-        nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
-        hjust    = dplyr::if_else(side == "left", 1, 0)
-      ) %>%
-      dplyr::ungroup()
-
-    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
-      ggrepel::geom_text_repel(data = lab_df,
-                               mapping = aes(x = x,
-                                             y = y,
-                                             label = paste0("Module", modularity3),
-                                             color = .data[[group.by]]),
-                               size = labelsize,
-                               nudge_x = lab_df$nudge_x,
-                               nudge_y = lab_df$nudge_y,
-                               hjust   = lab_df$hjust,
-                               min.segment.length = 0,
-                               segment.size = labelsegmentsize,
-                               segment.alpha = labelsegmentalpha,
-                               max.overlaps = Inf,
-                               box.padding = 0.15,
-                               point.padding = 0.15,
-                               force = 0.05,
-                               show.legend = F
-                                 ) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                                 name = group.by) +
-      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                             '#bdbdbd',
-                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                             '#ffff99','#b15928'),
-                                 name = group.by) +
-      ggplot2::coord_equal(clip = "off",
-                           xlim = c(xr[1] - pad, xr[2] + pad),
-                           ylim = yr) +
-      ggplot2::theme_void() +
-      ggplot2::theme(
-        aspect.ratio = 0.8,
-        plot.margin = margin(1,1,1,1,"cm")
-      )
-  }
-
-  # label = F add_outer = T
-  if (isFALSE(label) & isTRUE(add_outer)) {
-
-    maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
-                              clusters=ly1_1[["graph_obj"]] %>%
-                                tidygraph::activate(nodes) %>%
-                                tidygraph::as_tibble() %>%
-                                dplyr::pull(modularity3))
-
-    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                        name = group.by) +
-      ggnewscale::new_scale_fill() +
-      ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
-                   mapping = aes(x = x, y = y, group=group, fill = group, color = group),
-                   linewidth = outerwidth,
-                   linetype = outerlinetype,
-                   alpha = outeralpha,
-                   show.legend = F) +
-      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                             '#bdbdbd',
-                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                             '#ffff99','#b15928'),
-                         name = group.by) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                        name = group.by) +
-
-      ggplot2::coord_equal(clip = "off") +
-      ggplot2::theme_void() +
-      ggplot2::theme(
-        aspect.ratio = 1,
-        plot.margin = margin(1,1,1,1,"cm")
-      )
-  }
-
-  # label = T add_outer = T
-  if (isTRUE(label) & isTRUE(add_outer)) {
-
-    # compute label location
-    xr <- range(ly1_1[["layout"]]$x)
-    yr <- range(ly1_1[["layout"]]$y)
-    x_mid <- median(ly1_1[["layout"]]$x)
-    dx <- diff(xr) * 0.12
-    pad <- dx * 1.2
-
-    # lab df
-    lab_df <- ly1_1[["graph_ly_final"]] %>%
-      dplyr::distinct(modularity3, .keep_all = T) %>%
-      dplyr::filter(modularity3 != "Others") %>%
-      dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
-      dplyr::group_by(side) %>%
-      dplyr::arrange(y, .by_group = TRUE) %>%
-      dplyr::mutate(
-        y_rank   = row_number(),
-        y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
-        x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
-        nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
-        nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
-        hjust    = dplyr::if_else(side == "left", 1, 0)
-      ) %>%
-      dplyr::ungroup()
-
-    maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
-                                         clusters=ly1_1[["graph_obj"]] %>%
-                                           tidygraph::activate(nodes) %>%
-                                           tidygraph::as_tibble() %>%
-                                           dplyr::pull(modularity3))
-
-    p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
-      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
-      ggrepel::geom_text_repel(data = lab_df,
-                               mapping = aes(x = x,
-                                             y = y,
-                                             label = paste0("Module", modularity3),
-                                             color = modularity2),
-                               size = labelsize,
-                               nudge_x = lab_df$nudge_x,
-                               nudge_y = lab_df$nudge_y,
-                               hjust   = lab_df$hjust,
-                               min.segment.length = 0,
-                               segment.size = labelsegmentsize,
-                               segment.alpha = labelsegmentalpha,
-                               max.overlaps = Inf,
-                               box.padding = 0.15,
-                               point.padding = 0.15,
-                               force = 0.05,
-                               show.legend = F
-      ) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                                 name = group.by) +
-      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                             '#bdbdbd',
-                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                             '#ffff99','#b15928'),
-                                  name = group.by) +
-      ggnewscale::new_scale_fill() +
-      ggnewscale::new_scale_color() +
-      ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
-                            mapping = aes(x = x, y = y, group=group, fill = group, color = group),
-                            linewidth = outerwidth,
-                            linetype = outerlinetype,
-                            alpha = outeralpha,
-                            show.legend = F) +
-      ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                             '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                             '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                             '#bdbdbd',
-                                             '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                             '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                             '#ffff99','#b15928'),
-                                  name = group.by) +
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                                 name = group.by) +
-      ggplot2::coord_equal(clip = "off",
-                           xlim = c(xr[1] - pad, xr[2] + pad),
-                           ylim = yr) +
-      ggplot2::theme_void() +
-      ggplot2::theme(
-        aspect.ratio = 0.8,
-        plot.margin = margin(1,1,1,1,"cm")
-      )
-  }
-
-  if (func_name == "create_layout_rings") {
-    p1_1 <- ggraph::ggraph(ly1)  +
-      ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
-      ggraph::geom_node_point(aes(fill = group, size = Degree), shape = 21) +
+  if (layout == "dendrogram") {
+    p1_1 <- ggraph::ggraph(graph_obj,layout = layout, circular = TRUE) +
+      ggraph::geom_edge_diagonal(aes(color = node1.node), alpha=1/3) +
+      ggraph::geom_node_point(aes(size=node_size, color=type),alpha=1/3) +
+      #
+      ggplot2::scale_size(range = c(3,15)) +
       ggraph::geom_node_text(
-        aes(x = 1.1 * x,
-            y = 1.1 * y,
-            label = name,
-            angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
-        size = nodelabsize, hjust = 'outward'
+        aes(
+          x = 1.0175 * x,
+          y = 1.0175 * y,
+          label = node,
+          angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90,
+          filter = leaf,
+          color = type
+        ),
+        size = 2, hjust = 'outward'
       ) +
-      ggplot2::scale_shape_manual(values = 20:25) +
-      # scale_edge_color_gradientn(colors = c("#74add1","#abd9e9","#ffffbf","#fdae61","#f46d43"))+
-      ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
-                                            '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
-                                            '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
-                                            '#bdbdbd',
-                                            '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
-                                            '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
-                                            '#ffff99','#b15928'),
-                                 name = "Group") +
-      ggraph::scale_edge_width(range = c(0.1, 1)) +
-      ggplot2::coord_equal(clip = "off") +
+      ggraph::geom_node_text(
+        aes(label=node,
+            filter = !leaf,
+            color = type),
+        fontface="bold",
+        size=3,
+        family="sans"
+      ) +
       ggraph::theme_graph() +
-      ggplot2::theme(
-        plot.title = element_text(hjust = 0.5, family = "bold")
-      )
+      ggplot2::coord_fixed(clip = "off")
 
+    return(p1_1)
+  }
+
+  if (is.null(group.by)) {
+
+    ly <- ggraph::create_layout(graph_obj, layout = layout)
+
+    col_index_start = which(colnames(ly) == "name")
+    col_index_end = which(colnames(ly) == ".ggraph.orig_index")
+    col_index = colnames(ly)[(col_index_start+1) : (col_index_end -1)]
+
+    # 然后开始可视化
+    p1_1 <- ggraph::ggraph(ly, layout = "manual", x = ly[["x"]], y = ly[["y"]]) +
+      ggraph::geom_edge_link(color = "#6baed6") +
+      scatterpie::geom_scatterpie(
+        data = ly,
+        cols = col_index,
+        colour = "#000000",
+        pie_scale = 2
+      ) +
+      ggplot2::scale_fill_manual(values = c('#66c2a5','#fc8d62','#a6d854','#e78ac3')) +
+      ggplot2::coord_fixed() +
+      ggraph::theme_graph()
+
+    return(p1_1)
+  }
+
+  # 只有当我们需要模块的时候，我们才要获取模块的布局
+  if (isTRUE(group.by == "Modularity")) {
+    # 圆形布局 添加模块化 获取模块
+    ly1_1 <- module_layout(graph_obj,
+                           layout = ly1,
+                           center = center,
+                           idx = idx,
+                           shrink = shrink,
+                           split = split)
+
+    # module info
+    module_info <- levels(ly1_1$graph_ly_final$Modularity)
+    module_info <- module_info[module_info!="Others"]
+
+    # 可视化结果
+    if (isFALSE(remove)) {
+      ly1_1 <- ly1_1
+    }else{
+
+      ly1_1[["graph_ly_final"]] <- ly1_1[["graph_ly_final"]] %>%
+        dplyr::filter(as.character(Modularity) %in% module_info)
+
+      ly1_1[["graph_obj"]] <- ly1_1[["graph_obj"]] %>%
+        tidygraph::filter(name %in% ly1_1[["graph_ly_final"]]$name)
+
+
+      ly1_1[["layout"]] <- dplyr::select(ly1_1[["graph_ly_final"]], x, y)
+    }
+
+    # label = F add_outer = F
+    if (isFALSE(label) & isFALSE(add_outer)) {
+
+      p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+        ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+        ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+        ggplot2::coord_equal(clip = "off") +
+        ggplot2::theme_void() +
+        ggplot2::theme(
+          aspect.ratio = 1,
+          plot.margin = margin(1,1,1,1,"cm")
+        )
+    }
+
+    # label = T add_outer = F
+    if (isTRUE(label) & isFALSE(add_outer)) {
+
+      # compute label location
+      xr <- range(ly1_1[["layout"]]$x)
+      yr <- range(ly1_1[["layout"]]$y)
+      x_mid <- stats::median(ly1_1[["layout"]]$x)
+      dx <- diff(xr) * 0.12
+      pad <- dx * 1.2
+
+      # lab df
+      lab_df <- ly1_1[["graph_ly_final"]] %>%
+        dplyr::distinct(modularity3, .keep_all = T) %>%
+        dplyr::filter(modularity3 != "Others") %>%
+        dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
+        dplyr::group_by(side) %>%
+        dplyr::arrange(y, .by_group = TRUE) %>%
+        dplyr::mutate(
+          y_rank   = row_number(),
+          y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
+          x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
+          nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
+          nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
+          hjust    = dplyr::if_else(side == "left", 1, 0)
+        ) %>%
+        dplyr::ungroup()
+
+      p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+        ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+        ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
+        ggrepel::geom_text_repel(data = lab_df,
+                                 mapping = aes(x = x,
+                                               y = y,
+                                               label = paste0("Module", modularity3),
+                                               color = .data[[group.by]]),
+                                 size = labelsize,
+                                 nudge_x = lab_df$nudge_x,
+                                 nudge_y = lab_df$nudge_y,
+                                 hjust   = lab_df$hjust,
+                                 min.segment.length = 0,
+                                 segment.size = labelsegmentsize,
+                                 segment.alpha = labelsegmentalpha,
+                                 max.overlaps = Inf,
+                                 box.padding = 0.15,
+                                 point.padding = 0.15,
+                                 force = 0.05,
+                                 show.legend = F
+        ) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+        ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                               '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                               '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                               '#bdbdbd',
+                                               '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                               '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                               '#ffff99','#b15928'),
+                                    name = group.by) +
+        ggplot2::coord_equal(clip = "off",
+                             xlim = c(xr[1] - pad, xr[2] + pad),
+                             ylim = yr) +
+        ggplot2::theme_void() +
+        ggplot2::theme(
+          aspect.ratio = 0.8,
+          plot.margin = margin(1,1,1,1,"cm")
+        )
+    }
+
+    # label = F add_outer = T
+    if (isFALSE(label) & isTRUE(add_outer)) {
+
+      maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
+                                           clusters=ly1_1[["graph_obj"]] %>%
+                                             tidygraph::activate(nodes) %>%
+                                             tidygraph::as_tibble() %>%
+                                             dplyr::pull(modularity3))
+
+      p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+        ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+        ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+        ggnewscale::new_scale_fill() +
+        ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
+                              mapping = aes(x = x, y = y, group=group, fill = group, color = group),
+                              linewidth = outerwidth,
+                              linetype = outerlinetype,
+                              alpha = outeralpha,
+                              show.legend = F) +
+        ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                               '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                               '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                               '#bdbdbd',
+                                               '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                               '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                               '#ffff99','#b15928'),
+                                    name = group.by) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+
+        ggplot2::coord_equal(clip = "off") +
+        ggplot2::theme_void() +
+        ggplot2::theme(
+          aspect.ratio = 1,
+          plot.margin = margin(1,1,1,1,"cm")
+        )
+    }
+
+    # label = T add_outer = T
+    if (isTRUE(label) & isTRUE(add_outer)) {
+
+      # compute label location
+      xr <- range(ly1_1[["layout"]]$x)
+      yr <- range(ly1_1[["layout"]]$y)
+      x_mid <- stats::median(ly1_1[["layout"]]$x)
+      dx <- diff(xr) * 0.12
+      pad <- dx * 1.2
+
+      # lab df
+      lab_df <- ly1_1[["graph_ly_final"]] %>%
+        dplyr::distinct(modularity3, .keep_all = T) %>%
+        dplyr::filter(modularity3 != "Others") %>%
+        dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
+        dplyr::group_by(side) %>%
+        dplyr::arrange(y, .by_group = TRUE) %>%
+        dplyr::mutate(
+          y_rank   = row_number(),
+          y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
+          x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
+          nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
+          nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
+          hjust    = dplyr::if_else(side == "left", 1, 0)
+        ) %>%
+        dplyr::ungroup()
+
+      maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
+                                           clusters=ly1_1[["graph_obj"]] %>%
+                                             tidygraph::activate(nodes) %>%
+                                             tidygraph::as_tibble() %>%
+                                             dplyr::pull(modularity3))
+
+      p1_1 <- ggraph::ggraph(ly1_1[["graph_obj"]], layout = "manual", x = ly1_1[["layout"]]$x, y = ly1_1[["layout"]]$y) +
+        ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+        ggraph::geom_node_point(aes(fill = .data[[group.by]], size = Degree), alpha = 0.9, shape = 21) +
+        ggrepel::geom_text_repel(data = lab_df,
+                                 mapping = aes(x = x,
+                                               y = y,
+                                               label = paste0("Module", modularity3),
+                                               color = modularity2),
+                                 size = labelsize,
+                                 nudge_x = lab_df$nudge_x,
+                                 nudge_y = lab_df$nudge_y,
+                                 hjust   = lab_df$hjust,
+                                 min.segment.length = 0,
+                                 segment.size = labelsegmentsize,
+                                 segment.alpha = labelsegmentalpha,
+                                 max.overlaps = Inf,
+                                 box.padding = 0.15,
+                                 point.padding = 0.15,
+                                 force = 0.05,
+                                 show.legend = F
+        ) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+        ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                               '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                               '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                               '#bdbdbd',
+                                               '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                               '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                               '#ffff99','#b15928'),
+                                    name = group.by) +
+        ggnewscale::new_scale_fill() +
+        ggnewscale::new_scale_color() +
+        ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
+                              mapping = aes(x = x, y = y, group=group, fill = group, color = group),
+                              linewidth = outerwidth,
+                              linetype = outerlinetype,
+                              alpha = outeralpha,
+                              show.legend = F) +
+        ggplot2::scale_color_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                               '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                               '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                               '#bdbdbd',
+                                               '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                               '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                               '#ffff99','#b15928'),
+                                    name = group.by) +
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = group.by) +
+        ggplot2::coord_equal(clip = "off",
+                             xlim = c(xr[1] - pad, xr[2] + pad),
+                             ylim = yr) +
+        ggplot2::theme_void() +
+        ggplot2::theme(
+          aspect.ratio = 0.8,
+          plot.margin = margin(1,1,1,1,"cm")
+        )
+    }
+
+    if (func_name == "create_layout_rings") {
+      p1_1 <- ggraph::ggraph(ly1)  +
+        ggraph::geom_edge_link(alpha = linealpha, colour = linecolor) +
+        ggraph::geom_node_point(aes(fill = group, size = Degree), shape = 21) +
+        ggraph::geom_node_text(
+          aes(x = 1.1 * x,
+              y = 1.1 * y,
+              label = name,
+              angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
+          size = nodelabsize, hjust = 'outward'
+        ) +
+        ggplot2::scale_shape_manual(values = 20:25) +
+        # scale_edge_color_gradientn(colors = c("#74add1","#abd9e9","#ffffbf","#fdae61","#f46d43"))+
+        ggplot2::scale_fill_manual(values = c('#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3',
+                                              '#fdb462','#b3de69','#fccde5','#cab2d6','#bc80bd',
+                                              '#ccebc5','#ffed6f','#a6cee3','#b2df8a', '#fb9a99',
+                                              '#bdbdbd',
+                                              '#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99',
+                                              '#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a',
+                                              '#ffff99','#b15928'),
+                                   name = "Group") +
+        ggraph::scale_edge_width(range = c(0.1, 1)) +
+        ggplot2::coord_equal(clip = "off") +
+        ggraph::theme_graph() +
+        ggplot2::theme(
+          plot.title = element_text(hjust = 0.5, family = "bold")
+        )
+
+    }
   }
 
   return(p1_1)

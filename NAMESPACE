@@ -2,7 +2,9 @@
 
 export("%>%")
 export(build_graph_from_df)
+export(build_graph_from_enrichGO)
 export(build_graph_from_mat)
+export(build_graph_from_pie)
 export(build_graph_from_wgcna)
 export(get_network_topology)
 export(ggNetView)
