@@ -28,8 +28,6 @@
 #'   "up","down","left","right"
 #' @param angle Integer  (default = 0).
 #'  change  orientation angle
-#' @param split Numeric (default = 1).
-#'   split factor applied to the center points.
 #' @param linealpha Integer  (default = 0.25).
 #'  change  line alpha
 #' @param linecolor   Character  (default = "grey70").
@@ -54,6 +52,12 @@
 #' change variable for group
 #' @param remove   Logical (default = FALSE).
 #' delect nodes that are not modules
+#' @param arrange_by_radius Logical (default = TRUE).
+#' layout Module in, and Others out is TRUE
+#' layout Module random is FALSE
+#' @param push_others_out Logical (default = TRUE).
+#' push Others out is TRUE
+#' push Others random is TRUE
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -61,13 +65,14 @@
 #' @examples NULL
 ggNetView <- function(graph_obj,
                       layout = NULL,
+                      arrange_by_radius = TRUE,
+                      push_others_out   = TRUE,
                       node_add = 7,
                       ring_n = NULL,
                       r = 1,
                       center = T,
                       idx = NULL,
                       shrink = 1,
-                      split = 1,
                       group.by = NULL,
                       label = F,
                       nodelabsize = 5,
@@ -105,9 +110,10 @@ ggNetView <- function(graph_obj,
 
   if (layout == "dendrogram") {
     p1_1 <- ggraph::ggraph(graph_obj,layout = layout, circular = TRUE) +
-      ggraph::geom_edge_diagonal(aes(color = node1.node), alpha=1/3) +
-      ggraph::geom_node_point(aes(size=node_size, color=type),alpha=1/3) +
-      #
+      ggraph::geom_node_point(ggplot2::aes(size=node_size, color=type),alpha=1/3) +
+      ggraph::geom_edge_diagonal(ggplot2::aes(color = node1.node), alpha=1/3) +
+      ggraph::scale_edge_color_manual(values = c('#66c2a5','#fc8d62','#a6d854','#e78ac3')) +
+      ggplot2::scale_color_manual(values = c('#66c2a5','#fc8d62','#a6d854','#e78ac3')) +
       ggplot2::scale_size(range = c(3,15)) +
       ggraph::geom_node_text(
         aes(
@@ -159,14 +165,26 @@ ggNetView <- function(graph_obj,
   }
 
   # 只有当我们需要模块的时候，我们才要获取模块的布局
-  if (isTRUE(group.by == "Modularity")) {
+  # 并且只有模块化之后，我们才有必要去remove无模块的节点
+  if (!is.null(group.by)) {
     # 圆形布局 添加模块化 获取模块
     ly1_1 <- module_layout(graph_obj,
                            layout = ly1,
                            center = center,
                            idx = idx,
-                           shrink = shrink,
-                           split = split)
+                           shrink = shrink
+                           )
+
+    # ly1_1 <- module_layout2(graph_obj,
+    #                         layout = ly1,
+    #                         center = center,
+    #                         idx = idx,
+    #                         shrink = shrink,
+    #                         arrange_by_radius = arrange_by_radius,
+    #                         push_others_out   = push_others_out,
+    # )
+
+
 
     # module info
     module_info <- levels(ly1_1$graph_ly_final$Modularity)

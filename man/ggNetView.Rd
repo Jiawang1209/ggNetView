@@ -7,13 +7,14 @@
 ggNetView(
   graph_obj,
   layout = NULL,
+  arrange_by_radius = TRUE,
+  push_others_out = TRUE,
   node_add = 7,
   ring_n = NULL,
   r = 1,
   center = T,
   idx = NULL,
   shrink = 1,
-  split = 1,
   group.by = NULL,
   label = F,
   nodelabsize = 5,
@@ -42,6 +43,14 @@ custom layouts; one of
 "star", "star_concentric","rectangle,
 "rightiso_layers"}
 
+\item{arrange_by_radius}{Logical (default = TRUE).
+layout Module in, and Others out is TRUE
+layout Module random is FALSE}
+
+\item{push_others_out}{Logical (default = TRUE).
+push Others out is TRUE
+push Others random is TRUE}
+
 \item{node_add}{Integer (default = 7).
 Number of nodes to add in each layer of the layout.}
 
@@ -59,9 +68,6 @@ Index of nodes to be emphasized or centered in the layout}
 
 \item{shrink}{Numeric (default = 1).
 Shrinkage factor applied to the center points.}
-
-\item{split}{Numeric (default = 1).
-split factor applied to the center points.}
 
 \item{group.by}{Character   (default = "Modularity").
 change variable for group}
