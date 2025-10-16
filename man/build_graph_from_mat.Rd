@@ -2,18 +2,20 @@
 % Please edit documentation in R/build_graph_from_mat.R
 \name{build_graph_from_mat}
 \alias{build_graph_from_mat}
-\title{Build a graph object from raw matrix for correlation analysis}
+\title{Build a correlation-based network from a matrix}
 \usage{
 build_graph_from_mat(
   mat,
+  transfrom.method = c("none", "scale", "center", "log2", "log10", "ln", "rrarefy",
+    "rrarefy_relative"),
   r.threshold = 0.7,
   p.threshold = 0.05,
   method = c("WGCNA", "SpiecEasi", "SPARCC"),
   cor.method = c("pearson", "kendall", "spearman"),
-  SpiecEasi.method = c("mb", "glasso"),
   proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
     "TSBH"),
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
+  SpiecEasi.method = c("mb", "glasso"),
   node_annotation = NULL,
   top_modules = 15,
   seed = 1115
@@ -21,43 +23,62 @@ build_graph_from_mat(
 }
 \arguments{
 \item{mat}{Numeric matrix.
-A matrix with variables in columns; pairwise correlations are computed.}
+A numeric matrix with samples in rows and variables in columns.}
+
+\item{transfrom.method}{Character.
+Data transformation methods applied before correlation analysis.
+Options include:
+"none" (raw data),
+"scale" (z-score standardization),
+"center" (mean centering only),
+"log2" (log2 transfrom),
+"log10" (log10 transfrom),
+"ln" (natural transfrom ),
+"rrarefy" (random rarefaction using \code{vegan::rrarefy}),
+"rrarefy_relative" (rarefy then convert to relative abundance).}
 
 \item{r.threshold}{Numeric.
 Correlation coefficient threshold; edges are kept only if |r| >= r.threshold.}
 
-\item{p.threshold}{Numeric.
-Significance threshold for correlations; edges are kept only if p < p.threshold.}
+\item{p.threshold}{Significance threshold for correlations; edges are kept only if p < p.threshold.}
 
-\item{method}{Charecter.
-Relationship analysis methods contains "WGCNA", "SpiecEasi", "SPARCC"}
+\item{method}{Character.
+Relationship analysis methods.
+Options include: "WGCNA", "SpiecEasi", and "SPARCC".}
 
-\item{cor.method}{Charecter.
-Correlation analysis methods contains "pearson", "kendall", "spearman"}
+\item{cor.method}{Character.
+Correlation analysis method.
+Options include "pearson", "kendall", and "spearman".}
 
-\item{SpiecEasi.method}{Charecter.
-SpiecEasi methods contains "mb", "glasso"}
+\item{proc}{Character.
+Correlation p-value adjustment methods.
+Options include:
+"Bonferroni", "Holm", "Hochberg", "
+SidakSS", "SidakSD","BH",
+"BY", "ABH", and "TSBH".}
 
-\item{proc}{Corelation adjust pvalue methods contains "Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"}
+\item{module.method}{Character.
+Network community detection (module identification) method.
+Options include "Fast_greedy", "Walktrap", "Edge_betweenness", and "Spinglass".}
 
-\item{module.method}{Character
-Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"}
+\item{SpiecEasi.method}{Character.
+Method used in \code{SpiecEasi} network inference; options include "mb" and "glasso".}
 
-\item{node_annotation}{Data Frame
-The annotation file of nodes in network}
+\item{node_annotation}{Data frame.
+Optional node annotation table, containing metadata such as taxonomy or functional categories.}
 
 \item{top_modules}{Integer.
-Number of top-ranked modules to retain}
+Number of top-ranked modules to retain for downstream visualization or analysis.}
 
-\item{seed}{Integer.
+\item{seed}{Integer (default = 1115).
 Random seed for reproducibility; if `NULL`, no seed is set.}
 }
 \value{
-An graph object representing the correlation network.
+A graph object representing the correlation-based microbial network.
 Node/edge attributes include correlation statistics and (optionally) module labels.
 }
 \description{
-Build a graph object from raw matrix for correlation analysis
+Build a correlation-based network from a matrix
 }
 \examples{
 NULL

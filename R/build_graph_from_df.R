@@ -81,10 +81,11 @@ build_graph_from_df <- function(df,
                       modularity2 = factor(modularity2),
                       modularity3 = as.character(modularity2),
                       Modularity = modularity2,
+                      Degree = tidygraph::centrality_degree(mode = "out"),
                       Segree = tidygraph::centrality_degree(mode = "out"),
                       Strength = tidygraph::centrality_degree(weights = weight)
     ) %>%
-    tidygraph::arrange(modularity2, desc(degree))
+    tidygraph::arrange(modularity2, desc(Degree))
 
   return(graph_obj)
 }

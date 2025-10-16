@@ -27,10 +27,12 @@ get_neighbors <- function(ly,
     self_ids <- which(abs(ly$x - fx) <= tol & abs(ly$y - fy) <= tol)
     idx_used <- if (length(self_ids) == 1) self_ids else NA_integer_
   } else {
+    # 如果 coord 是空的
     # 如果id 不是空的
     if (is.null(idx)) idx <- sample.int(n, 1)
     stopifnot(idx >= 1, idx <= n)
-    fx <- ly$x[idx]; fy <- ly$y[idx]
+    fx <- ly$x[idx]
+    fy <- ly$y[idx]
     self_ids <- idx
     idx_used <- idx
   }
@@ -101,10 +103,6 @@ module_layout <- function(graph_obj,
     df
   }
 
-  # --- 代表半径：用模块当前坐标的平均半径（也可换成 median 或 max）---
-  rep_radius <- function(df){
-    mean(sqrt(df$x^2 + df$y^2))
-  }
 
   # 1) 取节点数据
   node_df <- graph_obj %>%
@@ -141,8 +139,6 @@ module_layout <- function(graph_obj,
 
   neighbors_list <- list()
 
-  # --- 关键：维护“上一圈目标半径” ---
-  prev_target_r <- NULL
 
   # 7) 逐模块分配
   for (i in 1:nrow(node_df_sorted_number)) {

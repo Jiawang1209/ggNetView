@@ -7,8 +7,6 @@
 ggNetView(
   graph_obj,
   layout = NULL,
-  arrange_by_radius = TRUE,
-  push_others_out = TRUE,
   node_add = 7,
   ring_n = NULL,
   r = 1,
@@ -42,14 +40,6 @@ custom layouts; one of
 "petal2", "heart_centered","diamond",
 "star", "star_concentric","rectangle,
 "rightiso_layers"}
-
-\item{arrange_by_radius}{Logical (default = TRUE).
-layout Module in, and Others out is TRUE
-layout Module random is FALSE}
-
-\item{push_others_out}{Logical (default = TRUE).
-push Others out is TRUE
-push Others random is TRUE}
 
 \item{node_add}{Integer (default = 7).
 Number of nodes to add in each layer of the layout.}

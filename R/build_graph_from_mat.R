@@ -1,46 +1,78 @@
-#' Build a graph object from raw matrix for correlation analysis
+#' Build a correlation-based network from a matrix
 #'
-#' @param mat Numeric matrix.
-#' A matrix with variables in columns; pairwise correlations are computed.
+#' @param mat  Numeric matrix.
+#' A numeric matrix with samples in rows and variables in columns.
+#'
+#' @param transfrom.method Character.
+#'Data transformation methods applied before correlation analysis.
+#' Options include:
+#' "none" (raw data),
+#' "scale" (z-score standardization),
+#' "center" (mean centering only),
+#' "log2" (log2 transfrom),
+#' "log10" (log10 transfrom),
+#' "ln" (natural transfrom ),
+#' "rrarefy" (random rarefaction using \code{vegan::rrarefy}),
+#' "rrarefy_relative" (rarefy then convert to relative abundance).
+#'
 #' @param r.threshold Numeric.
 #' Correlation coefficient threshold; edges are kept only if |r| >= r.threshold.
-#' @param p.threshold Numeric.
-#' Significance threshold for correlations; edges are kept only if p < p.threshold.
-#' @param top_modules Integer.
-#' Number of top-ranked modules to retain
-#' @param seed Integer.
-#' Random seed for reproducibility; if `NULL`, no seed is set.
-#' @param cor.method Charecter.
-#' Correlation analysis methods contains "pearson", "kendall", "spearman"
-#' @param proc
-#' Corelation adjust pvalue methods contains "Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"
-#' @param module.method Character
-#' Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"
-#' @param node_annotation Data Frame
-#' The annotation file of nodes in network
-#' @param method Charecter.
-#' Relationship analysis methods contains "WGCNA", "SpiecEasi", "SPARCC"
-#' @param SpiecEasi.method Charecter.
-#' SpiecEasi methods contains "mb", "glasso"
 #'
-#' @returns An graph object representing the correlation network.
+#' @param p.threshold
+#' Significance threshold for correlations; edges are kept only if p < p.threshold.
+#'
+#' @param method Character.
+#' Relationship analysis methods.
+#' Options include: "WGCNA", "SpiecEasi", and "SPARCC".
+#'
+#' @param cor.method Character.
+#' Correlation analysis method.
+#' Options include "pearson", "kendall", and "spearman".
+#'
+#' @param proc Character.
+#' Correlation p-value adjustment methods.
+#' Options include:
+#' "Bonferroni", "Holm", "Hochberg", "
+#' SidakSS", "SidakSD","BH",
+#' "BY", "ABH", and "TSBH".
+#'
+#' @param module.method Character.
+#' Network community detection (module identification) method.
+#' Options include "Fast_greedy", "Walktrap", "Edge_betweenness", and "Spinglass".
+#'
+#' @param SpiecEasi.method Character.
+#' Method used in \code{SpiecEasi} network inference; options include "mb" and "glasso".
+#'
+#' @param node_annotation Data frame.
+#' Optional node annotation table, containing metadata such as taxonomy or functional categories.
+#'
+#' @param top_modules Integer.
+#' Number of top-ranked modules to retain for downstream visualization or analysis.
+#'
+#' @param seed Integer (default = 1115).
+#' Random seed for reproducibility; if `NULL`, no seed is set.
+#'
+#' @returns A graph object representing the correlation-based microbial network.
 #' Node/edge attributes include correlation statistics and (optionally) module labels.
+#'
 #'
 #' @export
 #'
 #' @examples NULL
-
 build_graph_from_mat <- function(mat,
+                                 transfrom.method = c("none", "scale", "center", "log2", "log10", "ln", "rrarefy", "rrarefy_relative"),
                                  r.threshold = 0.7,
                                  p.threshold = 0.05,
                                  method = c("WGCNA", "SpiecEasi", "SPARCC"),
                                  cor.method = c("pearson", "kendall", "spearman"),
-                                 SpiecEasi.method = c("mb", "glasso"),
                                  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"),
                                  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
+                                 SpiecEasi.method = c("mb", "glasso"),
                                  node_annotation = NULL,
                                  top_modules = 15,
                                  seed = 1115){
+
+  set.seed(seed)
 
   # argument check
   if (is.data.frame(mat)){
@@ -64,7 +96,7 @@ build_graph_from_mat <- function(mat,
     stop(sprintf("`mat` must contain only colname. The duplicated colname: %s", paste(dup, collapse = ", ")), call. = FALSE)
   }
 
-  module.method <- match.arg(module.method)
+
 
   allowed_proc <- c("Bonferroni","Holm","Hochberg","SidakSS","SidakSD","BH","BY","ABH","TSBH")
   if (is.null(proc) || length(proc) < 1L) {
@@ -98,7 +130,26 @@ build_graph_from_mat <- function(mat,
     }
   }
 
-  set.seed(seed)
+  # argument check
+  transfrom.method <-  match.arg(transfrom.method)
+  module.method <- match.arg(module.method)
+  cor.method <- match.arg(cor.method)
+  proc <- match.arg(proc)
+  module.method <- match.arg(module.method)
+  SpiecEasi.method <- match.arg(SpiecEasi.method)
+
+  # data transfrom
+  mat <- switch (
+    transfrom.method,
+    none = mat,
+    scale = t(scale(t(mat), scale = T, center = T)),
+    center = t(scale(t(mat), scale = F, center = T)),
+    log2 = log2(mat + 1),
+    log10 = log10(mat + 1),
+    ln = log(mat + 1),
+    rrarefy = t(vegan::rrarefy(t(mat), min(colSums(mat)))),
+    rrarefy_relative = t(vegan::rrarefy(t(mat), min(colSums(mat)))) / colSums(t(vegan::rrarefy(t(mat), min(colSums(mat)))))
+  )
 
   # calculate correlation
 

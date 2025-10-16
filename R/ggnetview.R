@@ -52,12 +52,6 @@
 #' change variable for group
 #' @param remove   Logical (default = FALSE).
 #' delect nodes that are not modules
-#' @param arrange_by_radius Logical (default = TRUE).
-#' layout Module in, and Others out is TRUE
-#' layout Module random is FALSE
-#' @param push_others_out Logical (default = TRUE).
-#' push Others out is TRUE
-#' push Others random is TRUE
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -65,8 +59,6 @@
 #' @examples NULL
 ggNetView <- function(graph_obj,
                       layout = NULL,
-                      arrange_by_radius = TRUE,
-                      push_others_out   = TRUE,
                       node_add = 7,
                       ring_n = NULL,
                       r = 1,
@@ -90,9 +82,11 @@ ggNetView <- function(graph_obj,
                       angle = 0 # 在 orientation 基础上的微调（弧度）
                       ){
 
-  # 首先拿到布局函数
+  # find layout function
   func_name <- paste0("create_layout_", layout)
-  lay_func <- utils::getFromNamespace(func_name, "ggNetView")  # 从全局环境找对应函数
+
+  # find layout functions from ggNetView package
+  lay_func <- utils::getFromNamespace(func_name, "ggNetView")
 
   if (func_name == "create_layout_rings") {
     ly1 = lay_func(graph_obj = graph_obj,
