@@ -50,7 +50,7 @@
 #' Number of top-ranked modules to retain for downstream visualization or analysis.
 #'
 #' @param seed Integer (default = 1115).
-#' Random seed for reproducibility; if `NULL`, no seed is set.
+#' Random seed for reproducibility..
 #'
 #' @returns A graph object representing the correlation-based microbial network.
 #' Node/edge attributes include correlation statistics and (optionally) module labels.
@@ -219,6 +219,7 @@ build_graph_from_mat <- function(mat,
   ## set weight
   igraph::E(g)$correlation <- igraph::E(g)$weight
   igraph::E(g)$weight <- abs(igraph::E(g)$weight)
+  igraph::E(g)$corr_direction <- ifelse(igraph::E(g)$correlation > 0, "Positive", "Negative")
 
   # membership
   membership_vec <- switch(

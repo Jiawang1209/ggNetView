@@ -10,24 +10,34 @@ ggNetView(
   node_add = 7,
   ring_n = NULL,
   r = 1,
-  center = T,
+  center = TRUE,
   idx = NULL,
   shrink = 1,
-  group.by = NULL,
-  label = F,
-  nodelabsize = 5,
+  k_nn = 8,
+  push_others_delta = 0,
+  layout.module = c("random", "adjacent"),
+  shape = 21,
+  pointalpha = 1,
+  pointsize = c(1, 10),
+  group.by = "Modularity",
+  jitter = FALSE,
+  jitter_sd = 0.1,
+  mapping_line = FALSE,
+  linealpha = 0.25,
+  linecolor = "grey70",
+  label = FALSE,
   labelsize = 10,
   labelsegmentsize = 1,
   labelsegmentalpha = 1,
-  linealpha = 0.25,
-  linecolor = "grey70",
-  add_outer = F,
-  remove = F,
+  add_outer = FALSE,
   outerwidth = 1.25,
   outerlinetype = 2,
   outeralpha = 0.5,
+  nodelabsize = 5,
+  remove = FALSE,
   orientation = "up",
-  angle = 0
+  angle = 0,
+  seed = 1115
 )
 }
 \arguments{
@@ -35,17 +45,15 @@ ggNetView(
 The network object to be visualized.}
 
 \item{layout}{Character string.
-custom layouts; one of
-"gephi", "square", "square2", "petal",
-"petal2", "heart_centered","diamond",
-"star", "star_concentric","rectangle,
-"rightiso_layers"}
+Custom layouts; one of "gephi", "square", "square2", "petal",
+"petal2", "heart_centered","diamond", "star", "star_concentric","rectangle,
+"rightiso_layers" etc.}
 
 \item{node_add}{Integer (default = 7).
 Number of nodes to add in each layer of the layout.}
 
-\item{ring_n}{Integer  (default = NULL).
-change  ring number in multipy ring layout}
+\item{ring_n}{Numeric (default = 7)
+Numbers of ring in rings layout.}
 
 \item{r}{Numeric (default = 1).
 Radius increment for concentric or layered layouts.}
@@ -59,51 +67,80 @@ Index of nodes to be emphasized or centered in the layout}
 \item{shrink}{Numeric (default = 1).
 Shrinkage factor applied to the center points.}
 
-\item{group.by}{Character   (default = "Modularity").
-change variable for group}
+\item{k_nn}{Numeric (default = 8).
+Number of nearest neighbors used to build the local adjacency graph.}
 
-\item{label}{Logical (default = FALSE).
-Whether to display node labels in the center points}
+\item{push_others_delta}{Numeric (default = 0).
+Radial offset applied to the "Others" module to slightly}
 
-\item{nodelabsize}{Integer  (default = 5).
-change  node label size}
+\item{layout.module}{Character  (default = "random")
+- adjacent : modules are positioned close to each other, minimizing inter-module gaps.}
 
-\item{labelsize}{Integer  (default = 10).
-change  label size}
+\item{shape}{Integer  (default = 21).
+The point shape likely in ggplot2.}
 
-\item{labelsegmentsize}{Integer  (default = 1).
-change  label segment size}
+\item{pointalpha}{Integer  (default = 1).
+The point alpha}
 
-\item{labelsegmentalpha}{Integer  (default = 1).
-change  label segment alpha}
+\item{pointsize}{Vector (default =  c(1,10))
+The point size rang.}
+
+\item{group.by}{Character (default = "Modularity").
+Change variable for group}
+
+\item{jitter}{Logical (default = FALSE).
+Whether to apply jitter to points.}
+
+\item{jitter_sd}{Integer  (default = 0.1).
+The standard deviation of the jitter applied when `jitter = TRUE`.}
+
+\item{mapping_line}{Logical (default = FALSE).
+Whether to mapping line in ggNetView.}
 
 \item{linealpha}{Integer  (default = 0.25).
-change  line alpha}
+Change  line alpha.}
 
 \item{linecolor}{Character  (default = "grey70").
-change  line color}
+Change  line color.}
+
+\item{label}{Logical (default = FALSE).
+Whether to display node labels in the center points.}
+
+\item{labelsize}{Integer  (default = 10).
+Change Module label size.}
+
+\item{labelsegmentsize}{Integer  (default = 1).
+Change  label segment size.}
+
+\item{labelsegmentalpha}{Integer  (default = 1).
+Change  label segment alpha.}
 
 \item{add_outer}{Logical (default = FALSE).
 Whether to add an outer circle/border around the layout.}
 
-\item{remove}{Logical (default = FALSE).
-delect nodes that are not modules}
-
 \item{outerwidth}{Integer  (default = 1.25).
-change  outer linewidth}
+Change  outer linewidth.}
 
 \item{outerlinetype}{Integer  (default = 2).
-change  outer linetype}
+Change  outer linetype.}
 
 \item{outeralpha}{Integer  (default = 0.5).
-change  outer alpha}
+Change  outer alpha.}
+
+\item{nodelabsize}{Integer  (default = 5).
+Change  node label size.}
+
+\item{remove}{Logical (default = FALSE).
+Delect nodes that are not modules.}
 
 \item{orientation}{Character string.
-custom orientation; one of
-"up","down","left","right"}
+Custom orientation; one of "up","down","left","right".}
 
 \item{angle}{Integer  (default = 0).
-change  orientation angle}
+Change  orientation angle.}
+
+\item{seed}{Integer (default = 1115).
+Random seed for reproducibility.}
 }
 \value{
 A ggplot object representing the network visualization.

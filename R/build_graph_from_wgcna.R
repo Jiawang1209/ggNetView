@@ -4,9 +4,9 @@
 #'
 #' @param module Module data frame
 #' @param directed Logical (default: \code{FALSE}).
-#'   Whether edges between nodes are directed.
-#' @param seed Integer, optional.
-#'   Random seed for reproducibility; if \code{NULL}, no seed is set.
+#' Whether edges between nodes are directed.
+#' @param seed nteger (default = 1115).
+#' Random seed for reproducibility.
 #' @param node_annotation Data Frame
 #' The annotation file of nodes in network
 #'
@@ -38,10 +38,10 @@ build_graph_from_wgcna <- function(wgcna_tom,
                         modularity2 = factor(modularity2),
                         modularity3 = as.character(modularity2),
                         Modularity = modularity2,
-                        Segree = tidygraph::centrality_degree(mode = "out"),
+                        Degree = tidygraph::centrality_degree(mode = "out"),
                         Strength = tidygraph::centrality_degree(weights = weight)
       ) %>%
-      tidygraph::arrange(modularity2, desc(degree))
+      tidygraph::arrange(modularity2, desc(Degree))
   }else{
     # 构建ggraph对象
     graph_obj <- tidygraph::as_tbl_graph(g) %>%

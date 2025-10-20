@@ -9,8 +9,8 @@
 #'   Whether edges between nodes are directed.
 #' @param top_modules Integer.
 #'   Number of top-ranked modules to select.
-#' @param seed Integer, optional.
-#'   Random seed for reproducibility; if \code{NULL}, no seed is set.
+#' @param seed Integer (default = 1115).
+#'   Random seed for reproducibility.
 #' @param module.method Character
 #'   Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"
 #' @returns An graph object representing the correlation network.

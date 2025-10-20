@@ -30,8 +30,8 @@ Module analysis methods contains "Fast_greedy", "Walktrap", "Edge_betweenness", 
 \item{top_modules}{Integer.
 Number of top-ranked modules to select.}
 
-\item{seed}{Integer, optional.
-Random seed for reproducibility; if \code{NULL}, no seed is set.}
+\item{seed}{Integer (default = 1115).
+Random seed for reproducibility.}
 }
 \value{
 An graph object representing the correlation network.

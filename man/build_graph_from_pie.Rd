@@ -17,8 +17,8 @@ The annotation file of nodes in network}
 \item{directed}{Logical (default: \code{FALSE}).
 Whether edges between nodes are directed.}
 
-\item{seed}{Integer, optional.
-Random seed for reproducibility; if \code{NULL}, no seed is set.}
+\item{seed}{Integer (default = 1115).
+Random seed for reproducibility.}
 }
 \value{
 An graph object representing the correlation network.
