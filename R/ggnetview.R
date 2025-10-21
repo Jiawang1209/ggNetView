@@ -179,37 +179,44 @@ ggNetView <- function(graph_obj,
                                              ly1_1[["graph_obj"]])
     }
 
-    # compute label location
-    xr <- range(ly1_1[["layout"]]$x)
-    yr <- range(ly1_1[["layout"]]$y)
-    x_mid <- stats::median(ly1_1[["layout"]]$x)
-    dx <- diff(xr) * 0.12
-    pad <- dx * 1.2
+    .build_label_location <- function(){
+      # compute label location
+      xr <<- range(ly1_1[["layout"]]$x)
+      yr <<- range(ly1_1[["layout"]]$y)
+      x_mid <<- stats::median(ly1_1[["layout"]]$x)
+      dx <<- diff(xr) * 0.12
+      pad <<- dx * 1.2
 
-    # label df location
-    lab_df <- ly1_1[["graph_ly_final"]] %>%
-      dplyr::distinct(modularity3, .keep_all = T) %>%
-      dplyr::filter(modularity3 != "Others") %>%
-      dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
-      dplyr::group_by(side) %>%
-      dplyr::arrange(y, .by_group = TRUE) %>%
-      dplyr::mutate(
-        y_rank   = dplyr::row_number(),
-        y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
-        x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
-        nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
-        nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
-        hjust    = dplyr::if_else(side == "left", 1, 0)
-      ) %>%
-      dplyr::ungroup()
+      # label df location
+      lab_df <<- ly1_1[["graph_ly_final"]] %>%
+        dplyr::distinct(modularity3, .keep_all = T) %>%
+        dplyr::filter(modularity3 != "Others") %>%
+        dplyr::mutate(side = ifelse(x < x_mid, "left", "right")) %>%
+        dplyr::group_by(side) %>%
+        dplyr::arrange(y, .by_group = TRUE) %>%
+        dplyr::mutate(
+          y_rank   = dplyr::row_number(),
+          y_target = scales::rescale(y_rank, to = yr),                    # 把 rank 均匀映射到全局 y 范围
+          x_anchor = dplyr::if_else(side == "left", xr[1] - dx, xr[2] + dx),
+          nudge_x  = x_anchor - x,                                # 横向把标签推到两侧锚点
+          nudge_y  = y_target - y,                                # 纵向把标签均匀拉开
+          hjust    = dplyr::if_else(side == "left", 1, 0)
+        ) %>%
+        dplyr::ungroup()
+    }
+
 
     # outlier df location
-    maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
-                                         clusters=ly1_1[["graph_obj"]] %>%
-                                           tidygraph::activate(nodes) %>%
-                                           tidygraph::as_tibble() %>%
-                                           dplyr::pull(modularity3)
-                                         )
+    .build_mask_table <- function(){
+      maskTable <- mascarade::generateMask(dims= ly1_1[["layout"]],
+                              clusters=ly1_1[["graph_obj"]] %>%
+                                tidygraph::activate(nodes) %>%
+                                tidygraph::as_tibble() %>%
+                                dplyr::pull(modularity3)
+      )
+
+      return(maskTable)
+    }
 
     ####----Plot----####
     # base plot
@@ -224,7 +231,11 @@ ggNetView <- function(graph_obj,
                                                      y = from_y,
                                                      yend = to_y),
                               alpha = linealpha,
-                              colour = linecolor)
+                              colour = linecolor) +
+         ggplot2::coord_fixed() +
+         theme_ggnetview() +
+         scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
+
     }else{
       p1_1 <- p1_1 +
         ggplot2::geom_segment(data = ly1_1[["ggplot_data"]][[2]],
@@ -233,7 +244,10 @@ ggNetView <- function(graph_obj,
                                                      y = from_y,
                                                      yend = to_y,
                                                      colour = corr_direction),
-                              alpha = linealpha)
+                              alpha = linealpha) +
+        ggplot2::coord_fixed() +
+        theme_ggnetview() +
+        scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
     }
 
     # point paramers
@@ -243,7 +257,10 @@ ggNetView <- function(graph_obj,
                             mapping = ggplot2::aes(x = x, y = y, fill = .data[[group.by]], size = Degree),
                             shape = shape,
                             alpha = pointalpha) +
-        ggplot2::scale_size(range = pointsize)
+        ggplot2::scale_size(range = pointsize) +
+        ggplot2::coord_fixed() +
+        theme_ggnetview() +
+        scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
     }else{
       p1_1 <- p1_1 +
         ggplot2::geom_jitter(data = ly1_1[["ggplot_data"]][[1]],
@@ -251,21 +268,27 @@ ggNetView <- function(graph_obj,
                              shape = shape,
                              alpha = pointalpha,
                              position = ggplot2::position_jitter(width = jitter_sd, height = jitter_sd, seed = seed)) +
-        ggplot2::scale_size(range = pointsize)
+        ggplot2::scale_size(range = pointsize) +
+        ggplot2::coord_fixed() +
+        theme_ggnetview() +
+        scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
 
     }
 
     # label = F add_outer = F
     if (isFALSE(label) & isFALSE(add_outer)) {
-      p1_1 <- p1_1 +
-        ggplot2::coord_fixed() +
-        theme_ggnetview()
+      p1_1 <- p1_1
+
     }
 
     # label = T add_outer = F
     if (isTRUE(label) & isFALSE(add_outer)) {
 
+      .build_label_location()
+
       p1_1 <- p1_1 +
+        ggnewscale::new_scale_fill() +
+        ggnewscale::new_scale_color() +
         ggrepel::geom_text_repel(data = lab_df,
                                  mapping = ggplot2::aes(x = x,
                                                y = y,
@@ -284,6 +307,8 @@ ggNetView <- function(graph_obj,
                                  force = 0.05,
                                  show.legend = F
         ) +
+        scale_fill_ggnetview(levels(lab_df$Modularity)) +
+        scale_color_ggnetview(levels(lab_df$Modularity)) +
         ggplot2::coord_equal(clip = "off",
                              xlim = c(xr[1] - pad, xr[2] + pad),
                              ylim = yr) +
@@ -293,21 +318,37 @@ ggNetView <- function(graph_obj,
     # label = F add_outer = T
     if (isFALSE(label) & isTRUE(add_outer)) {
 
+      maskTable <- .build_mask_table()
+
+      maskTable <- maskTable %>% dplyr::mutate(cluster = factor(cluster, levels = levels(ly1_1[["graph_ly_final"]]$Modularity), ordered = T))
+
       p1_1 <- p1_1 +
         ggnewscale::new_scale_fill() +
-        ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
-                              mapping = ggplot2::aes(x = x, y = y, group=group, fill = group, color = group),
+        ggnewscale::new_scale_color() +
+        ggplot2::geom_polygon(data=maskTable %>%
+                                dplyr::filter(cluster != "Others"),
+                              mapping = ggplot2::aes(x = x, y = y, group=cluster, fill = cluster, color = cluster),
                               linewidth = outerwidth,
                               linetype = outerlinetype,
                               alpha = outeralpha,
                               show.legend = F) +
+        scale_fill_ggnetview(levels(maskTable$cluster)) +
+        scale_color_ggnetview(levels(maskTable$cluster)) +
         ggplot2::coord_equal(clip = "off") +
         theme_ggnetview()
     }
 
     # label = T add_outer = T
     if (isTRUE(label) & isTRUE(add_outer)) {
+
+      .build_label_location()
+      maskTable <- .build_mask_table()
+
+      maskTable <- maskTable %>% dplyr::mutate(cluster = factor(cluster, levels = levels(ly1_1[["graph_ly_final"]]$Modularity), ordered = T))
+
       p1_1 <- p1_1 +
+        ggnewscale::new_scale_fill() +
+        ggnewscale::new_scale_color() +
         ggrepel::geom_text_repel(data = lab_df,
                                  mapping = ggplot2::aes(x = x,
                                                y = y,
@@ -326,14 +367,18 @@ ggNetView <- function(graph_obj,
                                  force = 0.05,
                                  show.legend = F
         ) +
+        scale_fill_ggnetview(levels(lab_df$Modularity)) +
+        scale_color_ggnetview(levels(lab_df$Modularity)) +
         ggnewscale::new_scale_fill() +
         ggnewscale::new_scale_color() +
-        ggplot2::geom_polygon(data=maskTable %>% dplyr::filter(cluster != "Others"),
-                              mapping = ggplot2::aes(x = x, y = y, group=group, fill = group, color = group),
+        ggplot2::geom_polygon(data= maskTable %>% dplyr::filter(cluster != "Others"),
+                              mapping = ggplot2::aes(x = x, y = y, group=cluster, fill = cluster, color = cluster),
                               linewidth = outerwidth,
                               linetype = outerlinetype,
                               alpha = outeralpha,
                               show.legend = F) +
+        scale_fill_ggnetview(levels(maskTable$cluster)) +
+        scale_color_ggnetview(levels(maskTable$cluster)) +
         ggplot2::coord_equal(clip = "off",
                              xlim = c(xr[1] - pad, xr[2] + pad),
                              ylim = yr) +
