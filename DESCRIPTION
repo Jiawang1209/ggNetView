@@ -7,7 +7,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-6180-8068"))
 Description: More about what it does (maybe more than one line).
     Continuation lines should be indented.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Depends: 
     R (>= 3.5)
 Imports: 
