@@ -3,10 +3,9 @@
 create_layout_rightiso_layers <- function(
     graph_obj,
     node_add = 7,
-    r = 0.2,                                  # 层间尺度步长（直角边长度 L 的增量）
+    r = 0.2,
     orientation = c("up","down","left","right"),
-    angle = 0,                              # 在 orientation 基础上的微调（弧度）
-){
+    angle = 0){
   orientation <- match.arg(orientation)
   base_angle <- switch(orientation,
                        up = 0, right = -pi/2, down = pi, left = pi/2)
