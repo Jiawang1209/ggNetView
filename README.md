@@ -179,3 +179,10 @@ p2
            plot = p2,
            height = 10,
            width = 10)
+
+#### Citation
+
+If you use ggNetView in your research, please cite:
+
+    Yue Liu (2025). ggNetView: An R package for complex biological and ecological network analysis and visualization. R package version 0.1.0. 
+    https://github.com/Jiawang1209/ggNetView
