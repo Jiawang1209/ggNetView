@@ -157,15 +157,29 @@ ggNetView <- function(graph_obj,
       )
     }
 
+    module_number <- ly1_1$graph_ly_final$Modularity %>% as.character() %>% unique() %>% length()
+
     # module info
-    module_info <- levels(ly1_1$graph_ly_final$Modularity)
-    module_info <- module_info[module_info!="Others"]
+    if (module_number == 1) {
+      module_info <-  ly1_1$graph_ly_final$Modularity %>% as.character() %>% unique()
+
+      ly1_1[["graph_ly_final"]] <- ly1_1[["graph_ly_final"]] %>%
+        dplyr::mutate(Modularity = as.character(Modularity)) %>%
+        dplyr::mutate(Modularity = factor(Modularity))
+
+      ly1_1[["graph_obj"]] <- ly1_1[["graph_obj"]] %>%
+        tidygraph::mutate(Modularity = as.character(Modularity)) %>%
+        tidygraph::mutate(Modularity = factor(Modularity, ordered = T))
+
+    }else{
+      module_info <- levels(ly1_1$graph_ly_final$Modularity)
+      module_info <- module_info[module_info!="Others"]
+    }
 
     # remove Others
     if (isFALSE(remove)) {
       ly1_1 <- ly1_1
     }else{
-
       ly1_1[["graph_ly_final"]] <- ly1_1[["graph_ly_final"]] %>%
         dplyr::filter(as.character(Modularity) %in% module_info)
 
@@ -377,8 +391,8 @@ ggNetView <- function(graph_obj,
                               linetype = outerlinetype,
                               alpha = outeralpha,
                               show.legend = F) +
-        scale_fill_ggnetview(levels(maskTable$cluster)) +
-        scale_color_ggnetview(levels(maskTable$cluster)) +
+        scale_fill_ggnetview(levels(maskTable$cluster), na_value = NA) +
+        scale_color_ggnetview(levels(maskTable$cluster), na_value = NA) +
         ggplot2::coord_equal(clip = "off",
                              xlim = c(xr[1] - pad, xr[2] + pad),
                              ylim = yr) +
