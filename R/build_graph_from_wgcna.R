@@ -41,10 +41,11 @@ build_graph_from_wgcna <- function(wgcna_tom,
                         Degree = tidygraph::centrality_degree(mode = "out"),
                         Strength = tidygraph::centrality_degree(weights = weight)
       ) %>%
-      tidygraph::arrange(modularity2, desc(Degree))
+      tidygraph::arrange(Modularity, desc(Degree))
   }else{
     # 构建ggraph对象
-    graph_obj <- tidygraph::as_tbl_graph(g) %>%
+    graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
+      tidygraph::left_join(module, by = c("name" = "ID")) %>%
       tidygraph::mutate(modularity = factor(modularity),
                         modularity2 = factor(modularity2),
                         modularity3 = as.character(modularity2),
