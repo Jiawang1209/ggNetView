@@ -46,7 +46,7 @@ build_graph_from_wgcna <- function(wgcna_tom,
     # 构建ggraph对象
     graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
       tidygraph::left_join(module, by = c("name" = "ID")) %>%
-      tidygraph::mutate(modularity = factor(modularity),
+      tidygraph::mutate(modularity = factor(Module),
                         modularity2 = factor(modularity2),
                         modularity3 = as.character(modularity2),
                         Modularity = modularity2,
