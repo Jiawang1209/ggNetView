@@ -19,12 +19,6 @@ A named character vector where names correspond to
 Generate a named color palette for discrete classes
 }
 \examples{
-classes <- c("A", "B", "C", "Others")
-get_palette(classes)
-
-# Use in ggplot2
-ggplot(df, aes(x, y, color = group)) +
-  geom_point() +
-  scale_color_manual(values = get_palette(df$group))
+NULL
 
 }

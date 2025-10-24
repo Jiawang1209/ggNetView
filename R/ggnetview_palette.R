@@ -7,14 +7,7 @@
 #' @returns A named character vector where names correspond to
 #' @export
 #'
-#' @examples
-#' classes <- c("A", "B", "C", "Others")
-#' get_palette(classes)
-#'
-#' # Use in ggplot2
-#' ggplot(df, aes(x, y, color = group)) +
-#'   geom_point() +
-#'   scale_color_manual(values = get_palette(df$group))
+#' @examples NULL
 #'
 get_palette <- function(classes, others_label = "Others") {
   base_colors <- c(
@@ -55,10 +48,7 @@ get_palette <- function(classes, others_label = "Others") {
 #' @returns A `ggplot2` scale object.
 #' @export
 #'
-#' @examples
-#' ggplot(df, aes(x, y, color = group)) +
-#'   geom_point() +
-#'   scale_color_ggnetview(unique(df$group))
+#' @examples NULL
 #'
 scale_color_ggnetview <- function(classes,
                                   ...,
@@ -81,11 +71,7 @@ scale_color_ggnetview <- function(classes,
 #' @returns A `ggplot2` scale object.
 #' @export
 #'
-#' @examples
-#'  ggplot(df, aes(x, y, color = group)) +
-#'   geom_point() +
-#'   scale_fill_ggnetview(unique(df$group))
-#'
+#' @examples NULL
 scale_fill_ggnetview <- function(classes,
                                  ...,
                                  others_label = "Others",

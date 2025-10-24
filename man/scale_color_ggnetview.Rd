@@ -31,8 +31,6 @@ A `ggplot2` scale object.
 Custom discrete color scale for ggNetView
 }
 \examples{
-ggplot(df, aes(x, y, color = group)) +
-  geom_point() +
-  scale_color_ggnetview(unique(df$group))
+NULL
 
 }
