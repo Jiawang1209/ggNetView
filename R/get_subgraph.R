@@ -1,3 +1,12 @@
+#' Extract subgrah from graph object
+#'
+#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
+#' The network object to be visualized.
+#'
+#' @returns list
+#' @export
+#'
+#' @examples NULL
 get_subgraph <- function(graph_obj){
 
   # get obj

@@ -14,7 +14,7 @@ TOM matrix from WGCNA result}
 matrox to WGCNA analysis}
 }
 \value{
-data frame
+A Data frame contain from, to and weight
 }
 \description{
 Translate TOM matrin to create graph object

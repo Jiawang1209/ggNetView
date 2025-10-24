@@ -6,7 +6,7 @@
 #' @param mat matrix
 #' matrox to WGCNA analysis
 #'
-#' @returns data frame
+#' @returns A Data frame contain from, to and weight
 #' @export
 #'
 #' @examples NULL
