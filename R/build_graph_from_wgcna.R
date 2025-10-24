@@ -34,8 +34,8 @@ build_graph_from_wgcna <- function(wgcna_tom,
   if (is.null(node_annotation)) {
     graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
       tidygraph::left_join(module, by = c("name" = "ID")) %>%
-      tidygraph::mutate(modularity2 = factor(Module),
-                        modularity2 = factor(modularity2),
+      tidygraph::mutate(modularity = factor(Module),
+                        modularity2 = factor(modularity),
                         modularity3 = as.character(modularity2),
                         Modularity = modularity2,
                         Degree = tidygraph::centrality_degree(mode = "out"),
@@ -47,7 +47,7 @@ build_graph_from_wgcna <- function(wgcna_tom,
     graph_obj <- tidygraph::as_tbl_graph(wgcna_tom) %>%
       tidygraph::left_join(module, by = c("name" = "ID")) %>%
       tidygraph::mutate(modularity = factor(Module),
-                        modularity2 = factor(modularity2),
+                        modularity2 = factor(modularity),
                         modularity3 = as.character(modularity2),
                         Modularity = modularity2,
                         Degree = tidygraph::centrality_degree(mode = "out"),
