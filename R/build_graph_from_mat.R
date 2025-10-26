@@ -23,7 +23,7 @@
 #'
 #' @param method Character.
 #' Relationship analysis methods.
-#' Options include: "WGCNA", "SpiecEasi", and "SPARCC".
+#' Options include: "WGCNA", "SpiecEasi", "SPARCC" and "cor".
 #'
 #' @param cor.method Character.
 #' Correlation analysis method.
@@ -63,7 +63,7 @@ build_graph_from_mat <- function(mat,
                                  transfrom.method = c("none", "scale", "center", "log2", "log10", "ln", "rrarefy", "rrarefy_relative"),
                                  r.threshold = 0.7,
                                  p.threshold = 0.05,
-                                 method = c("WGCNA", "SpiecEasi", "SPARCC"),
+                                 method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
                                  cor.method = c("pearson", "kendall", "spearman"),
                                  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD","BH", "BY","ABH","TSBH"),
                                  module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
@@ -209,6 +209,23 @@ build_graph_from_mat <- function(mat,
     g <- igraph::graph_from_adjacency_matrix(SparCC_graph, weighted = TRUE, mode = 'undirected')
   }
 
+  # cor
+  if (method == "cor") {
+    # WGCNA for correlation
+    occor <- psych::corr.test(t(mat), method = cor.method)
+    mtadj <- multtest::mt.rawp2adjp(unlist(occor$p),proc=proc)
+    adpcor <- mtadj$adjp[order(mtadj$index),2]
+    occor.p <- matrix(adpcor, dim(t(mat))[2])
+
+    # R and pvalue
+    occor.r <- occor$r
+    diag(occor.r) <- 0
+    occor.r[occor.p > p.threshold | abs(occor.r) < r.threshold] = 0
+    occor.r[is.na(occor.r)]=0
+
+    # create igraph object
+    g <- igraph::graph_from_adjacency_matrix(occor.r, weighted = TRUE, mode = 'undirected')
+  }
 
   # remove self correlation
   g <- igraph::simplify(g)
