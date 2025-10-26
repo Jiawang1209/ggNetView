@@ -4,7 +4,7 @@
 \alias{trans_TOM_in_WGCNA}
 \title{Translate TOM matrin to create graph object}
 \usage{
-trans_TOM_in_WGCNA(TOM, mat)
+trans_TOM_in_WGCNA(TOM, mat, threshold = NULL)
 }
 \arguments{
 \item{TOM}{matrix
@@ -12,6 +12,9 @@ TOM matrix from WGCNA result}
 
 \item{mat}{matrix
 matrox to WGCNA analysis}
+
+\item{threshold}{numeric
+the threshold in weight}
 }
 \value{
 A Data frame contain from, to and weight
