@@ -17,6 +17,7 @@
 #' @return A list with: chosen_threshold, chosen_reason, tested_thresholds, scores (data.frame),
 #'         unfolded (last-step unfolding), meta (matrix info & params), plots (file paths if saved).
 #'
+#' @export
 #' @examples NULL
 #' # m <- cor(scale(matrix(rnorm(40000), 200, 200)))
 #' # res <- ggNetView_RMT(m, save_plots=TRUE)
