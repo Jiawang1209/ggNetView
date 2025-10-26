@@ -10,7 +10,7 @@ build_graph_from_mat(
     "rrarefy_relative"),
   r.threshold = 0.7,
   p.threshold = 0.05,
-  method = c("WGCNA", "SpiecEasi", "SPARCC"),
+  method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
   cor.method = c("pearson", "kendall", "spearman"),
   proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
     "TSBH"),
@@ -44,7 +44,7 @@ Correlation coefficient threshold; edges are kept only if |r| >= r.threshold.}
 
 \item{method}{Character.
 Relationship analysis methods.
-Options include: "WGCNA", "SpiecEasi", and "SPARCC".}
+Options include: "WGCNA", "SpiecEasi", "SPARCC" and "cor".}
 
 \item{cor.method}{Character.
 Correlation analysis method.

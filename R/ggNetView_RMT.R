@@ -1,6 +1,6 @@
-#' ggNetView_RMT: one-shot, non-interactive RMT threshold scan with auto selection
+#' One-shot, non-interactive RMT threshold scan with auto selection
 #'
-#' @param mat Numeric, symmetric, square matrix (e.g., correlation or weighted adjacency).
+#' @param mat  Numeric, symmetric, square matrix (e.g., correlation or weighted adjacency).
 #' @param nr_thresholds Integer. Number of thresholds to scan (default 51).
 #' @param interval Optional numeric length-2 vector [min, max] for scanning range over |mat| upper triangle (default auto).
 #' @param unfold.method "gaussian" or "spline" (default "gaussian").
@@ -14,19 +14,16 @@
 #' @param out_dir Character. Output directory for plots (default "RMT_plots").
 #' @param verbose Logical. Print progress (default TRUE).
 #'
-#' @return A list with: chosen_threshold, chosen_reason, tested_thresholds, scores (data.frame),
+#' @returns A list with: chosen_threshold, chosen_reason, tested_thresholds, scores (data.frame),
 #'         unfolded (last-step unfolding), meta (matrix info & params), plots (file paths if saved).
-#'
 #' @export
+#'
 #' @examples NULL
+#'
+#'
 #' # m <- cor(scale(matrix(rnorm(40000), 200, 200)))
 #' # res <- ggNetView_RMT(m, save_plots=TRUE)
 #' # res$chosen_threshold
-#'
-#' @importFrom stats density approx ecdf splinefun ks.test quantile loess rnorm runif
-#' @importFrom grDevices png dev.off
-#' @import ggplot2
-#'
 ggNetView_RMT <- function(
     mat,
     nr_thresholds = 51,

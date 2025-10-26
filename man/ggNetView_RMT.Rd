@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggNetView_RMT.R
 \name{ggNetView_RMT}
 \alias{ggNetView_RMT}
-\title{ggNetView_RMT: one-shot, non-interactive RMT threshold scan with auto selection}
+\title{One-shot, non-interactive RMT threshold scan with auto selection}
 \usage{
 ggNetView_RMT(
   mat,
@@ -52,12 +52,13 @@ A list with: chosen_threshold, chosen_reason, tested_thresholds, scores (data.fr
         unfolded (last-step unfolding), meta (matrix info & params), plots (file paths if saved).
 }
 \description{
-ggNetView_RMT: one-shot, non-interactive RMT threshold scan with auto selection
+One-shot, non-interactive RMT threshold scan with auto selection
 }
 \examples{
 NULL
+
+
 # m <- cor(scale(matrix(rnorm(40000), 200, 200)))
 # res <- ggNetView_RMT(m, save_plots=TRUE)
 # res$chosen_threshold
-
 }
