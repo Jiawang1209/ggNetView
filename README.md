@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ggNetView
+# ggNetView <img src="man/figures/logo.png" align="right" width="240" hight="240" />
 
 <!-- badges: start -->
 
