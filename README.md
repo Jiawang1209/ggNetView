@@ -11,6 +11,8 @@ ggNetView is an R package for network analysis and visualization. It
 provides flexible and publication-ready tools for exploring complex
 biological and ecological networks.
 
+</br> </br> </br>
+
 ## Installation
 
 You can install the development version of ggNetView from
