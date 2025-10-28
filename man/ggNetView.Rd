@@ -19,6 +19,7 @@ ggNetView(
   shape = 21,
   pointalpha = 1,
   pointsize = c(1, 10),
+  pointcolor = "#d9d9d9",
   group.by = "Modularity",
   jitter = FALSE,
   jitter_sd = 0.1,
@@ -84,6 +85,8 @@ The point alpha}
 
 \item{pointsize}{Vector (default =  c(1,10))
 The point size rang.}
+
+\item{pointcolor}{Character  (default = "#d9d9d9").}
 
 \item{group.by}{Character (default = "Modularity").
 Change variable for group}

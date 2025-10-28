@@ -54,6 +54,9 @@ ggNetView_RMT <- function(
   sprs <- signif(sum(mat == 0) / (N * N), 4)
   if (verbose) message(sprintf("[Info] #non-zeros: %d | Sparseness: %.4f", nz0, sprs))
 
+
+  ## ---------- compute ---------
+
   ## ---------- threshold range ----------
   ut_abs <- abs(mat[upper.tri(mat, diag = FALSE)])
   min_cell <- min(ut_abs)

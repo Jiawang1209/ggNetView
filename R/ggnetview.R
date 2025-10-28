@@ -25,12 +25,14 @@
 #' @param layout.module Character  (default = "random")
 #‘ - random : modules are distributed more randomly and independently.
 #' - adjacent : modules are positioned close to each other, minimizing inter-module gaps.
+#'
 #' @param shape Integer  (default = 21).
 #' The point shape likely in ggplot2.
 #' @param pointalpha Integer  (default = 1).
 #' The point alpha
 #' @param pointsize Vector (default =  c(1,10))
 #' The point size rang.
+#' @param pointcolor Character  (default = "#d9d9d9").
 #' @param group.by Character (default = "Modularity").
 #' Change variable for group
 #' @param jitter Logical (default = FALSE).
@@ -69,6 +71,7 @@
 #' Change  orientation angle.
 #' @param seed Integer (default = 1115).
 #' Random seed for reproducibility.
+
 #'
 #' @returns A ggplot object representing the network visualization.
 #' @export
@@ -88,6 +91,7 @@ ggNetView <- function(graph_obj,
                       shape = 21,
                       pointalpha = 1,
                       pointsize = c(1,10),
+                      pointcolor = "#d9d9d9",
                       group.by = "Modularity",
                       jitter = FALSE,
                       jitter_sd = 0.1,
@@ -246,7 +250,7 @@ ggNetView <- function(graph_obj,
                                                      yend = to_y),
                               alpha = linealpha,
                               colour = linecolor) +
-         ggplot2::coord_fixed() +
+         # ggplot2::coord_fixed() +
          theme_ggnetview() +
          scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
 
@@ -259,7 +263,7 @@ ggNetView <- function(graph_obj,
                                                      yend = to_y,
                                                      colour = corr_direction),
                               alpha = linealpha) +
-        ggplot2::coord_fixed() +
+        # ggplot2::coord_fixed() +
         theme_ggnetview() +
         scale_fill_ggnetview(levels(ly1_1[["graph_ly_final"]]$Modularity))
     }
@@ -270,7 +274,8 @@ ggNetView <- function(graph_obj,
         ggplot2::geom_point(data = ly1_1[["ggplot_data"]][[1]],
                             mapping = ggplot2::aes(x = x, y = y, fill = .data[[group.by]], size = Degree),
                             shape = shape,
-                            alpha = pointalpha) +
+                            alpha = pointalpha,
+                            color = pointcolor) +
         ggplot2::scale_size(range = pointsize) +
         ggplot2::coord_fixed() +
         theme_ggnetview() +
@@ -281,6 +286,7 @@ ggNetView <- function(graph_obj,
                              mapping = ggplot2::aes(x = x, y = y, fill = .data[[group.by]], size = Degree),
                              shape = shape,
                              alpha = pointalpha,
+                             color = pointcolor,
                              position = ggplot2::position_jitter(width = jitter_sd, height = jitter_sd, seed = seed)) +
         ggplot2::scale_size(range = pointsize) +
         ggplot2::coord_fixed() +
