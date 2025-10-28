@@ -32,7 +32,7 @@
 #' The point alpha
 #' @param pointsize Vector (default =  c(1,10))
 #' The point size rang.
-#' @param pointcolor Character  (default = "#d9d9d9").
+#' @param pointstroke Integer  (default = 0.3).
 #' @param group.by Character (default = "Modularity").
 #' Change variable for group
 #' @param jitter Logical (default = FALSE).
@@ -91,7 +91,7 @@ ggNetView <- function(graph_obj,
                       shape = 21,
                       pointalpha = 1,
                       pointsize = c(1,10),
-                      pointcolor = "#d9d9d9",
+                      pointstroke = 0.3,
                       group.by = "Modularity",
                       jitter = FALSE,
                       jitter_sd = 0.1,
@@ -275,7 +275,7 @@ ggNetView <- function(graph_obj,
                             mapping = ggplot2::aes(x = x, y = y, fill = .data[[group.by]], size = Degree),
                             shape = shape,
                             alpha = pointalpha,
-                            color = pointcolor) +
+                            stroke = pointstroke) +
         ggplot2::scale_size(range = pointsize) +
         ggplot2::coord_fixed() +
         theme_ggnetview() +
@@ -286,7 +286,7 @@ ggNetView <- function(graph_obj,
                              mapping = ggplot2::aes(x = x, y = y, fill = .data[[group.by]], size = Degree),
                              shape = shape,
                              alpha = pointalpha,
-                             color = pointcolor,
+                             stroke = pointstroke,
                              position = ggplot2::position_jitter(width = jitter_sd, height = jitter_sd, seed = seed)) +
         ggplot2::scale_size(range = pointsize) +
         ggplot2::coord_fixed() +
