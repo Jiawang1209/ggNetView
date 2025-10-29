@@ -6,7 +6,7 @@
 # data("Spedf")
 
 
-gglink_heatmaps <- function(
+gglink_heatmaps2 <- function(
     env,
     spec,
     env_select = NULL,
@@ -20,7 +20,7 @@ gglink_heatmaps <- function(
     distance = 3,
     orientation = c("up","down","left","right", "top_right", "bottom_right", "top_left","bottom_left"),
     r = 6
-    ){
+){
 
   # test
   env = Envdf_4st
@@ -48,11 +48,19 @@ gglink_heatmaps <- function(
   # 1 个点， 然后4个环境数据
   spec_select = list(Spec01 = 1:8)
 
+  # different env
+  # env_select = list(Env01 = 1:14,
+  #                   Env02 = 15:26, # 15:28
+  #                   Env03 = 29:38, # 29:42
+  #                   Env04 = 43:50 # 43:56
+  # )
+
+  # equal env
   env_select = list(Env01 = 1:14,
-                    Env02 = 15:26, # 15:28
-                    Env03 = 29:38, # 29:42
-                    Env04 = 43:50 # 43:56
-                    )
+                    Env02 = 15:28,
+                    Env03 = 29:42,
+                    Env04 = 43:56)
+
   # split data
   env_list <- purrr::map(env_select, ~ Envdf_4st[, .x, drop = FALSE])
   spec_list <- purrr::map(spec_select, ~ Spedf[, .x, drop = FALSE])
@@ -358,11 +366,16 @@ gglink_heatmaps <- function(
   x <- center_x + radius * cos(angles)
   y <- center_y + radius * sin(angles)
 
+  # 中间点的物理位置
   cor_spec_env <- data.frame(
     ID = cor_spec_env_list_out$ID %>% unique() %>% sort(),
     x = x,
     y = y
   )
+
+  k_vec
+  k_gap
+  length_dist
 
   cor_spec_env_location <- cor_spec_env_list_out %>%
     dplyr::left_join(cor_spec_env, by = c("ID" = "ID")) %>%
@@ -370,29 +383,29 @@ gglink_heatmaps <- function(
       env_cor_self_list[[1]] %>%
         dplyr::filter(ID == Type) %>%
         dplyr::select(ID, ID2, Type2) %>%
-        dplyr::mutate(ID2 = ID2 + 2,
-                      Type2 = Type2+2-1) %>%
+        dplyr::mutate(ID2 = ID2 + k_gap[1],
+                      Type2 = Type2+k_gap[1]-1) %>%
         purrr::set_names(c("ID", "x_to", "y_to")),
       env_cor_self_list[[2]] %>%
         dplyr::filter(ID == Type) %>%
         dplyr::select(ID, ID2, Type2) %>%
-        dplyr::mutate(ID2 = ID2 + 2,
-                      Type2 = Type2-17+1) %>%
+        dplyr::mutate(ID2 = ID2 + k_gap[2],
+                      Type2 = Type2-length_dist+1) %>%
         purrr::set_names(c("ID", "x_to", "y_to")),
       env_cor_self_list[[3]] %>%
         dplyr::filter(ID == Type) %>%
         dplyr::select(ID, ID2, Type2) %>%
-        dplyr::mutate(ID2 = ID2 - 17,
-                      Type2 = Type2+2-1) %>%
+        dplyr::mutate(ID2 = ID2 - length_dist,
+                      Type2 = Type2+k_gap[3]-1) %>%
         purrr::set_names(c("ID", "x_to", "y_to")),
       env_cor_self_list[[4]] %>%
         dplyr::filter(ID == Type) %>%
         dplyr::select(ID, ID2, Type2) %>%
-        dplyr::mutate(ID2 = ID2 - 17,
-                      Type2 = Type2-17+1) %>%
+        dplyr::mutate(ID2 = ID2 - length_dist,
+                      Type2 = Type2-length_dist+1) %>%
         purrr::set_names(c("ID", "x_to", "y_to"))
-      ),
-      by = c("Type" = "ID"))
+    ),
+    by = c("Type" = "ID"))
 
 
   # # test 右上
@@ -402,6 +415,21 @@ gglink_heatmaps <- function(
     geom_text(aes(x = 15 + 2, y = Type2 + 2, label = Type), hjust = "left") +
     coord_cartesian(clip = "off") +
     theme_bw()
+
+
+  # # test 右上 new add gap
+  k_vec
+  k_gap
+  length_dist
+
+  ggplot(data = env_cor_self_list[[1]]) +
+    geom_tile(aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
+    coord_cartesian(clip = "off") +
+    theme_bw()
+
+
   #
   # # test 右下
   # ggplot(data = env_cor_self_list[[2]]) +
@@ -410,6 +438,36 @@ gglink_heatmaps <- function(
   #   geom_text(aes(x = 15 + 2, y = Type2 - 17, label = Type), hjust = "left") +
   #   coord_cartesian(clip = "off") +
   #   theme_bw()
+
+
+  # # test 右下 new add gap
+  k_vec
+  k_gap
+  length_dist
+
+  ggplot(data = env_cor_self_list[[2]]) +
+    geom_tile(aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
+    coord_cartesian(clip = "off") +
+    theme_bw()
+
+  # 左上和左下
+  ggplot() +
+    geom_tile(data = env_cor_self_list[[1]], aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[1]], aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[1]], aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type)) +
+    geom_tile(data = env_cor_self_list[[2]], aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[2]], aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[2]], aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
+    coord_fixed(clip = "off") +
+    theme_bw()
+
+  # 经过测试，没问题
+
+
+
+
   #
   # # test 左上
   # ggplot(data = env_cor_self_list[[3]]) +
@@ -418,6 +476,21 @@ gglink_heatmaps <- function(
   #   geom_text(aes(x = 0 - 17, y = Type2 + 2, label = Type), hjust = "right") +
   #   coord_cartesian(clip = "off") +
   #   theme_bw()
+
+
+  # test 左上 new add gap
+  k_vec
+  k_gap
+  length_dist
+  ggplot(data = env_cor_self_list[[3]]) +
+    geom_tile(aes(x = ID2 - length_dist, y = Type2 + k_gap[3], fill = Correlation)) +
+    geom_text(aes(x = ID2 - length_dist, y = length_dist + 1, label = ID)) +
+    geom_text(aes(x = 0 - length_dist, y = Type2 + k_gap[3], label = Type), hjust = "right") +
+    coord_cartesian(clip = "off") +
+    theme_bw()
+
+
+
   #
   # # test 左下
   # ggplot(data = env_cor_self_list[[4]]) +
@@ -427,52 +500,176 @@ gglink_heatmaps <- function(
   #   coord_cartesian(clip = "off") +
   #   theme_bw()
 
+  # test 左下 new add gap
+  k_vec
+  k_gap
+  length_dist
+
+  ggplot(data = env_cor_self_list[[4]]) +
+      geom_tile(aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+      geom_text(aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+      geom_text(aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
+      coord_cartesian(clip = "off") +
+      theme_bw()
+
+
+  # 左上和左下 测试可以
+  ggplot() +
+    geom_tile(data = env_cor_self_list[[1]], aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[1]], aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[1]], aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
+    geom_tile(data = env_cor_self_list[[2]], aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[2]], aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[2]], aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
+    geom_tile(data = env_cor_self_list[[3]], aes(x = ID2 - length_dist, y = Type2 + k_gap[3], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[3]], aes(x = ID2 - length_dist, y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[3]], aes(x = 0 - length_dist, y = Type2 + k_gap[3], label = Type), hjust = "right") +
+    geom_tile(data = env_cor_self_list[[4]],aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[4]],aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[4]],aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
+    coord_fixed(clip = "off") +
+    theme_void() +
+    theme(
+      plot.margin = margin(1,1,1,1,"cm"),
+      aspect.ratio = 1,
+      legend.position = "top"
+    )
+    # theme_bw()
+
+  # 然后继续可视化
+  ggplot() +
+    # env 1 右上
+    geom_tile(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
+    geom_point(data = env_cor_self_list[[1]] %>% dplyr::filter(ID == Type),
+               mapping = aes(x = ID2+k_gap[1], y = Type2+k_gap[1]-1),
+               shape = 21,
+               fill = "#de77ae",
+               size = 4) +
+    scale_fill_gradient2(low = "#4d9221", mid = "#ffffff", high = "#c51b7d", midpoint = 0, name = paste("Env", 1),
+                         guide = guide_colorbar(order = 1)) +
+    # env 2 右下
+    ggnewscale::new_scale_fill() +
+    geom_tile(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
+    geom_point(data = env_cor_self_list[[2]] %>% dplyr::filter(ID == Type),
+               mapping = aes(x = ID2+k_gap[2], y = Type2-length_dist+1),
+               shape = 21,
+               fill = "#de77ae",
+               size = 4) +
+    scale_fill_gradient2(low = "#8073ac", mid = "#ffffff", high = "#e08214", midpoint = 0, name = paste("Env", 2),
+                         guide = guide_colorbar(order = 2)) +
+    # env 3 左上
+    ggnewscale::new_scale_fill() +
+    geom_tile(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2- length_dist, y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 + k_gap[3], label = Type), hjust = "right") +
+    geom_point(data = env_cor_self_list[[3]] %>% dplyr::filter(ID == Type),
+               mapping = aes(x = ID2-length_dist, y = Type2+k_gap[3]-1),
+               shape = 21,
+               fill = "#de77ae",
+               size = 4) +
+    scale_fill_gradient2(low = "#4393c3", mid = "#ffffff", high = "#d6604d", midpoint = 0, name = paste("Env", 3),
+                         guide = guide_colorbar(order = 3)) +
+    # env 4 左下
+    ggnewscale::new_scale_fill() +
+    geom_tile(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
+    geom_point(data = env_cor_self_list[[4]] %>% dplyr::filter(ID == Type),
+               mapping = aes(x = ID2-length_dist, y = Type2-length_dist+1),
+               shape = 21,
+               fill = "#de77ae",
+               size = 4) +
+    scale_fill_gradient2(low = "#66bd63", mid = "#ffffff", high = "#f46d43", midpoint = 0, name = paste("Env", 4),
+                         guide = guide_colorbar(order = 4)) +
+    new_scale_fill() +
+    geom_segment(data = cor_spec_env_location,
+                 mapping = aes(x = x, y = y, xend = x_to, yend = y_to, color = Correlation, linetype = p_signif),
+                 alpha = 0.5
+    ) +
+    scale_color_gradient(low = "#fdbb84", high = "#d7301f") +
+    geom_point(data = cor_spec_env_location %>% dplyr::distinct(ID, .keep_all = T),
+               mapping = aes(x = x, y = y, fill = ID),
+               shape = 21,
+               fill = "#41b6c4",
+               size = 8.5) +
+    geom_text(data = cor_spec_env_location %>% dplyr::distinct(ID, .keep_all = T),
+              mapping = aes(x =x, y = y, label = ID),
+              size = 5) +
+    # geom_line(data = cor_spec_env_location %>% dplyr::distinct(ID, .keep_all = T) %>% dplyr::select(ID, x, y),
+    #           mapping = aes(x = x, y = y, group = 1),
+    #           linetype = 1,
+    #           linewidth = 1.5,
+    #           color = "#41b6c4") +
+    coord_cartesian(clip = "off") +
+    theme_void() +
+    theme(
+      plot.margin = margin(1,1,1,1,"cm"),
+      aspect.ratio = 1,
+      legend.position = "top"
+    )
+
 
   ####----Plot----####
-  p1 <- ggplot(data = env_cor_self_list[[1]]) +
-    geom_tile(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + 2, y = Type2 + 2, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + 2, y = Type2 + 2, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + 2, y = 15 + 2, label = ID)) +
-    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 15 + 2, y = Type2 + 2, label = Type), hjust = "left") +
+  p1 <- ggplot() +
+    # env 1 右上
+    geom_tile(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
     geom_point(data = env_cor_self_list[[1]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2+2, y = Type2+2-1),
+               mapping = aes(x = ID2+k_gap[1], y = Type2+k_gap[1]-1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#4d9221", mid = "#ffffff", high = "#c51b7d", midpoint = 0) +
+    scale_fill_gradient2(low = "#4d9221", mid = "#ffffff", high = "#c51b7d", midpoint = 0, name = paste("Env", 1),
+                         guide = guide_colorbar(order = 1)) +
+    # env 2 右下
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + 2, y = Type2 - 17, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + 2, y = Type2 - 17, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + 2, y = 0 - 17, label = ID)) +
-    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 15 + 2, y = Type2 - 17, label = Type), hjust = "left") +
+    geom_tile(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
     geom_point(data = env_cor_self_list[[2]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2+2, y = Type2-17+1),
+               mapping = aes(x = ID2+k_gap[2], y = Type2-length_dist+1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#8073ac", mid = "#ffffff", high = "#e08214", midpoint = 0) +
+    scale_fill_gradient2(low = "#8073ac", mid = "#ffffff", high = "#e08214", midpoint = 0, name = paste("Env", 2),
+                         guide = guide_colorbar(order = 2)) +
+    # env 3 左上
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - 17, y = Type2 + 2, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - 17, y = Type2 + 2, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2- 17, y = 15 + 2, label = ID)) +
-    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - 17, y = Type2 + 2, label = Type), hjust = "right") +
+    geom_tile(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2- length_dist, y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 + k_gap[3], label = Type), hjust = "right") +
     geom_point(data = env_cor_self_list[[3]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2-17, y = Type2+2-1),
+               mapping = aes(x = ID2-length_dist, y = Type2+k_gap[3]-1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#4393c3", mid = "#ffffff", high = "#d6604d", midpoint = 0) +
+    scale_fill_gradient2(low = "#4393c3", mid = "#ffffff", high = "#d6604d", midpoint = 0, name = paste("Env", 3),
+                         guide = guide_colorbar(order = 3)) +
+    # env 4 左下
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - 17, y = Type2 - 17, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - 17, y = Type2 - 17, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 - 17, y = 0 - 17, label = ID)) +
-    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - 17, y = Type2 - 17, label = Type), hjust = "right") +
-    scale_fill_gradient2(low = "#66bd63", mid = "#ffffff", high = "#f46d43", midpoint = 0) +
+    geom_tile(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
     geom_point(data = env_cor_self_list[[4]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2-17, y = Type2-17+1),
+               mapping = aes(x = ID2-length_dist, y = Type2-length_dist+1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
+    scale_fill_gradient2(low = "#66bd63", mid = "#ffffff", high = "#f46d43", midpoint = 0, name = paste("Env", 4),
+                         guide = guide_colorbar(order = 4)) +
     new_scale_fill() +
     geom_segment(data = cor_spec_env_location,
                  mapping = aes(x = x, y = y, xend = x_to, yend = y_to, color = Correlation, linetype = p_signif),
@@ -502,50 +699,58 @@ gglink_heatmaps <- function(
 
   p1
 
-  p2 <- ggplot(data = env_cor_self_list[[1]]) +
-    geom_tile(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + 2, y = Type2 + 2, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + 2, y = Type2 + 2, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + 2, y = 15 + 2, label = ID)) +
-    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 15 + 2, y = Type2 + 2, label = Type), hjust = "left") +
+  p2 <- ggplot() +
+    # env 1 右上
+    geom_tile(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[1]], mapping = aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[1]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
     geom_point(data = env_cor_self_list[[1]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2+2, y = Type2+2-1),
+               mapping = aes(x = ID2+k_gap[1], y = Type2+k_gap[1]-1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#4d9221", mid = "#ffffff", high = "#c51b7d", midpoint = 0) +
+    scale_fill_gradient2(low = "#4d9221", mid = "#ffffff", high = "#c51b7d", midpoint = 0, name = paste("Env", 1),
+                         guide = guide_colorbar(order = 1)) +
+    # env 2 右下
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + 2, y = Type2 - 17, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + 2, y = Type2 - 17, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + 2, y = 0 - 17, label = ID)) +
-    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 15 + 2, y = Type2 - 17, label = Type), hjust = "left") +
+    geom_tile(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[2]], mapping = aes(x = ID2 + k_gap[2], y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 + k_gap[2], y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[2]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = length_dist + 1, y = Type2 - length_dist, label = Type), hjust = "left") +
     geom_point(data = env_cor_self_list[[2]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2+2, y = Type2-17+1),
+               mapping = aes(x = ID2+k_gap[2], y = Type2-length_dist+1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#8073ac", mid = "#ffffff", high = "#e08214", midpoint = 0) +
+    scale_fill_gradient2(low = "#8073ac", mid = "#ffffff", high = "#e08214", midpoint = 0, name = paste("Env", 2),
+                         guide = guide_colorbar(order = 2)) +
+    # env 3 左上
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - 17, y = Type2 + 2, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - 17, y = Type2 + 2, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2- 17, y = 15 + 2, label = ID)) +
-    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - 17, y = Type2 + 2, label = Type), hjust = "right") +
+    geom_tile(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[3]], mapping = aes(x = ID2 - length_dist, y = Type2 + k_gap[3], label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2- length_dist, y = length_dist + 1, label = ID)) +
+    geom_text(data = env_cor_self_list[[3]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 + k_gap[3], label = Type), hjust = "right") +
     geom_point(data = env_cor_self_list[[3]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2-17, y = Type2+2-1),
+               mapping = aes(x = ID2-length_dist, y = Type2+k_gap[3]-1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
-    scale_fill_gradient2(low = "#4393c3", mid = "#ffffff", high = "#d6604d", midpoint = 0) +
+    scale_fill_gradient2(low = "#4393c3", mid = "#ffffff", high = "#d6604d", midpoint = 0, name = paste("Env", 3),
+                         guide = guide_colorbar(order = 3)) +
+    # env 4 左下
     ggnewscale::new_scale_fill() +
-    geom_tile(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - 17, y = Type2 - 17, fill = Correlation)) +
-    geom_text(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - 17, y = Type2 - 17, label = p_signif), size = 5) +
-    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 - 17, y = 0 - 17, label = ID)) +
-    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - 17, y = Type2 - 17, label = Type), hjust = "right") +
-    scale_fill_gradient2(low = "#66bd63", mid = "#ffffff", high = "#f46d43", midpoint = 0) +
+    geom_tile(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(data = env_cor_self_list[[4]], mapping = aes(x = ID2 - length_dist, y = Type2 - length_dist, label = p_signif), size = 5) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(ID, .keep_all = T), mapping = aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+    geom_text(data = env_cor_self_list[[4]] %>% dplyr::distinct(Type, .keep_all = T), mapping = aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
     geom_point(data = env_cor_self_list[[4]] %>% dplyr::filter(ID == Type),
-               mapping = aes(x = ID2-17, y = Type2-17+1),
+               mapping = aes(x = ID2-length_dist, y = Type2-length_dist+1),
                shape = 21,
                fill = "#de77ae",
                size = 4) +
+    scale_fill_gradient2(low = "#66bd63", mid = "#ffffff", high = "#f46d43", midpoint = 0, name = paste("Env", 4),
+                         guide = guide_colorbar(order = 4)) +
     new_scale_fill() +
     geom_curve(data = cor_spec_env_location,
                mapping = aes(x = x, y = y, xend = x_to, yend = y_to, color = Correlation, linetype = p_signif),
@@ -578,16 +783,16 @@ gglink_heatmaps <- function(
 
   return(list(p1, p2))
 
-# ggsave(filename = "/Users/liuyue/Desktop/Github_repos/R&Python_Wechat_Official_Account_Platform/20250909_网络可视化R包ggNetView_添加核心变量与多个环境因子的关系网络图/Output/Out.pdf",
-#        height = 13,
-#        width = 13,
-#        plot = p1)
-#
-#
-# ggsave(filename = "/Users/liuyue/Desktop/Github_repos/R&Python_Wechat_Official_Account_Platform/20250909_网络可视化R包ggNetView_添加核心变量与多个环境因子的关系网络图/Output/Out_2.pdf",
-#        height = 13,
-#        width = 13,
-#        plot = p2)
+  # ggsave(filename = "/Users/liuyue/Desktop/Github_repos/R&Python_Wechat_Official_Account_Platform/20250909_网络可视化R包ggNetView_添加核心变量与多个环境因子的关系网络图/Output/Out.pdf",
+  #        height = 13,
+  #        width = 13,
+  #        plot = p1)
+  #
+  #
+  # ggsave(filename = "/Users/liuyue/Desktop/Github_repos/R&Python_Wechat_Official_Account_Platform/20250909_网络可视化R包ggNetView_添加核心变量与多个环境因子的关系网络图/Output/Out_2.pdf",
+  #        height = 13,
+  #        width = 13,
+  #        plot = p2)
 
 
 }
