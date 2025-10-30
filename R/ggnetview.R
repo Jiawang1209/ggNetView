@@ -145,8 +145,8 @@ ggNetView <- function(graph_obj,
                              layout = ly1,
                              center = center,
                              idx = idx,
-                             shrink = shrink,
-                             seed = seed
+                             shrink = shrink# ,
+                             # seed = seed
       )
     }
 
@@ -156,8 +156,8 @@ ggNetView <- function(graph_obj,
                               center = center,
                               k_nn = k_nn,
                               push_others_delta = push_others_delta,
-                              shrink = shrink,
-                              seed = seed
+                              shrink = shrink# ,
+                              # seed = seed
       )
     }
 

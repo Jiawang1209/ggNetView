@@ -2,7 +2,7 @@ get_neighbors <- function(ly,
                           k = 5,
                           idx = NULL,
                           coord = NULL,
-                          seed = seed,
+                          # seed = seed,
                           tol = 1e-12) {
 
   # ly: data.frame，至少包含 x, y 两列
@@ -17,7 +17,7 @@ get_neighbors <- function(ly,
   n <- nrow(ly)
   if (n < 1) stop("ly requires at least one point.")
 
-  set.seed(seed)
+  # set.seed(seed)
 
   # 1) 确定中心 (fx, fy)，以及与中心重合的点们
   # 如果 coord 不是空的
@@ -74,8 +74,18 @@ get_neighbors <- function(ly,
 
 
 # 仅对 get_neighbors 的输出做“局部半径升序”的重排
-get_neighbors_hub <- function(ly, k=5, idx=NULL, coord=NULL, seed=seed, tol=1e-12) {
-  out <- get_neighbors(ly = ly, k = k, idx = idx, coord = coord, seed = seed, tol = tol)
+get_neighbors_hub <- function(ly,
+                              k=5,
+                              idx=NULL,
+                              coord=NULL,
+                              # seed=seed,
+                              tol=1e-12) {
+  out <- get_neighbors(ly = ly,
+                       k = k,
+                       idx = idx,
+                       coord = coord,
+                       # seed = seed,
+                       tol = tol)
   nb  <- out$neighbors
   # 以该块点集的质心为“局部中心”
   cx  <- mean(nb$x); cy <- mean(nb$y)
@@ -109,10 +119,11 @@ module_layout <- function(graph_obj,
                           layout,
                           center = TRUE,
                           idx = NULL,
-                          shrink = 1,
-                          seed = seed){
+                          shrink = 1
+                          # seed = seed
+                          ){
 
-  set.seed(seed)
+  # set.seed(seed)
 
   # 1) 取节点数据
   node_df <- graph_obj %>%
@@ -210,12 +221,13 @@ module_layout2 <- function(graph_obj,
                            center = TRUE,
                            shrink = 0.9,
                            k_nn = 8,
-                           push_others_delta = 0.2,
-                           seed = seed) {
+                           push_others_delta = 0.2# ,
+                           # seed = seed
+                           ) {
 
   stopifnot(all(c("x","y") %in% names(layout)))
 
-  set.seed(seed)
+  # set.seed(seed)
 
   ## ---------- 1) layout 邻接：kNN 图 ----------
   xy <- as.matrix(layout[, c("x","y")])
@@ -429,11 +441,12 @@ module_layout3 <- function(graph_obj,
                            center = TRUE,         # 第一个模块优先靠中心放
                            shrink = 0.9,          # 模块内轻度收紧
                            k_nn = 8,              # layout 邻接度（6~10合适）
-                           push_others_delta = 0.2, # Others 外移量
-                           seed = seed) {
+                           push_others_delta = 0.2#, # Others 外移量
+                           # seed = seed
+                           ) {
 
   stopifnot(all(c("x","y") %in% names(layout)))
-  set.seed(seed)
+  # set.seed(seed)
 
   ## ---------- 小工具 ----------
   # shrink_rings_global <- function(df, shrink){
