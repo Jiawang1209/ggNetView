@@ -2,7 +2,7 @@ get_neighbors <- function(ly,
                           k = 5,
                           idx = NULL,
                           coord = NULL,
-                          seed = 1115,
+                          seed = seed,
                           tol = 1e-12) {
 
   # ly: data.frame，至少包含 x, y 两列
@@ -74,7 +74,7 @@ get_neighbors <- function(ly,
 
 
 # 仅对 get_neighbors 的输出做“局部半径升序”的重排
-get_neighbors_hub <- function(ly, k=5, idx=NULL, coord=NULL, seed=1115, tol=1e-12) {
+get_neighbors_hub <- function(ly, k=5, idx=NULL, coord=NULL, seed=seed, tol=1e-12) {
   out <- get_neighbors(ly = ly, k = k, idx = idx, coord = coord, seed = seed, tol = tol)
   nb  <- out$neighbors
   # 以该块点集的质心为“局部中心”
