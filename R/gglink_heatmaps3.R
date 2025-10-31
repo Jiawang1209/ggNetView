@@ -6,7 +6,7 @@
 # data("Spedf")
 
 
-gglink_heatmaps2 <- function(
+gglink_heatmaps3 <- function(
     env,
     spec,
     env_select = NULL,
@@ -307,6 +307,10 @@ gglink_heatmaps2 <- function(
 
   env_cor_self_list
 
+  names(env_cor_self_list) <- orientation
+  names(k_gap) <- orientation
+
+
   ####----核心物种与环境因子之间的关系----####
   # if (method == "mantel") {
   #   mantal_spec_env <- vegan::mantel(vegan::vegdist(env_list[[1]]),
@@ -508,11 +512,11 @@ gglink_heatmaps2 <- function(
   length_dist
 
   ggplot(data = env_cor_self_list[[4]]) +
-      geom_tile(aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
-      geom_text(aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
-      geom_text(aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
-      coord_cartesian(clip = "off") +
-      theme_bw()
+    geom_tile(aes(x = ID2 - length_dist, y = Type2 - length_dist, fill = Correlation)) +
+    geom_text(aes(x = ID2 - length_dist, y = 0 - length_dist, label = ID)) +
+    geom_text(aes(x = 0 - length_dist, y = Type2 - length_dist, label = Type), hjust = "right") +
+    coord_cartesian(clip = "off") +
+    theme_bw()
 
 
   # 左上和左下 测试可以
@@ -536,7 +540,7 @@ gglink_heatmaps2 <- function(
       aspect.ratio = 1,
       legend.position = "top"
     )
-    # theme_bw()
+  # theme_bw()
 
   # 然后继续可视化
   ggplot() +
