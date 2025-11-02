@@ -347,7 +347,7 @@ gglink_heatmaps <- function(
 
   ####----核心物种与环境因子之间的关系----####
 
-  if (method == "correlation") {
+  if (relation_method == "correlation") {
     cor_spec_env_list <- list()
 
     for (p in seq_along(env_list)) {
