@@ -24,6 +24,16 @@ gglink_heatmaps3 <- function(
     r = 6
 ){
 
+  # argument test
+  relation_method <- match.arg(relation_method)
+  cor.method      <- match.arg(cor.method)
+  cor.use         <- match.arg(cor.use)
+  mantel.method   <- match.arg(mantel.method)
+  mantel.method2  <- match.arg(mantel.method2)
+  mantel.alternative <- match.arg(mantel.alternative)
+  orientation     <- match.arg(orientation, several.ok = TRUE)
+
+
   # test
   env = Envdf_4st
   spec = Spedf
@@ -51,17 +61,17 @@ gglink_heatmaps3 <- function(
   spec_select = list(Spec01 = 1:8)
 
   # different env
-  # env_select = list(Env01 = 1:14,
-  #                   Env02 = 15:26, # 15:28
-  #                   Env03 = 29:38, # 29:42
-  #                   Env04 = 43:50 # 43:56
-  # )
+  env_select = list(Env01 = 1:14,
+                    Env02 = 15:26, # 15:28
+                    Env03 = 29:38, # 29:42
+                    Env04 = 43:50 # 43:56
+  )
 
   # equal env
-  env_select = list(Env01 = 1:14,
-                    Env02 = 15:28,
-                    Env03 = 29:42,
-                    Env04 = 43:56)
+  # env_select = list(Env01 = 1:14,
+  #                   Env02 = 15:28,
+  #                   Env03 = 29:42,
+  #                   Env04 = 43:56)
 
   # split data
   env_list <- purrr::map(env_select, ~ Envdf_4st[, .x, drop = FALSE])
@@ -134,21 +144,6 @@ gglink_heatmaps3 <- function(
                             cor_self_p %>% dplyr::select(3,6))
 
       env_cor_self_list[[i]] <- cor_self_r_p
-
-      # ggplot(data = cor_self_r_p) +
-      #   geom_tile(aes(x = ID2, y = Type2, fill = Correlation)) +
-      #   geom_text(aes(x = ID2, y = Type2, label = p_signif), size = 5) +
-      #   geom_text(data = cor_self_r_p %>% dplyr::distinct(Type, .keep_all = T),
-      #             mapping = aes(x = 15, y = Type2, label = Type), hjust = "left") +
-      #   geom_text(data = cor_self_r_p %>% dplyr::distinct(ID, .keep_all = T),
-      #             mapping = aes(x = ID2, y = 15, label = ID)) +
-      #   geom_point(data = cor_self_r_p %>% dplyr::filter(ID == Type),
-      #              mapping = aes(x = ID2, y = Type2-1),
-      #              shape = 21,
-      #              fill = "#de77ae",
-      #              size = 4)
-
-
 
     }
 
@@ -307,7 +302,10 @@ gglink_heatmaps3 <- function(
 
   env_cor_self_list
 
+  # rename list based on orientation
   names(env_cor_self_list) <- orientation
+
+  # rename k_gap based on orientation
   names(k_gap) <- orientation
 
 
@@ -358,7 +356,11 @@ gglink_heatmaps3 <- function(
 
   }
 
+  names(cor_spec_env_list) <- orientation
+
   cor_spec_env_list_out
+
+  # core location layout
 
   # 查看一下里面有多少个变量, 然后将其均等分
   n_points <- cor_spec_env_list_out$ID %>% unique() %>% length()
@@ -413,14 +415,14 @@ gglink_heatmaps3 <- function(
     ),
     by = c("Type" = "ID"))
 
-
-  # # test 右上
-  ggplot(data = env_cor_self_list[[1]]) +
-    geom_tile(aes(x = ID2 + 2, y = Type2 + 2, fill = Correlation)) +
-    geom_text(aes(x = ID2 + 2, y = 15 + 2, label = ID)) +
-    geom_text(aes(x = 15 + 2, y = Type2 + 2, label = Type), hjust = "left") +
-    coord_cartesian(clip = "off") +
-    theme_bw()
+#
+#   # # test 右上
+#   ggplot(data = env_cor_self_list[[1]]) +
+#     geom_tile(aes(x = ID2 + 2, y = Type2 + 2, fill = Correlation)) +
+#     geom_text(aes(x = ID2 + 2, y = 15 + 2, label = ID)) +
+#     geom_text(aes(x = 15 + 2, y = Type2 + 2, label = Type), hjust = "left") +
+#     coord_cartesian(clip = "off") +
+#     theme_bw()
 
 
   # # test 右上 new add gap
@@ -428,12 +430,12 @@ gglink_heatmaps3 <- function(
   k_gap
   length_dist
 
-  ggplot(data = env_cor_self_list[[1]]) +
-    geom_tile(aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
-    geom_text(aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
-    geom_text(aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
-    coord_cartesian(clip = "off") +
-    theme_bw()
+  # ggplot(data = env_cor_self_list[[1]]) +
+  #   geom_tile(aes(x = ID2 + k_gap[1], y = Type2 + k_gap[1], fill = Correlation)) +
+  #   geom_text(aes(x = ID2 + k_gap[1], y = length_dist + 1, label = ID)) +
+  #   geom_text(aes(x = length_dist + 1, y = Type2 + k_gap[1], label = Type), hjust = "left") +
+  #   coord_cartesian(clip = "off") +
+  #   theme_bw()
 
 
   #
