@@ -93,23 +93,6 @@ gglink_heatmaps4 <- function(
   #   cor_out_self <- psych::corr.test(x)
   # })
 
-  orient_rules <- tibble::tibble(
-    orientation   = c("top_right","bottom_right","top_left","bottom_left"),
-    type_reversed = c(TRUE,        FALSE,         FALSE,      TRUE)
-  )
-  # 只保留用户传入的 orientation 子集
-  orient_rules <- dplyr::semi_join(orient_rules,
-                                   tibble::tibble(orientation = orientation),
-                                   by = "orientation")
-
-  .get_type2_vis <- function(df, ori, rules){
-    n_lvls <- max(df$Type2, df$ID2, na.rm = TRUE)   # 该象限变量数
-    rev_on <- rules$type_reversed[rules$orientation == ori]
-    if (isTRUE(rev_on)) df$Type2 else (n_lvls - df$Type2 + 1L)
-  }
-
-
-
   ####----环境因子自身的相关性----####
   env_cor_self_list <- list()
 
@@ -404,67 +387,34 @@ gglink_heatmaps4 <- function(
 
   # get targets informations
   # 针对每一个 orientation 设置 x_to y_to
-  # .make_targets <- function(df, ori, k_gap, length_dist){
-  #   df %>%
-  #     dplyr::mutate(
-  #       ID = as.character(ID),
-  #       Type = as.character(Type)
-  #     ) %>%
-  #     dplyr::filter(ID == Type) %>%
-  #     dplyr::transmute(ID,
-  #                      x_to = dplyr::case_when(
-  #                        ori == "top_right" ~ ID2 + k_gap[ori],
-  #                        ori == "bottom_right" ~ ID2 + k_gap[ori],
-  #                        ori == "top_left" ~ ID2 - length_dist,
-  #                        ori == "bottom_left" ~ID2 - length_dist
-  #                      ),
-  #                      y_to = dplyr::case_when(
-  #                        ori == "top_right" ~ Type2+k_gap[ori]-1,
-  #                        ori == "bottom_right" ~ Type2-length_dist+1,
-  #                        ori == "top_left" ~ Type2+k_gap[ori]-1,
-  #                        ori == "bottom_left" ~Type2-length_dist+1
-  #                      ))
-  # }
-
-  # xy_targets <- purrr::imap_dfr(
-  #   .x = env_cor_self_list[orientation],
-  #   .f = .make_targets,
-  #   k_gap = k_gap,
-  #   length_dist = length_dist
-  # )
-
-  .make_targets <- function(df, ori, k_gap, length_dist, rules){
+  .make_targets <- function(df, ori, k_gap, length_dist){
     df %>%
       dplyr::mutate(
-        ID   = as.character(ID),
-        Type = as.character(Type),
-        Type2_vis = .get_type2_vis(., ori, rules)
+        ID = as.character(ID),
+        Type = as.character(Type)
       ) %>%
       dplyr::filter(ID == Type) %>%
-      dplyr::transmute(
-        ID,
-        x_to = dplyr::case_when(
-          ori %in% c("top_right","bottom_right") ~ ID2 + k_gap[[ori]],
-          TRUE                                   ~ ID2 - length_dist
-        ),
-        y_to = dplyr::case_when(
-          ori %in% c("top_right","top_left")     ~ Type2_vis + k_gap[[ori]] - 1,
-          TRUE                                   ~ Type2_vis - length_dist + 1
-        )
-      )
+      dplyr::transmute(ID,
+                       x_to = dplyr::case_when(
+                         ori == "top_right" ~ ID2 + k_gap[ori],
+                         ori == "bottom_right" ~ ID2 + k_gap[ori],
+                         ori == "top_left" ~ ID2 - length_dist,
+                         ori == "bottom_left" ~ID2 - length_dist
+                       ),
+                       y_to = dplyr::case_when(
+                         ori == "top_right" ~ Type2+k_gap[ori]-1,
+                         ori == "bottom_right" ~ Type2-length_dist+1,
+                         ori == "top_left" ~ Type2+k_gap[ori]-1,
+                         ori == "bottom_left" ~Type2-length_dist+1
+                       ))
   }
-
 
   xy_targets <- purrr::imap_dfr(
     .x = env_cor_self_list[orientation],
     .f = .make_targets,
     k_gap = k_gap,
-    length_dist = length_dist,
-    rules = orient_rules
+    length_dist = length_dist
   )
-
-
-
 
   xy_targets
 
@@ -473,87 +423,42 @@ gglink_heatmaps4 <- function(
     dplyr::left_join(cor_spec_env, by = "ID") %>%
     dplyr::left_join(xy_targets, by = c("Type" = "ID"))
 
-  # .offset_env <- function(df, ori, k_gap, length_dist){
-  #   stopifnot(ori %in% c("top_right","bottom_right","top_left","bottom_left"))
-  #   df <- df %>% dplyr::mutate(ID = as.character(ID), Type = as.character(Type))
-  #
-  #   # tile 坐标（四象限通用规则）
-  #   x_tile <- if (ori %in% c("top_right","bottom_right")) df$ID2 + k_gap[[ori]] else df$ID2 - length_dist
-  #   y_tile <- if (ori %in% c("top_right","top_left"))      df$Type2 + k_gap[[ori]] else df$Type2 - length_dist
-  #
-  #   tile <- df %>% dplyr::mutate(x_tile = x_tile, y_tile = y_tile, orientation = ori)
-  #
-  #   # 对角点（你原来用于标注主对角）
-  #   diag_df <- df %>% dplyr::filter(ID == Type)
-  #   x_diag  <- if (ori %in% c("top_right","bottom_right")) diag_df$ID2 + k_gap[[ori]] else diag_df$ID2 - length_dist
-  #   y_diag  <- if (ori %in% c("top_right","top_left"))     diag_df$Type2 + k_gap[[ori]] - 1 else diag_df$Type2 - length_dist + 1
-  #   diag    <- diag_df %>% dplyr::transmute(ID, x_diag, y_diag, orientation = ori)
-  #
-  #   # 轴标签位置
-  #   y_id_lab   <- if (ori %in% c("top_right","top_left")) length_dist + 1 else 0 - length_dist
-  #   x_type_lab <- if (ori %in% c("top_right","bottom_right")) length_dist + 1 else 0 - length_dist
-  #   hjust_type <- if (ori %in% c("top_right","bottom_right")) "left" else "right"
-  #
-  #   id_lab <- df %>%
-  #     dplyr::distinct(ID, .keep_all = TRUE) %>%
-  #     dplyr::transmute(ID,
-  #                      x_id = if (ori %in% c("top_right","bottom_right")) ID2 + k_gap[[ori]] else ID2 - length_dist,
-  #                      y_id = y_id_lab, orientation = ori)
-  #
-  #   type_lab <- df %>%
-  #     dplyr::distinct(Type, .keep_all = TRUE) %>%
-  #     dplyr::transmute(Type,
-  #                      x_type = x_type_lab,
-  #                      y_type = if (ori %in% c("top_right","top_left")) Type2 + k_gap[[ori]] else Type2 - length_dist,
-  #                      hjust_type = hjust_type, orientation = ori)
-  #
-  #   list(tile = tile, diag = diag, id_lab = id_lab, type_lab = type_lab)
-  # }
-
-  .offset_env <- function(df, ori, k_gap, length_dist, rules){
+  .offset_env <- function(df, ori, k_gap, length_dist){
     stopifnot(ori %in% c("top_right","bottom_right","top_left","bottom_left"))
-    df <- df %>% dplyr::mutate(
-      ID   = as.character(ID),
-      Type = as.character(Type),
-      Type2_vis = .get_type2_vis(., ori, rules)
-    )
+    df <- df %>% dplyr::mutate(ID = as.character(ID), Type = as.character(Type))
 
-    # tile 坐标
+    # tile 坐标（四象限通用规则）
     x_tile <- if (ori %in% c("top_right","bottom_right")) df$ID2 + k_gap[[ori]] else df$ID2 - length_dist
-    y_tile <- if (ori %in% c("top_right","top_left"))     df$Type2_vis + k_gap[[ori]] else df$Type2_vis - length_dist
-    tile   <- df %>% dplyr::mutate(x_tile = x_tile, y_tile = y_tile, orientation = ori)
+    y_tile <- if (ori %in% c("top_right","top_left"))      df$Type2 + k_gap[[ori]] else df$Type2 - length_dist
 
-    # 对角点
+    tile <- df %>% dplyr::mutate(x_tile = x_tile, y_tile = y_tile, orientation = ori)
+
+    # 对角点（你原来用于标注主对角）
     diag_df <- df %>% dplyr::filter(ID == Type)
     x_diag  <- if (ori %in% c("top_right","bottom_right")) diag_df$ID2 + k_gap[[ori]] else diag_df$ID2 - length_dist
-    y_diag  <- if (ori %in% c("top_right","top_left"))     diag_df$Type2_vis + k_gap[[ori]] - 1 else diag_df$Type2_vis - length_dist + 1
+    y_diag  <- if (ori %in% c("top_right","top_left"))     diag_df$Type2 + k_gap[[ori]] - 1 else diag_df$Type2 - length_dist + 1
     diag    <- diag_df %>% dplyr::transmute(ID, x_diag, y_diag, orientation = ori)
 
-    # 轴标签位置（y 轴用 Type2_vis）
+    # 轴标签位置
     y_id_lab   <- if (ori %in% c("top_right","top_left")) length_dist + 1 else 0 - length_dist
     x_type_lab <- if (ori %in% c("top_right","bottom_right")) length_dist + 1 else 0 - length_dist
     hjust_type <- if (ori %in% c("top_right","bottom_right")) "left" else "right"
 
     id_lab <- df %>%
       dplyr::distinct(ID, .keep_all = TRUE) %>%
-      dplyr::transmute(
-        ID,
-        x_id = if (ori %in% c("top_right","bottom_right")) ID2 + k_gap[[ori]] else ID2 - length_dist,
-        y_id = y_id_lab, orientation = ori
-      )
+      dplyr::transmute(ID,
+                       x_id = if (ori %in% c("top_right","bottom_right")) ID2 + k_gap[[ori]] else ID2 - length_dist,
+                       y_id = y_id_lab, orientation = ori)
 
     type_lab <- df %>%
       dplyr::distinct(Type, .keep_all = TRUE) %>%
-      dplyr::transmute(
-        Type,
-        x_type = x_type_lab,
-        y_type = if (ori %in% c("top_right","top_left")) Type2_vis + k_gap[[ori]] else Type2_vis - length_dist,
-        hjust_type = hjust_type, orientation = ori
-      )
+      dplyr::transmute(Type,
+                       x_type = x_type_lab,
+                       y_type = if (ori %in% c("top_right","top_left")) Type2 + k_gap[[ori]] else Type2 - length_dist,
+                       hjust_type = hjust_type, orientation = ori)
 
     list(tile = tile, diag = diag, id_lab = id_lab, type_lab = type_lab)
   }
-
 
   .add_quadrant_layers <- function(p,
                                    pack,
@@ -582,19 +487,16 @@ gglink_heatmaps4 <- function(
   }
 
   # 先为每个方位算好偏移后的数据包
-  # packs <- purrr::imap(env_cor_self_list, ~ .offset_env(.x, .y, k_gap, length_dist))
-
-  packs <- purrr::imap(env_cor_self_list,
-                       ~ .offset_env(.x, .y, k_gap, length_dist, orient_rules))
-
+  packs <- purrr::imap(env_cor_self_list, ~ .offset_env(.x, .y, k_gap, length_dist))
 
   p0 <- ggplot()
 
   for (i in seq_along(packs)) {
     if (i > 1) p0 <- p0 + ggnewscale::new_scale_fill()
-    p0 <- .add_quadrant_layers(p1, packs[[i]], idx = i, scale_name = "Env")
+    p0 <- .add_quadrant_layers(p0, packs[[i]], idx = i, scale_name = "Env")
   }
 
+  p0
   # 统一叠加连线 & 中圈节点
   p1 <- p0 +
     ggnewscale::new_scale_color() +
