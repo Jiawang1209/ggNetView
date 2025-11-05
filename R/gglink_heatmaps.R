@@ -1,4 +1,4 @@
-#' #' Visualize multi-orientation environmental–species correlation heatmaps
+#' Visualize multi-orientation environmental–species correlation heatmaps
 #'
 #' @param env A data frame or matrix containing environmental variables.
 #' Each column represents an environmental factor.

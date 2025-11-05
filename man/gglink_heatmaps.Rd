@@ -2,7 +2,7 @@
 % Please edit documentation in R/gglink_heatmaps.R
 \name{gglink_heatmaps}
 \alias{gglink_heatmaps}
-\title{#' Visualize multi-orientation environmental–species correlation heatmaps}
+\title{Visualize multi-orientation environmental–species correlation heatmaps}
 \usage{
 gglink_heatmaps(
   env,
@@ -78,7 +78,7 @@ and `"bottom_left"`.}
 a list of ggplot2
 }
 \description{
-#' Visualize multi-orientation environmental–species correlation heatmaps
+Visualize multi-orientation environmental–species correlation heatmaps
 }
 \examples{
 NULL
