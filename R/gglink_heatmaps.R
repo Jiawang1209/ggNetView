@@ -1,8 +1,10 @@
 #' Visualize multi-orientation environmental–species correlation heatmaps
 #'
-#' @param env A data frame or matrix containing environmental variables.
+#' @param env Data Frame
+#' A data frame or matrix containing environmental variables.
 #' Each column represents an environmental factor.
-#' @param spec A data frame or matrix containing species abundance or trait data.
+#' @param spec  Data Frame
+#' A data frame or matrix containing species abundance or trait data.
 #' Each column represents a species or taxonomic unit.
 #' @param env_select Optional list specifying the column indices (or names)
 #' of environmental variables to include in each environmental block.
@@ -10,30 +12,38 @@
 #' @param spec_select Optional list specifying column indices (or names)
 #' of species to include. If multiple elements are provided, they define
 #' separate species clusters in the visualization.
-#' @param spec_layout Character string specifying the spatial arrangement
-#'of species nodes. Options include `"ringle"` (radial) and other supported layouts.
-#' @param relation_method Method for computing relationships between
-#' species and environmental factors. Options are `"correlation"` or `"mantel"`.
-#' @param cor.method Correlation method to use when `relation_method = "correlation"`.
+#' @param spec_layout Character
+#' Character string specifying the spatial arrangement of species nodes. Options include `"ringle"` (radial) and other supported layouts.
+#' @param spec_relation Logical (defalt = TRUE)
+#' Whether to compulate the ralationship of spec
+#' @param relation_method Character
+#' Method for computing relationships between species and environmental factors. Options are `"correlation"` or `"mantel"`.
+#' @param cor.method Character
+#' Correlation method to use when `relation_method = "correlation"`.
 #' One of `"pearson"`, `"kendall"`, or `"spearman"`.
-#' @param cor.use Method for handling missing values in correlation computation.
+#' @param cor.use Character
+#' Method for handling missing values in correlation computation.
 #' One of `"everything"`, `"all"`, `"complete"`, `"pairwise"`, or `"na"`.
-#' @param mantel.method Type of Mantel test to use when `relation_method = "mantel"`.
+#' @param mantel.method Character
+#' Type of Mantel test to use when `relation_method = "mantel"`.
 #' Options include `"mantel"`, `"mantel.partial"`, `"mantelhaen.test"`, and `"mantel.correlog"`.
-#' @param mantel.method2 Correlation coefficient used in the Mantel test.
+#' @param mantel.method2 Character
+#' Correlation coefficient used in the Mantel test.
 #' One of `"pearson"`, `"kendall"`, or `"spearman"`.
-#' @param mantel.alternative Alternative hypothesis for Mantel test.
-#' One of `"two.sided"`, `"less"`, or `"greater"`.
-#' @param drop_nonsig Logical; if `TRUE`, non-significant correlations are dropped
-#'   from the final visualization.
-#' @param shape Integer or numeric specifying the shape of species nodes
-#'   in the plot (passed to `geom_point()`).
-#' @param distance Numeric; the offset distance between central nodes and
-#'   the environmental heatmaps.
-#' @param orientation Character vector defining which heatmap quadrants to display.
-#'   Can include any combination of `"top_right"`, `"bottom_right"`, `"top_left"`,
-#'   and `"bottom_left"`.
-#' @param r Numeric; radius of the central species layout (in plot units).
+#' @param mantel.alternative Character
+#' Alternative hypothesis for Mantel test. One of `"two.sided"`, `"less"`, or `"greater"`.
+#' @param drop_nonsig Logical
+#' if `TRUE`, non-significant correlations are dropped from the final visualization.
+#' @param shape Intrger
+#' Integer or numeric specifying the shape of species nodes in the plot (passed to `geom_point()`).
+#' @param distance Numeric
+#' the offset distance between central nodes and the environmental heatmaps.
+#' @param orientation Character
+#' Character vector defining which heatmap quadrants to display. Can include any combination of `"top_right"`, `"bottom_right"`, `"top_left"`, and `"bottom_left"`.
+#' @param r Numeric
+#' radius of the central species layout (in plot units).
+#' @param fontsize Numeric (default = 5)
+#' The fontsize in env heatmap
 #'
 #' @returns a list of ggplot2
 #' @export
@@ -44,7 +54,8 @@ gglink_heatmaps <- function(
     spec,
     env_select = NULL,
     spec_select = NULL,
-    spec_layout = "ringle",
+    spec_layout = "circle",
+    spec_relation = TRUE,
     relation_method = c("correlation", "mantel"),
     cor.method = c("pearson", "kendall", "spearman"),
     cor.use = c("everything", "all", "complete", "pairwise", "na"),
@@ -54,6 +65,7 @@ gglink_heatmaps <- function(
     drop_nonsig = FALSE,
     shape = 22,
     distance = 3,
+    fontsize = 5,
     orientation = c("top_right", "bottom_right", "top_left","bottom_left"),
     r = 6
 ){
@@ -68,6 +80,7 @@ gglink_heatmaps <- function(
   orientation     <- match.arg(orientation, several.ok = TRUE)
 
 
+
   # test
   # env = Envdf_4st
   # spec = Spedf
@@ -78,8 +91,13 @@ gglink_heatmaps <- function(
   # cor.method = "pearson"
   # cor.use = "pairwise"
   # distance = 4
-  # method = "correlation"
+  # relation_method = "correlation"
   # r = 6
+  # spec_relation = T
+  # fontsize = 5
+  # spec_layout = "gephi"
+  # spec_layout = "star"
+  # spec_layout = "square"
 
 
 
@@ -93,14 +111,14 @@ gglink_heatmaps <- function(
 
   ####----split data----####
   # 1 个点， 然后4个环境数据
-  # spec_select = list(Spec01 = 1:8)
+  spec_select = list(Spec01 = 1:8)
   #
   # # different env
-  # env_select = list(Env01 = 1:14,
-  #                   Env02 = 15:26, # 15:28
-  #                   Env03 = 29:38, # 29:42
-  #                   Env04 = 43:50 # 43:56
-  # )
+  env_select = list(Env01 = 1:14,
+                    Env02 = 15:26, # 15:28
+                    Env03 = 29:38, # 29:42
+                    Env04 = 43:50 # 43:56
+  )
 
   # equal env
   # env_select = list(Env01 = 1:14,
@@ -394,24 +412,120 @@ gglink_heatmaps <- function(
   cor_spec_env_list_out
 
   # core location layout
+  # create graph obj
+  # first to calculate spec correlation
+  if (isTRUE(spec_relation)) {
+    # compute relationship
+    spec_relation_df <- spec_list[[1]]
 
-  # 查看一下里面有多少个变量, 然后将其均等分
-  n_points <- cor_spec_env_list_out$ID %>% unique() %>% length()
+    # single correlation analysis
+    spec_cor_out_self <- psych::corr.test(spec_relation_df, use = cor.use, method = cor.method)
 
-  # 计算每一个点的角度
-  angles <- seq(0, 2*pi, length.out = n_points + 1)[-(n_points+1)]
-  center_x <- 0
-  center_y <- 0
+    # correlation
+    spec_cor_self_r <- spec_cor_out_self$r %>% as.data.frame()
+    spec_cor_self_r[lower.tri(spec_cor_self_r)] <- NA
 
-  # 计算坐标
-  x <- center_x + radius * cos(angles)
-  y <- center_y + radius * sin(angles)
+    # pvalue
+    spec_cor_self_p <- spec_cor_out_self$p %>% as.data.frame()
+    spec_cor_self_p[lower.tri(spec_cor_self_p)] <- NA
+
+    # combine
+    spec_cor_self_r <- spec_cor_self_r %>%
+      tibble::rownames_to_column(var = "ID") %>%
+      tidyr::pivot_longer(cols = -ID,
+                          names_to = "Type",
+                          values_to = "Correlation") %>%
+      dplyr::mutate(ID = factor(ID, levels = unique(ID), ordered = T),
+                    Type = factor(Type, levels = unique(Type), ordered = T),
+                    ID2 = as.numeric(ID),
+                    Type2 = as.numeric(Type)
+      ) %>%
+      stats::na.omit()
+
+    spec_cor_self_p <- spec_cor_self_p %>%
+      tibble::rownames_to_column(var = "ID") %>%
+      tidyr::pivot_longer(cols = -ID,
+                          names_to = "Type",
+                          values_to = "Pvalue") %>%
+      dplyr::mutate(ID = factor(ID, levels = unique(ID), ordered = T),
+                    Type = factor(Type, levels = unique(Type), ordered = T),
+                    ID2 = as.numeric(ID),
+                    Type2 = as.numeric(Type)) %>%
+      stats::na.omit() %>%
+      dplyr::mutate(p_signif = dplyr::case_when(
+        Pvalue > 0.05 ~ "",
+        Pvalue > 0.01 & Pvalue <= 0.05 ~ "*",
+        Pvalue < 0.01 & Pvalue >= 0.001 ~ "**",
+        Pvalue < 0.001 ~ "***"
+      ))
+
+    spec_cor_self_r_p <- cbind(spec_cor_self_r %>% dplyr::select(1,2,4,5,3),
+                               spec_cor_self_p %>% dplyr::select(3,6)
+                               ) %>%
+      dplyr::filter(ID != Type) %>%
+      dplyr::mutate(tmp = ifelse(ID > Type, stringr::str_c(ID, Type), stringr::str_c(Type, ID))) %>%
+      dplyr::distinct(tmp, .keep_all = T) %>%
+      dplyr::select(-tmp) %>%
+      dplyr::select(ID, Type, Correlation, p_signif) %>%
+      purrr::set_names(c("from", "to", "weight", "sig"))
+  }
+
+  # create graph obj
+  spec_graph_obj <- build_graph_from_df(
+    df = spec_cor_self_r_p,
+    node_annotation = NULL,
+    directed = F,
+    module.method = "Fast_greedy"
+  )
+
+  # spec_graph_obj <- igraph::graph_from_data_frame(
+  #   d = spec_cor_self_r_p,
+  #   vertices = NULL,
+  #   directed = F
+  # )
+  # g <- spec_graph_obj
+  #
+  # tidygraph::as_tbl_graph(spec_graph_obj)
+
+  # get location
+  # find layout function
+  # spec_layout = "diamond"
+  # spec_layout = "gephi"
+  # spec_layout = "square"
+
+  func_name <- paste0("create_layout_", spec_layout)
+
+  # find layout functions from ggNetView package
+  lay_func <- utils::getFromNamespace(func_name, "ggNetView")
+
+
+  ly1 = lay_func(graph_obj = spec_graph_obj,
+                 r = radius/2,
+                 node_add = 7)
+
+  ggplot(data = ly1) + geom_point(aes(x = x , y = y))
+
+  # # 查看一下里面有多少个变量, 然后将其均等分
+  # n_points <- cor_spec_env_list_out$ID %>% unique() %>% length()
+  #
+  # # 计算每一个点的角度
+  # angles <- seq(0, 2*pi, length.out = n_points + 1)[-(n_points+1)]
+  # center_x <- 0
+  # center_y <- 0
+  #
+  # # 计算坐标
+  # x <- center_x + radius * cos(angles)
+  # y <- center_y + radius * sin(angles)
 
   # 中间点的物理位置
   cor_spec_env <- data.frame(
-    ID = cor_spec_env_list_out$ID %>% unique() %>% sort(),
-    x = x,
-    y = y
+    # ID = cor_spec_env_list_out$ID %>% unique() %>% sort(),
+    ID = spec_graph_obj %>%
+      tidygraph::activate(nodes) %>%
+      tidygraph::as_tibble() %>%
+      tidygraph::pull(name),
+    x = ly1$x,
+    y = ly1$y
   )
 
   k_vec
@@ -507,9 +621,10 @@ gglink_heatmaps <- function(
     p +
       geom_tile(data = tile, aes(x = x_tile, y = y_tile, fill = Correlation)) +
       geom_text(data = tile, aes(x = x_tile, y = y_tile, label = p_signif), size = 5) +
-      geom_text(data = id_lab,   aes(x = x_id,   y = y_id,   label = ID)) +
+      geom_text(data = id_lab,   aes(x = x_id,   y = y_id,   label = ID), size = fontsize) +
       geom_text(data = type_lab, aes(x = x_type, y = y_type, label = Type),
-                hjust = type_lab$hjust_type[1]) +
+                hjust = type_lab$hjust_type[1],
+                size = fontsize) +
       geom_point(data = diag, aes(x = x_diag, y = y_diag),
                  shape = 21, fill = "#de77ae", size = 4) +
       scale_fill_gradient2(
@@ -572,7 +687,8 @@ gglink_heatmaps <- function(
     ) +
     geom_text(
       data = dplyr::distinct(cor_spec_env_location, ID, .keep_all = TRUE),
-      aes(x = x, y = y, label = ID), size = 5
+      aes(x = x, y = y, label = ID),
+      size = 5
     ) +
     coord_cartesian(clip = "off") +
     theme_void() +
