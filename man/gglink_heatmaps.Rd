@@ -9,7 +9,9 @@ gglink_heatmaps(
   spec,
   env_select = NULL,
   spec_select = NULL,
-  spec_layout = "ringle",
+  spec_layout = "circle",
+  spec_orientation = c("up", "down", "left", "right"),
+  spec_relation = TRUE,
   relation_method = c("correlation", "mantel"),
   cor.method = c("pearson", "kendall", "spearman"),
   cor.use = c("everything", "all", "complete", "pairwise", "na"),
@@ -19,15 +21,18 @@ gglink_heatmaps(
   drop_nonsig = FALSE,
   shape = 22,
   distance = 3,
+  fontsize = 5,
   orientation = c("top_right", "bottom_right", "top_left", "bottom_left"),
   r = 6
 )
 }
 \arguments{
-\item{env}{A data frame or matrix containing environmental variables.
+\item{env}{Data Frame
+A data frame or matrix containing environmental variables.
 Each column represents an environmental factor.}
 
-\item{spec}{A data frame or matrix containing species abundance or trait data.
+\item{spec}{Data Frame
+A data frame or matrix containing species abundance or trait data.
 Each column represents a species or taxonomic unit.}
 
 \item{env_select}{Optional list specifying the column indices (or names)
@@ -38,41 +43,54 @@ Each list element corresponds to one quadrant of the heatmap layout.}
 of species to include. If multiple elements are provided, they define
 separate species clusters in the visualization.}
 
-\item{spec_layout}{Character string specifying the spatial arrangement
-of species nodes. Options include `"ringle"` (radial) and other supported layouts.}
+\item{spec_layout}{Character
+Character string specifying the spatial arrangement of species nodes. Options include `"ringle"` (radial) and other supported layouts.}
 
-\item{relation_method}{Method for computing relationships between
-species and environmental factors. Options are `"correlation"` or `"mantel"`.}
+\item{spec_orientation}{Character
+spec_oritation. Options include: "up","down","left","right"}
 
-\item{cor.method}{Correlation method to use when `relation_method = "correlation"`.
+\item{spec_relation}{Logical (defalt = TRUE)
+Whether to compulate the ralationship of spec}
+
+\item{relation_method}{Character
+Method for computing relationships between species and environmental factors. Options are `"correlation"` or `"mantel"`.}
+
+\item{cor.method}{Character
+Correlation method to use when `relation_method = "correlation"`.
 One of `"pearson"`, `"kendall"`, or `"spearman"`.}
 
-\item{cor.use}{Method for handling missing values in correlation computation.
+\item{cor.use}{Character
+Method for handling missing values in correlation computation.
 One of `"everything"`, `"all"`, `"complete"`, `"pairwise"`, or `"na"`.}
 
-\item{mantel.method}{Type of Mantel test to use when `relation_method = "mantel"`.
+\item{mantel.method}{Character
+Type of Mantel test to use when `relation_method = "mantel"`.
 Options include `"mantel"`, `"mantel.partial"`, `"mantelhaen.test"`, and `"mantel.correlog"`.}
 
-\item{mantel.method2}{Correlation coefficient used in the Mantel test.
+\item{mantel.method2}{Character
+Correlation coefficient used in the Mantel test.
 One of `"pearson"`, `"kendall"`, or `"spearman"`.}
 
-\item{mantel.alternative}{Alternative hypothesis for Mantel test.
-One of `"two.sided"`, `"less"`, or `"greater"`.}
+\item{mantel.alternative}{Character
+Alternative hypothesis for Mantel test. One of `"two.sided"`, `"less"`, or `"greater"`.}
 
-\item{drop_nonsig}{Logical; if `TRUE`, non-significant correlations are dropped
-from the final visualization.}
+\item{drop_nonsig}{Logical
+if `TRUE`, non-significant correlations are dropped from the final visualization.}
 
-\item{shape}{Integer or numeric specifying the shape of species nodes
-in the plot (passed to `geom_point()`).}
+\item{shape}{Intrger
+Integer or numeric specifying the shape of species nodes in the plot (passed to `geom_point()`).}
 
-\item{distance}{Numeric; the offset distance between central nodes and
-the environmental heatmaps.}
+\item{distance}{Numeric
+the offset distance between central nodes and the environmental heatmaps.}
 
-\item{orientation}{Character vector defining which heatmap quadrants to display.
-Can include any combination of `"top_right"`, `"bottom_right"`, `"top_left"`,
-and `"bottom_left"`.}
+\item{fontsize}{Numeric (default = 5)
+The fontsize in env heatmap}
 
-\item{r}{Numeric; radius of the central species layout (in plot units).}
+\item{orientation}{Character
+Character vector defining which heatmap quadrants to display. Can include any combination of `"top_right"`, `"bottom_right"`, `"top_left"`, and `"bottom_left"`.}
+
+\item{r}{Numeric
+radius of the central species layout (in plot units).}
 }
 \value{
 a list of ggplot2

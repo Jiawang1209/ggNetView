@@ -14,6 +14,8 @@
 #' separate species clusters in the visualization.
 #' @param spec_layout Character
 #' Character string specifying the spatial arrangement of species nodes. Options include `"ringle"` (radial) and other supported layouts.
+#' @param spec_orientation Character
+#' spec_oritation. Options include: "up","down","left","right"
 #' @param spec_relation Logical (defalt = TRUE)
 #' Whether to compulate the ralationship of spec
 #' @param relation_method Character
@@ -55,6 +57,7 @@ gglink_heatmaps <- function(
     env_select = NULL,
     spec_select = NULL,
     spec_layout = "circle",
+    spec_orientation = c("up","down","left","right"),
     spec_relation = TRUE,
     relation_method = c("correlation", "mantel"),
     cor.method = c("pearson", "kendall", "spearman"),
@@ -95,9 +98,7 @@ gglink_heatmaps <- function(
   # r = 6
   # spec_relation = T
   # fontsize = 5
-  # spec_layout = "gephi"
-  # spec_layout = "star"
-  # spec_layout = "square"
+
 
 
 
@@ -111,7 +112,7 @@ gglink_heatmaps <- function(
 
   ####----split data----####
   # 1 个点， 然后4个环境数据
-  spec_select = list(Spec01 = 1:8)
+  spec_select = list(Spec01 = 1:15)
   #
   # # different env
   env_select = list(Env01 = 1:14,
@@ -492,6 +493,7 @@ gglink_heatmaps <- function(
   # spec_layout = "diamond"
   # spec_layout = "gephi"
   # spec_layout = "square"
+  # spec_layout = "rectangle_outline"
 
   func_name <- paste0("create_layout_", spec_layout)
 
@@ -500,8 +502,9 @@ gglink_heatmaps <- function(
 
 
   ly1 = lay_func(graph_obj = spec_graph_obj,
-                 r = radius/2,
-                 node_add = 7)
+                 r = radius,
+                 node_add = NULL,
+                 orientation = spec_orientation)
 
   ggplot(data = ly1) + geom_point(aes(x = x , y = y))
 
@@ -637,7 +640,7 @@ gglink_heatmaps <- function(
   # 先为每个方位算好偏移后的数据包
   packs <- purrr::imap(env_cor_self_list, ~ .offset_env(.x, .y, k_gap, length_dist))
 
-  p0 <- ggplot()
+  p0 <- ggplot2::ggplot()
 
   for (i in seq_along(packs)) {
     if (i > 1) p0 <- p0 + ggnewscale::new_scale_fill()

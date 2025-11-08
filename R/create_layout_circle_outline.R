@@ -1,7 +1,7 @@
-create_layout_circle2 <- function(
+create_layout_circle_outline <- function(
     graph_obj,
     node_add = NULL,
-    r=NULL,
+    r = 6,
     orientation = c("up","down","left","right"),
     angle = 0
 ){
@@ -11,6 +11,9 @@ create_layout_circle2 <- function(
   base_angle <- switch(orientation,
                        up = 0, right = -pi/2, down = pi, left = pi/2)
   theta_shift <- base_angle + angle
+
+  # set radius
+  radius = r
 
   # 获取节点
   node_df <- graph_obj %>%
@@ -25,13 +28,22 @@ create_layout_circle2 <- function(
   # as igraph object
   igraph_obj <- tidygraph::as.igraph(graph_obj)
 
-  # layout
-  ly <- igraph::layout_in_circle(igraph_obj) %>%
-    as.data.frame() %>%
-    purrr::set_names(c("x", "y"))
 
+  n_points <- node_df %>% dplyr::pull(name) %>% length()
+  #
+  # 计算每一个点的角度
+  angles <- seq(0, 2*pi, length.out = n_points + 1)[-(n_points+1)]
+  center_x <- 0
+  center_y <- 0
+  #
+  # # 计算坐标
+  x <- center_x + radius * cos(angles)
+  y <- center_y + radius * sin(angles)
 
-  # ly <- as.data.frame(ly) %>% dplyr::select(1,2)
+  ly <- data.frame(
+    x = x,
+    y = y
+  )
 
 
   # 开始旋转
@@ -42,7 +54,6 @@ create_layout_circle2 <- function(
     xy <- as.matrix(ly[, c("x","y")])
     ly[, c("x","y")] <- t(Rm %*% t(xy))
   }
-
 
   return(ly)
 }
