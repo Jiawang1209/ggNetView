@@ -161,6 +161,7 @@ ggNetView <- function(graph_obj,
       )
     }
 
+
     module_number <- ly1_1$graph_ly_final$Modularity %>% as.character() %>% unique() %>% length()
 
     # module info
