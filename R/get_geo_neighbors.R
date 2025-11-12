@@ -680,3 +680,71 @@ module_layout3 <- function(graph_obj,
     ggplot_data = ggplot_data
   )
 }
+
+
+module_layout4 <- function(graph_obj,
+                           layout,                # data.frame(x, y)
+                           center = TRUE,         # 第一个模块优先靠中心放
+                           shrink = 0.9,          # 模块内轻度收紧
+                           k_nn = 8,              # layout 邻接度（6~10合适）
+                           push_others_delta = 0.2#, # Others 外移量
+                           # seed = seed
+){
+  # set.seed(seed)
+
+  # 1) 取节点数据
+  node_df <- graph_obj %>%
+    tidygraph::activate(nodes) %>%
+    tidygraph::as_tibble()
+
+  # 2) 确定模块顺序（大到小，Others 最后）
+  node_df %>%
+    dplyr::count(modularity3, name = "size") %>%
+    dplyr::arrange(desc(size)) %>%
+    dplyr::mutate(modularity4 = factor(modularity3,
+                                       levels = c(setdiff(modularity3, "Others"), "Others"),
+                                       ordered = TRUE)) %>%
+    dplyr::arrange(modularity4) %>%
+    dplyr::mutate(modularity4 = as.character(modularity4)) %>%
+    dplyr::pull(modularity4) -> mod_levels
+
+  # 3) 模块内按度数排（仅用于统计数量）
+  node_df_sorted <- node_df %>%
+    tidygraph::mutate(modularity3 = factor(modularity3, levels = mod_levels)) %>%
+    tidygraph::arrange(modularity3, dplyr::desc(Degree))
+
+  # 4) 每模块节点数
+  node_df_sorted_number <- node_df_sorted %>%
+    dplyr::count(modularity3)
+
+  # 5) 返回的图对象（只按模块顺序排）
+  graph_obj_sort <- graph_obj %>%
+    tidygraph::mutate(modularity3 = factor(modularity3, levels = mod_levels, ordered = TRUE)) %>%
+    tidygraph::arrange(modularity3)
+
+
+  ly_final <- data.frame(x = layout$x,
+                         y = layout$y)
+
+  # combine
+
+  graph_ly_final <- dplyr::bind_cols(
+    ly_final,
+    graph_obj_sort %>%
+      tidygraph::activate(nodes) %>%
+      tidygraph::as_tibble()
+  ) %>%
+    dplyr::mutate(Modularity = droplevels(Modularity))
+
+
+  ggplot_data <- get_location(graph_ly_final, graph_obj_sort)
+
+  # get location result
+
+  return(list(layout = ly_final,
+              graph_obj = graph_obj_sort,
+              graph_ly_final = graph_ly_final,
+              ggplot_data = ggplot_data
+  ))
+
+}

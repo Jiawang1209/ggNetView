@@ -25,7 +25,7 @@
 #' @param layout.module Character  (default = "random")
 #‘ - random : modules are distributed more randomly and independently.
 #' - adjacent : modules are positioned close to each other, minimizing inter-module gaps.
-#'
+#' - order : modules are distributed by order, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`
 #' @param shape Integer  (default = 21).
 #' The point shape likely in ggplot2.
 #' @param pointalpha Integer  (default = 1).
@@ -87,7 +87,7 @@ ggNetView <- function(graph_obj,
                       shrink = 1,
                       k_nn = 8,
                       push_others_delta = 0,
-                      layout.module = c("random", "adjacent"),
+                      layout.module = c("random", "adjacent", "order"),
                       shape = 21,
                       pointalpha = 1,
                       pointsize = c(1,10),
@@ -161,6 +161,16 @@ ggNetView <- function(graph_obj,
       )
     }
 
+    if (layout.module == "none") {
+      ly1_1 <- module_layout4(graph_obj,
+                              layout = ly1,
+                              center = center,
+                              k_nn = k_nn,
+                              push_others_delta = push_others_delta,
+                              shrink = shrink# ,
+                              # seed = seed
+      )
+    }
 
     module_number <- ly1_1$graph_ly_final$Modularity %>% as.character() %>% unique() %>% length()
 

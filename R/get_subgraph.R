@@ -2,6 +2,8 @@
 #'
 #' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
 #' The network object to be visualized.
+#' @param select_module a character vectors
+#' Select the module name in graph object
 #'
 #' @returns list
 #' @export
@@ -46,6 +48,16 @@ get_subgraph <- function(graph_obj, select_module = NULL){
 
   }
 
+  # stat
+  stat_module <- purrr::map(id_list, ~length(.x)) %>%
+    do.call(rbind, .) %>%
+    as.data.frame() %>%
+    tibble::rownames_to_column(var = "Module") %>%
+    dplyr::rename(Number = V1)
+
+
+
+
 
   if (!is.null(select_module)) {
     graph_select <- obj %>%
@@ -56,6 +68,7 @@ get_subgraph <- function(graph_obj, select_module = NULL){
 
 
   return(list(sub_graph_all = sub_graph,
+              stat_module = stat_module,
               sub_graph_select = graph_select))
 
 }

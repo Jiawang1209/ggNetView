@@ -4,11 +4,14 @@
 \alias{get_subgraph}
 \title{Extract subgrah from graph object}
 \usage{
-get_subgraph(graph_obj)
+get_subgraph(graph_obj, select_module = NULL)
 }
 \arguments{
 \item{graph_obj}{An graph object from build_graph_from_mat or build_graph_from_df.
 The network object to be visualized.}
+
+\item{select_module}{a character vectors
+Select the module name in graph object}
 }
 \value{
 list
