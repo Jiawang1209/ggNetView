@@ -1,24 +1,7 @@
-#' Create petal2 layout
-#'
-#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
-#'   The network object to be visualized.
-#' @param node_add Integer (default = 7).
-#'   Number of nodes to add in each layer of the layout.
-#' @param r Numeric (default = 1).
-#'   Radius increment for concentric or layered layouts.
-#' @param petals Numeric (default = 6).
-#' @param amp Numeric (default = 0.35).
-#' @param inner_rings Numeric (default = 2).
-#' @param transition_rings Numeric (default = 0).
-#'
-#' @returns Layout
-#' @description internal function
-#' @keywords internal
-#'
-#' @examples NULL
 create_layout_petal2 <- function(graph_obj,
                                  node_add = 7,
                                  r = 0.1,
+                                 scale = T,
                                  petals = 6,
                                  amp = 0.35,
                                  inner_rings = 2, # 有多少“内圈”保持纯圆形（不含中心点）

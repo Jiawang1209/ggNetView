@@ -2,6 +2,7 @@ create_layout_square2 <- function(
     graph_obj,
     node_add = 8,
     r = 0.1,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0 # 在 orientation 基础上的微调（弧度）
 ){

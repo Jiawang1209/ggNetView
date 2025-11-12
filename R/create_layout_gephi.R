@@ -1,25 +1,7 @@
-#' Create gephi layout
-#'
-#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
-#'   The network object to be visualized.
-#' @param node_add Integer (default = 7).
-#'   Number of nodes to add in each layer of the layout.
-#' @param r Numeric (default = 1).
-#'   Radius increment for concentric or layered layouts.
-#' @param orientation Character string.
-#'   custom orientation; one of
-#'   "up","down","left","right"
-#' @param angle Integer  (default = 0).
-#'  change  orientation angle
-#'
-#' @returns layout.
-#' @description internal function
-#' @keywords internal
-#'
-#' @examples NULL
 create_layout_gephi <- function(
     graph_obj,
     node_add = 7,
+    scale = T,
     r = 0.1,
     orientation = c("up","down","left","right"),
     angle = 0

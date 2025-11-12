@@ -128,12 +128,14 @@ ggNetView <- function(graph_obj,
     ly1 = lay_func(graph_obj = graph_obj,
                    r = r,
                    ring_n = ring_n,
+                   scale = scale,
                    orientation = orientation,
                    angle = angle)
   }else{
     ly1 = lay_func(graph_obj = graph_obj,
                    node_add = node_add,
                    r = r,
+                   scale = scale,
                    orientation = orientation,
                    angle = angle)
   }

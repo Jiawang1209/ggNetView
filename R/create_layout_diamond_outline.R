@@ -4,6 +4,7 @@ create_layout_diamond_outline <- function(
     graph_obj,
     r = 6,
     node_add = NULL,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0  # 弧度
 ){

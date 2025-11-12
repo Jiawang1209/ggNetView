@@ -2,7 +2,7 @@ create_layout_bipartite_layout <- function(
     graph_obj,
     r = 6,
     node_add = NULL,
-    scale = TRUE,
+    scale = scale,
     orientation = c("up","down","left","right"),
     angle = 0
   ){
@@ -38,7 +38,7 @@ create_layout_bipartite_layout <- function(
   }
 
   # get radius
-  get_radius <- function(n_points, r = r, scale = TRUE) {
+  get_radius <- function(n_points, r = r, scale = scale) {
     if (!scale) return(rep(r, length(n_points)))
     n_scaled <- n_points / mean(n_points)
     r * n_scaled ^ 0.75 * 1.25

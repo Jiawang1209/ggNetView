@@ -4,6 +4,7 @@ create_layout_rightiso_layers <- function(
     graph_obj,
     node_add = 7,
     r = 0.2,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0){
   orientation <- match.arg(orientation)

@@ -1,29 +1,8 @@
-#' Create petal layout
-#'
-#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
-#'   The network object to be visualized.
-#' @param node_add Integer (default = 7).
-#'   Number of nodes to add in each layer of the layout.
-#' @param r Numeric (default = 1).
-#'   Radius increment for concentric or layered layouts.
-#' @param petals Numeric (default = 6).
-#' @param amp Numeric (default = 0.35).
-#'
-#' @param orientation Character string.
-#'   custom orientation; one of
-#'   "up","down","left","right"
-#' @param angle Integer  (default = 0).
-#'  change  orientation angle
-#'
-#' @returns Layout
-#' @description internal function
-#' @keywords internal
-#'
-#' @examples NULL
 create_layout_petal <- function(
     graph_obj,
     node_add = 7,
     r = 0.1,
+    scale = T,
     petals = 6,
     amp = 0.35,
     orientation = c("up","down","left","right"),

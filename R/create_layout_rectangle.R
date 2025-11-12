@@ -1,28 +1,9 @@
-#' Create rectangle layout
-#'
-#' @param graph_obj An graph object from build_graph_from_mat or build_graph_from_df.
-#'   The network object to be visualized.
-#' @param node_add Integer (default = 7).
-#'   Number of nodes to add in each layer of the layout.
-#' @param r Numeric (default = 1).
-#'   Radius increment for concentric or layered layouts.
-#' @param ratio Numeric (default = 1.5).
-#' @param orientation Character string.
-#'   custom orientation; one of
-#'   "up","down","left","right"
-#' @param angle Integer  (default = 0).
-#'  change  orientation angle
-#'
-#' @returns Layout
-#' @description internal function
-#' @keywords internal
-#'
-#' @examples NULL
 create_layout_rectangle <- function(
     graph_obj,
     node_add = 7,
     r = 0.1,
     ratio = 1.5,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0 # 在 orientation 基础上的微调（弧度）
 ){

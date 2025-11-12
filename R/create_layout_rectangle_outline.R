@@ -4,6 +4,7 @@ create_layout_rectangle_outline <- function(
     graph_obj,
     r = 6,
     node_add = NULL,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0  # 弧度；在 orientation 基础上的微调
 ){

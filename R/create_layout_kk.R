@@ -2,6 +2,7 @@ create_layout_kk <- function(
     graph_obj,
     node_add = NULL,
     r=NULL,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0
 ){

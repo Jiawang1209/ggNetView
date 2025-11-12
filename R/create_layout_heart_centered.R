@@ -1,29 +1,9 @@
-#' Create heart centered layout
-#'
-#' @param graph_obj  An graph object from build_graph_from_mat or build_graph_from_df.
-#'   The network object to be visualized.
-#' @param r Numeric (default = 1).
-#'   Radius increment for concentric or layered layouts.
-#' @param node_add Integer (default = 7).
-#'   Number of nodes to add in each layer of the layout.
-#' @param orientation Character string.
-#'   custom orientation; one of
-#'   "up","down","left","right"
-#' @param angle Integer  (default = 0).
-#'  change  orientation angle
-#' @param y_squash Integer   (default = 1).
-#'
-#'
-#' @returns Layout
-#' @description internal function
-#' @keywords internal
-#'
-#' @examples NULL
 create_layout_heart_centered <- function(
     graph_obj,
     r = 0.15,                    # 层间尺度步长（整体大小递增）
     node_add = 8L,          # 每层基础分段数（默认更紧凑：8, 16, 24, ...）
     orientation = c("up","down","left","right"),
+    scale = T,
     angle = 0,                   # 在 orientation 基础上的微调（弧度）
     y_squash = 1.0               # 纵向压缩（<1更“薄”，>1更“胖”）
 ){

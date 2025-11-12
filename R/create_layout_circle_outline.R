@@ -2,6 +2,7 @@ create_layout_circle_outline <- function(
     graph_obj,
     node_add = NULL,
     r = 6,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0
 ){
