@@ -1,8 +1,8 @@
-create_layout_tripartite_gephi_layout <- function(
+create_layout_cross_quadripartite_gephi_layout <- function(
     graph_obj,
-    scale = T,
     r = 1,
     node_add = 7,
+    scale = T,
     orientation = c("up","down","left","right"),
     angle = 0
 ){
@@ -11,33 +11,36 @@ create_layout_tripartite_gephi_layout <- function(
                        up = 0, right = -pi/2, down = pi, left = pi/2)
   theta_shift <- base_angle + angle
 
-  # 基础半径与等腰直角三角形三个锚点（先按“up”放置，再统一旋转）
+  # ---- 十字交叉四个锚点（先按“up”构型放置，再统一旋转）----
   radius <- r * 6
-
   anchors <- list(
-    c(-radius, 0),  # 左
-    c( radius, 0),  # 右
-    c( 0,  radius)  # 上（此处是直角顶点，三角形为等腰直角）
+    c( 0,  radius),  # 上
+    c( 0, -radius),  # 下
+    c(-radius,  0),  # 左
+    c( radius,  0)   # 右
   )
+  # 此布局关于原点对称，质心天然在(0,0)，无需平移
 
-  # 取节点与模块
+  # ---- 获取节点与模块 ----
   node_df <- graph_obj %>%
     tidygraph::activate(nodes) %>%
     tidygraph::as_tibble()
 
   mod_levels <- node_df$Modularity %>% droplevels() %>% levels() %>% as.character()
   module_list <- node_df %>% dplyr::group_split(Modularity)
-
   n_vec <- purrr::map_int(module_list, nrow)
 
-  if (length(n_vec) < 3) {
-    stop("Tripartite layout requires at least 2 modules in `Modularity`")
+  if (length(n_vec) < 4) {
+    stop("Cross quadripartite 布局需要至少 4 个模块（来自列 Modularity）。")
   }
-  if (length(n_vec) > 3) {
-    message("`tripartite layout more than 2 modules detected.")
+  if (length(n_vec) > 4) {
+    message("检测到超过 4 个模块，仅使用前 4 个模块进行十字交叉布局。")
+    module_list <- module_list[1:4]
+    n_vec <- n_vec[1:4]
+    mod_levels <- mod_levels[1:4]
   }
 
-  # 计算每个模块同心圆分桶
+  # ---- 同心圆分层（每圈节点数序列）----
   circle_layout <- function(n, node_add){
     counts <- 1
     total  <- 1
@@ -63,18 +66,18 @@ create_layout_tripartite_gephi_layout <- function(
     )
   })
 
-  # 生成“以某锚点为中心”的同心圆布局（带交错 offset）
+  # ---- 以锚点为圆心生成同心圆坐标（含交错 offset）----
   concentric_from_anchor <- function(cx, cy, info_df, r_step){
-    ly <- data.frame(x = cx, y = cy)  # 第一圈放 1 个
+    ly <- data.frame(x = cx, y = cy)
     offset <- 0
     prev_n <- info_df$number_node
     if (nrow(info_df) >= 2) {
       for (index in 2:nrow(info_df)) {
         if (index == 2) {
-          l <- 2 * pi * (0:(prev_n[index]-1)) / prev_n[index]
+          l <- 2*pi * (0:(prev_n[index]-1)) / prev_n[index]
         } else {
           offset <- (offset + pi/prev_n[index]) %% (2*pi)
-          l <- offset + 2 * pi * (0:(prev_n[index]-1)) / prev_n[index]
+          l <- offset + 2*pi * (0:(prev_n[index]-1)) / prev_n[index]
         }
         x <- cx + sin(l) * (index - 1) * r_step
         y <- cy + cos(l) * (index - 1) * r_step
@@ -84,12 +87,12 @@ create_layout_tripartite_gephi_layout <- function(
     ly
   }
 
-  # 为三个模块依次生成
-  ly_list <- list()
-  for (i in 1:3) {
+  # ---- 四模块逐一生成 ----
+  ly_list <- vector("list", 4)
+  for (i in 1:4) {
     cx <- anchors[[i]][1]; cy <- anchors[[i]][2]
     ly_i <- concentric_from_anchor(cx, cy, n_vec_node[[i]], r_step = r)
-    ly_i$group <- mod_levels[i]  # 可用于后续按模块对齐/合并
+    ly_i$group <- mod_levels[i]  # 标记模块，便于后续 join
     ly_list[[i]] <- ly_i
   }
 

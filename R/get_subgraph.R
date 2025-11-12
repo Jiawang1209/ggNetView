@@ -55,8 +55,7 @@ get_subgraph <- function(graph_obj, select_module = NULL){
     tibble::rownames_to_column(var = "Module") %>%
     dplyr::rename(Number = V1)
 
-
-
+  print(stat_module)
 
 
   if (!is.null(select_module)) {
