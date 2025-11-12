@@ -1,4 +1,4 @@
-create_bipartite_gephi_layout <- function(
+create_layout_bipartite_gephi_layout <- function(
     graph_obj,
     r = 1,
     node_add = 7,
@@ -16,7 +16,7 @@ create_bipartite_gephi_layout <- function(
   theta_shift <- base_angle + angle
 
   # set radius
-  radius = r * 10
+  radius = r * 6
 
   # 获取节点
   node_df <- graph_obj %>%

@@ -1,4 +1,4 @@
-create_bipartite_layout <- function(
+create_layout_bipartite_layout <- function(
     graph_obj,
     r = 6,
     node_add = NULL,
