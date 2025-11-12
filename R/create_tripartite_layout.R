@@ -1,4 +1,4 @@
-create_layout_tripartite_layout <- function(
+create_tripartite_layout <- function(
     graph_obj,
     scale = T,
     orientation = c("up","down","left","right"),

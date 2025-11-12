@@ -1,4 +1,4 @@
-create_layout_bipartite_gephi_layout <- function(
+create_bipartite_gephi_layout <- function(
     graph_obj,
     r = 1,
     node_add = 7,
