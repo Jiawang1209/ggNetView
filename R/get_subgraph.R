@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples NULL
-get_subgraph <- function(graph_obj){
+get_subgraph <- function(graph_obj, select_module = NULL){
 
   # get obj
   obj <- graph_obj
@@ -46,7 +46,17 @@ get_subgraph <- function(graph_obj){
 
   }
 
-  return(sub_graph)
+
+  if (!is.null(select_module)) {
+    graph_select <- obj %>%
+      tidygraph::filter(as.character(Modularity) %in% select_module)
+  }else{
+    graph_select <- NULL
+  }
+
+
+  return(list(sub_graph_all = sub_graph,
+              sub_graph_select = graph_select))
 
 }
 
