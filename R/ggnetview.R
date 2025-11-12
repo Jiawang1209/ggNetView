@@ -166,7 +166,7 @@ ggNetView <- function(graph_obj,
       )
     }
 
-    if (layout.module == "none") {
+    if (layout.module == "order") {
       ly1_1 <- module_layout4(graph_obj,
                               layout = ly1,
                               center = center,
