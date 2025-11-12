@@ -69,6 +69,8 @@
 #' Custom orientation; one of "up","down","left","right".
 #' @param angle Integer  (default = 0).
 #' Change  orientation angle.
+#' @param scale Logical  (default = T).
+#' modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius
 #' @param seed Integer (default = 1115).
 #' Random seed for reproducibility.
 
@@ -109,7 +111,8 @@ ggNetView <- function(graph_obj,
                       nodelabsize = 5,
                       remove = FALSE,
                       orientation = "up",
-                      angle = 0, # 在 orientation 基础上的微调（弧度）
+                      angle = 0,
+                      scale = T,
                       seed = 1115
                       ){
 

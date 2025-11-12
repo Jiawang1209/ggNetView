@@ -38,6 +38,7 @@ ggNetView(
   remove = FALSE,
   orientation = "up",
   angle = 0,
+  scale = T,
   seed = 1115
 )
 }
@@ -142,6 +143,9 @@ Custom orientation; one of "up","down","left","right".}
 
 \item{angle}{Integer  (default = 0).
 Change  orientation angle.}
+
+\item{scale}{Logical  (default = T).
+modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius}
 
 \item{seed}{Integer (default = 1115).
 Random seed for reproducibility.}
