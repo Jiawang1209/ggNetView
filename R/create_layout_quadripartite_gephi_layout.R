@@ -2,6 +2,7 @@ create_layout_quadripartite_gephi_layout <- function(
     graph_obj,
     r = 1,
     node_add = 7,
+    anchor_dist = 10,
     scale = T,
     orientation = c("up","down","left","right"),
     angle = 0
@@ -12,12 +13,12 @@ create_layout_quadripartite_gephi_layout <- function(
   theta_shift <- base_angle + angle
 
   # ---- 正方形的四个锚点 ----
-  radius <- r * 6
+  radius <- r
   anchors <- list(
-    c(-radius, -radius),  # 左下
-    c(-radius,  radius),  # 左上
-    c( radius,  radius),  # 右上
-    c( radius, -radius)   # 右下
+    c(-anchor_dist, -anchor_dist),  # 左下
+    c(-anchor_dist,  anchor_dist),  # 左上
+    c( anchor_dist,  anchor_dist),  # 右上
+    c( anchor_dist, -anchor_dist)   # 右下
   )
 
   # 平移到质心在原点

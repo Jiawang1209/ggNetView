@@ -4,6 +4,7 @@ create_layout_heart_centered <- function(
     node_add = 8L,          # 每层基础分段数（默认更紧凑：8, 16, 24, ...）
     orientation = c("up","down","left","right"),
     scale = T,
+    anchor_dist = 10,
     angle = 0,                   # 在 orientation 基础上的微调（弧度）
     y_squash = 1.0               # 纵向压缩（<1更“薄”，>1更“胖”）
 ){

@@ -5,6 +5,7 @@ create_layout_rightiso_layers <- function(
     node_add = 7,
     r = 0.2,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0){
   orientation <- match.arg(orientation)

@@ -1,6 +1,7 @@
 create_layout_cross_quadripartite_gephi_layout <- function(
     graph_obj,
     r = 1,
+    anchor_dist = 10,
     node_add = 7,
     scale = T,
     orientation = c("up","down","left","right"),
@@ -12,12 +13,12 @@ create_layout_cross_quadripartite_gephi_layout <- function(
   theta_shift <- base_angle + angle
 
   # ---- 十字交叉四个锚点（先按“up”构型放置，再统一旋转）----
-  radius <- r * 6
+  radius <- r
   anchors <- list(
-    c( 0,  radius),  # 上
-    c( 0, -radius),  # 下
-    c(-radius,  0),  # 左
-    c( radius,  0)   # 右
+    c( 0,  anchor_dist),  # 上
+    c( 0, -anchor_dist),  # 下
+    c(-anchor_dist,  0),  # 左
+    c( anchor_dist,  0)   # 右
   )
   # 此布局关于原点对称，质心天然在(0,0)，无需平移
 

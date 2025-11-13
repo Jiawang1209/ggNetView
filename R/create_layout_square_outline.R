@@ -3,6 +3,7 @@ create_layout_square_outline <- function(
     r = 6,
     node_add = NULL,
     orientation = c("up","down","left","right"),
+    anchor_dist = 10,
     angle = 0  # 弧度
 ){
   # 方向与旋转角

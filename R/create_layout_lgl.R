@@ -3,6 +3,7 @@ create_layout_lgl <- function(
     node_add = NULL,
     r=NULL,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0
 ){

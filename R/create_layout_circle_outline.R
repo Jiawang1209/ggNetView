@@ -3,6 +3,7 @@ create_layout_circle_outline <- function(
     node_add = NULL,
     r = 6,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0
 ){

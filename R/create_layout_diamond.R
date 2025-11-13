@@ -2,6 +2,7 @@ create_layout_diamond <- function(
     graph_obj,
     node_add = 7,
     scale = T,
+    anchor_dist = 10,
     r = 0.1,
     orientation = c("up","down","left","right"),
     angle = 0 # 在 orientation 基础上的微调（弧度）

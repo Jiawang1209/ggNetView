@@ -3,6 +3,7 @@ create_layout_square2 <- function(
     node_add = 8,
     r = 0.1,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0 # 在 orientation 基础上的微调（弧度）
 ){

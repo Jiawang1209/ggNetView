@@ -3,6 +3,7 @@ create_layout_petal <- function(
     node_add = 7,
     r = 0.1,
     scale = T,
+    anchor_dist = 10,
     petals = 6,
     amp = 0.35,
     orientation = c("up","down","left","right"),

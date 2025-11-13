@@ -5,6 +5,7 @@ create_layout_rectangle_outline <- function(
     r = 6,
     node_add = NULL,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0  # 弧度；在 orientation 基础上的微调
 ){

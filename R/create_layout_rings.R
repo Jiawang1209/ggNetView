@@ -2,6 +2,7 @@ create_layout_rings <- function(graph_obj,
                                 ring_n = NULL,
                                 r = 0.25,
                                 scale = T,
+                                anchor_dist = 10,
                                 orientation = c("up","down","left","right"),
                                 angle = 0){
   graph_obj = graph_obj %>%

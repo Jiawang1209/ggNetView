@@ -4,6 +4,7 @@ create_layout_rectangle <- function(
     r = 0.1,
     ratio = 1.5,
     scale = T,
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle = 0 # 在 orientation 基础上的微调（弧度）
 ){

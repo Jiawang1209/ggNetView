@@ -2,6 +2,7 @@ create_layout_petal2 <- function(graph_obj,
                                  node_add = 7,
                                  r = 0.1,
                                  scale = T,
+                                 anchor_dist = 10,
                                  petals = 6,
                                  amp = 0.35,
                                  inner_rings = 2, # 有多少“内圈”保持纯圆形（不含中心点）

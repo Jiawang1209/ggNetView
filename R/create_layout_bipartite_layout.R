@@ -2,6 +2,7 @@ create_layout_bipartite_layout <- function(
     graph_obj,
     r = 6,
     node_add = NULL,
+    anchor_dist = 10,
     scale = scale,
     orientation = c("up","down","left","right"),
     angle = 0

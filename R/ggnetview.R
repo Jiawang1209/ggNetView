@@ -71,6 +71,8 @@
 #' Change  orientation angle.
 #' @param scale Logical  (default = T).
 #' modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius
+#' @param anchor_dist Integer (default = 10)
+#' the distance of each modules, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`
 #' @param seed Integer (default = 1115).
 #' Random seed for reproducibility.
 
@@ -113,6 +115,7 @@ ggNetView <- function(graph_obj,
                       orientation = "up",
                       angle = 0,
                       scale = T,
+                      anchor_dist = 6,
                       seed = 1115
                       ){
 
@@ -129,6 +132,7 @@ ggNetView <- function(graph_obj,
                    r = r,
                    ring_n = ring_n,
                    scale = scale,
+                   anchor_dist = anchor_dist,
                    orientation = orientation,
                    angle = angle)
   }else{
@@ -136,6 +140,7 @@ ggNetView <- function(graph_obj,
                    node_add = node_add,
                    r = r,
                    scale = scale,
+                   anchor_dist = anchor_dist,
                    orientation = orientation,
                    angle = angle)
   }

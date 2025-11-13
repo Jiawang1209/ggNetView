@@ -6,6 +6,7 @@ create_layout_star_concentric <- function(
     inner_ratio = 0.45,        # 内半径/外半径（0.35~0.55 常用，越小越尖）
     center     = c(0, 0),      # 整体平移
     scale      = 1,            # 整体缩放系数（对所有半径生效）
+    anchor_dist = 10,
     orientation = c("up","down","left","right"),
     angle      = 0             # 在 orientation 基础上的微调（弧度）
 ){

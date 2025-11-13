@@ -2,6 +2,7 @@ create_layout_tripartite_gephi_layout <- function(
     graph_obj,
     scale = T,
     r = 1,
+    anchor_dist = 10,
     node_add = 7,
     orientation = c("up","down","left","right"),
     angle = 0
@@ -15,9 +16,9 @@ create_layout_tripartite_gephi_layout <- function(
   radius <- r * 6
 
   anchors <- list(
-    c(-radius, 0),  # 左
-    c( radius, 0),  # 右
-    c( 0,  radius)  # 上（此处是直角顶点，三角形为等腰直角）
+    c(-anchor_dist, 0),  # 左
+    c( anchor_dist, 0),  # 右
+    c( 0,  anchor_dist)  # 上（此处是直角顶点，三角形为等腰直角）
   )
 
   # 取节点与模块

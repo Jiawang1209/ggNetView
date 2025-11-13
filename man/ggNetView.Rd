@@ -39,6 +39,7 @@ ggNetView(
   orientation = "up",
   angle = 0,
   scale = T,
+  anchor_dist = 6,
   seed = 1115
 )
 }
@@ -146,6 +147,9 @@ Change  orientation angle.}
 
 \item{scale}{Logical  (default = T).
 modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius}
+
+\item{anchor_dist}{Integer (default = 10)
+the distance of each modules, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`}
 
 \item{seed}{Integer (default = 1115).
 Random seed for reproducibility.}

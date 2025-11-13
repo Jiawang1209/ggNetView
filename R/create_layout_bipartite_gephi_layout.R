@@ -1,6 +1,7 @@
 create_layout_bipartite_gephi_layout <- function(
     graph_obj,
     r = 1,
+    anchor_dist = 10,
     node_add = 7,
     scale = scale,
     orientation = c("up","down","left","right"),
@@ -16,7 +17,7 @@ create_layout_bipartite_gephi_layout <- function(
   theta_shift <- base_angle + angle
 
   # set radius
-  radius = r * 6
+  radius = r
 
   # 获取节点
   node_df <- graph_obj %>%
@@ -73,7 +74,7 @@ create_layout_bipartite_gephi_layout <- function(
 
   for (i in seq_along(n_vec_node)) {
     if (i == 1) {
-      ly <- data.frame(x = -1*radius, y = 0)
+      ly <- data.frame(x = -1*anchor_dist, y = 0)
       offset <- 0
       prev_n <- n_vec_node[[i]]$number_node
 
@@ -90,7 +91,7 @@ create_layout_bipartite_gephi_layout <- function(
           l <- offset + (2* pi * (0:(prev_n[index]-1)) / prev_n[index])
         }
 
-        x <- -1*radius + sin(l) * (index-1)*r
+        x <- -1*anchor_dist + sin(l) * (index-1)*r
         y <- 0 + cos(l) * (index-1)*r
         ly_tmp <- data.frame(x = x,
                              y = y)
@@ -103,7 +104,7 @@ create_layout_bipartite_gephi_layout <- function(
     }
 
     if (i == 2) {
-      ly <- data.frame(x = 1*radius, y = 0)
+      ly <- data.frame(x = 1*anchor_dist, y = 0)
       offset <- 0
       prev_n <- n_vec_node[[i]]$number_node
 
@@ -120,7 +121,7 @@ create_layout_bipartite_gephi_layout <- function(
           l <- offset + (2* pi * (0:(prev_n[index]-1)) / prev_n[index])
         }
 
-        x <- 1*radius + sin(l) * (index-1)*r
+        x <- 1*anchor_dist + sin(l) * (index-1)*r
         y <- 0 + cos(l) * (index-1)*r
         ly_tmp <- data.frame(x = x,
                              y = y)
