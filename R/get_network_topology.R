@@ -8,6 +8,9 @@
 #'
 #' @examples NULL
 get_network_topology <- function(graph_obj){
+  # get node and edge number
+
+
   # create igraph object
   ig <- tidygraph::as.igraph(graph_obj)
 
@@ -38,7 +41,19 @@ get_network_topology <- function(graph_obj){
   fast_greedy_com <- igraph::cluster_fast_greedy(ig)
   fast_greedy_com_modularity <- igraph::modularity(fast_greedy_com)
 
+  # Robustness
 
+  # Stability
+
+  # Cohension
+
+  # Vulenrability
+
+
+  # random network and topology
+
+
+  # output
   out <- data.frame(
     degree_vals = degree_vals,
     avg_path = avg_path,
