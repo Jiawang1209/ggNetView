@@ -9,6 +9,7 @@ ggNetView_RMT(
   nr_thresholds = 51,
   interval = NULL,
   unfold.method = c("gaussian", "spline"),
+  method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
   bandwidth = "nrd0",
   nr.fit.points = 51,
   discard.outliers = TRUE,
@@ -27,7 +28,10 @@ ggNetView_RMT(
 
 \item{interval}{Optional numeric length-2 vector [min, max] for scanning range over |mat| upper triangle (default auto).}
 
-\item{unfold.method}{"gaussian" or "spline" (default "gaussian").}
+\item{unfold.method}{"gaussian" or "spline" (default "gaussian").
+#' @param method Character.
+Relationship analysis methods.
+Options include: "WGCNA", "SpiecEasi", "SPARCC" and "cor".}
 
 \item{bandwidth}{Bandwidth for gaussian unfolding (passed to stats::density), default "nrd0".}
 

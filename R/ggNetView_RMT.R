@@ -4,6 +4,9 @@
 #' @param nr_thresholds Integer. Number of thresholds to scan (default 51).
 #' @param interval Optional numeric length-2 vector [min, max] for scanning range over |mat| upper triangle (default auto).
 #' @param unfold.method "gaussian" or "spline" (default "gaussian").
+#' #' @param method Character.
+#' Relationship analysis methods.
+#' Options include: "WGCNA", "SpiecEasi", "SPARCC" and "cor".
 #' @param bandwidth Bandwidth for gaussian unfolding (passed to stats::density), default "nrd0".
 #' @param nr.fit.points Integer, number of support points for spline unfolding (default 51).
 #' @param discard.outliers Logical. Remove eigenvalue outliers via IQR before unfolding (default TRUE).
@@ -29,6 +32,7 @@ ggNetView_RMT <- function(
     nr_thresholds = 51,
     interval = NULL,
     unfold.method = c("gaussian", "spline"),
+    method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
     bandwidth = "nrd0",
     nr.fit.points = 51,
     discard.outliers = TRUE,
