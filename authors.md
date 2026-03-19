@@ -11,11 +11,11 @@ Source:
 [`DESCRIPTION`](https://github.com/Jiawang1209/ggNetView/blob/main/DESCRIPTION)
 
 Liu Y (2026). *ggNetView: An R Package for Reproducible and
-Deterministic Network Analysis and Visualization.*. R package version
+Deterministic Network Analysis and Visualization*. R package version
 1.4.30, <https://github.com/Jiawang1209/ggNetView>.
 
     @Manual{,
-      title = {ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization.},
+      title = {ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization},
       author = {Yue Liu},
       year = {2026},
       note = {R package version 1.4.30},
