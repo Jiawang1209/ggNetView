@@ -15,8 +15,7 @@ get_network_topology(
   p.threshold = 0.05,
   method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
   cor.method = c("pearson", "kendall", "spearman"),
-  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
-    "TSBH"),
+  proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
   bootstrap = 100
@@ -67,8 +66,8 @@ get_network_topology(
 - proc:
 
   Character. Correlation p-value adjustment methods. Options include:
-  "Bonferroni", "Holm", "Hochberg", " SidakSS", "SidakSD","BH", "BY",
-  "ABH", and "TSBH".
+  "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", and
+  "none".
 
 - sparcc_R:
 

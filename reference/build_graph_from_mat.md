@@ -11,10 +11,9 @@ build_graph_from_mat(
     "rrarefy_relative"),
   r.threshold = 0.7,
   p.threshold = 0.05,
-  method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
+  method = c("WGCNA", "SpiecEasi", "SPARCC", "cor", "Hmisc"),
   cor.method = c("pearson", "kendall", "spearman"),
-  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
-    "TSBH"),
+  proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
@@ -54,7 +53,7 @@ build_graph_from_mat(
 - method:
 
   Character. Relationship analysis methods. Options include: "WGCNA",
-  "SpiecEasi", "SPARCC" and "cor".
+  "SpiecEasi", "SPARCC", "cor", and "Hmisc".
 
 - cor.method:
 
@@ -64,8 +63,8 @@ build_graph_from_mat(
 - proc:
 
   Character. Correlation p-value adjustment methods. Options include:
-  "Bonferroni", "Holm", "Hochberg", " SidakSS", "SidakSD","BH", "BY",
-  "ABH", and "TSBH".
+  "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", and
+  "none".
 
 - module.method:
 

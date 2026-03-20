@@ -19,8 +19,7 @@ get_sample_subgraph_topology(
   p.threshold = 0.05,
   method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
   cor.method = c("pearson", "kendall", "spearman"),
-  proc = c("Bonferroni", "Holm", "Hochberg", "SidakSS", "SidakSD", "BH", "BY", "ABH",
-    "TSBH"),
+  proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
   bootstrap = 100

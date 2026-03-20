@@ -12,12 +12,12 @@ Source:
 
 Liu Y (2026). *ggNetView: An R Package for Reproducible and
 Deterministic Network Analysis and Visualization*. R package version
-1.4.30, <https://github.com/Jiawang1209/ggNetView>.
+1.4.31, <https://github.com/Jiawang1209/ggNetView>.
 
     @Manual{,
       title = {ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization},
       author = {Yue Liu},
       year = {2026},
-      note = {R package version 1.4.30},
+      note = {R package version 1.4.31},
       url = {https://github.com/Jiawang1209/ggNetView},
     }
