@@ -53,8 +53,10 @@ pre-built graph object or directly from an adjacency matrix.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_network_topology_parallel</span><span class="op">(</span></span>
-<span>  <span class="va">graph_obj</span>,</span>
+<span>  graph_obj <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  graph_obj_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  mat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  graph_mat_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  transfrom.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"scale"</span>, <span class="st">"center"</span>, <span class="st">"log2"</span>, <span class="st">"log10"</span>, <span class="st">"ln"</span>, <span class="st">"rrarefy"</span>,</span>
 <span>    <span class="st">"rrarefy_relative"</span><span class="op">)</span>,</span>
 <span>  r.threshold <span class="op">=</span> <span class="fl">0.7</span>,</span>
@@ -80,9 +82,20 @@ pre-built graph object or directly from an adjacency matrix.</p>
 The network object to be visualized.</p></dd>
 
 
+<dt id="arg-graph-obj-list">graph_obj_list<a class="anchor" aria-label="anchor" href="#arg-graph-obj-list"></a></dt>
+<dd><p>A list of graph objects. Optional alternative to
+<code>graph_obj</code>. Each element is analyzed separately.</p></dd>
+
+
 <dt id="arg-mat">mat<a class="anchor" aria-label="anchor" href="#arg-mat"></a></dt>
 <dd><p>Numeric Matrix (default = NULL)
 The matrix to build graph_obj</p></dd>
+
+
+<dt id="arg-graph-mat-list">graph_mat_list<a class="anchor" aria-label="anchor" href="#arg-graph-mat-list"></a></dt>
+<dd><p>A list of matrices corresponding to
+<code>graph_obj_list</code>. Optional. Each element is paired with the graph
+object at the same position and used for topology analysis separately.</p></dd>
 
 
 <dt id="arg-transfrom-method">transfrom.method<a class="anchor" aria-label="anchor" href="#arg-transfrom-method"></a></dt>
@@ -157,7 +170,9 @@ Random seed for reproducibility.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>data frame of network topolog</p>
+    <p>A list containing topology output and robustness output for a single
+  network. When <code>graph_obj_list</code> is provided, returns a named list of
+  such results.</p>
     </div>
 
     <div class="section level2">

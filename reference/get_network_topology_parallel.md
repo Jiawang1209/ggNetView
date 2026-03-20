@@ -7,8 +7,10 @@ either a pre-built graph object or directly from an adjacency matrix.
 
 ``` r
 get_network_topology_parallel(
-  graph_obj,
+  graph_obj = NULL,
+  graph_obj_list = NULL,
   mat = NULL,
+  graph_mat_list = NULL,
   transfrom.method = c("none", "scale", "center", "log2", "log10", "ln", "rrarefy",
     "rrarefy_relative"),
   r.threshold = 0.7,
@@ -32,9 +34,20 @@ get_network_topology_parallel(
   An graph object from build_graph_from_mat or build_graph_from_df. The
   network object to be visualized.
 
+- graph_obj_list:
+
+  A list of graph objects. Optional alternative to `graph_obj`. Each
+  element is analyzed separately.
+
 - mat:
 
   Numeric Matrix (default = NULL) The matrix to build graph_obj
+
+- graph_mat_list:
+
+  A list of matrices corresponding to `graph_obj_list`. Optional. Each
+  element is paired with the graph object at the same position and used
+  for topology analysis separately.
 
 - transfrom.method:
 
@@ -97,7 +110,9 @@ get_network_topology_parallel(
 
 ## Value
 
-data frame of network topolog
+A list containing topology output and robustness output for a single
+network. When `graph_obj_list` is provided, returns a named list of such
+results.
 
 ## Examples
 
