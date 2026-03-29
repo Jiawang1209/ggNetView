@@ -61,6 +61,9 @@
 - [`gglink_heatmaps()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps.md)
   : Visualize multi-orientation environmental–species correlation
   heatmaps
+- [`gglink_heatmaps_2()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps_2.md)
+  : Visualize multi-orientation environmental-species correlation
+  heatmaps (adaptive sizing)
 - [`ggnetview_modularity_heatmaps()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_modularity_heatmaps.md)
   : Visualize network with module-environment heatmaps
 - [`ggnetview_zipi()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_zipi.md)
