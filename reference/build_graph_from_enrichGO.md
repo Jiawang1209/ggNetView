@@ -21,6 +21,9 @@ An graph object with GO enrichment analysis
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# Requires clusterProfiler enrichment result
+ego <- clusterProfiler::enrichGO(gene, OrgDb = org.Hs.eg.db, ont = "ALL")
+obj <- build_graph_from_enrichGO(df = as.data.frame(ego))
+} # }
 ```

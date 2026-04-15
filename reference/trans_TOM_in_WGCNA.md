@@ -29,6 +29,10 @@ A Data frame contain from, to and weight
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# `TOM` is a topological overlap matrix from WGCNA and `mat` is the
+# expression matrix used to compute it.
+edge_df <- trans_TOM_in_WGCNA(TOM = TOM, mat = mat, threshold = 0.1)
+head(edge_df)
+} # }
 ```

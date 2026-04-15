@@ -600,6 +600,12 @@ and optional topology results.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# Provide either `mat` + `group_info` or a pre-built `graph_obj_list`.
+p <- ggNetView_multi_link(
+  mat        = mat,
+  group_info = group_info,
+  method     = "cor"
+)
+} # }
 ```

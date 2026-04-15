@@ -88,8 +88,18 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ppi_example</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_graph_from_df.html">build_graph_from_df</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  df              <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">ppi</span>,</span></span>
+<span class="r-in"><span>  node_annotation <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">annotation</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="ggNetView.html">ggNetView</a></span><span class="op">(</span><span class="va">obj</span>, layout <span class="op">=</span> <span class="st">"fr"</span>, layout.module <span class="op">=</span> <span class="st">"adjacent"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">export_ggnetview</span><span class="op">(</span><span class="va">p</span>, filename <span class="op">=</span> <span class="va">tmp</span>, height <span class="op">=</span> <span class="fl">6</span>, width <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

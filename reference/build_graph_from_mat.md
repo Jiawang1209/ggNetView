@@ -105,6 +105,47 @@ module labels.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+# \donttest{
+set.seed(1)
+mat <- matrix(stats::rnorm(40 * 20), nrow = 40, ncol = 20)
+rownames(mat) <- paste0("feature", seq_len(40))
+colnames(mat) <- paste0("sample",  seq_len(20))
+obj <- build_graph_from_mat(
+  mat           = mat,
+  method        = "cor",
+  cor.method    = "pearson",
+  proc          = "none",
+  r.threshold   = 0.3,
+  p.threshold   = 0.05,
+  module.method = "Fast_greedy"
+)
+#> The max module in network is 7 we use the 7  modules for next analysis
+obj
+#> # A tbl_graph: 22 nodes and 18 edges
+#> #
+#> # An undirected simple graph with 5 components
+#> #
+#> # Node Data: 22 × 7 (active)
+#>    name      modularity modularity2 modularity3 Modularity Degree Strength
+#>    <chr>     <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl>
+#>  1 feature33 1          1           1           1               3    1.41 
+#>  2 feature7  1          1           1           1               2    0.951
+#>  3 feature31 1          1           1           1               2    1.00 
+#>  4 feature8  1          1           1           1               1    0.531
+#>  5 feature13 1          1           1           1               1    0.472
+#>  6 feature28 1          1           1           1               1    0.458
+#>  7 feature36 2          2           2           2               4    2.25 
+#>  8 feature10 2          2           2           2               3    1.80 
+#>  9 feature12 2          2           2           2               2    1.17 
+#> 10 feature15 2          2           2           2               2    1.21 
+#> # ℹ 12 more rows
+#> #
+#> # Edge Data: 18 × 5
+#>    from    to weight correlation corr_direction
+#>   <int> <int>  <dbl>       <dbl> <chr>         
+#> 1    13    14  0.454       0.454 Positive      
+#> 2     8    15  0.458       0.458 Positive      
+#> 3    15    16  0.460       0.460 Positive      
+#> # ℹ 15 more rows
+# }
 ```

@@ -68,13 +68,19 @@ The discrete class names or factor levels to map to colors.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A named character vector where names correspond to</p>
+    <p>A named character vector whose names are the discrete classes
+and whose values are hex colors. If `others_label` appears in `classes`,
+it is always mapped to a neutral grey so "Others" has a stable color.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_palette</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Module1"</span>, <span class="st">"Module2"</span>, <span class="st">"Module3"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Module1   Module2   Module3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "#8dd3c7" "#ffffb3" "#bebada" </span>
+<span class="r-in"><span><span class="fu">get_palette</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Module1"</span>, <span class="st">"Module2"</span>, <span class="st">"Others"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Module1   Module2    Others </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "#8dd3c7" "#ffffb3" "#bdbdbd" </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

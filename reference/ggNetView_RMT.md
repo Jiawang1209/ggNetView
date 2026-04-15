@@ -125,11 +125,11 @@ params), plots (file paths if saved).
 ## Examples
 
 ``` r
-NULL
-#> NULL
-
-
-# m <- cor(scale(matrix(rnorm(40000), 200, 200)))
-# res <- ggNetView_RMT(m, save_plots=TRUE)
-# res$chosen_threshold
+if (FALSE) { # \dontrun{
+set.seed(1)
+m <- stats::cor(scale(matrix(stats::rnorm(40000), 200, 200)))
+rownames(m) <- colnames(m) <- paste0("g", seq_len(200))
+res <- ggNetView_RMT(m, method = "cor")
+res$chosen_threshold
+} # }
 ```

@@ -56,6 +56,17 @@ column exists).
 ## Examples
 
 ``` r
-NULL
-#> NULL
+data(ppi_example)
+obj <- build_graph_from_df(
+  df              = ppi_example$ppi,
+  node_annotation = ppi_example$annotation
+)
+obj2 <- update_graph_modules(
+  graph_obj = obj,
+  modules   = c("1" = "ModuleA", "2" = "ModuleB")
+)
+levels(get_graph_nodes(obj2)$Modularity)
+#>  [1] "10"      "11"      "12"      "13"      "14"      "15"      "16"     
+#>  [8] "17"      "18"      "19"      "20"      "21"      "22"      "ModuleA"
+#> [15] "ModuleB" "Others" 
 ```

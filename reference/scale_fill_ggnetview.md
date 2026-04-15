@@ -44,6 +44,12 @@ A \`ggplot2\` scale object.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+library(ggplot2)
+df <- data.frame(
+  x = 1:4, y = 1:4,
+  group = c("Module1", "Module2", "Module3", "Others")
+)
+ggplot(df, aes(x, y, fill = group)) +
+  geom_point(shape = 21, size = 8) +
+  scale_fill_ggnetview(df$group)
 ```

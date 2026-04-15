@@ -107,6 +107,22 @@ results.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+# \donttest{
+data(ppi_example)
+obj <- build_graph_from_df(
+  df              = ppi_example$ppi,
+  node_annotation = ppi_example$annotation
+)
+topo <- get_network_topology(graph_obj = obj, bootstrap = 10)
+head(topo$topology)
+#> # A tibble: 6 × 3
+#>   Topology Target_network Random_nerwork
+#>   <chr>             <dbl>          <dbl>
+#> 1 Node           100            100     
+#> 2 Edge            50             50     
+#> 3 Degree           1              1     
+#> 4 Distance        59.8            3.43  
+#> 5 Diameter       109.             9.2   
+#> 6 Density          0.0101         0.0101
+# }
 ```

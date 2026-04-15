@@ -60,6 +60,12 @@ a ggplot2 object
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+p <- gglink_heatmap_triple(
+  Environment = env_df,
+  Experiment  = exp_df,
+  edge        = edge_df,
+  node        = node_df
+)
+} # }
 ```

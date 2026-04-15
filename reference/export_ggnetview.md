@@ -47,6 +47,16 @@ a graph output
 ## Examples
 
 ``` r
-NULL
-#> NULL
+# \donttest{
+data(ppi_example)
+obj <- build_graph_from_df(
+  df              = ppi_example$ppi,
+  node_annotation = ppi_example$annotation
+)
+p <- ggNetView(obj, layout = "fr", layout.module = "adjacent")
+tmp <- tempfile(fileext = ".png")
+export_ggnetview(p, filename = tmp, height = 6, width = 6)
+file.exists(tmp)
+#> [1] TRUE
+# }
 ```

@@ -91,8 +91,15 @@ If <code>NULL</code>, order by module size (descending) and place
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ppi_example</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_graph_from_df.html">build_graph_from_df</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  df              <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">ppi</span>,</span></span>
+<span class="r-in"><span>  node_annotation <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">annotation</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Re-assign modularity from the existing `group` node column.</span></span></span>
+<span class="r-in"><span><span class="va">obj2</span> <span class="op">&lt;-</span> <span class="fu">update_graph_modules2</span><span class="op">(</span>graph_obj <span class="op">=</span> <span class="va">obj</span>, modules_new <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="fu"><a href="get_graph_nodes.html">get_graph_nodes</a></span><span class="op">(</span><span class="va">obj2</span><span class="op">)</span><span class="op">$</span><span class="va">Modularity</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "D" "C" "B" "A"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

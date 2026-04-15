@@ -109,8 +109,16 @@ Random seed for reproducibility.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ppi_example</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ig</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  d        <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">ppi</span>,</span></span>
+<span class="r-in"><span>  vertices <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">annotation</span>,</span></span>
+<span class="r-in"><span>  directed <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">build_graph_from_igraph</span><span class="op">(</span>igraph <span class="op">=</span> <span class="va">ig</span>, module.method <span class="op">=</span> <span class="st">"Fast_greedy"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in igraph::cluster_fast_greedy(g):</span> At vendor/cigraph/src/community/fast_modularity.c:666 : Fast greedy community detection works only on graphs without multi-edges. Invalid value</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="fu"><a href="get_graph_nodes.html">get_graph_nodes</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span><span class="op">$</span><span class="va">Modularity</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'obj' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

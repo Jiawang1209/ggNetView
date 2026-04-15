@@ -47,6 +47,12 @@ labels.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# `node_annotation` must contain a `Modularity` column that assigns
+# each node to a module.
+obj <- build_graph_from_module(
+  df              = edge_df,
+  node_annotation = node_annotation
+)
+} # }
 ```

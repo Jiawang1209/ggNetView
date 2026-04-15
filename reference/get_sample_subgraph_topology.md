@@ -99,6 +99,14 @@ A list with:
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# `mat` is the OTU/feature-by-sample matrix used to build `graph_obj`.
+obj <- build_graph_from_mat(mat = mat, method = "cor")
+res <- get_sample_subgraph_topology(
+  graph_obj = obj,
+  mat       = mat,
+  bootstrap = 10
+)
+head(res$topology)
+} # }
 ```

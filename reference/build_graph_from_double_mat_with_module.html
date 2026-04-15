@@ -101,8 +101,15 @@ Random seed for reproducibility.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># `node_annotation` must contain a `Modularity` column that assigns each</span></span></span>
+<span class="r-in"><span><span class="co"># node (rownames of `mat1` and `mat2`) to a module.</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">build_graph_from_double_mat_with_module</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mat1            <span class="op">=</span> <span class="va">mat1</span>,</span></span>
+<span class="r-in"><span>  mat2            <span class="op">=</span> <span class="va">mat2</span>,</span></span>
+<span class="r-in"><span>  node_annotation <span class="op">=</span> <span class="va">node_annotation</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

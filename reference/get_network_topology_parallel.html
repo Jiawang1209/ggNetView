@@ -184,8 +184,20 @@ Random seed for reproducibility.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ppi_example</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_graph_from_df.html">build_graph_from_df</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  df              <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">ppi</span>,</span></span>
+<span class="r-in"><span>  node_annotation <span class="op">=</span> <span class="va">ppi_example</span><span class="op">$</span><span class="va">annotation</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">topo</span> <span class="op">&lt;-</span> <span class="fu">get_network_topology_parallel</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span></span>
+<span class="r-in"><span>  bootstrap <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>  parallel  <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  n_workers <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">topo</span><span class="op">$</span><span class="va">topology</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -49,6 +49,35 @@ module labels.
 ## Examples
 
 ``` r
-NULL
-#> NULL
+data(adjacency_matrix_example)
+set.seed(1)
+idx <- sample(ncol(adjacency_matrix_example), 80)
+adj <- adjacency_matrix_example[idx, idx]
+obj <- build_graph_from_adj_mat(
+  adjacency_matrix = adj,
+  module.method    = "Fast_greedy",
+  top_modules      = 5
+)
+#> The max module in network is 3 we use the 3  modules for next analysis
+obj
+#> # A tbl_graph: 6 nodes and 3 edges
+#> #
+#> # An unrooted forest with 3 trees
+#> #
+#> # Node Data: 6 × 7 (active)
+#>   name     modularity modularity2 modularity3 Modularity Degree Strength
+#>   <chr>    <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl>
+#> 1 ASV_1029 1          1           1           1               1    0.808
+#> 2 ASV_1655 1          1           1           1               1    0.808
+#> 3 ASV_1848 2          2           2           2               1    0.809
+#> 4 ASV_1120 2          2           2           2               1    0.809
+#> 5 ASV_2230 3          3           3           3               1    0.857
+#> 6 ASV_2437 3          3           3           3               1    0.857
+#> #
+#> # Edge Data: 3 × 5
+#>    from    to weight correlation corr_direction
+#>   <int> <int>  <dbl>       <dbl> <chr>         
+#> 1     1     2  0.808       0.808 Positive      
+#> 2     3     4  0.809       0.809 Positive      
+#> 3     5     6  0.857       0.857 Positive      
 ```

@@ -23,6 +23,17 @@ A numeric matrix with rownames and colnames set to node IDs (`name`).
 ## Examples
 
 ``` r
-NULL
-#> NULL
+data(ppi_example)
+obj <- build_graph_from_df(
+  df              = ppi_example$ppi,
+  node_annotation = ppi_example$annotation
+)
+adj <- get_graph_adjacency(obj)
+dim(adj)
+#> [1] 100 100
+adj[1:3, 1:3]
+#>     C13 C28 C2
+#> C13   0   1  0
+#> C28   1   0  0
+#> C2    0   0  0
 ```

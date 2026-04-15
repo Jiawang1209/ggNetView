@@ -94,8 +94,15 @@ Node/edge attributes from WGCNA TOM matrix (optionally) module labels.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="cn">NULL</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># `wgcna_tom` is a long-format TOM edge list (from, to, weight)</span></span></span>
+<span class="r-in"><span><span class="co"># produced by `trans_TOM_in_WGCNA()`, and `module` is the WGCNA</span></span></span>
+<span class="r-in"><span><span class="co"># module-assignment data frame with columns (ID, Module).</span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">build_graph_from_wgcna</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  wgcna_tom <span class="op">=</span> <span class="va">wgcna_tom</span>,</span></span>
+<span class="r-in"><span>  module    <span class="op">=</span> <span class="va">module</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

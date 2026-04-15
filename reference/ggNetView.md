@@ -373,6 +373,36 @@ A ggplot object, or when `return_layout = TRUE`, a list with `$plot` and
 ## Examples
 
 ``` r
-NULL
-#> NULL
+data(ppi_example)
+obj <- build_graph_from_df(
+  df              = ppi_example$ppi,
+  node_annotation = ppi_example$annotation,
+  module.method   = "Fast_greedy",
+  top_modules     = 5
+)
+
+ggNetView(
+  graph_obj     = obj,
+  layout        = "fr",
+  layout.module = "adjacent",
+  pointsize     = c(3, 8),
+  seed          = 1115
+)
+
+# \donttest{
+ggNetView(
+  graph_obj       = obj,
+  layout          = "gephi",
+  layout.module   = "adjacent",
+  pointsize       = c(3, 8),
+  label           = TRUE,
+  add_group_outer = TRUE,
+  seed            = 1115
+)
+#> Coordinate system already present.
+#> ℹ Adding new coordinate system, which will replace the existing one.
+#> Warning: No shared levels found between `names(values)` of the manual scale and the
+#> data's fill values.
+
+# }
 ```

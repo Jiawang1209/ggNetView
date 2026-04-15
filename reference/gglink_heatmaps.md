@@ -287,6 +287,11 @@ segments. - \[\[2\]\]: ggplot object with curved link segments. -
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# `env` and `spec` are environmental / species abundance data frames.
+p <- gglink_heatmaps(
+  env  = env,
+  spec = spec
+)
+} # }
 ```

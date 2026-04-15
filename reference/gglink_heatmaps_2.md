@@ -292,6 +292,11 @@ segments. - \[\[2\]\]: ggplot object with curved link segments. -
 ## Examples
 
 ``` r
-NULL
-#> NULL
+if (FALSE) { # \dontrun{
+# Adaptive-sized variant of `gglink_heatmaps()`.
+p <- gglink_heatmaps_2(
+  env  = env,
+  spec = spec
+)
+} # }
 ```
