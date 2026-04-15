@@ -641,3 +641,9 @@ https://jiawang1209.github.io/ggNetView-manual/
 - [`update_graph_modules2()`](https://jiawang1209.github.io/ggNetView/reference/update_graph_modules2.md)
   : Update module assignments from an existing column in graph object
 
+# Articles
+
+### All vignettes
+
+- [Introduction to
+  ggNetView](https://jiawang1209.github.io/ggNetView/articles/ggNetView-intro.md):

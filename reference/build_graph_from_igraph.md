@@ -66,7 +66,7 @@ ig <- igraph::graph_from_data_frame(
   directed = FALSE
 )
 obj <- build_graph_from_igraph(igraph = ig, module.method = "Fast_greedy")
-#> Error in igraph::cluster_fast_greedy(g): At vendor/cigraph/src/community/fast_modularity.c:666 : Fast greedy community detection works only on graphs without multi-edges. Invalid value
 levels(get_graph_nodes(obj)$Modularity)
-#> Error: object 'obj' not found
+#>  [1] "1"      "10"     "11"     "12"     "13"     "14"     "15"     "16"    
+#>  [9] "17"     "18"     "19"     "2"      "20"     "21"     "22"     "Others"
 ```
