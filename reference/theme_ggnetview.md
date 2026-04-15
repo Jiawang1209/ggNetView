@@ -41,7 +41,7 @@ theme_ggnetview(
 
 - title_hjust:
 
-  Title horizontal justification (0–1). Default 0.5 (center).
+  Title horizontal justification (0-1). Default 0.5 (center).
 
 - subtitle_size:
 

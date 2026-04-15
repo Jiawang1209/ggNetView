@@ -85,6 +85,12 @@ get_network_topology_parallel(
   "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", and
   "none".
 
+- SpiecEasi.method:
+
+  Character. Inverse-covariance estimation method passed to SpiecEasi
+  when `method = "SpiecEasi"`. One of `"mb"` (Meinshausen-Buehlmann,
+  default) or `"glasso"`.
+
 - sparcc_R:
 
   Integer. Number of bootstrap/permutation replicates for SparCC

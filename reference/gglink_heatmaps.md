@@ -1,6 +1,6 @@
-# Visualize multi-orientation environmental–species correlation heatmaps
+# Visualize multi-orientation environmental-species correlation heatmaps
 
-Visualize multi-orientation environmental–species correlation heatmaps
+Visualize multi-orientation environmental-species correlation heatmaps
 
 ## Usage
 
@@ -131,8 +131,8 @@ gglink_heatmaps(
 
 - comparisons:
 
-  Logical (default = TRUE). Whether to perform species–environment
-  correlation or Mantel analysis. If `FALSE`, no spec–env links are
+  Logical (default = TRUE). Whether to perform species-environment
+  correlation or Mantel analysis. If `FALSE`, no spec-env links are
   computed or drawn.
 
 - comparisons_groups:
@@ -142,7 +142,7 @@ gglink_heatmaps(
   a length-2 character vector: `c(env_block_name, spec_block_name)`,
   e.g. `list(c("Env01", "Spec01"), c("Env02", "Spec01"))`. Block names
   must match `names(env_select)` and `names(spec_select)`. If `NULL`,
-  all env–spec block pairs are analyzed (default).
+  all env-spec block pairs are analyzed (default).
 
 - shape:
 
@@ -174,9 +174,7 @@ gglink_heatmaps(
   shorter) used across quadrants. - If a list of length equal to the
   number of quadrants, each element should be either \`c(low, high)\` or
   \`list(low=..., high=...)\` for that quadrant (in order). - example
-  \`HeatmapColorBar = list( c("#2166ac", "#b2182b"), \# 第1个象限
-  low/high c("#1b7837", "#762a83"), \# 第2个 c("#4393c3", "#d6604d"), \#
-  第3个 c("#92c5de", "#f4a582") \# 第4个 )\`
+  \`HeatmapColorBar = list( )\`
 
 - HeatmapLabelOrient:
 
@@ -187,13 +185,13 @@ gglink_heatmaps(
 - SigLineWidth:
 
   Numeric vector of length 2 (default = c(0.5, 2)) Controls the minimum
-  and maximum line width for species–environment links, scaled by
+  and maximum line width for species-environment links, scaled by
   significance (p-value). Smaller p leads to thicker lines.
 
 - SigLineColor:
 
   Character vector (length 2, default = c("#fdbb84", "#d7301f")) Colors
-  used for the species–environment link color gradient, corresponding to
+  used for the species-environment link color gradient, corresponding to
   low and high correlation values respectively.
 
 - HeatmapPointSize:
@@ -281,7 +279,7 @@ gglink_heatmaps(
 
 A list of length 3: - \[\[1\]\]: ggplot object with straight link
 segments. - \[\[2\]\]: ggplot object with curved link segments. -
-\[\[3\]\]: data.frame of full species–environment correlation statistics
+\[\[3\]\]: data.frame of full species-environment correlation statistics
 (unfiltered, not affected by \`drop_nonsig\`), with columns `ID`,
 `Type`, `Correlation`, `Pvalue`, `spec_block`, `env_block`, and `method`
 (e.g. `"correlation"` or `"mantel"`).

@@ -15,7 +15,7 @@ pre-built graph object or directly from an adjacency matrix."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,7 @@ pre-built graph object or directly from an adjacency matrix."><meta property="og
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -139,6 +140,12 @@ Options include:
 "BH", "BY", "fdr", and "none".</p></dd>
 
 
+<dt id="arg-spieceasi-method">SpiecEasi.method<a class="anchor" aria-label="anchor" href="#arg-spieceasi-method"></a></dt>
+<dd><p>Character. Inverse-covariance estimation method
+passed to SpiecEasi when <code>method = "SpiecEasi"</code>.
+One of <code>"mb"</code> (Meinshausen-Buehlmann, default) or <code>"glasso"</code>.</p></dd>
+
+
 <dt id="arg-sparcc-r">sparcc_R<a class="anchor" aria-label="anchor" href="#arg-sparcc-r"></a></dt>
 <dd><p>Integer.
 Number of bootstrap/permutation replicates for SparCC p-values (when <code>method = "SPARCC"</code>).
@@ -168,7 +175,7 @@ Number of bootstrap iterations for stability analysis</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Yue Liu.</p>
+  <p>Developed by Yue Liu, Chao Wang.</p>
 </div>
 
 <div class="pkgdown-footer-right">

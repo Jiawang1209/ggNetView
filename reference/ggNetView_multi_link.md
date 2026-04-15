@@ -592,10 +592,6 @@ ggNetView_multi_link(
 
   Integer (default = 1115). Random seed for reproducibility.
 
-- pointstroke:
-
-  Integer (default = 0.3).
-
 ## Value
 
 A list containing plot, module-overlap info, link info, group graphs,

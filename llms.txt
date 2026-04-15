@@ -511,6 +511,20 @@ https://jiawang1209.github.io/ggNetView-manual/
 
 ## All functions
 
+- [`BASV_tab`](https://jiawang1209.github.io/ggNetView/reference/BASV_tab.md)
+  : Bacterial ASV demonstration table
+- [`Envdf`](https://jiawang1209.github.io/ggNetView/reference/Envdf.md)
+  : Environmental variables (single block)
+- [`Envdf_4st`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st.md)
+  : Environmental variables across four sampling stages
+- [`Envdf_4st_2`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st_2.md)
+  : Alternative four-stage environmental dataset
+- [`FASV_tab`](https://jiawang1209.github.io/ggNetView/reference/FASV_tab.md)
+  : Fungal ASV demonstration table
+- [`Spedf`](https://jiawang1209.github.io/ggNetView/reference/Spedf.md)
+  : Species composition table for link-heatmap examples
+- [`adjacency_matrix_example`](https://jiawang1209.github.io/ggNetView/reference/adjacency_matrix_example.md)
+  : Pre-computed adjacency matrix
 - [`build_graph_from_adj_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat.md)
   : Build a correlation-based network from a adjacency matrix
 - [`build_graph_from_adj_mat_module()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat_module.md)
@@ -535,6 +549,10 @@ https://jiawang1209.github.io/ggNetView-manual/
   : Build a pie graph object from a data frame
 - [`build_graph_from_wgcna()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_wgcna.md)
   : Build a graph object from WGCNA result
+- [`double_mat_node_df`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df.md)
+  : Two-block node table for double-matrix examples
+- [`double_mat_node_df_with_modularity`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df_with_modularity.md)
+  : Two-block node table with pre-computed modularity
 - [`export_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/export_ggnetview.md)
   : Save a ggNetView with sensible defaults
 - [`get_graph_adjacency()`](https://jiawang1209.github.io/ggNetView/reference/get_graph_adjacency.md)
@@ -565,10 +583,10 @@ https://jiawang1209.github.io/ggNetView-manual/
   : Visualize multiple networks and show the connections between them to
   highlight key members within the networks
 - [`gglink_heatmap_triple()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmap_triple.md)
-  : Visualize multi-orientation environmental–species correlation
+  : Visualize multi-orientation environmental-species correlation
   heatmaps2
 - [`gglink_heatmaps()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps.md)
-  : Visualize multi-orientation environmental–species correlation
+  : Visualize multi-orientation environmental-species correlation
   heatmaps
 - [`gglink_heatmaps_2()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps_2.md)
   : Visualize multi-orientation environmental-species correlation
@@ -584,6 +602,20 @@ https://jiawang1209.github.io/ggNetView-manual/
   correlation
 - [`order_graph()`](https://jiawang1209.github.io/ggNetView/reference/order_graph.md)
   : Reorder the Modularity from graph object
+- [`otu_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/otu_NatureWater.md)
+  : Larger OTU table from a published water-quality study
+- [`otu_rare`](https://jiawang1209.github.io/ggNetView/reference/otu_rare.md)
+  : Rarefied OTU abundance table
+- [`otu_rare_relative`](https://jiawang1209.github.io/ggNetView/reference/otu_rare_relative.md)
+  : Relative-abundance OTU table
+- [`otu_sample`](https://jiawang1209.github.io/ggNetView/reference/otu_sample.md)
+  : Sample metadata for the OTU example
+- [`otu_tab`](https://jiawang1209.github.io/ggNetView/reference/otu_tab.md)
+  : Example OTU abundance table
+- [`ppi_example`](https://jiawang1209.github.io/ggNetView/reference/ppi_example.md)
+  : Protein-protein interaction example
+- [`ppi_module`](https://jiawang1209.github.io/ggNetView/reference/ppi_module.md)
+  : Protein-protein interaction example with module assignment
 - [`scale_color_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_color_ggnetview.md)
   : Custom discrete color scale for ggNetView
 - [`scale_fill_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_fill_ggnetview.md)
@@ -594,6 +626,10 @@ https://jiawang1209.github.io/ggNetView-manual/
   : SparCC p-value matrix (Rcpp implementation)
 - [`spieceasi_matrix_rcpp()`](https://jiawang1209.github.io/ggNetView/reference/spieceasi_matrix_rcpp.md)
   : SPIEC-EASI matrix (Rcpp implementation)
+- [`tax_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/tax_NatureWater.md)
+  : Taxonomy table for \[otu_NatureWater\]
+- [`tax_tab`](https://jiawang1209.github.io/ggNetView/reference/tax_tab.md)
+  : Taxonomy annotation table
 - [`theme_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/theme_ggnetview.md)
   : ggNetView Theme
 - [`trans_TOM_in_WGCNA()`](https://jiawang1209.github.io/ggNetView/reference/trans_TOM_in_WGCNA.md)

@@ -120,9 +120,10 @@ ggNetView(
 
 - layout.module:
 
-  Character (default = "random") - adjacent : modules are positioned
-  close to each other, minimizing inter-module gaps. - order : modules
-  are distributed by order, applicable to \`Bipartite, Tripartite,
+  Character (default = "random") - random : modules are distributed more
+  randomly and independently. - adjacent : modules are positioned close
+  to each other, minimizing inter-module gaps. - order : modules are
+  distributed by order, applicable to \`Bipartite, Tripartite,
   Quadripartite, Multipartite, Pentapartite Layout\`
 
 - shape:

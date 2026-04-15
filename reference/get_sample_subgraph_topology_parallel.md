@@ -70,6 +70,12 @@ get_sample_subgraph_topology_parallel(
   Character. Passed to
   [`get_network_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md).
 
+- SpiecEasi.method:
+
+  Character. Passed to
+  [`get_network_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md);
+  one of `"mb"` or `"glasso"` for SpiecEasi inverse-covariance.
+
 - sparcc_R:
 
   Integer. Passed to

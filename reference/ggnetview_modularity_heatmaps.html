@@ -21,7 +21,7 @@ diagonals."><meta property="og:image" content="https://jiawang1209.github.io/ggN
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,7 @@ diagonals."><meta property="og:image" content="https://jiawang1209.github.io/ggN
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -154,6 +155,12 @@ use <code>"sum"</code> or <code>"mean"</code>.</p></dd>
 <dd><p>Character. Layout for ggNetView (e.g. <code>"gephi"</code>, <code>"square"</code>).</p></dd>
 
 
+<dt id="arg-layout-module">layout.module<a class="anchor" aria-label="anchor" href="#arg-layout-module"></a></dt>
+<dd><p>Character. Module ordering strategy passed through to
+the underlying ggNetView call. One of <code>"random"</code> (default),
+<code>"adjacent"</code> or <code>"order"</code>.</p></dd>
+
+
 <dt id="arg-orientation">orientation<a class="anchor" aria-label="anchor" href="#arg-orientation"></a></dt>
 <dd><p>Character vector. Heatmap quadrants:
 <code>"top_right"</code>, <code>"bottom_right"</code>, <code>"top_left"</code>, <code>"bottom_left"</code>.</p></dd>
@@ -174,20 +181,61 @@ heatmap size. Values &gt; 1 enlarge the whole heatmap layout.</p></dd>
 
 
 <dt id="arg-siglinealpha">SigLineAlpha<a class="anchor" aria-label="anchor" href="#arg-siglinealpha"></a></dt>
-<dd><p>Numeric (default = 0.5). Transparency for module–heatmap
+<dd><p>Numeric (default = 0.5). Transparency for module-heatmap
 link lines. Must be between 0 and 1.</p></dd>
+
+
+<dt id="arg-heatmaplabelsize">HeatmapLabelSize<a class="anchor" aria-label="anchor" href="#arg-heatmaplabelsize"></a></dt>
+<dd><p>Numeric (default = 5). Text size for the heatmap
+row/column labels.</p></dd>
+
+
+<dt id="arg-heatmapsigsize">HeatmapSigSize<a class="anchor" aria-label="anchor" href="#arg-heatmapsigsize"></a></dt>
+<dd><p>Numeric (default = 5). Text size for the significance
+marks rendered on the heatmap tiles.</p></dd>
+
+
+<dt id="arg-heatmapcolorbar">HeatmapColorBar<a class="anchor" aria-label="anchor" href="#arg-heatmapcolorbar"></a></dt>
+<dd><p>A list of length-2 character vectors giving
+(low, high) hex colours, one per heatmap quadrant. <code>NULL</code> (default)
+uses the package colour palette.</p></dd>
+
+
+<dt id="arg-heatmaplabelorient">HeatmapLabelOrient<a class="anchor" aria-label="anchor" href="#arg-heatmaplabelorient"></a></dt>
+<dd><p>Numeric (default = 0). Rotation in degrees applied
+to the heatmap labels.</p></dd>
 
 
 <dt id="arg-siglinewidth">SigLineWidth<a class="anchor" aria-label="anchor" href="#arg-siglinewidth"></a></dt>
 <dd><p>Numeric vector of length 2 (default = c(0.5, 2)).
-Min and max line width for module–heatmap links. Line width is mapped from
-<code>-log10(p-value)</code>: smaller p (more significant) → thicker line.
-E.g. p=0.05→1.3, p=0.01→2, p=0.001→3; values are scaled to this range.</p></dd>
+Min and max line width for module-heatmap links. Line width is mapped from
+<code>-log10(p-value)</code>: smaller p (more significant) -&gt; thicker line.
+E.g. p=0.05-&gt;1.3, p=0.01-&gt;2, p=0.001-&gt;3; values are scaled to this range.</p></dd>
 
 
 <dt id="arg-siglinecolor">SigLineColor<a class="anchor" aria-label="anchor" href="#arg-siglinecolor"></a></dt>
 <dd><p>Character vector of length 2. Colors for link gradient
 (low and high correlation).</p></dd>
+
+
+<dt id="arg-heatmappointsize">HeatmapPointSize<a class="anchor" aria-label="anchor" href="#arg-heatmappointsize"></a></dt>
+<dd><p>Numeric (default = 5). Point size for the central
+module anchor used to attach the heatmap.</p></dd>
+
+
+<dt id="arg-heatmappointfill">HeatmapPointFill<a class="anchor" aria-label="anchor" href="#arg-heatmappointfill"></a></dt>
+<dd><p>Character (default = <code>"#de77ae"</code>). Fill colour
+for the central module anchor point.</p></dd>
+
+
+<dt id="arg-heatmaptilecolor">HeatmapTileColor<a class="anchor" aria-label="anchor" href="#arg-heatmaptilecolor"></a></dt>
+<dd><p>Border colour for the heatmap tiles. Default
+<code>NA</code> (no border).</p></dd>
+
+
+<dt id="arg-heatmaptilesize">HeatmapTileSize<a class="anchor" aria-label="anchor" href="#arg-heatmaptilesize"></a></dt>
+<dd><p>Numeric (default = 0). Border size for the heatmap
+tiles.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -209,7 +257,7 @@ module labels in ggNetView style), <code>labelsize</code>, <code>labelsegmentsiz
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Yue Liu.</p>
+  <p>Developed by Yue Liu, Chao Wang.</p>
 </div>
 
 <div class="pkgdown-footer-right">

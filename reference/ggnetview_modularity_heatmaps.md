@@ -98,6 +98,12 @@ ggnetview_modularity_heatmaps(
 
   Character. Layout for ggNetView (e.g. `"gephi"`, `"square"`).
 
+- layout.module:
+
+  Character. Module ordering strategy passed through to the underlying
+  ggNetView call. One of `"random"` (default), `"adjacent"` or
+  `"order"`.
+
 - orientation:
 
   Character vector. Heatmap quadrants: `"top_right"`, `"bottom_right"`,
@@ -119,20 +125,59 @@ ggnetview_modularity_heatmaps(
 
 - SigLineAlpha:
 
-  Numeric (default = 0.5). Transparency for module–heatmap link lines.
+  Numeric (default = 0.5). Transparency for module-heatmap link lines.
   Must be between 0 and 1.
+
+- HeatmapLabelSize:
+
+  Numeric (default = 5). Text size for the heatmap row/column labels.
+
+- HeatmapSigSize:
+
+  Numeric (default = 5). Text size for the significance marks rendered
+  on the heatmap tiles.
+
+- HeatmapColorBar:
+
+  A list of length-2 character vectors giving (low, high) hex colours,
+  one per heatmap quadrant. `NULL` (default) uses the package colour
+  palette.
+
+- HeatmapLabelOrient:
+
+  Numeric (default = 0). Rotation in degrees applied to the heatmap
+  labels.
 
 - SigLineWidth:
 
   Numeric vector of length 2 (default = c(0.5, 2)). Min and max line
-  width for module–heatmap links. Line width is mapped from
-  `-log10(p-value)`: smaller p (more significant) → thicker line. E.g.
-  p=0.05→1.3, p=0.01→2, p=0.001→3; values are scaled to this range.
+  width for module-heatmap links. Line width is mapped from
+  `-log10(p-value)`: smaller p (more significant) -\> thicker line. E.g.
+  p=0.05-\>1.3, p=0.01-\>2, p=0.001-\>3; values are scaled to this
+  range.
 
 - SigLineColor:
 
   Character vector of length 2. Colors for link gradient (low and high
   correlation).
+
+- HeatmapPointSize:
+
+  Numeric (default = 5). Point size for the central module anchor used
+  to attach the heatmap.
+
+- HeatmapPointFill:
+
+  Character (default = `"#de77ae"`). Fill colour for the central module
+  anchor point.
+
+- HeatmapTileColor:
+
+  Border colour for the heatmap tiles. Default `NA` (no border).
+
+- HeatmapTileSize:
+
+  Numeric (default = 0). Border size for the heatmap tiles.
 
 - ...:
 

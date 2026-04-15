@@ -33,11 +33,15 @@ ggNetView_RMT(
 - mat:
 
   Numeric matrix. A numeric matrix with samples in colums and variables
-  in rows \#' @param transfrom.method Character. Data transformation
-  methods applied before correlation analysis. Options include: "none"
-  (raw data), "scale" (z-score standardization), "center" (mean
-  centering only), "log2" (log2 transfrom), "log10" (log10 transfrom),
-  "ln" (natural transfrom ), "rrarefy" (random rarefaction using
+  in rows
+
+- transfrom.method:
+
+  Character. Data transformation methods applied before correlation
+  analysis. Options include: "none" (raw data), "scale" (z-score
+  standardization), "center" (mean centering only), "log2" (log2
+  transfrom), "log10" (log10 transfrom), "ln" (natural transfrom ),
+  "rrarefy" (random rarefaction using
   [`vegan::rrarefy`](https://vegandevs.github.io/vegan/reference/rarefy.html)),
   "rrarefy_relative" (rarefy then convert to relative abundance).
 

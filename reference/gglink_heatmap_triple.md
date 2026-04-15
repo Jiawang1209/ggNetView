@@ -1,6 +1,6 @@
-# Visualize multi-orientation environmental–species correlation heatmaps2
+# Visualize multi-orientation environmental-species correlation heatmaps2
 
-Visualize multi-orientation environmental–species correlation heatmaps2
+Visualize multi-orientation environmental-species correlation heatmaps2
 
 ## Usage
 
