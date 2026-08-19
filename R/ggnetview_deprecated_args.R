@@ -72,19 +72,43 @@ NULL
 
 .ggnv_deprecated_since <- "0.2.0"
 
+# ggNetView_multi_link() shares most of the registry, minus the ggNetView()-only
+# arguments, plus its own inner_* / link_* / label_* names.
+.ggnv_multi_link_deprecated_arg_map <- c(
+  .ggnv_deprecated_arg_map[setdiff(
+    names(.ggnv_deprecated_arg_map),
+    c("color", "color.by", "shape", "pointalpha", "pointstroke", "pointlabel",
+      "pointlabelsize", "nodelabsize", "plot_line", "curve", "curvature",
+      "label", "labelsize", "labelsegmentsize", "labelsegmentalpha",
+      "label_layout", "label_wrap_width", "label_outer_pad", "remove"))],
+  list(
+    color                      = "node_color_values",
+    inner_curve                = "edge_curve",
+    inner_curvature            = "edge_curvature",
+    inner_curve_adaptive       = "edge_curve_adaptive",
+    inner_curve_adaptive_range = "edge_curve_adaptive_range",
+    inner_curve_adaptive_bins  = "edge_curve_adaptive_bins",
+    link_linewidth_node        = "link_width_node",
+    link_linewidth_module      = "link_width_module",
+    link_linealpha_node        = "link_alpha_node",
+    link_linealpha_module      = "link_alpha_module",
+    label_offset               = "group_label_offset",
+    label_size                 = "group_label_size"
+  )
+)
+
 #' Translate deprecated ggNetView() argument names to their 0.2.0 names
 #'
 #' @param args Named list of arguments (any mix of old and new names).
 #' @param fn   Function name used in the lifecycle message.
-#' @param keep_new If a new-name argument is already present in `args`, it
-#'   wins over the deprecated alias (the alias still triggers a warning).
+#' @param map Registry (old -> new) to use; defaults to the ggNetView() one.
 #' @return Named list with only new names.
 #' @noRd
 .ggnv_rename_args <- function(args, fn = "ggNetView",
                               env = rlang::caller_env(),
-                              user_env = rlang::caller_env(2)) {
+                              user_env = rlang::caller_env(2),
+                              map = .ggnv_deprecated_arg_map) {
   if (length(args) == 0L) return(list())
-  map <- .ggnv_deprecated_arg_map
   nms <- names(args)
   if (is.null(nms) || any(nms == "")) {
     stop("All arguments forwarded to `", fn, "()` must be named.", call. = FALSE)
@@ -153,8 +177,8 @@ NULL
 #' Used inside ggNetView(): every deprecated argument has default
 #' `deprecated()`; this returns a named list of the ones the caller supplied.
 #' @noRd
-.ggnv_collect_deprecated <- function(env) {
-  old_names <- names(.ggnv_deprecated_arg_map)
+.ggnv_collect_deprecated <- function(env, map = .ggnv_deprecated_arg_map) {
+  old_names <- names(map)
   present <- list()
   for (nm in old_names) {
     if (!exists(nm, envir = env, inherits = FALSE)) next

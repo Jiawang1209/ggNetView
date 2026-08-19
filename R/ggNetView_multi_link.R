@@ -64,8 +64,6 @@
 #' "rightiso_layers" etc.
 #' @param node_add Integer (default = 7).
 #' Number of nodes to add in each layer of the layout.
-#' @param ring_n Numeric (default = 7)
-#' Numbers of ring in rings layout.
 #' @param r Numeric (default = 1).
 #' Radius increment for concentric or layered layouts.
 #' @param center Logical (default = TRUE).
@@ -81,71 +79,72 @@
 #' Number of nearest neighbors used to build the local adjacency graph.
 #' @param push_others_delta Numeric (default = 0).
 #' Radial offset applied to the "Others" module to slightly
-#' @param layout.module Character  (default = "random")
+#' @param layout_module Character  (default = "random")
 #' - random : modules are distributed more randomly and independently.
 #' - adjacent : modules are positioned close to each other, minimizing inter-module gaps.
 #' - order : modules are distributed by order, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`
-#' @param group.by Character (default = "Modularity").
+#' @param group_by Character (default = "Modularity").
 #' Change group for nodes
-#' @param fill.by Character (default = "Modularity").
+#' @param node_fill Character (default = "Modularity").
 #' Change fill for nodes
-#' @param fill Named vector of colors for node/module fill (e.g. \code{c("M1" = "red", "M2" = "blue")}).
+#' @param node_fill_values Named vector of colors for node/module fill (e.g. \code{c("M1" = "red", "M2" = "blue")}).
 #' If \code{NULL} (default), uses viridis discrete fill scale
 #' (\code{scale_fill_viridis_d});
-#' if provided, uses \code{scale_fill_manual(values = fill)}.
-#' @param color Color setting for node/module border.
+#' if provided, uses \code{scale_fill_manual(values = node_fill_values)}.
+#' @param node_color_values Color setting for node/module border.
 #' Supports either a single color string (fixed border color) or a named vector
-#' (module-to-color mapping, similar to \code{fill}).
+#' (module-to-color mapping, similar to \code{node_fill_values}).
 #' If \code{NULL}, mapped borders use viridis discrete color scale
 #' (\code{scale_color_viridis_d}).
-#' @param pointsize Numeric vector of length 2 (default = \code{c(1, 5)}).
+#' @param node_size_range Numeric vector of length 2 (default = \code{c(1, 5)}).
 #' The range of point size when mapping \code{Degree} to size.
 #' First value is minimum size, second is maximum size.
-#' @param jitter Logical (default = FALSE).
-#' Whether to apply jitter to points.
-#' @param jitter_sd  Integer  (default = 0.1).
-#' The standard deviation of the jitter applied when `jitter = TRUE`.
-#' @param mapping_line Logical or Character (default = FALSE).
-#' Whether to map line color in ggNetView. If a character string is provided,
-#' it must be a variable name in edge data.
-#' @param linealpha  Integer  (default = 0.25).
+#' @param node_jitter Logical (default = FALSE).
+#' Whether to apply node_jitter to points.
+#' @param node_jitter_sd  Integer  (default = 0.1).
+#' The standard deviation of the node_jitter applied when `node_jitter = TRUE`.
+#' @param edge_color Character (default = "grey70").
+#' Within-group edge colour: an edge column name (mapping; \code{"corr_direction"}
+#' colours positive/negative edges red/blue and adds the counts to the group
+#' label) or a single colour (constant).
+#' @param edge_color_values Named colour vector or NULL (default = NULL).
+#' Manual palette for a categorical \code{edge_color} mapping.
+#' @param edge_alpha  Integer  (default = 0.25).
 #' Change  line alpha.
-#' @param linecolor Character  (default = "grey70").
-#' Change  line color.
-#' @param inner_curve Logical (default = FALSE).
+#' @param edge_curve Logical (default = FALSE).
 #' Whether to draw within-group edges as curves.
-#' @param inner_curvature Numeric (default = 0.12).
-#' Curvature for within-group edges when \code{inner_curve = TRUE}.
-#' @param inner_curve_adaptive Logical (default = TRUE).
+#' @param edge_curvature Numeric (default = 0.12).
+#' Curvature for within-group edges when \code{edge_curve = TRUE}.
+#' @param edge_curve_adaptive Logical (default = TRUE).
 #' Whether to adapt within-group edge curvature by edge length when
-#' \code{inner_curve = TRUE}.
-#' @param inner_curve_adaptive_range Numeric vector of length 2 (default = c(0.7, 1.3)).
-#' Multipliers applied to \code{inner_curvature} for shortest and longest
+#' \code{edge_curve = TRUE}.
+#' @param edge_curve_adaptive_range Numeric vector of length 2 (default = c(0.7, 1.3)).
+#' Multipliers applied to \code{edge_curvature} for shortest and longest
 #' within-group edges.
-#' @param inner_curve_adaptive_bins Integer (default = 7).
+#' @param edge_curve_adaptive_bins Integer (default = 7).
 #' Number of bins used to approximate per-edge adaptive curvature for
 #' within-group edges.
-#' @param add_outer Logical or Character (default = "circle").
+#' @param module_outline Logical or Character (default = "circle").
 #' Add outer boundaries for matched modules.
 #' Supported values: \code{"circle"} (use \code{ggforce::geom_mark_circle}),
 #' \code{"manual"} (use smoothed polygon boundary like \code{ggNetView}),
 #' and \code{"none"} (disable). Logical \code{TRUE}/\code{FALSE} are
 #' accepted and mapped to \code{"circle"}/\code{"none"}.
-#' @param q_outer Numeric (default = 0.88).
-#' HDR coverage of the outer boundary when \code{add_outer = "manual"}: the
+#' @param module_outline_q Numeric (default = 0.88).
+#' HDR coverage of the outer boundary when \code{module_outline = "manual"}: the
 #' contour is drawn at the density level whose iso-density region contains a
-#' fraction \code{q_outer} of the module's empirical probability mass.
-#' @param expand_outer Numeric (default = 1.02).
+#' fraction \code{module_outline_q} of the module's empirical probability mass.
+#' @param module_outline_expand Numeric (default = 1.02).
 #' Multiplicative scaling applied to each polygon from its own centroid
-#' when \code{add_outer = "manual"}.
-#' @param bandwidth_scale Numeric (default = 1.0).
+#' when \code{module_outline = "manual"}.
+#' @param module_outline_bandwidth Numeric (default = 1.0).
 #' Multiplier on the robust normal-reference 2D KDE bandwidth used to build
-#' the outer boundary when \code{add_outer = "manual"}.
-#' @param outerwidth Numeric (default = 1.25).
+#' the outer boundary when \code{module_outline = "manual"}.
+#' @param module_outline_width Numeric (default = 1.25).
 #' Line width for module outer boundaries.
-#' @param outerlinetype Integer or character (default = 2).
+#' @param module_outline_linetype Integer or character (default = 2).
 #' Linetype for module outer boundaries (e.g. 1 = solid, 2 = dashed).
-#' @param outeralpha Numeric (default = 0.5).
+#' @param module_outline_alpha Numeric (default = 0.5).
 #' Alpha for module outer boundaries.
 #' @param link_level Character (default = "Module").
 #' Cross-group link granularity. One of \code{"None"}, \code{"Module"}, \code{"Node"},
@@ -181,19 +180,19 @@
 #' A single value, named vector (e.g. \code{c("WT|KO" = "red")}), or unnamed vector (by pair index).
 #' @param link_color_module Character or NULL (default = NULL).
 #' Colors for module-to-module cross-group links. Same rules as \code{link_color_node}.
-#' @param link_linewidth_node Numeric (default = 1).
+#' @param link_width_node Numeric (default = 1).
 #' Line width for node-to-node cross-group links. Single value or vector (by pair index/named).
-#' @param link_linewidth_module Numeric (default = 1).
+#' @param link_width_module Numeric (default = 1).
 #' Line width for module-to-module cross-group links. Single value or vector.
 #' @param link_linetype_node Integer or character (default = 2).
 #' Linetype for node-to-node cross-group links (e.g. 2 = dashed, 1 = solid). Single value or vector.
 #' @param link_linetype_module Integer or character (default = 1).
 #' Linetype for module-to-module cross-group links. Single value or vector.
-#' @param link_linealpha_node Numeric (default = 0.25).
+#' @param link_alpha_node Numeric (default = 0.25).
 #' Alpha (transparency) for node-to-node cross-group links. Single value or vector.
-#' @param link_linealpha_module Numeric (default = 0.5).
+#' @param link_alpha_module Numeric (default = 0.5).
 #' Alpha (transparency) for module-to-module cross-group links. Single value or vector.
-#' @param dropOthers Logical (default = FALSE).
+#' @param drop_others Logical (default = FALSE).
 #' If TRUE, remove nodes in the \code{"Others"} module from each group's
 #' \code{graph_obj} before layout, plotting, and module-overlap comparison.
 #' @param calculate_topology Logical (default = FALSE).
@@ -258,29 +257,37 @@
 #' @param ncol Integer (default = NULL).
 #' Number of columns. Used by: (1) \code{group_layout = "row"}, \code{"column"}, or \code{"snake"} for group grid;
 #' (2) layout functions like \code{"consensus_module_equal_gephi"} for module grid.
-#' @param label_offset Numeric (default = 0.2).
+#' @param group_label_offset Numeric (default = 0.2).
 #' Vertical offset of group labels above each group's layout (added to max y).
-#' @param label_size Numeric (default = 4).
+#' @param group_label_size Numeric (default = 4).
 #' Font size for group labels (Group, Node, Edge, etc.).
-#' @param add_group_outer Logical (default = FALSE).
+#' @param network_outline Logical (default = FALSE).
 #' Whether to add a circle boundary around each group (mimics \code{ggforce::geom_mark_circle}).
-#' @param add_group_outer_expand Numeric (default = 2).
+#' @param network_outline_expand Numeric (default = 2).
 #' Expansion in mm for the group circle to account for point size; passed to \code{geom_mark_circle(expand = ...)}.
-#' @param add_group_outer_color Character (default = "grey50").
+#' @param network_outline_color Character (default = "grey50").
 #' Color of the group outer circle border. A single value applies to all groups;
 #' a named vector maps group names to colors (e.g. \code{c("WT" = "blue", "KO" = "red")});
 #' an unnamed vector is used by index (recycled if needed).
-#' @param add_group_outer_fill Character or NULL (default = NULL).
+#' @param network_outline_fill Character or NULL (default = NULL).
 #' Fill color of the group outer circle. \code{NULL} = no fill (transparent).
-#' A single value, named vector, or unnamed vector works like \code{add_group_outer_color}.
-#' @param add_group_outer_fill_alpha Numeric (default = 0.2).
+#' A single value, named vector, or unnamed vector works like \code{network_outline_color}.
+#' @param network_outline_fill_alpha Numeric (default = 0.2).
 #' Alpha (transparency) of the group outer circle fill; 0 = fully transparent, 1 = opaque.
-#' @param add_group_outer_linetype Integer or character (default = 1).
+#' @param network_outline_linetype Integer or character (default = 1).
 #' Linetype of the group outer circle (e.g. 1 = solid, 2 = dashed).
-#' @param add_group_outer_linewidth Numeric (default = 0.5).
+#' @param network_outline_width Numeric (default = 0.5).
 #' Line width of the group outer circle.
 #' @param seed Integer (default = 1115).
 #' Random seed for reproducibility.
+#' @param ring_n,layout.module,group.by,fill.by,fill,color,pointsize,jitter,jitter_sd,mapping_line,linealpha,linecolor,inner_curve,inner_curvature,inner_curve_adaptive,inner_curve_adaptive_range,inner_curve_adaptive_bins,add_outer,q_outer,expand_outer,bandwidth_scale,outerwidth,outerlinetype,outeralpha,link_linewidth_node,link_linewidth_module,link_linealpha_node,link_linealpha_module,dropOthers,label_offset,label_size,add_group_outer,add_group_outer_expand,add_group_outer_color,add_group_outer_fill,add_group_outer_fill_alpha,add_group_outer_linetype,add_group_outer_linewidth
+#'   \lifecycle{deprecated} Pre-0.2.0 argument names, kept for backward
+#'   compatibility. They emit a deprecation warning and are forwarded to the
+#'   new argument (same renaming scheme as \code{\link{ggNetView}}; in addition
+#'   \code{inner_curve*} -> \code{edge_curve*}, \code{link_linewidth_*} ->
+#'   \code{link_width_*}, \code{link_linealpha_*} -> \code{link_alpha_*},
+#'   \code{label_offset}/\code{label_size} -> \code{group_label_offset}/
+#'   \code{group_label_size}).
 #'
 #' @returns A list containing plot, module-overlap info, link info, group graphs,
 #' and optional topology results.
@@ -312,7 +319,6 @@ ggNetView_multi_link <- function(mat = NULL,
                                  top_modules = 15,
                                  layout = NULL,
                                  node_add = 7,
-                                 ring_n = NULL,
                                  r = 1,
                                  center = TRUE,
                                  idx = NULL,
@@ -320,29 +326,29 @@ ggNetView_multi_link <- function(mat = NULL,
                                  inner_shrink = 1,
                                  k_nn = 12,
                                  push_others_delta = 0,
-                                 layout.module = c("random", "adjacent", "order"),
-                                 group.by = "Modularity",
-                                 fill.by = "Modularity",
-                                 fill = NULL,
-                                 color = NULL,
-                                 pointsize = c(1, 5),
-                                 jitter = FALSE,
-                                 jitter_sd = 0.01,
-                                 mapping_line = FALSE,
-                                 linealpha = 0.25,
-                                 linecolor = "grey70",
-                                 inner_curve = FALSE,
-                                 inner_curvature = 0.12,
-                                 inner_curve_adaptive = TRUE,
-                                 inner_curve_adaptive_range = c(0.7, 1.3),
-                                 inner_curve_adaptive_bins = 7,
-                                 add_outer = "circle",
-                                 q_outer = 0.88,
-                                 expand_outer = 1.02,
-                                 bandwidth_scale = 1.0,
-                                 outerwidth = 1.25,
-                                 outerlinetype = 2,
-                                 outeralpha = 0.5,
+                                 layout_module = c("random", "adjacent", "order"),
+                                 group_by = "Modularity",
+                                 node_fill = "Modularity",
+                                 node_fill_values = NULL,
+                                 node_color_values = NULL,
+                                 node_size_range = c(1, 5),
+                                 node_jitter = FALSE,
+                                 node_jitter_sd = 0.01,
+                                 edge_color = "grey70",
+                                 edge_color_values = NULL,
+                                 edge_alpha = 0.25,
+                                 edge_curve = FALSE,
+                                 edge_curvature = 0.12,
+                                 edge_curve_adaptive = TRUE,
+                                 edge_curve_adaptive_range = c(0.7, 1.3),
+                                 edge_curve_adaptive_bins = 7,
+                                 module_outline = "circle",
+                                 module_outline_q = 0.88,
+                                 module_outline_expand = 1.02,
+                                 module_outline_bandwidth = 1.0,
+                                 module_outline_width = 1.25,
+                                 module_outline_linetype = 2,
+                                 module_outline_alpha = 0.5,
                                  link_level = "Module",
                                  link_curve = FALSE,
                                  link_curvature = 0.2,
@@ -352,13 +358,13 @@ ggNetView_multi_link <- function(mat = NULL,
                                  link_curve_adaptive_bins = 7,
                                  link_color_node = NULL,
                                  link_color_module = NULL,
-                                 link_linewidth_node = 1,
-                                 link_linewidth_module = 1,
+                                 link_width_node = 1,
+                                 link_width_module = 1,
                                  link_linetype_node = 2,
                                  link_linetype_module = 1,
-                                 link_linealpha_node = 0.25,
-                                 link_linealpha_module = 0.5,
-                                 dropOthers = FALSE,
+                                 link_alpha_node = 0.25,
+                                 link_alpha_module = 0.5,
+                                 drop_others = FALSE,
                                  calculate_topology = FALSE,
                                  comparisons = TRUE,
                                  comparisons_groups = NULL,
@@ -372,17 +378,71 @@ ggNetView_multi_link <- function(mat = NULL,
                                  nrow = NULL,
                                  ncol = NULL,
                                  sine_period = 4,
-                                 label_offset = 0.2,
-                                 label_size = 4,
-                                 add_group_outer = FALSE,
-                                 add_group_outer_expand = 2,
-                                 add_group_outer_color = "grey50",
-                                 add_group_outer_fill = NULL,
-                                 add_group_outer_fill_alpha = 0.2,
-                                 add_group_outer_linetype = 1,
-                                 add_group_outer_linewidth = 0.5,
-                                 seed = 1115
+                                 group_label_offset = 0.2,
+                                 group_label_size = 4,
+                                 network_outline = FALSE,
+                                 network_outline_expand = 2,
+                                 network_outline_color = "grey50",
+                                 network_outline_fill = NULL,
+                                 network_outline_fill_alpha = 0.2,
+                                 network_outline_linetype = 1,
+                                 network_outline_width = 0.5,
+                                 seed = 1115,
+                                 # ---- deprecated (< 0.2.0) names ----
+                                 ring_n = deprecated(),
+                                 layout.module = deprecated(),
+                                 group.by = deprecated(),
+                                 fill.by = deprecated(),
+                                 fill = deprecated(),
+                                 color = deprecated(),
+                                 pointsize = deprecated(),
+                                 jitter = deprecated(),
+                                 jitter_sd = deprecated(),
+                                 mapping_line = deprecated(),
+                                 linealpha = deprecated(),
+                                 linecolor = deprecated(),
+                                 inner_curve = deprecated(),
+                                 inner_curvature = deprecated(),
+                                 inner_curve_adaptive = deprecated(),
+                                 inner_curve_adaptive_range = deprecated(),
+                                 inner_curve_adaptive_bins = deprecated(),
+                                 add_outer = deprecated(),
+                                 q_outer = deprecated(),
+                                 expand_outer = deprecated(),
+                                 bandwidth_scale = deprecated(),
+                                 outerwidth = deprecated(),
+                                 outerlinetype = deprecated(),
+                                 outeralpha = deprecated(),
+                                 link_linewidth_node = deprecated(),
+                                 link_linewidth_module = deprecated(),
+                                 link_linealpha_node = deprecated(),
+                                 link_linealpha_module = deprecated(),
+                                 dropOthers = deprecated(),
+                                 label_offset = deprecated(),
+                                 label_size = deprecated(),
+                                 add_group_outer = deprecated(),
+                                 add_group_outer_expand = deprecated(),
+                                 add_group_outer_color = deprecated(),
+                                 add_group_outer_fill = deprecated(),
+                                 add_group_outer_fill_alpha = deprecated(),
+                                 add_group_outer_linetype = deprecated(),
+                                 add_group_outer_linewidth = deprecated()
 ){
+  # ---- lifecycle: translate deprecated (< 0.2.0) argument names ----------
+  .fn_env <- environment()
+  .old_args <- .ggnv_collect_deprecated(.fn_env, map = .ggnv_multi_link_deprecated_arg_map)
+  if (length(.old_args) > 0L) {
+    .explicit_new <- setdiff(names(match.call(expand.dots = FALSE))[-1L],
+                             names(.ggnv_multi_link_deprecated_arg_map))
+    .renamed <- .ggnv_rename_args(.old_args, fn = "ggNetView_multi_link",
+                                  env = .fn_env, user_env = parent.frame(),
+                                  map = .ggnv_multi_link_deprecated_arg_map)
+    for (.nm in names(.renamed)) {
+      if (.nm %in% .explicit_new) next
+      assign(.nm, .renamed[[.nm]], envir = .fn_env)
+    }
+  }
+
   method <- match.arg(method)
   sig_by <- match.arg(sig_by)
 
@@ -396,17 +456,11 @@ ggNetView_multi_link <- function(mat = NULL,
                '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f'
                )
 
-  if (is.logical(mapping_line)) {
-    if (length(mapping_line) != 1 || is.na(mapping_line)) {
-      stop("`mapping_line` must be a single logical or character string.")
-    }
-  } else if (is.character(mapping_line)) {
-    if (length(mapping_line) != 1 || is.na(mapping_line) || trimws(mapping_line) == "") {
-      stop("`mapping_line` must be a single logical or character string.")
-    }
-  } else {
-    stop("`mapping_line` must be a single logical or character string.")
+  if (!is.character(edge_color) || length(edge_color) != 1 || is.na(edge_color) ||
+      trimws(edge_color) == "") {
+    stop("`edge_color` must be a single colour or a single edge column name.")
   }
+  edge_color_is_sign <- identical(edge_color, "corr_direction")
   if (!is.logical(calculate_topology) || length(calculate_topology) != 1 || is.na(calculate_topology)) {
     stop("`calculate_topology` must be TRUE or FALSE.")
   }
@@ -480,48 +534,48 @@ ggNetView_multi_link <- function(mat = NULL,
     }
     order
   }
-  if (!is.null(fill) && !is.character(fill)) {
-    stop("`fill` must be NULL or a character vector (preferably named).")
+  if (!is.null(node_fill_values) && !is.character(node_fill_values)) {
+    stop("`node_fill_values` must be NULL or a character vector (preferably named).")
   }
-  if (!is.null(color) && !is.character(color)) {
-    stop("`color` must be NULL, a single color string, or a named character vector.")
+  if (!is.null(node_color_values) && !is.character(node_color_values)) {
+    stop("`node_color_values` must be NULL, a single color string, or a named character vector.")
   }
-  if (is.logical(add_outer)) {
-    if (length(add_outer) != 1 || is.na(add_outer)) {
-      stop("`add_outer` must be a single logical or character string.")
+  if (is.logical(module_outline)) {
+    if (length(module_outline) != 1 || is.na(module_outline)) {
+      stop("`module_outline` must be a single logical or character string.")
     }
-    add_outer <- if (isTRUE(add_outer)) "circle" else "none"
-  } else if (is.character(add_outer)) {
-    if (length(add_outer) != 1 || is.na(add_outer) || trimws(add_outer) == "") {
-      stop("`add_outer` must be a single logical or character string.")
+    module_outline <- if (isTRUE(module_outline)) "circle" else "none"
+  } else if (is.character(module_outline)) {
+    if (length(module_outline) != 1 || is.na(module_outline) || trimws(module_outline) == "") {
+      stop("`module_outline` must be a single logical or character string.")
     }
-    add_outer <- tolower(trimws(add_outer))
-    if (!add_outer %in% c("circle", "manual", "none")) {
-      stop("`add_outer` must be one of: 'circle', 'manual', 'none'.")
+    module_outline <- tolower(trimws(module_outline))
+    if (!module_outline %in% c("circle", "manual", "none")) {
+      stop("`module_outline` must be one of: 'circle', 'manual', 'none'.")
     }
   } else {
-    stop("`add_outer` must be a single logical or character string.")
+    stop("`module_outline` must be a single logical or character string.")
   }
-  if (!is.logical(add_group_outer) || length(add_group_outer) != 1 || is.na(add_group_outer)) {
-    stop("`add_group_outer` must be TRUE or FALSE.")
+  if (!is.logical(network_outline) || length(network_outline) != 1 || is.na(network_outline)) {
+    stop("`network_outline` must be TRUE or FALSE.")
   }
-  if (!is.numeric(add_group_outer_expand) || length(add_group_outer_expand) != 1 || is.na(add_group_outer_expand)) {
-    stop("`add_group_outer_expand` must be a single numeric value.")
+  if (!is.numeric(network_outline_expand) || length(network_outline_expand) != 1 || is.na(network_outline_expand)) {
+    stop("`network_outline_expand` must be a single numeric value.")
   }
-  if (!is.null(add_group_outer_color) && !is.character(add_group_outer_color)) {
-    stop("`add_group_outer_color` must be NULL or a character vector (color string(s)).")
+  if (!is.null(network_outline_color) && !is.character(network_outline_color)) {
+    stop("`network_outline_color` must be NULL or a character vector (color string(s)).")
   }
-  if (!is.null(add_group_outer_fill) && !is.character(add_group_outer_fill)) {
-    stop("`add_group_outer_fill` must be NULL or a character vector (color string(s)).")
+  if (!is.null(network_outline_fill) && !is.character(network_outline_fill)) {
+    stop("`network_outline_fill` must be NULL or a character vector (color string(s)).")
   }
-  if (!is.numeric(add_group_outer_fill_alpha) || length(add_group_outer_fill_alpha) != 1 || is.na(add_group_outer_fill_alpha)) {
-    stop("`add_group_outer_fill_alpha` must be a single numeric value between 0 and 1.")
+  if (!is.numeric(network_outline_fill_alpha) || length(network_outline_fill_alpha) != 1 || is.na(network_outline_fill_alpha)) {
+    stop("`network_outline_fill_alpha` must be a single numeric value between 0 and 1.")
   }
-  if (add_group_outer_fill_alpha < 0 || add_group_outer_fill_alpha > 1) {
-    stop("`add_group_outer_fill_alpha` must be between 0 and 1.")
+  if (network_outline_fill_alpha < 0 || network_outline_fill_alpha > 1) {
+    stop("`network_outline_fill_alpha` must be between 0 and 1.")
   }
-  if (!is.numeric(add_group_outer_linewidth) || length(add_group_outer_linewidth) != 1 || is.na(add_group_outer_linewidth) || add_group_outer_linewidth < 0) {
-    stop("`add_group_outer_linewidth` must be a single non-negative numeric value.")
+  if (!is.numeric(network_outline_width) || length(network_outline_width) != 1 || is.na(network_outline_width) || network_outline_width < 0) {
+    stop("`network_outline_width` must be a single non-negative numeric value.")
   }
   if (!is.character(link_level) || length(link_level) != 1 || is.na(link_level)) {
     stop("`link_level` must be one of: 'None', 'Module', 'Node', 'NodeinModule', 'Module&Node', 'Module&Node2'.")
@@ -567,35 +621,35 @@ ggNetView_multi_link <- function(mat = NULL,
   if (!is.null(link_color_module) && !is.character(link_color_module)) {
     stop("`link_color_module` must be NULL or a character vector (color string(s)).")
   }
-  if (!is.numeric(link_linewidth_node) || any(is.na(link_linewidth_node)) || any(link_linewidth_node < 0)) {
-    stop("`link_linewidth_node` must be a numeric vector of non-negative values.")
+  if (!is.numeric(link_width_node) || any(is.na(link_width_node)) || any(link_width_node < 0)) {
+    stop("`link_width_node` must be a numeric vector of non-negative values.")
   }
-  if (!is.numeric(link_linewidth_module) || any(is.na(link_linewidth_module)) || any(link_linewidth_module < 0)) {
-    stop("`link_linewidth_module` must be a numeric vector of non-negative values.")
+  if (!is.numeric(link_width_module) || any(is.na(link_width_module)) || any(link_width_module < 0)) {
+    stop("`link_width_module` must be a numeric vector of non-negative values.")
   }
-  if (!is.logical(inner_curve) || length(inner_curve) != 1 || is.na(inner_curve)) {
-    stop("`inner_curve` must be TRUE or FALSE.")
+  if (!is.logical(edge_curve) || length(edge_curve) != 1 || is.na(edge_curve)) {
+    stop("`edge_curve` must be TRUE or FALSE.")
   }
-  if (!is.numeric(inner_curvature) || length(inner_curvature) != 1 || is.na(inner_curvature)) {
-    stop("`inner_curvature` must be a single numeric value.")
+  if (!is.numeric(edge_curvature) || length(edge_curvature) != 1 || is.na(edge_curvature)) {
+    stop("`edge_curvature` must be a single numeric value.")
   }
-  if (!is.logical(inner_curve_adaptive) || length(inner_curve_adaptive) != 1 || is.na(inner_curve_adaptive)) {
-    stop("`inner_curve_adaptive` must be TRUE or FALSE.")
+  if (!is.logical(edge_curve_adaptive) || length(edge_curve_adaptive) != 1 || is.na(edge_curve_adaptive)) {
+    stop("`edge_curve_adaptive` must be TRUE or FALSE.")
   }
-  if (!is.numeric(inner_curve_adaptive_range) || length(inner_curve_adaptive_range) != 2 ||
-      any(is.na(inner_curve_adaptive_range))) {
-    stop("`inner_curve_adaptive_range` must be a numeric vector of length 2.")
+  if (!is.numeric(edge_curve_adaptive_range) || length(edge_curve_adaptive_range) != 2 ||
+      any(is.na(edge_curve_adaptive_range))) {
+    stop("`edge_curve_adaptive_range` must be a numeric vector of length 2.")
   }
-  if (inner_curve_adaptive_range[1] <= 0 || inner_curve_adaptive_range[2] <= 0 ||
-      inner_curve_adaptive_range[1] > inner_curve_adaptive_range[2]) {
-    stop("`inner_curve_adaptive_range` must be positive and increasing, e.g. c(0.7, 1.3).")
+  if (edge_curve_adaptive_range[1] <= 0 || edge_curve_adaptive_range[2] <= 0 ||
+      edge_curve_adaptive_range[1] > edge_curve_adaptive_range[2]) {
+    stop("`edge_curve_adaptive_range` must be positive and increasing, e.g. c(0.7, 1.3).")
   }
-  if (!is.numeric(inner_curve_adaptive_bins) || length(inner_curve_adaptive_bins) != 1 || is.na(inner_curve_adaptive_bins)) {
-    stop("`inner_curve_adaptive_bins` must be a single integer >= 1.")
+  if (!is.numeric(edge_curve_adaptive_bins) || length(edge_curve_adaptive_bins) != 1 || is.na(edge_curve_adaptive_bins)) {
+    stop("`edge_curve_adaptive_bins` must be a single integer >= 1.")
   }
-  inner_curve_adaptive_bins <- as.integer(inner_curve_adaptive_bins)
-  if (inner_curve_adaptive_bins < 1) {
-    stop("`inner_curve_adaptive_bins` must be >= 1.")
+  edge_curve_adaptive_bins <- as.integer(edge_curve_adaptive_bins)
+  if (edge_curve_adaptive_bins < 1) {
+    stop("`edge_curve_adaptive_bins` must be >= 1.")
   }
   if (!is.numeric(anchor_dist) || length(anchor_dist) != 1 || is.na(anchor_dist)) {
     stop("`anchor_dist` must be a single numeric value.")
@@ -604,16 +658,16 @@ ggNetView_multi_link <- function(mat = NULL,
       (!is.numeric(layout_anchor_dist) || length(layout_anchor_dist) != 1 || is.na(layout_anchor_dist))) {
     stop("`layout_anchor_dist` must be NULL or a single numeric value.")
   }
-  if (!is.numeric(label_offset) || length(label_offset) != 1 || is.na(label_offset)) {
-    stop("`label_offset` must be a single numeric value.")
+  if (!is.numeric(group_label_offset) || length(group_label_offset) != 1 || is.na(group_label_offset)) {
+    stop("`group_label_offset` must be a single numeric value.")
   }
-  if (!is.numeric(label_size) || length(label_size) != 1 || is.na(label_size) || label_size <= 0) {
-    stop("`label_size` must be a single positive numeric value.")
+  if (!is.numeric(group_label_size) || length(group_label_size) != 1 || is.na(group_label_size) || group_label_size <= 0) {
+    stop("`group_label_size` must be a single positive numeric value.")
   }
   if (!is.numeric(sine_period) || length(sine_period) != 1 || is.na(sine_period) || sine_period <= 0) {
     stop("`sine_period` must be a single positive numeric value.")
   }
-  layout.module <- match.arg(layout.module)
+  layout_module <- match.arg(layout_module)
   group_layout <- match.arg(group_layout, choices = c("circle", "row", "column", "square", "diamond", "triangle", "triangle_down", "snake", "snake_vertical", "snake_vertical_sin", "snake_vertical_cos", "snake_vertical_neg_sin", "snake_vertical_neg_cos", "sin", "cos", "-sin", "-cos", "center_pairs"))
   layout_anchor_dist_use <- if (is.null(layout_anchor_dist)) anchor_dist else layout_anchor_dist
   if (is.null(layout) || length(layout) != 1 || is.na(layout) || trimws(as.character(layout)) == "") {
@@ -664,9 +718,9 @@ ggNetView_multi_link <- function(mat = NULL,
       )
     }
 
-    # dropOthers acts on the source graph_obj BEFORE layout:
+    # drop_others acts on the source graph_obj BEFORE layout:
     # it removes "Others" nodes first, then downstream layout/plot are rebuilt.
-    if (isTRUE(dropOthers)) {
+    if (isTRUE(drop_others)) {
       node_tbl <- graph %>%
         tidygraph::activate(nodes) %>%
         tidygraph::as_tibble()
@@ -690,7 +744,7 @@ ggNetView_multi_link <- function(mat = NULL,
             tidygraph::filter(as.character(.data[[module_col]]) != "Others")
         }
       } else {
-        warning("`dropOthers = TRUE` but no module column found in `graph_obj` nodes.")
+        warning("`drop_others = TRUE` but no module column found in `graph_obj` nodes.")
       }
     }
 
@@ -721,19 +775,19 @@ ggNetView_multi_link <- function(mat = NULL,
 
     # get ly1_1
 
-    if (layout.module == "random") {
+    if (layout_module == "random") {
       ly1_1 <- module_layout(graph,
                              layout = ly1,
                              center = center,
                              idx = idx,
                              shrink = shrink,
-                             jitter,
-                             jitter_sd# ,
+                             node_jitter,
+                             node_jitter_sd# ,
                              # seed = seed
       )
     }
 
-    if (layout.module == "adjacent") {
+    if (layout_module == "adjacent") {
       k_nn_try <- k_nn
       k_nn_cap <- max(1, nrow(ly1) - 1)
       ly1_1 <- NULL
@@ -745,8 +799,8 @@ ggNetView_multi_link <- function(mat = NULL,
                          k_nn = k_nn_try,
                          push_others_delta = push_others_delta,
                          shrink = shrink,
-                         jitter = jitter,
-                         jitter_sd = jitter_sd
+                         jitter = node_jitter,
+                         jitter_sd = node_jitter_sd
                          # seed = seed
           ),
           error = function(e) e
@@ -768,35 +822,35 @@ ggNetView_multi_link <- function(mat = NULL,
           stop(ly_try)
         }
         warning(sprintf(
-          "`layout.module = 'adjacent'` failed at k_nn = %d; retrying with k_nn = %d.",
+          "`layout_module = 'adjacent'` failed at k_nn = %d; retrying with k_nn = %d.",
           k_nn_try, next_k
         ))
         k_nn_try <- next_k
       }
     }
 
-    if (layout.module == "order" && func_name != "create_layout_multirings") {
+    if (layout_module == "order" && func_name != "create_layout_multirings") {
       ly1_1 <- module_layout4(graph,
                               layout = ly1,
                               center = center,
                               k_nn = k_nn,
                               push_others_delta = push_others_delta,
                               shrink = shrink,
-                              jitter,
-                              jitter_sd
+                              node_jitter,
+                              node_jitter_sd
                               # seed = seed
       )
     }
 
-    if (layout.module == "order" & func_name == "create_layout_multirings") {
+    if (layout_module == "order" & func_name == "create_layout_multirings") {
       ly1_1 <- module_layout5(graph,
                               layout = ly1,
                               center = center,
                               k_nn = k_nn,
                               push_others_delta = push_others_delta,
                               shrink = shrink,
-                              jitter,
-                              jitter_sd
+                              node_jitter,
+                              node_jitter_sd
                               # seed = seed
       )
     }
@@ -805,7 +859,7 @@ ggNetView_multi_link <- function(mat = NULL,
 
     graph_info[[g]] <- ly1_1$ggplot_data
 
-    graph_stat[[g]] <- stat_graph(graph, mapping_line)
+    graph_stat[[g]] <- stat_graph(graph, edge_color_is_sign)
 
     if (isTRUE(calculate_topology)) {
       topology_network[[g]] <- tryCatch(
@@ -939,7 +993,7 @@ ggNetView_multi_link <- function(mat = NULL,
   }
 
   Module_information_plot <- if (link_level %in% c("module", "nodeinmodule", "module&node", "module&node2")) {
-    if (isTRUE(dropOthers)) {
+    if (isTRUE(drop_others)) {
       Module_information
     } else {
       Module_information %>%
@@ -1121,13 +1175,13 @@ ggNetView_multi_link <- function(mat = NULL,
         )
 
     }
-    # jitter TRUE
-    if (isTRUE(jitter)) {
+    # node_jitter TRUE
+    if (isTRUE(node_jitter)) {
       for (i in seq_along(names(graph_info))) {
         graph_info[[i]]$ggplot_node_df <- graph_info[[i]]$ggplot_node_df %>%
           dplyr::mutate(
-            x = x + stats::rnorm(dplyr::n(), mean = 0, sd = jitter_sd),
-            y = y + stats::rnorm(dplyr::n(), mean = 0, sd = jitter_sd)
+            x = x + stats::rnorm(dplyr::n(), mean = 0, sd = node_jitter_sd),
+            y = y + stats::rnorm(dplyr::n(), mean = 0, sd = node_jitter_sd)
           )
 
         graph_info[[i]]$ggplot_edge_df <- graph_info[[i]]$ggplot_edge_df %>%
@@ -1167,13 +1221,13 @@ ggNetView_multi_link <- function(mat = NULL,
         dplyr::rename(to_x = x,
                       to_y = y)
 
-    # jitter TRUE
-    if (isTRUE(jitter)) {
+    # node_jitter TRUE
+    if (isTRUE(node_jitter)) {
       for (i in seq_along(names(graph_info))) {
         graph_info[[i]]$ggplot_node_df <- graph_info[[i]]$ggplot_node_df %>%
           dplyr::mutate(
-            x = x + stats::rnorm(dplyr::n(), mean = 0, sd = jitter_sd),
-            y = y + stats::rnorm(dplyr::n(), mean = 0, sd = jitter_sd)
+            x = x + stats::rnorm(dplyr::n(), mean = 0, sd = node_jitter_sd),
+            y = y + stats::rnorm(dplyr::n(), mean = 0, sd = node_jitter_sd)
           )
 
         graph_info[[i]]$ggplot_edge_df <- graph_info[[i]]$ggplot_edge_df %>%
@@ -1203,24 +1257,24 @@ ggNetView_multi_link <- function(mat = NULL,
   p <- ggplot()
 
   add_inner_link_geom <- function(edge_data, mapping_obj, color_fixed = NULL) {
-    if (!isTRUE(inner_curve)) {
+    if (!isTRUE(edge_curve)) {
       return(
         ggplot2::geom_segment(
           data = edge_data,
           mapping = mapping_obj,
-          alpha = linealpha,
+          alpha = edge_alpha,
           color = color_fixed
         )
       )
     }
 
-    if (!isTRUE(inner_curve_adaptive) || nrow(edge_data) < 2) {
+    if (!isTRUE(edge_curve_adaptive) || nrow(edge_data) < 2) {
       return(
         ggplot2::geom_curve(
           data = edge_data,
           mapping = mapping_obj,
-          curvature = inner_curvature,
-          alpha = linealpha,
+          curvature = edge_curvature,
+          alpha = edge_alpha,
           color = color_fixed
         )
       )
@@ -1232,22 +1286,22 @@ ggNetView_multi_link <- function(mat = NULL,
         ggplot2::geom_curve(
           data = edge_data,
           mapping = mapping_obj,
-          curvature = inner_curvature,
-          alpha = linealpha,
+          curvature = edge_curvature,
+          alpha = edge_alpha,
           color = color_fixed
         )
       )
     }
 
-    n_bins <- min(inner_curve_adaptive_bins, length(edge_dist))
+    n_bins <- min(edge_curve_adaptive_bins, length(edge_dist))
     breaks <- unique(stats::quantile(edge_dist, probs = seq(0, 1, length.out = n_bins + 1), na.rm = TRUE))
     if (length(breaks) <= 2) {
       return(
         ggplot2::geom_curve(
           data = edge_data,
           mapping = mapping_obj,
-          curvature = inner_curvature,
-          alpha = linealpha,
+          curvature = edge_curvature,
+          alpha = edge_alpha,
           color = color_fixed
         )
       )
@@ -1263,15 +1317,15 @@ ggNetView_multi_link <- function(mat = NULL,
         ggplot2::geom_curve(
           data = edge_data,
           mapping = mapping_obj,
-          curvature = inner_curvature,
-          alpha = linealpha,
+          curvature = edge_curvature,
+          alpha = edge_alpha,
           color = color_fixed
         )
       )
     }
 
     bin_mult <- stats::setNames(
-      seq(inner_curve_adaptive_range[1], inner_curve_adaptive_range[2], length.out = length(bins_present)),
+      seq(edge_curve_adaptive_range[1], edge_curve_adaptive_range[2], length.out = length(bins_present)),
       bins_present
     )
 
@@ -1279,8 +1333,8 @@ ggNetView_multi_link <- function(mat = NULL,
       ggplot2::geom_curve(
         data = edge_data %>% dplyr::filter(.curve_bin == b),
         mapping = mapping_obj,
-        curvature = inner_curvature * bin_mult[as.character(b)],
-        alpha = linealpha,
+        curvature = edge_curvature * bin_mult[as.character(b)],
+        alpha = edge_alpha,
         color = color_fixed
       )
     })
@@ -1320,9 +1374,9 @@ ggNetView_multi_link <- function(mat = NULL,
       function(g) {
         node_df <- graph_info[[g]]$ggplot_node_df
         d <- sqrt((node_df$x - cx[g])^2 + (node_df$y - cy[g])^2)
-        q_outer <- as.numeric(stats::quantile(d, probs = 0.98, na.rm = TRUE))
+        module_outline_q <- as.numeric(stats::quantile(d, probs = 0.98, na.rm = TRUE))
         r_max <- max(d, na.rm = TRUE)
-        max(max(q_outer, r_max * 0.98), 1e-6)
+        max(max(module_outline_q, r_max * 0.98), 1e-6)
       },
       numeric(1)
     )
@@ -1415,8 +1469,8 @@ ggNetView_multi_link <- function(mat = NULL,
     add_link_layer_impl <- function(p_obj, df_link, col_link, link_type = c("node", "module"), cross_channel_sign = NULL, link_lt = NULL, link_al = NULL, link_lw = NULL) {
       link_type <- match.arg(link_type)
       link_lt <- if (!is.null(link_lt)) link_lt else (if (link_type == "module") link_linetype_module else link_linetype_node)
-      link_al <- if (!is.null(link_al)) link_al else (if (link_type == "module") link_linealpha_module else link_linealpha_node)
-      link_lw <- if (!is.null(link_lw)) link_lw else (if (link_type == "module") link_linewidth_module else link_linewidth_node)
+      link_al <- if (!is.null(link_al)) link_al else (if (link_type == "module") link_alpha_module else link_alpha_node)
+      link_lw <- if (!is.null(link_lw)) link_lw else (if (link_type == "module") link_width_module else link_width_node)
       if (nrow(df_link) == 0) return(p_obj)
       if (isTRUE(link_curve)) {
         df_draw <- df_link
@@ -1603,8 +1657,8 @@ ggNetView_multi_link <- function(mat = NULL,
         pair_key <- paste(sort(c(gA, gB)), collapse = "|")
         col_i <- resolve_link_color(link_color_node, color_v, pair_key, tmpi)
         lt_i <- resolve_link_style(link_linetype_node, pair_key, tmpi)
-        al_i <- resolve_link_style(link_linealpha_node, pair_key, tmpi)
-        lw_i <- resolve_link_style(link_linewidth_node, pair_key, tmpi)
+        al_i <- resolve_link_style(link_alpha_node, pair_key, tmpi)
+        lw_i <- resolve_link_style(link_width_node, pair_key, tmpi)
         cross_sign <- cross_channel_lookup[[pair_key]]
         p <- add_link_layer(p, node_links, col_i, link_type = "node", cross_channel_sign = cross_sign, link_lt = lt_i, link_al = al_i, link_lw = lw_i)
         tmpi <- tmpi + 1
@@ -1657,8 +1711,8 @@ ggNetView_multi_link <- function(mat = NULL,
           pair_key <- paste(sort(c(gA, gB)), collapse = "|")
           col_i <- resolve_link_color(link_color_node, color_v, pair_key, tmpi)
           lt_i <- resolve_link_style(link_linetype_node, pair_key, tmpi)
-          al_i <- resolve_link_style(link_linealpha_node, pair_key, tmpi)
-          lw_i <- resolve_link_style(link_linewidth_node, pair_key, tmpi)
+          al_i <- resolve_link_style(link_alpha_node, pair_key, tmpi)
+          lw_i <- resolve_link_style(link_width_node, pair_key, tmpi)
           cross_sign <- cross_channel_lookup[[pair_key]]
           p <- add_link_layer(p, nodeinmodule_links, col_i, link_type = "node", cross_channel_sign = cross_sign, link_lt = lt_i, link_al = al_i, link_lw = lw_i)
           tmpi <- tmpi + 1
@@ -1672,9 +1726,9 @@ ggNetView_multi_link <- function(mat = NULL,
     edge_df <- graph_info[[index]]$ggplot_edge_df
 
 
-    if (isTRUE(add_group_outer) && nrow(graph_info[[index]]$ggplot_node_df) > 0) {
+    if (isTRUE(network_outline) && nrow(graph_info[[index]]$ggplot_node_df) > 0) {
       gname <- names(graph_info)[index]
-      color_vec <- if (is.null(add_group_outer_color) || length(add_group_outer_color) == 0L) "grey50" else add_group_outer_color
+      color_vec <- if (is.null(network_outline_color) || length(network_outline_color) == 0L) "grey50" else network_outline_color
 
       color_grp <- if (length(color_vec) == 1L) {
         color_vec
@@ -1684,19 +1738,19 @@ ggNetView_multi_link <- function(mat = NULL,
         color_vec[((index - 1L) %% length(color_vec)) + 1L]
       }
 
-      fill_grp <- if (is.null(add_group_outer_fill) || length(add_group_outer_fill) == 0L) {
+      fill_grp <- if (is.null(network_outline_fill) || length(network_outline_fill) == 0L) {
         NA
-      } else if (length(add_group_outer_fill) == 1L) {
-        add_group_outer_fill
-      } else if (!is.null(names(add_group_outer_fill)) && gname %in% names(add_group_outer_fill)) {
-        add_group_outer_fill[gname]
+      } else if (length(network_outline_fill) == 1L) {
+        network_outline_fill
+      } else if (!is.null(names(network_outline_fill)) && gname %in% names(network_outline_fill)) {
+        network_outline_fill[gname]
       } else {
-        add_group_outer_fill[((index - 1L) %% length(add_group_outer_fill)) + 1L]
+        network_outline_fill[((index - 1L) %% length(network_outline_fill)) + 1L]
       }
       group_circle_df <- graph_info[[index]]$ggplot_node_df %>%
         dplyr::mutate(.group_outer = 1L)
       circle_n_grp <- max(40, min(300, as.integer(round(8 * sqrt(nrow(group_circle_df))))))
-      alpha_grp <- if (is.na(fill_grp)) 1 else add_group_outer_fill_alpha
+      alpha_grp <- if (is.na(fill_grp)) 1 else network_outline_fill_alpha
       p <- p +
         ggforce::geom_mark_circle(
           data = group_circle_df,
@@ -1704,47 +1758,42 @@ ggNetView_multi_link <- function(mat = NULL,
           fill = fill_grp,
           alpha = alpha_grp,
           color = color_grp,
-          linetype = add_group_outer_linetype,
-          linewidth = add_group_outer_linewidth,
+          linetype = network_outline_linetype,
+          linewidth = network_outline_width,
           n = circle_n_grp,
-          expand = grid::unit(add_group_outer_expand, "mm")
+          expand = grid::unit(network_outline_expand, "mm")
         )
     }
 
     # plot link
-    if (isFALSE(mapping_line)) {
+    edge_color_mapped <- edge_color %in% colnames(edge_df)
+    if (!edge_color_mapped && edge_color_is_sign) {
+      stop("`edge_color = \"corr_direction\"` requires `corr_direction` in edge data.")
+    }
+    if (!edge_color_mapped) {
       p <- p + add_inner_link_geom(
         edge_data = edge_df,
         mapping_obj = ggplot2::aes(x = from_x, xend = to_x, y = from_y, yend = to_y),
-        color_fixed = linecolor
+        color_fixed = edge_color
       )
-    } else if (isTRUE(mapping_line)) {
-      if (!"corr_direction" %in% colnames(edge_df)) {
-        stop("`mapping_line = TRUE` requires `corr_direction` in edge data.")
-      }
-      p <- p +
-        ggnewscale::new_scale_color() +
-        add_inner_link_geom(
-          edge_data = edge_df,
-          mapping_obj = ggplot2::aes(x = from_x, xend = to_x, y = from_y, yend = to_y, colour = corr_direction)
-        ) +
-        ggplot2::scale_color_manual(values = c("Positive" = "#d6604d", "Negative" = "#4393c3"))
     } else {
-      if (!mapping_line %in% colnames(edge_df)) {
-        stop("`mapping_line` must be a variable name in edge data.")
-      }
-      line_values <- edge_df[[mapping_line]]
+      line_values <- edge_df[[edge_color]]
       line_scale <- if (is.numeric(line_values)) {
-        ggplot2::scale_color_gradient(low = "#4393c3", high = "#d6604d")
+        ggplot2::scale_color_gradient(low = "#4393c3", high = "#d6604d", name = edge_color)
+      } else if (!is.null(edge_color_values)) {
+        ggplot2::scale_color_manual(values = edge_color_values, name = edge_color)
+      } else if (edge_color_is_sign) {
+        ggplot2::scale_color_manual(values = c("Positive" = "#d6604d", "Negative" = "#4393c3"),
+                                    name = edge_color)
       } else {
-        scale_color_ggnetview(unique(as.character(line_values)))
+        scale_color_ggnetview(unique(as.character(line_values)), name = edge_color)
       }
 
       p <- p +
         ggnewscale::new_scale_color() +
         add_inner_link_geom(
           edge_data = edge_df,
-          mapping_obj = ggplot2::aes(x = from_x, xend = to_x, y = from_y, yend = to_y, colour = .data[[mapping_line]])
+          mapping_obj = ggplot2::aes(x = from_x, xend = to_x, y = from_y, yend = to_y, colour = .data[[edge_color]])
         ) +
         line_scale
     }
@@ -1765,7 +1814,7 @@ ggNetView_multi_link <- function(mat = NULL,
         dplyr::pull(mod_target) %>%
         unique()
 
-      if (!isTRUE(dropOthers)) {
+      if (!isTRUE(drop_others)) {
         module_targets <- module_targets[module_targets != "Others"]
       }
     } else {
@@ -1791,22 +1840,22 @@ ggNetView_multi_link <- function(mat = NULL,
       dplyr::pull(Modularity) %>%
       unique()
 
-    fill_scale_group <- if (is.null(fill)) {
+    fill_scale_group <- if (is.null(node_fill_values)) {
       ggplot2::scale_fill_viridis_d(drop = FALSE, limits = module_levels_group)
     } else {
-      ggplot2::scale_fill_manual(values = fill, drop = FALSE)
+      ggplot2::scale_fill_manual(values = node_fill_values, drop = FALSE)
     }
 
-    color_is_fixed <- !is.null(color) && length(color) == 1 && (is.null(names(color)) || names(color)[1] == "")
-    color_scale_group <- if (is.null(color)) {
+    color_is_fixed <- !is.null(node_color_values) && length(node_color_values) == 1 && (is.null(names(node_color_values)) || names(node_color_values)[1] == "")
+    color_scale_group <- if (is.null(node_color_values)) {
       ggplot2::scale_color_viridis_d(drop = FALSE, limits = module_levels_group)
     } else if (isTRUE(color_is_fixed)) {
       NULL
     } else {
-      ggplot2::scale_color_manual(values = color, drop = FALSE)
+      ggplot2::scale_color_manual(values = node_color_values, drop = FALSE)
     }
 
-    if (is.null(color)) {
+    if (is.null(node_color_values)) {
       p <- p +
         ggnewscale::new_scale_fill() +
         ggplot2::geom_point(data = graph_info[[index]]$ggplot_node_df,
@@ -1826,7 +1875,7 @@ ggNetView_multi_link <- function(mat = NULL,
                                                    fill = Modularity,
                                                    size = Degree),
                             shape = 21,
-                            color = color) +
+                            color = node_color_values) +
         fill_scale_group +
         ggnewscale::new_scale_fill()
     } else {
@@ -1845,9 +1894,9 @@ ggNetView_multi_link <- function(mat = NULL,
         ggnewscale::new_scale_fill()
     }
 
-    p <- p + ggplot2::scale_size(range = pointsize, guide = "none")
+    p <- p + ggplot2::scale_size(range = node_size_range, guide = "none")
 
-    if (add_outer == "circle" && nrow(outer_node_df) > 0) {
+    if (module_outline == "circle" && nrow(outer_node_df) > 0) {
       circle_n <- max(40, min(300, as.integer(round(8 * sqrt(nrow(outer_node_df))))))
       p <- p +
         ggnewscale::new_scale_color() +
@@ -1856,7 +1905,7 @@ ggNetView_multi_link <- function(mat = NULL,
             ggforce::geom_mark_circle(
               data = outer_node_df,
               mapping = ggplot2::aes(x = x, y = y, fill = Modularity),
-              color = color,
+              color = node_color_values,
               n = circle_n,
               expand = grid::unit(1, "mm")
             )
@@ -1875,13 +1924,13 @@ ggNetView_multi_link <- function(mat = NULL,
         }
     }
 
-    if (add_outer == "manual" && nrow(outer_node_df) > 2) {
+    if (module_outline == "manual" && nrow(outer_node_df) > 2) {
       maskTable <- generateMask_ggnetview(
         dims = outer_node_df %>% dplyr::select(x, y),
         clusters = outer_node_df %>% dplyr::pull(Modularity),
-        q = q_outer,
-        expand = expand_outer,
-        bandwidth_scale = bandwidth_scale
+        q = module_outline_q,
+        expand = module_outline_expand,
+        bandwidth_scale = module_outline_bandwidth
       ) %>%
         dplyr::mutate(cluster = as.character(cluster))
       p <- p +
@@ -1893,10 +1942,10 @@ ggNetView_multi_link <- function(mat = NULL,
               mapping = ggplot2::aes(x = x, y = y,
                                      group = interaction(cluster, polygon_id),
                                      fill = cluster),
-              color = color,
-              linewidth = outerwidth,
-              linetype = outerlinetype,
-              alpha = outeralpha,
+              color = node_color_values,
+              linewidth = module_outline_width,
+              linetype = module_outline_linetype,
+              alpha = module_outline_alpha,
               show.legend = FALSE
             )
           } else {
@@ -1905,9 +1954,9 @@ ggNetView_multi_link <- function(mat = NULL,
               mapping = ggplot2::aes(x = x, y = y,
                                      group = interaction(cluster, polygon_id),
                                      fill = cluster, color = cluster),
-              linewidth = outerwidth,
-              linetype = outerlinetype,
-              alpha = outeralpha,
+              linewidth = module_outline_width,
+              linetype = module_outline_linetype,
+              alpha = module_outline_alpha,
               show.legend = FALSE
             )
           }
@@ -1922,8 +1971,8 @@ ggNetView_multi_link <- function(mat = NULL,
       ggplot2::annotate(
         geom = "text",
         x = mean(graph_info[[index]]$ggplot_node_df$x),
-        y = max(graph_info[[index]]$ggplot_node_df$y) + label_offset,
-        label = if (isTRUE(mapping_line)) {
+        y = max(graph_info[[index]]$ggplot_node_df$y) + group_label_offset,
+        label = if (isTRUE(edge_color_is_sign)) {
           paste0("Group = ", names(graph_info[index]), "\n",
                  "Node = ", graph_stat[[index]]$node, "\n",
                  "Edge = ", graph_stat[[index]]$edge, "\n",
@@ -1934,7 +1983,7 @@ ggNetView_multi_link <- function(mat = NULL,
                  "Node = ", graph_stat[[index]]$node, "\n",
                  "Edge = ", graph_stat[[index]]$edge, "\n")
         },
-        size = label_size,
+        size = group_label_size,
         fontface = "bold"
       )
 
@@ -1963,9 +2012,9 @@ ggNetView_multi_link <- function(mat = NULL,
       function(g) {
         node_df <- graph_info[[g]]$ggplot_node_df
         d <- sqrt((node_df$x - cx[g])^2 + (node_df$y - cy[g])^2)
-        q_outer <- as.numeric(stats::quantile(d, probs = 0.98, na.rm = TRUE))
+        module_outline_q <- as.numeric(stats::quantile(d, probs = 0.98, na.rm = TRUE))
         r_max <- max(d, na.rm = TRUE)
-        max(max(q_outer, r_max * 0.98), 1e-6)
+        max(max(module_outline_q, r_max * 0.98), 1e-6)
       },
       numeric(1)
     )
@@ -2115,8 +2164,8 @@ ggNetView_multi_link <- function(mat = NULL,
       pair_key <- paste(sort(c(GroupA_tmp, GroupB_tmp)), collapse = "|")
       col_i <- resolve_link_color(link_color_module, color_v, pair_key, tmpi)
       lt_i <- resolve_link_style(link_linetype_module, pair_key, tmpi)
-      al_i <- resolve_link_style(link_linealpha_module, pair_key, tmpi)
-      lw_i <- resolve_link_style(link_linewidth_module, pair_key, tmpi)
+      al_i <- resolve_link_style(link_alpha_module, pair_key, tmpi)
+      lw_i <- resolve_link_style(link_width_module, pair_key, tmpi)
       cross_sign <- cross_channel_lookup[[pair_key]]
       p <- add_link_layer(p, Module_location_plot, col_i, link_type = "module", cross_channel_sign = cross_sign, link_lt = lt_i, link_al = al_i, link_lw = lw_i)
       tmpi <- tmpi + 1

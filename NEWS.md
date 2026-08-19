@@ -26,6 +26,13 @@ removed in a future major release.
 | `remove` / `dropOthers` | `hide_others` / `drop_others` |
 | `ring_n` / `nodelabsize` | removed (they had no effect) |
 
+`ggNetView_multi_link()` follows the same scheme (old names kept as
+deprecated aliases), plus: `inner_curve*` -> `edge_curve*`,
+`link_linewidth_*` -> `link_width_*`, `link_linealpha_*` -> `link_alpha_*`,
+`label_offset` / `label_size` -> `group_label_offset` / `group_label_size`,
+`mapping_line` / `linecolor` -> `edge_color` (+ new `edge_color_values`),
+`fill` / `color` -> `node_fill_values` / `node_color_values`.
+
 The same renaming applies to arguments forwarded through `...` / `full_args` /
 `sub_args` in `ggNetView_multi()`, `ggnetview_modularity_heatmaps()` and
 `ggnetview_subgraph()` (`ggnetview_subgraph(sub_pointsize)` ->

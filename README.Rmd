@@ -451,7 +451,7 @@ res <- ggnetview_modularity_heatmaps(
   ),
   layout = "gephi",                 # node-positioning algorithm
   layout_module = "adjacent",       # place neighbouring modules close together
-  node_jitter = T,                       # jitter node positions to reduce overlap
+  node_jitter    = T,                       # jitter node positions to reduce overlap
   module_outline = T,                    # draw an outer hull/line around each module
   HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
   network_outline = T,              # draw an outer boundary around node groups
@@ -485,7 +485,7 @@ res2 <- ggnetview_modularity_heatmaps(
   ),
   layout = "gephi",                 # node-positioning algorithm
   layout_module = "adjacent",       # place neighbouring modules close together
-  node_jitter = T,                       # jitter node positions to reduce overlap
+  node_jitter    = T,                       # jitter node positions to reduce overlap
   module_outline = T,                    # draw an outer hull/line around each module
   HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
   network_outline = T,              # draw an outer boundary around node groups
@@ -522,8 +522,8 @@ out1 <- ggNetView_multi_link(
   layout           = "gephi",           # global node-positioning algorithm per sub-network
   shrink           = 0.5,               # shrink each sub-network inward (smaller = more compact)
   scale            = F,                 # do NOT normalise each group to a common scale -> sub-networks keep their native size differences
-  node_jitter           = T,                 # jitter node positions slightly to reduce overlap
-  node_jitter_sd        = 0.3,               # SD of the jitter (bigger -> more spread)
+  node_jitter      = T,                 # jitter node positions slightly to reduce overlap
+  node_jitter_sd   = 0.3,               # SD of the jitter (bigger -> more spread)
   anchor_dist      = 30,                 # distance between groups on the outer anchor circle
   seed             = 1115,              # fix RNG for reproducibility
   orientation      = "up",              # frame orientation; one of "up"/"down"/"left"/"right"
@@ -559,8 +559,8 @@ out2 <- ggNetView_multi_link(
   layout           = "gephi",
   shrink           = 0.5,
   scale            = T,                 # normalise each group to a comparable coordinate scale
-  node_jitter           = T,
-  node_jitter_sd        = 0.01,              # smaller jitter — sub-networks are already on a unified scale
+  node_jitter      = T,
+  node_jitter_sd   = 0.01,              # smaller jitter — sub-networks are already on a unified scale
   anchor_dist      = 1,
   seed             = 1115,
   orientation      = "up",
