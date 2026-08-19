@@ -210,3 +210,13 @@ test_that("ggNetView_multi_link accepts new names and translates old ones", {
   expect_true(any(grepl("link_alpha_node", warns, fixed = TRUE)))
   expect_equal(length(p_old$p$layers), length(p_new$p$layers))
 })
+
+test_that("NULL node_size_range / edge_width_range fall back to defaults", {
+  # callers that build the argument list programmatically (e.g.
+  # ggnetview_modularity_heatmaps) may pass NULL for an unset range
+  g <- .arg_test_graph()
+  p <- ggNetView(g, layout = "fr", seed = 1, node_size_range = NULL,
+                 edge_width_range = NULL, module_label = FALSE)
+  expect_s3_class(p, "ggplot")
+  expect_equal(p$scales$get_scales("size")$palette(c(0, 1)), c(1, 10))
+})

@@ -832,9 +832,13 @@ ggnetview_modularity_heatmaps <- function(
     push_others_delta = if (!is.null(ggnetview_args$push_others_delta)) ggnetview_args$push_others_delta else 0,
     module_outline = if (!is.null(ggnetview_args$module_outline)) ggnetview_args$module_outline else FALSE,
     node_fill_values = ggnetview_args$node_fill_values,
-    node_size_range = ggnetview_args$node_size_range,
     seed = if (!is.null(ggnetview_args$seed)) ggnetview_args$seed else 1115
   )
+  # only forward node_size_range when the caller supplied one (ggNetView
+  # validates it and must otherwise keep its own default)
+  if (!is.null(ggnetview_args$node_size_range)) {
+    gv_call_args$node_size_range <- ggnetview_args$node_size_range
+  }
   if (layout %in% c("consensus_module_equal_gephi", "consensus_module_gephi")) {
     gv_call_args$nrow <- ggnetview_args$nrow
     gv_call_args$ncol <- ggnetview_args$ncol

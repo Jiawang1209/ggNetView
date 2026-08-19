@@ -447,6 +447,8 @@ ggNetView <- function(graph_obj,
     stop("`module_label_pad` must be a single non-negative numeric value.")
   }
 
+  if (is.null(node_size_range)) node_size_range <- c(1, 10)
+  if (is.null(edge_width_range)) edge_width_range <- c(0.2, 1.5)
   if (!is.numeric(node_size_range) || length(node_size_range) != 2L ||
       anyNA(node_size_range)) {
     stop("`node_size_range` must be a numeric vector of length 2.")
