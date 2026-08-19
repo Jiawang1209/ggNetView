@@ -75,9 +75,9 @@ ggNetView(
   graph_wgcna,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -107,9 +107,9 @@ ggNetView(
   graph_wgcna_annot,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Phylum",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Phylum",
+  module_label     = FALSE
 )
 ```
 
@@ -243,9 +243,9 @@ ggNetView(
   graph_full,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -261,9 +261,9 @@ ggNetView(
   graph_full,
   layout    = "circular_modules_petal_layout",
   seed      = 1,
-  pointsize = c(2, 6),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 6),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -307,9 +307,9 @@ ggNetView(
   graph_rmt,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 

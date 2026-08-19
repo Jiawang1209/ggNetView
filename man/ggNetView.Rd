@@ -8,7 +8,6 @@ ggNetView(
   graph_obj,
   layout = NULL,
   node_add = 7,
-  ring_n = NULL,
   r = 1,
   center = TRUE,
   idx = NULL,
@@ -16,50 +15,53 @@ ggNetView(
   inner_shrink = 1,
   k_nn = 12,
   push_others_delta = 0,
-  layout.module = c("random", "adjacent", "order"),
-  shape = 21,
-  pointalpha = 1,
-  pointsize = c(1, 10),
-  pointstroke = 0.3,
-  pointlabel = NULL,
-  pointlabelsize = 5,
-  group.by = "Modularity",
-  fill.by = "Modularity",
-  color.by = NULL,
-  fill = NULL,
-  color = NULL,
-  jitter = FALSE,
-  jitter_sd = 0.1,
-  plot_line = TRUE,
-  mapping_line = FALSE,
-  curve = FALSE,
-  curvature = 0.25,
-  linealpha = 0.25,
-  linecolor = "grey70",
-  label = FALSE,
-  labelsize = 10,
-  labelsegmentsize = 1,
-  labelsegmentalpha = 1,
-  label_layout = c("two_column", "two_column_follow", "label_circle"),
-  label_wrap_width = NULL,
-  label_outer_pad = 0.25,
-  add_group_outer = FALSE,
-  add_group_outer_expand = 2,
-  add_group_outer_color = "grey50",
-  add_group_outer_fill = NULL,
-  add_group_outer_fill_alpha = 0.2,
-  add_group_outer_linetype = 1,
-  add_group_outer_linewidth = 0.5,
-  add_outer = FALSE,
-  q_outer = 0.88,
-  expand_outer = 1.02,
-  bandwidth_scale = 2,
-  outerwidth = 1,
-  outerlinetype = 1,
-  outeralpha = 0.5,
-  nodelabsize = 5,
-  remove = FALSE,
-  dropOthers = FALSE,
+  layout_module = c("random", "adjacent", "order"),
+  group_by = "Modularity",
+  node_fill = "Modularity",
+  node_color = NULL,
+  node_shape = 21,
+  node_size = "Degree",
+  node_size_range = c(1, 10),
+  node_alpha = 1,
+  node_stroke = 0.3,
+  node_fill_values = NULL,
+  node_color_values = NULL,
+  node_jitter = FALSE,
+  node_jitter_sd = 0.1,
+  node_label = NULL,
+  node_label_size = 5,
+  show_edges = TRUE,
+  edge_color = "grey70",
+  edge_color_values = NULL,
+  edge_width = 0.5,
+  edge_width_range = c(0.2, 1.5),
+  edge_linetype = 1,
+  edge_alpha = 0.25,
+  edge_curve = FALSE,
+  edge_curvature = 0.25,
+  module_label = FALSE,
+  module_label_size = 10,
+  module_label_segment_width = 1,
+  module_label_segment_alpha = 1,
+  module_label_layout = c("two_column", "two_column_follow", "label_circle"),
+  module_label_wrap = NULL,
+  module_label_pad = 0.25,
+  module_outline = FALSE,
+  module_outline_q = 0.88,
+  module_outline_expand = 1.02,
+  module_outline_bandwidth = 2,
+  module_outline_width = 1,
+  module_outline_linetype = 1,
+  module_outline_alpha = 0.5,
+  network_outline = FALSE,
+  network_outline_expand = 2,
+  network_outline_color = "grey50",
+  network_outline_fill = NULL,
+  network_outline_fill_alpha = 0.2,
+  network_outline_linetype = 1,
+  network_outline_width = 0.5,
+  hide_others = FALSE,
+  drop_others = FALSE,
   orientation = "up",
   angle = 0,
   scale = TRUE,
@@ -68,23 +70,69 @@ ggNetView(
   ncol = NULL,
   seed = 1115,
   scale_radius = NULL,
-  return_layout = FALSE
+  return_layout = FALSE,
+  fill.by = deprecated(),
+  color.by = deprecated(),
+  shape = deprecated(),
+  pointsize = deprecated(),
+  pointalpha = deprecated(),
+  pointstroke = deprecated(),
+  fill = deprecated(),
+  color = deprecated(),
+  jitter = deprecated(),
+  jitter_sd = deprecated(),
+  pointlabel = deprecated(),
+  pointlabelsize = deprecated(),
+  nodelabsize = deprecated(),
+  ring_n = deprecated(),
+  plot_line = deprecated(),
+  linecolor = deprecated(),
+  mapping_line = deprecated(),
+  linealpha = deprecated(),
+  curve = deprecated(),
+  curvature = deprecated(),
+  label = deprecated(),
+  labelsize = deprecated(),
+  labelsegmentsize = deprecated(),
+  labelsegmentalpha = deprecated(),
+  label_layout = deprecated(),
+  label_wrap_width = deprecated(),
+  label_outer_pad = deprecated(),
+  add_outer = deprecated(),
+  q_outer = deprecated(),
+  expand_outer = deprecated(),
+  bandwidth_scale = deprecated(),
+  outerwidth = deprecated(),
+  outerlinetype = deprecated(),
+  outeralpha = deprecated(),
+  add_group_outer = deprecated(),
+  add_group_outer_expand = deprecated(),
+  add_group_outer_color = deprecated(),
+  add_group_outer_fill = deprecated(),
+  add_group_outer_fill_alpha = deprecated(),
+  add_group_outer_linetype = deprecated(),
+  add_group_outer_linewidth = deprecated(),
+  layout.module = deprecated(),
+  group.by = deprecated(),
+  remove = deprecated(),
+  dropOthers = deprecated()
 )
 }
 \arguments{
-\item{graph_obj}{An graph object from build_graph_from_mat or build_graph_from_df.
-The network object to be visualized.}
+\item{graph_obj}{A \code{tbl_graph} from \code{build_graph_from_mat()} or any other
+\verb{build_graph_from_*()} builder. The network object to be visualized.}
 
-\item{layout}{Character string.
-Custom layouts; one of "gephi", "square", "square2", "petal",
-"petal2", "heart_centered","diamond", "star", "star_concentric","rectangle,
-"rightiso_layers" etc.}
+\item{layout}{Character string naming the layout, dispatched to the
+internal \verb{create_layout_<layout>()} function. Popular choices: \code{"gephi"},
+\code{"fr"}, \code{"kk"}, \code{"stress"}, \code{"circle"}, \code{"square"}, \code{"square2"},
+\code{"petal"}, \code{"petal2"}, \code{"heart_centered"}, \code{"diamond"}, \code{"star"},
+\code{"star_concentric"}, \code{"rectangle"}, \code{"rightiso_layers"}, \code{"WGCNA"},
+\code{"circlepack"}, \code{"bipartite_gephi_layout"}, \code{"tripartite_gephi_layout"},
+\code{"circular_modules_*"}. An unknown name errors with the full list of
+available layouts.}
 
 \item{node_add}{Integer (default = 7).
 Number of nodes to add in each layer of the layout.}
-
-\item{ring_n}{Numeric (default = 7)
-Numbers of ring in rings layout.}
 
 \item{r}{Numeric (default = 1).
 Radius increment for concentric or layered layouts.}
@@ -93,7 +141,7 @@ Radius increment for concentric or layered layouts.}
 Whether to place a node at the center of the layout.}
 
 \item{idx}{Optional.
-Index of nodes to be emphasized or centered in the layout}
+Index of nodes to be emphasized or centered in the layout.}
 
 \item{shrink}{Numeric (default = 1).
 Shrinkage factor applied to the center points.}
@@ -102,299 +150,330 @@ Shrinkage factor applied to the center points.}
 Intra-module compactness factor for \code{layout = "WGCNA"} only.
 Controls how tightly nodes fill each module's allocated disc during
 the WGCNA bubble-pack layout: at \code{1} (default) nodes spread to
-fill 95\% of the disc (original behaviour); smaller values
+fill 95 percent of the disc (original behaviour); smaller values
 (e.g. \code{0.65}) contract the FR/uniform fill toward each module
 centre, exposing hub/periphery structure and producing visible
 inter-module whitespace.  Module disc centres and radii are
 invariant under \code{inner_shrink}; this parameter only affects
 the point cloud inside each module.  Ignored by all other layouts.}
 
-\item{k_nn}{Numeric (default = 8).
-Number of nearest neighbors used to build the local adjacency graph.}
+\item{k_nn}{Numeric (default = 12).
+Number of nearest neighbors used to build the local adjacency graph
+for \code{layout_module = "adjacent"} / \code{"order"}.}
 
 \item{push_others_delta}{Numeric (default = 0).
-Radial offset applied to the "Others" module to slightly}
+Radial offset applied to the "Others" module to push it slightly
+outward from the rest of the network.}
 
-\item{layout.module}{Character  (default = "random")
-- random : modules are distributed more randomly and independently.
-- adjacent : modules are positioned close to each other, minimizing inter-module gaps.
-- order : modules are distributed by order, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`}
-
-\item{shape}{Integer  (default = 21).
-The point shape likely in ggplot2. If a character string is provided,
-it must be a variable name in graph_object for point shape mapping.}
-
-\item{pointalpha}{Integer  (default = 1).
-The point alpha}
-
-\item{pointsize}{Vector (default =  c(1,10))
-The point size rang.}
-
-\item{pointstroke}{Integer  (default = 0.3).}
-
-\item{pointlabel}{Character (default = NULL).
-Optional node label mode for top Degree nodes within each module.
-Supported values: \code{"topN"} (e.g. \code{"top1"}, \code{"top7"}, \code{"top20"})
-and \code{"ALL"}.}
-
-\item{pointlabelsize}{Integer (default = 5).
-Change point label size.}
-
-\item{group.by}{Character (default = "Modularity").
-Change group for nodes}
-
-\item{fill.by}{Character (default = "Modularity").
-Change fill for nodes}
-
-\item{color.by}{Character (default = NULL).
-Change color for nodes. If provided, must be a variable name in
-graph_object. Numeric uses \code{scale_color_gradient},
-otherwise uses \code{scale_color_manual} or \code{scale_color_ggnetview}.}
-
-\item{fill}{Named vector of colors for node fill (e.g. \code{c("M1" = "red", "M2" = "blue")}).
-If \code{NULL} (default), uses \code{scale_fill_ggnetview}; if provided, uses \code{scale_fill_manual(values = fill)}.}
-
-\item{color}{Named vector of colors for node/edge/label color.
-If \code{NULL} (default), uses \code{scale_color_ggnetview}; if provided, uses \code{scale_color_manual(values = color)}.}
-
-\item{jitter}{Logical (default = FALSE).
-Whether to apply jitter to points.}
-
-\item{jitter_sd}{Integer  (default = 0.1).
-The standard deviation of the jitter applied when `jitter = TRUE`.}
-
-\item{plot_line}{Logical (default = TRUE).
-Whether to plot line in net plot.}
-
-\item{mapping_line}{Logical (default = FALSE).
-Whether to mapping line in ggNetView. If a character string is provided,
-it must be a variable name in graph_object for line color mapping.}
-
-\item{curve}{Logical (default = FALSE).
-Whether to plot curve line in net plot.}
-
-\item{curvature}{Integer (default = 0.25)
-The curve level of curve line when curve is TRUE}
-
-\item{linealpha}{Integer  (default = 0.25).
-Change  line alpha.}
-
-\item{linecolor}{Character  (default = "grey70").
-Change  line color.}
-
-\item{label}{Logical or Character (default = \code{FALSE}).
-Controls module label text and module legend prefix.
-If \code{FALSE}, module text labels are not drawn and legend prefix uses
-\code{"Modularity"}.
-If \code{TRUE}, module text labels are drawn and legend prefix uses
-\code{"Modularity"}.
-If a character string, module text labels are drawn and that string is used
-as prefix for module text and module legend labels.}
-
-\item{labelsize}{Integer  (default = 10).
-Change Module label size.}
-
-\item{labelsegmentsize}{Integer  (default = 1).
-Change  label segment size.}
-
-\item{labelsegmentalpha}{Integer  (default = 1).
-Change  label segment alpha.}
-
-\item{label_layout}{Character (default = \code{"two_column"}).
-Strategy used to place module text labels when \code{label} is not
-\code{FALSE}. One of:
+\item{layout_module}{Character (default = \code{"random"}). How modules are
+arranged relative to each other:
 \itemize{
-  \item \code{"two_column"} (default; backward compatible): modules whose
-    centroid \code{x} is left of the network median go to a fixed left
-    column at \code{x = xr[1] - dx}, the rest to a fixed right column at
-    \code{x = xr[2] + dx}, with labels evenly distributed along \code{y}.
-    Best for very crowded networks or layouts that read left-to-right
-    (bipartite, grid).
-  \item \code{"two_column_follow"}: 360-degree ring layout with
-    two-segment "L-shape" leaders. Modules are sorted by their
-    actual angle from the network centroid and assigned angularly
-    equispaced target angles around the full \code{2*pi}, so
-    labels are evenly distributed around the network while
-    preserving the angular neighbour order. Each label is
-    projected onto an outer ellipse whose semi-axes are
-    \code{(1 + label_outer_pad)} times the network's half-width /
-    half-height. The leader has two segments: the first leg is
-    drawn manually via \code{geom_segment} from the module
-    centroid to an elbow on the network boundary at the module's
-    actual angle; the second leg is drawn by \code{ggrepel} from
-    the label (which it may push tangentially with \code{force = 1}
-    to avoid overlaps) back to that elbow. Use this when you need
-    the L bend to be clearly visible and labels to never overlap.
-  \item \code{"label_circle"}: 360-degree ring layout drawn
-    entirely by \code{ggrepel}. Same equispacing as
-    \code{"two_column_follow"} (so labels track module angular
-    order around the outer ellipse), but no manual first leg --
-    \code{ggrepel} handles both placement and the connecting
-    segment, with \code{segment.square = TRUE} and
-    \code{segment.squareShape = 0} so the leader is an L-shape
-    between label and module centroid. Code is much simpler than
-    \code{"two_column_follow"} and works well when modules are
-    roughly evenly distributed around the network; the trade-off
-    is that the L bend can visually collapse when a label happens
-    to sit on its module's radial line (rare with full
-    equispacing). Requires \code{ggrepel >= 0.9.4}.
+\item \code{"random"}: modules are distributed more randomly and independently.
+\item \code{"adjacent"}: modules are positioned close to each other, minimizing inter-module gaps.
+\item \code{"order"}: modules are distributed by order; required by the
+\verb{*partite*} and \code{multirings} layouts.
 }}
 
-\item{label_wrap_width}{Integer or NULL (default = \code{NULL}).
+\item{group_by}{Character (default = \code{"Modularity"}).
+Node column used to group nodes into modules (drives module labels and
+top-N node labels). \code{"pie"} switches to the scatterpie rendering path.}
+
+\item{node_fill}{Character (default = \code{"Modularity"}).
+Node fill: a node column name (mapping) or a single colour (constant).
+Categorical columns use \code{scale_fill_ggnetview()} (or \code{node_fill_values});
+numeric columns use a blue-red gradient. For shapes without a fill slot
+(0-20) the mapping is applied to the point colour instead.}
+
+\item{node_color}{Character or NULL (default = NULL).
+Node border colour: a node column name (mapping) or a single colour
+(constant). Numeric columns use \code{scale_color_gradient()}, otherwise
+\code{scale_color_ggnetview()} / \code{node_color_values}.}
+
+\item{node_shape}{Integer or character (default = 21).
+ggplot2 point shape (constant) or a node column name (mapping; shapes
+21-25 are cycled).}
+
+\item{node_size}{Character or numeric (default = \code{"Degree"}).
+Node size: a numeric node column name (mapping, scaled to
+\code{node_size_range}) or a single number (constant size).}
+
+\item{node_size_range}{Numeric length-2 (default = \code{c(1, 10)}).
+Size range used when \code{node_size} is a mapping.}
+
+\item{node_alpha}{Numeric (default = 1). Node alpha.}
+
+\item{node_stroke}{Numeric (default = 0.3). Node border width.}
+
+\item{node_fill_values}{Named colour vector or NULL (default = NULL).
+Manual palette for a categorical \code{node_fill} mapping, e.g.
+\code{c("1" = "red", "2" = "blue")}. \code{NULL} uses \code{scale_fill_ggnetview()}.
+When \code{node_fill} is a module field this palette is also used for module
+labels and module outlines.}
+
+\item{node_color_values}{Named colour vector or NULL (default = NULL).
+Manual palette for a categorical \code{node_color} mapping.}
+
+\item{node_jitter}{Logical (default = FALSE). Whether to jitter node
+positions.}
+
+\item{node_jitter_sd}{Numeric (default = 0.1). Standard deviation of the
+jitter applied when \code{node_jitter = TRUE}.}
+
+\item{node_label}{Character or NULL (default = NULL).
+Text labels for the top-degree nodes within each module:
+\code{"topN"} (e.g. \code{"top1"}, \code{"top7"}) or \code{"ALL"}.}
+
+\item{node_label_size}{Numeric (default = 5). Node label size.}
+
+\item{show_edges}{Logical (default = TRUE). Whether to draw edges.}
+
+\item{edge_color}{Character (default = \code{"grey70"}).
+Edge colour: an edge column name (mapping) or a single colour
+(constant). \code{"corr_direction"} (added by the correlation builders)
+colours positive edges red and negative edges blue and adds the
+positive/negative counts to the title. Numeric columns use a blue-red
+gradient.}
+
+\item{edge_color_values}{Named colour vector or NULL (default = NULL).
+Manual palette for a categorical \code{edge_color} mapping.}
+
+\item{edge_width}{Character or numeric (default = 0.5).
+Edge line width: an edge column name (mapping, e.g. \code{"weight"}, scaled
+to \code{edge_width_range}) or a single number (constant).}
+
+\item{edge_width_range}{Numeric length-2 (default = \code{c(0.2, 1.5)}).
+Line-width range used when \code{edge_width} is a mapping.}
+
+\item{edge_linetype}{Character, integer or NULL (default = 1).
+Edge linetype: an edge column name (mapping) or a single linetype
+(constant).}
+
+\item{edge_alpha}{Numeric (default = 0.25). Edge alpha.}
+
+\item{edge_curve}{Logical (default = FALSE). Draw curved edges.}
+
+\item{edge_curvature}{Numeric (default = 0.25). Curvature of curved edges.}
+
+\item{module_label}{Logical or character (default = FALSE).
+Controls module text labels and the module legend prefix.
+\code{FALSE}: no module text labels, legend prefix \code{"Modularity"}.
+\code{TRUE}: draw labels, legend prefix \code{"Modularity"}.
+A string: draw labels and use that string as prefix for module text and
+legend labels.}
+
+\item{module_label_size}{Numeric (default = 10). Module label size.}
+
+\item{module_label_segment_width}{Numeric (default = 1). Width of the
+module label leader segment.}
+
+\item{module_label_segment_alpha}{Numeric (default = 1). Alpha of the
+module label leader segment.}
+
+\item{module_label_layout}{Character (default = \code{"two_column"}).
+Strategy used to place module text labels when \code{module_label} is not
+\code{FALSE}. One of:
+\itemize{
+\item \code{"two_column"} (default): modules whose centroid \code{x} is left of
+the network median go to a fixed left column, the rest to a fixed
+right column, with labels evenly distributed along \code{y}. Best for
+very crowded networks or layouts that read left-to-right (bipartite,
+grid).
+\item \code{"two_column_follow"}: 360-degree ring layout with two-segment
+"L-shape" leaders. Modules are sorted by their actual angle from the
+network centroid and assigned angularly equispaced target angles
+around the full circle, so labels are evenly distributed around the
+network while preserving the angular neighbour order. Each label is
+projected onto an outer ellipse whose semi-axes are
+\code{(1 + module_label_pad)} times the network's half-width /
+half-height. The first leader leg runs from the module centroid to
+an elbow on the network boundary; the second leg is drawn by
+\code{ggrepel} from the label back to that elbow.
+\item \code{"label_circle"}: like \code{"two_column_follow"} but every label
+sits at its module's true angle on the outer ellipse and \code{ggrepel}
+draws an L-shaped leader (\code{segment.square = TRUE}).
+}}
+
+\item{module_label_wrap}{Integer or NULL (default = NULL).
 If a positive integer, module text labels are wrapped to roughly that
-many characters per line via \code{stringr::str_wrap()} before
-rendering. Useful for long pathway / taxonomy names. Applies to every
-\code{label_layout}.}
+many characters per line via \code{stringr::str_wrap()}.}
 
-\item{label_outer_pad}{Numeric (default = \code{0.25}).
-Fractional outward push of the label anchors, expressed as a multiple
-of the network's \code{x}-range (for \code{"two_column"}) or as the
-fractional enlargement of the outer label-anchor ellipse (for
-\code{"two_column_follow"}). Larger values move labels further
-away from the network and make the slanted second leg of the
-\code{"two_column_follow"} L-shape leader more pronounced. Try
-\code{0.20} for a tight layout that almost hugs the network,
-\code{0.40} for the default breathing room, \code{0.55+} when
-modules sit inside a thick \code{add_group_outer} ring or labels
-are long.}
+\item{module_label_pad}{Numeric (default = 0.25).
+Fractional outward push of the label anchors: a multiple of the
+network's \code{x}-range (\code{"two_column"}) or the fractional enlargement of
+the outer label-anchor ellipse (\code{"two_column_follow"},
+\code{"label_circle"}). Try \code{0.20} for a tight layout, \code{0.40} for more
+breathing room, \verb{0.55+} when modules sit inside a thick
+\code{network_outline} ring or labels are long.}
 
-\item{add_group_outer}{Logical (default = FALSE).
-Whether to add a circle boundary around the entire network (mimics \code{ggforce::geom_mark_circle}).}
+\item{module_outline}{Logical (default = FALSE).
+Draw a smooth outer boundary around each module. The boundary is
+computed by 2D kernel density estimation followed by a
+Highest-Density-Region (HDR) contour: it encloses the densest portion of
+each module rather than all of its points. A module whose points fall
+into two well-separated clouds may produce two disconnected polygons.}
 
-\item{add_group_outer_expand}{Numeric (default = 2).
-Expansion in mm for the group circle to account for point size; passed to \code{geom_mark_circle(expand = ...)}.}
+\item{module_outline_q}{Numeric (default = 0.88).
+HDR coverage of the module outline: the contour is drawn at the density
+level whose iso-density region contains a fraction \code{module_outline_q}
+of the module's probability mass. Higher values are more inclusive
+(closer to the convex hull). Modules with fewer than 10 nodes bypass the
+KDE path and use a convex hull.}
 
-\item{add_group_outer_color}{Character (default = "grey50").
-Color of the group outer circle border.}
+\item{module_outline_expand}{Numeric (default = 1.02).
+Multiplicative scaling applied to each outline polygon from its own
+centroid (> 1 expands, < 1 shrinks).}
 
-\item{add_group_outer_fill}{Character or NULL (default = NULL).
-Fill color of the group outer circle. \code{NULL} = no fill (transparent).}
+\item{module_outline_bandwidth}{Numeric (default = 2).
+Multiplier on the robust normal-reference 2D KDE bandwidth used to build
+the module outline (> 1 smoother/wider, < 1 tighter).}
 
-\item{add_group_outer_fill_alpha}{Numeric (default = 0.2).
-Alpha (transparency) of the group outer circle fill; 0 = fully transparent, 1 = opaque.}
+\item{module_outline_width}{Numeric (default = 1). Module outline line width.}
 
-\item{add_group_outer_linetype}{Integer or character (default = 1).
-Linetype of the group outer circle (e.g. 1 = solid, 2 = dashed).}
+\item{module_outline_linetype}{Integer or character (default = 1).
+Module outline linetype.}
 
-\item{add_group_outer_linewidth}{Numeric (default = 0.5).
-Line width of the group outer circle.}
+\item{module_outline_alpha}{Numeric (default = 0.5). Module outline alpha.}
 
-\item{add_outer}{Logical (default = FALSE).
-Whether to draw a smooth outer boundary around each module. The boundary is
-computed by 2D kernel density estimation followed by a Highest-Density-Region
-(HDR) contour: it encloses the densest portion of each module rather than
-all of its points. As a side effect, a single module whose points fall into
-two well-separated clouds may produce two disconnected polygons (this is by
-design and matches the behaviour of e.g. `mascarade`).}
+\item{network_outline}{Logical (default = FALSE).
+Draw a circle around the entire network (via
+\code{ggforce::geom_mark_circle()}).}
 
-\item{q_outer}{Numeric (default = 0.88).
-HDR coverage of the outer boundary: the contour is drawn at the density
-level whose iso-density region contains a fraction `q_outer` of the module's
-empirical probability mass. Higher values make the boundary more inclusive
-(closer to the convex hull of the module); lower values make it tighter
-around the densest core. Sparse outliers/satellites typically fall outside
-the contour and remain visible as bare nodes.
-Note: modules with fewer than 10 nodes bypass the KDE path entirely and are
-enclosed by a convex hull, so `q_outer` (and `bandwidth_scale`) have no
-effect on them.}
+\item{network_outline_expand}{Numeric (default = 2).
+Expansion in mm of the network circle; passed to
+\code{geom_mark_circle(expand = )}.}
 
-\item{expand_outer}{Numeric (default = 1.02).
-Multiplicative scaling applied to each polygon from its own centroid after
-the HDR contour is drawn. Values > 1 slightly expand the boundary, values
-< 1 slightly shrink it. Useful for adding a small visual breathing room
-between the boundary and the nodes.}
+\item{network_outline_color}{Character (default = \code{"grey50"}).
+Border colour of the network circle.}
 
-\item{bandwidth_scale}{Numeric (default = 2.0).
-Multiplier on the robust normal-reference 2D KDE bandwidth used to build the
-outer boundary. Values > 1 produce smoother, wider contours (and may merge
-nearby sub-clusters of a module into a single component); values < 1
-produce tighter, more wiggly contours that follow local point density more
-closely. Has no effect when \code{add_outer = FALSE} or when a module falls
-back to the convex-hull path (very small clusters).}
+\item{network_outline_fill}{Character or NULL (default = NULL).
+Fill colour of the network circle; \code{NULL} = transparent.}
 
-\item{outerwidth}{Integer  (default = 1.25).
-Change  outer linewidth.}
+\item{network_outline_fill_alpha}{Numeric (default = 0.2).
+Fill alpha of the network circle.}
 
-\item{outerlinetype}{Integer  (default = 2).
-Change  outer linetype.}
+\item{network_outline_linetype}{Integer or character (default = 1).
+Linetype of the network circle.}
 
-\item{outeralpha}{Integer  (default = 0.5).
-Change  outer alpha.}
+\item{network_outline_width}{Numeric (default = 0.5).
+Line width of the network circle.}
 
-\item{nodelabsize}{Integer  (default = 5).
-Change  node label size.}
+\item{hide_others}{Logical (default = FALSE).
+Hide the \code{"Others"} module at the visualization stage only (post-layout),
+so the layout of the remaining modules is unchanged.}
 
-\item{remove}{Logical (default = FALSE).
-Remove \code{"Others"} only at the visualization stage (post-layout),
-so the layout of remaining modules is kept unchanged.}
+\item{drop_others}{Logical (default = FALSE).
+Remove \code{"Others"} nodes from \code{graph_obj} \emph{before} layout, then recompute
+layout and plot from the reduced graph.}
 
-\item{dropOthers}{Logical (default = FALSE).
-If TRUE, remove nodes in the \code{"Others"} module from \code{graph_obj}
-before layout and visualization, then recompute layout/plot from the
-updated graph.}
+\item{orientation}{Character string (default = \code{"up"}).
+Orientation for directional layouts: \code{"up"}, \code{"down"}, \code{"left"}, \code{"right"}.}
 
-\item{orientation}{Character string.
-Custom orientation; one of "up","down","left","right".}
+\item{angle}{Numeric (default = 0). Rotation angle of the layout.}
 
-\item{angle}{Integer  (default = 0).
-Change  orientation angle.}
+\item{scale}{Logical (default = TRUE).
+Whether the \verb{*partite*} layouts scale the module radius.}
 
-\item{scale}{Logical  (default = TRUE).
-modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius}
+\item{anchor_dist}{Numeric (default = 6).
+Distance between modules in the \verb{*partite*} layouts.}
 
-\item{anchor_dist}{Integer (default = 6)
-the distance of each modules, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`}
+\item{nrow, ncol}{Integer (default = NULL).
+Grid dimensions for \code{layout = "consensus_module_equal_gephi"} /
+\code{"consensus_module_gephi"}.}
 
-\item{nrow}{Integer (default = NULL).
-the nrow of network with layout is "consensus_module_equal_gephi" or "consensus_module_gephi"}
-
-\item{ncol}{Integer (default = NULL).
-the ncol of network with layout is "consensus_module_equal_gephi" or "consensus_module_gephi"}
-
-\item{seed}{Integer (default = 1115).
-Random seed for reproducibility.}
+\item{seed}{Integer (default = 1115). Random seed for reproducibility.}
 
 \item{scale_radius}{Numeric or NULL (default = NULL).
 When non-NULL, scale the layout so the network fits within this radius.
-Used by \code{ggnetview_modularity_heatmaps} for coordinate alignment.}
+Used by \code{ggnetview_modularity_heatmaps()} for coordinate alignment.}
 
 \item{return_layout}{Logical (default = FALSE).
-When TRUE, return a list with \code{$plot} (ggplot) and \code{$layout_data}
-(graph_ly_final, graph_obj, ggplot_data, module_centroids) for downstream
-use (e.g. adding heatmaps and links).}
+When TRUE, return a list with \verb{$plot} (ggplot) and \verb{$layout_data}
+(\code{graph_ly_final}, \code{graph_obj}, \code{ggplot_data}, \code{module_centroids}) for
+downstream use (e.g. adding heatmaps and links).}
+
+\item{fill.by, color.by, shape, pointsize, pointalpha, pointstroke, fill, color, jitter, jitter_sd, pointlabel, pointlabelsize, nodelabsize, ring_n, plot_line, linecolor, mapping_line, linealpha, curve, curvature, label, labelsize, labelsegmentsize, labelsegmentalpha, label_layout, label_wrap_width, label_outer_pad, add_outer, q_outer, expand_outer, bandwidth_scale, outerwidth, outerlinetype, outeralpha, add_group_outer, add_group_outer_expand, add_group_outer_color, add_group_outer_fill, add_group_outer_fill_alpha, add_group_outer_linetype, add_group_outer_linewidth, layout.module, group.by, remove, dropOthers}{\lifecycle{deprecated} Old argument names kept for backward
+compatibility; see the \emph{Deprecated arguments} section for the new name
+of each one. Using them emits a deprecation warning and the value is
+forwarded to the new argument.}
 }
 \value{
 A ggplot object, or when \code{return_layout = TRUE}, a list with
-\code{$plot} and \code{$layout_data}.
+\verb{$plot} and \verb{$layout_data}.
 }
 \description{
-Visualize a network with custom layouts
+\code{ggNetView()} renders a \code{tbl_graph} produced by one of the
+\verb{build_graph_from_*()} builders with a deterministic, module-aware layout.
+
+Since ggNetView 0.2.0 the plotting arguments follow a tidyverse-style
+\code{element_property} naming scheme: \verb{node_*} for nodes, \verb{edge_*} for edges,
+\verb{module_label_*} for module text labels, \verb{module_outline_*} for the per-module
+boundary and \verb{network_outline_*} for the whole-network circle. Every old
+argument name is still accepted with a deprecation warning
+(see \emph{Deprecated arguments} below).
 }
+\section{Column name or literal value}{
+
+\code{node_fill}, \code{node_color}, \code{node_shape}, \code{node_size}, \code{edge_color},
+\code{edge_width} and \code{edge_linetype} accept \strong{either} the name of a column in
+the node / edge table of \code{graph_obj} (an aesthetic \emph{mapping}) \strong{or} a
+literal value (a fixed colour, shape code, size, ...). A single string that
+matches a column name is treated as a mapping; anything else is used as a
+constant.
+}
+
+\section{Deprecated arguments}{
+
+\lifecycle{deprecated} The following arguments were renamed in 0.2.0 and
+will be removed in a future release. Old names keep working but emit a
+\code{\link[lifecycle:deprecate_warn]{lifecycle::deprecate_warn()}} message.\tabular{ll}{
+   Old \tab New \cr
+   \code{fill.by} \tab \code{node_fill} \cr
+   \code{color.by} \tab \code{node_color} \cr
+   \code{shape} \tab \code{node_shape} \cr
+   \code{pointsize} \tab \code{node_size_range} \cr
+   \code{pointalpha} \tab \code{node_alpha} \cr
+   \code{pointstroke} \tab \code{node_stroke} \cr
+   \code{fill} \tab \code{node_fill_values} \cr
+   \code{color} \tab \code{node_color_values} + \code{edge_color_values} \cr
+   \code{jitter}, \code{jitter_sd} \tab \code{node_jitter}, \code{node_jitter_sd} \cr
+   \code{pointlabel}, \code{pointlabelsize} \tab \code{node_label}, \code{node_label_size} \cr
+   \code{plot_line} \tab \code{show_edges} \cr
+   \code{linecolor}, \code{mapping_line} \tab \code{edge_color} (\code{mapping_line = TRUE} is \code{edge_color = "corr_direction"}) \cr
+   \code{linealpha} \tab \code{edge_alpha} \cr
+   \code{curve}, \code{curvature} \tab \code{edge_curve}, \code{edge_curvature} \cr
+   \code{label}, \code{labelsize} \tab \code{module_label}, \code{module_label_size} \cr
+   \code{labelsegmentsize}, \code{labelsegmentalpha} \tab \code{module_label_segment_width}, \code{module_label_segment_alpha} \cr
+   \code{label_layout}, \code{label_wrap_width}, \code{label_outer_pad} \tab \code{module_label_layout}, \code{module_label_wrap}, \code{module_label_pad} \cr
+   \code{add_outer}, \code{q_outer}, \code{expand_outer}, \code{bandwidth_scale} \tab \code{module_outline}, \code{module_outline_q}, \code{module_outline_expand}, \code{module_outline_bandwidth} \cr
+   \code{outerwidth}, \code{outerlinetype}, \code{outeralpha} \tab \code{module_outline_width}, \code{module_outline_linetype}, \code{module_outline_alpha} \cr
+   \verb{add_group_outer*} \tab \verb{network_outline*} (\code{..._linewidth} is \code{network_outline_width}) \cr
+   \code{layout.module}, \code{group.by} \tab \code{layout_module}, \code{group_by} \cr
+   \code{remove}, \code{dropOthers} \tab \code{hide_others}, \code{drop_others} \cr
+   \code{ring_n}, \code{nodelabsize} \tab removed (they had no effect) \cr
+}
+}
+
 \examples{
-data(ppi_example)
-obj <- build_graph_from_df(
-  df              = ppi_example$ppi,
-  node_annotation = ppi_example$annotation,
-  module.method   = "Fast_greedy",
-  top_modules     = 5
+\donttest{
+library(ggNetView)
+data("otu_rare_relative")
+data("tax_tab")
+
+graph_obj <- build_graph_from_mat(
+  mat = otu_rare_relative, transfrom.method = "none",
+  r.threshold = 0.7, p.threshold = 0.05, method = "WGCNA",
+  cor.method = "pearson", proc = "bonferroni",
+  module.method = "Fast_greedy", node_annotation = tax_tab,
+  top_modules = 15, seed = 1115
 )
 
-ggNetView(
-  graph_obj     = obj,
-  layout        = "fr",
-  layout.module = "adjacent",
-  pointsize     = c(3, 8),
-  seed          = 1115
-)
-\donttest{
-ggNetView(
-  graph_obj       = obj,
-  layout          = "gephi",
-  layout.module   = "adjacent",
-  pointsize       = c(3, 8),
-  label           = TRUE,
-  add_group_outer = TRUE,
-  seed            = 1115
-)
+# tidyverse-style arguments (>= 0.2.0)
+ggNetView(graph_obj, layout = "gephi",
+          node_fill = "Modularity", node_shape = 21,
+          edge_color = "corr_direction", edge_width = "weight",
+          module_label = TRUE)
+
+# solid shapes (no fill slot): the fill mapping is applied to colour
+ggNetView(graph_obj, layout = "gephi", node_shape = 16, node_fill = "Phylum")
 }
 }

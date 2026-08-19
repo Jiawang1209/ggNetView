@@ -40,23 +40,25 @@
 #'   exact.
 #' @param full_args,sub_args Named lists of extra arguments passed through to
 #'   \code{\link{ggNetView}} for the full-network and subgraph panels
-#'   respectively (e.g. \code{full_args = list(label = TRUE, pointsize = c(2, 6))}).
+#'   respectively (e.g. \code{full_args = list(module_label = TRUE, node_size_range = c(2, 6))}).
+#'   Deprecated pre-0.2.0 names are still accepted with a lifecycle warning.
 #'   Anything you can pass to \code{ggNetView()} can go here, including
-#'   \code{add_outer = TRUE} to outline modules (with \code{q_outer},
-#'   \code{outeralpha}, \code{outerwidth}, etc.). On the full network this is
+#'   \code{module_outline = TRUE} to outline modules (with \code{module_outline_q},
+#'   \code{module_outline_alpha}, \code{module_outline_width}, etc.). On the full network this is
 #'   drawn by \code{ggNetView} and outlines every module. On the subgraph the
 #'   outline is drawn by this function (for \emph{any} \code{sub_layout},
 #'   including \code{"same"}) using the full-network palette, so the outer
 #'   colour always matches the node / full-network colours; it outlines the
 #'   selected module(s). For \code{sub_layout = "same"} the subgraph is drawn
-#'   directly, so only \code{linecolor}, \code{linealpha} and the
-#'   \code{add_outer} styling keys in \code{sub_args} take effect there.
+#'   directly, so only \code{edge_color}, \code{edge_alpha} and the
+#'   \code{module_outline} styling keys in \code{sub_args} take effect there.
 #' @param sub_fill Optional single colour used to recolour every node of the
 #'   magnified subgraph (as in the classic teal "extracted module" figure).
 #'   When \code{NULL} (default) the subgraph keeps its original module colour,
 #'   so it visually matches the module in the full network.
-#' @param sub_pointsize Numeric length-2 vector (default \code{c(4, 10)}). Point
+#' @param sub_node_size_range Numeric length-2 vector (default \code{c(4, 10)}). Point
 #'   size range for the enlarged subgraph.
+#' @param sub_pointsize \lifecycle{deprecated} Use \code{sub_node_size_range}.
 #' @param arrow Logical (default \code{TRUE}). Whether to draw the connecting
 #'   arrow panel between the full network and the magnified subgraph.
 #' @param show_stats Logical (default \code{TRUE}). Whether to show a
@@ -101,20 +103,20 @@
 #' # The module is magnified keeping the SAME layout as the full network (a
 #' # true zoom). Full-panel styling is passed through via `full_args`.
 #' full_style <- list(
-#'   layout.module = "adjacent",  # neighbouring modules close together
-#'   pointsize     = c(1, 5),     # node size range
+#'   layout_module   = "adjacent",  # neighbouring modules close together
+#'   node_size_range = c(1, 5),     # node size range
 #'   center        = FALSE,       # do not pull nodes to module centre
 #'   shrink        = 0.9,         # compact layout
-#'   linealpha     = 0.2,         # edge transparency
-#'   linecolor     = "#d9d9d9"    # edge colour
+#'   edge_alpha    = 0.2,         # edge transparency
+#'   edge_color    = "#d9d9d9"    # edge colour
 #' )
 #' ggnetview_subgraph(obj, select_module = "1", full_args = full_style)
 #'
-#' # Outline modules via ggNetView's own add_outer, on BOTH panels.
+#' # Outline modules via ggNetView's own module_outline, on BOTH panels.
 #' ggnetview_subgraph(
 #'   obj, select_module = "1",
-#'   full_args = c(full_style, list(add_outer = TRUE)),
-#'   sub_args  = list(add_outer = TRUE)
+#'   full_args = c(full_style, list(module_outline = TRUE)),
+#'   sub_args  = list(module_outline = TRUE)
 #' )
 #'
 #' # Re-lay-out the subgraph as a clean circle, recoloured teal.
@@ -142,13 +144,14 @@ ggnetview_subgraph <- function(
     full_args        = list(),
     sub_args         = list(),
     sub_fill         = NULL,
-    sub_pointsize    = c(4, 10),
+    sub_node_size_range = c(4, 10),
     arrow            = TRUE,
     show_stats       = TRUE,
     full_title       = "Full Network",
     sub_title        = NULL,
     widths           = c(1, 0.12, 0.62),
-    seed             = 1115
+    seed             = 1115,
+    sub_pointsize    = deprecated()
 ) {
 
   ## ---- validate ----------------------------------------------------------
@@ -157,6 +160,17 @@ ggnetview_subgraph <- function(
     stop("`select_module` must name at least one module to magnify.")
   }
   select_module <- as.character(select_module)
+
+  # translate deprecated (< 0.2.0) argument names
+  if (lifecycle::is_present(sub_pointsize)) {
+    lifecycle::deprecate_warn("0.2.0", "ggnetview_subgraph(sub_pointsize)",
+                              "ggnetview_subgraph(sub_node_size_range)")
+    sub_node_size_range <- sub_pointsize
+  }
+  full_args <- .ggnv_rename_args(full_args, fn = "ggnetview_subgraph",
+                                 env = environment(), user_env = parent.frame())
+  sub_args  <- .ggnv_rename_args(sub_args,  fn = "ggnetview_subgraph",
+                                 env = environment(), user_env = parent.frame())
 
   node_tbl <- graph_obj %>%
     tidygraph::activate("nodes") %>%
@@ -248,8 +262,9 @@ ggnetview_subgraph <- function(
       as.numeric(deg[as.character(nodes_sel[["name"]])])
 
     # edge styling inherits from sub_args when provided
-    sub_linecolor <- if (!is.null(sub_args[["linecolor"]])) sub_args[["linecolor"]] else "grey70"
-    sub_linealpha <- if (!is.null(sub_args[["linealpha"]])) sub_args[["linealpha"]] else 0.5
+    sub_linecolor <- if (!is.null(sub_args[["edge_color"]]) &&
+                         !sub_args[["edge_color"]] %in% colnames(edge_df)) sub_args[["edge_color"]] else "grey70"
+    sub_linealpha <- if (!is.null(sub_args[["edge_alpha"]])) sub_args[["edge_alpha"]] else 0.5
 
     # `mod_classes` (computed above) keeps the palette identical to the
     # full-network panel.
@@ -271,7 +286,7 @@ ggnetview_subgraph <- function(
         mapping = ggplot2::aes(x = x, y = y, fill = Modularity, size = .mag_deg),
         shape = 21, stroke = 0.3, colour = "grey20"
       ) +
-      ggplot2::scale_size(range = sub_pointsize, guide = "none") +
+      ggplot2::scale_size(range = sub_node_size_range, guide = "none") +
       fill_scale +
       ggplot2::guides(fill = "none") +
       ggplot2::coord_fixed(clip = "off") +
@@ -288,7 +303,7 @@ ggnetview_subgraph <- function(
       list(
         graph_obj     = sub_g,
         layout        = sub_layout,
-        pointsize     = sub_pointsize,
+        node_size_range = sub_node_size_range,
         seed          = seed,
         return_layout = TRUE
       ),
@@ -298,16 +313,16 @@ ggnetview_subgraph <- function(
     # palette, so strip it here; ggNetView's own mask colours it from
     # `modularity3` + its own scale and can mismatch the node colours in
     # module-structured layouts (e.g. circular_modules_*).
-    sub_call[["add_outer"]] <- NULL
+    sub_call[["module_outline"]] <- NULL
     if (!is.null(sub_fill)) {
-      sub_call[["fill"]] <- stats::setNames(
+      sub_call[["node_fill_values"]] <- stats::setNames(
         rep(sub_fill[1L], length(select_module)), select_module
       )
     } else {
       # Force the FULL network's palette so the subgraph module keeps its
       # original colour (otherwise ggNetView would recolour it from scratch,
       # giving module "14" the first palette colour instead of its own).
-      sub_call[["fill"]] <- full_palette
+      sub_call[["node_fill_values"]] <- full_palette
     }
     sub_res  <- do.call(ggNetView, sub_call)
     if (is.list(sub_res) && !is.null(sub_res[["plot"]])) {
@@ -347,18 +362,18 @@ ggnetview_subgraph <- function(
   # Opt in via `sub_args = list(add_outer = TRUE)`; styling reads the usual
   # ggNetView outer_* keys from `sub_args`.
   getd <- function(x, d) if (is.null(x)) d else x
-  if (isTRUE(sub_args[["add_outer"]]) && !is.null(sub_xy)) {
+  if (isTRUE(sub_args[["module_outline"]]) && !is.null(sub_xy)) {
     sub_plot <- .ggnv_add_outer_layer(
       sub_plot,
       xy_df     = sub_xy,
       clusters  = sub_clusters,
       classes   = mod_classes,
-      q         = getd(sub_args[["q_outer"]], 0.88),
-      expand    = getd(sub_args[["expand_outer"]], 1.02),
-      bandwidth = getd(sub_args[["bandwidth_scale"]], 2),
-      linewidth = getd(sub_args[["outerwidth"]], 1),
-      linetype  = getd(sub_args[["outerlinetype"]], 1),
-      alpha     = getd(sub_args[["outeralpha"]], 0.5),
+      q         = getd(sub_args[["module_outline_q"]], 0.88),
+      expand    = getd(sub_args[["module_outline_expand"]], 1.02),
+      bandwidth = getd(sub_args[["module_outline_bandwidth"]], 2),
+      linewidth = getd(sub_args[["module_outline_width"]], 1),
+      linetype  = getd(sub_args[["module_outline_linetype"]], 1),
+      alpha     = getd(sub_args[["module_outline_alpha"]], 0.5),
       fb_color = "grey30", fb_linetype = "dashed",
       fb_linewidth = 0.8, fb_expand_mm = 8
     )
@@ -407,7 +422,7 @@ ggnetview_subgraph <- function(
 #'
 #' Internal helper shared by the full-network and subgraph panels of
 #' \code{\link{ggnetview_subgraph}}. Draws the same HDR contour that
-#' \code{ggNetView(add_outer = TRUE)} uses, but for an explicit set of node
+#' \code{ggNetView(module_outline = TRUE)} uses, but for an explicit set of node
 #' coordinates / clusters, and coloured from a fixed class palette so colours
 #' stay consistent with the rest of the figure. Falls back to a dashed ring
 #' when the point cloud is too small for a KDE contour.

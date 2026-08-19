@@ -43,9 +43,9 @@ ggNetView(
   graph_obj,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 8),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 8),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 
 
@@ -54,8 +54,8 @@ ggNetView(
   graph_obj,
   layout    = "circle",
   seed      = 1,
-  pointsize = c(2, 8),
-  fill.by   = "Modularity"
+  node_size_range = c(2, 8),
+  node_fill   = "Modularity"
 )
 
 

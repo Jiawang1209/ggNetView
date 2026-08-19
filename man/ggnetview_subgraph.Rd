@@ -12,13 +12,14 @@ ggnetview_subgraph(
   full_args = list(),
   sub_args = list(),
   sub_fill = NULL,
-  sub_pointsize = c(4, 10),
+  sub_node_size_range = c(4, 10),
   arrow = TRUE,
   show_stats = TRUE,
   full_title = "Full Network",
   sub_title = NULL,
   widths = c(1, 0.12, 0.62),
-  seed = 1115
+  seed = 1115,
+  sub_pointsize = deprecated()
 )
 }
 \arguments{
@@ -50,24 +51,25 @@ exact.}
 
 \item{full_args, sub_args}{Named lists of extra arguments passed through to
 \code{\link{ggNetView}} for the full-network and subgraph panels
-respectively (e.g. \code{full_args = list(label = TRUE, pointsize = c(2, 6))}).
+respectively (e.g. \code{full_args = list(module_label = TRUE, node_size_range = c(2, 6))}).
+Deprecated pre-0.2.0 names are still accepted with a lifecycle warning.
 Anything you can pass to \code{ggNetView()} can go here, including
-\code{add_outer = TRUE} to outline modules (with \code{q_outer},
-\code{outeralpha}, \code{outerwidth}, etc.). On the full network this is
+\code{module_outline = TRUE} to outline modules (with \code{module_outline_q},
+\code{module_outline_alpha}, \code{module_outline_width}, etc.). On the full network this is
 drawn by \code{ggNetView} and outlines every module. On the subgraph the
 outline is drawn by this function (for \emph{any} \code{sub_layout},
 including \code{"same"}) using the full-network palette, so the outer
 colour always matches the node / full-network colours; it outlines the
 selected module(s). For \code{sub_layout = "same"} the subgraph is drawn
-directly, so only \code{linecolor}, \code{linealpha} and the
-\code{add_outer} styling keys in \code{sub_args} take effect there.}
+directly, so only \code{edge_color}, \code{edge_alpha} and the
+\code{module_outline} styling keys in \code{sub_args} take effect there.}
 
 \item{sub_fill}{Optional single colour used to recolour every node of the
 magnified subgraph (as in the classic teal "extracted module" figure).
 When \code{NULL} (default) the subgraph keeps its original module colour,
 so it visually matches the module in the full network.}
 
-\item{sub_pointsize}{Numeric length-2 vector (default \code{c(4, 10)}). Point
+\item{sub_node_size_range}{Numeric length-2 vector (default \code{c(4, 10)}). Point
 size range for the enlarged subgraph.}
 
 \item{arrow}{Logical (default \code{TRUE}). Whether to draw the connecting
@@ -90,6 +92,8 @@ the subgraph panel is deliberately smaller than the full network. When
 
 \item{seed}{Integer (default \code{1115}). Seed forwarded to
 \code{\link{ggNetView}} for both panels to keep the figure reproducible.}
+
+\item{sub_pointsize}{\lifecycle{deprecated} Use \code{sub_node_size_range}.}
 }
 \value{
 A \code{patchwork} object (a composed \code{ggplot}) that can be
@@ -134,20 +138,20 @@ obj <- build_graph_from_mat(
 # The module is magnified keeping the SAME layout as the full network (a
 # true zoom). Full-panel styling is passed through via `full_args`.
 full_style <- list(
-  layout.module = "adjacent",  # neighbouring modules close together
-  pointsize     = c(1, 5),     # node size range
+  layout_module   = "adjacent",  # neighbouring modules close together
+  node_size_range = c(1, 5),     # node size range
   center        = FALSE,       # do not pull nodes to module centre
   shrink        = 0.9,         # compact layout
-  linealpha     = 0.2,         # edge transparency
-  linecolor     = "#d9d9d9"    # edge colour
+  edge_alpha    = 0.2,         # edge transparency
+  edge_color    = "#d9d9d9"    # edge colour
 )
 ggnetview_subgraph(obj, select_module = "1", full_args = full_style)
 
-# Outline modules via ggNetView's own add_outer, on BOTH panels.
+# Outline modules via ggNetView's own module_outline, on BOTH panels.
 ggnetview_subgraph(
   obj, select_module = "1",
-  full_args = c(full_style, list(add_outer = TRUE)),
-  sub_args  = list(add_outer = TRUE)
+  full_args = c(full_style, list(module_outline = TRUE)),
+  sub_args  = list(module_outline = TRUE)
 )
 
 # Re-lay-out the subgraph as a clean circle, recoloured teal.

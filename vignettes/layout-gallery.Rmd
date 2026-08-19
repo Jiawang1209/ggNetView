@@ -64,9 +64,9 @@ show_layout <- function(layout_name, ...) {
     g,
     layout    = layout_name,
     seed      = 1,
-    pointsize = c(2, 6),
-    fill.by   = "Modularity",
-    label     = FALSE,
+    node_size_range = c(2, 6),
+    node_fill   = "Modularity",
+    module_label     = FALSE,
     ...
   ) +
     ggplot2::ggtitle(layout_name)
@@ -191,34 +191,34 @@ circle, making module boundaries visually explicit. Each comes in a
 standard version (module sizes proportional to node count) and an
 **equal** version (all modules the same size).
 
-Circular module layouts require `layout.module = "adjacent"` for best
+Circular module layouts require `layout_module = "adjacent"` for best
 results. They work best with networks that have well-defined,
 moderately-sized modules.
 
 ```{r cm-examples, eval = FALSE}
 # Standard (proportional) variants
-show_layout("circular_modules_gephi_layout", layout.module = "adjacent")
-show_layout("circular_modules_petal_layout", layout.module = "adjacent")
-show_layout("circular_modules_petal2_layout", layout.module = "adjacent")
-show_layout("circular_modules_diamond_layout", layout.module = "adjacent")
-show_layout("circular_modules_star_layout", layout.module = "adjacent")
-show_layout("circular_modules_star_concentric_layout", layout.module = "adjacent")
-show_layout("circular_modules_square_layout", layout.module = "adjacent")
-show_layout("circular_modules_square2_layout", layout.module = "adjacent")
-show_layout("circular_modules_grid_layout", layout.module = "adjacent")
-show_layout("circular_modules_heart_centered_layout", layout.module = "adjacent")
+show_layout("circular_modules_gephi_layout", layout_module = "adjacent")
+show_layout("circular_modules_petal_layout", layout_module = "adjacent")
+show_layout("circular_modules_petal2_layout", layout_module = "adjacent")
+show_layout("circular_modules_diamond_layout", layout_module = "adjacent")
+show_layout("circular_modules_star_layout", layout_module = "adjacent")
+show_layout("circular_modules_star_concentric_layout", layout_module = "adjacent")
+show_layout("circular_modules_square_layout", layout_module = "adjacent")
+show_layout("circular_modules_square2_layout", layout_module = "adjacent")
+show_layout("circular_modules_grid_layout", layout_module = "adjacent")
+show_layout("circular_modules_heart_centered_layout", layout_module = "adjacent")
 
 # Equal-sized module variants
-show_layout("circular_modules_equal_gephi_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_petal_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_petal2_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_diamond_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_star_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_star_concentric_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_square_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_square2_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_grid_layout", layout.module = "adjacent")
-show_layout("circular_modules_equal_heart_centered_layout", layout.module = "adjacent")
+show_layout("circular_modules_equal_gephi_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_petal_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_petal2_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_diamond_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_star_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_star_concentric_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_square_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_square2_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_grid_layout", layout_module = "adjacent")
+show_layout("circular_modules_equal_heart_centered_layout", layout_module = "adjacent")
 ```
 
 ## 5. Multipartite layouts
@@ -227,7 +227,7 @@ Multipartite layouts separate nodes into two or more spatially distinct
 groups. Use them when nodes have a categorical block attribute
 (e.g. bacteria vs. fungi, or different experimental groups).
 
-The `layout.module` parameter controls how modules are arranged:
+The `layout_module` parameter controls how modules are arranged:
 
 - `"random"` -- modules distributed freely
 - `"adjacent"` -- modules positioned close together
@@ -238,23 +238,23 @@ block count (e.g. bipartite needs exactly 2, tripartite needs 3).
 
 ```{r multi-examples, eval = FALSE}
 # Bipartite (2-block)
-show_layout("bipartite_layout", layout.module = "order")
-show_layout("bipartite_gephi_layout", layout.module = "order")
+show_layout("bipartite_layout", layout_module = "order")
+show_layout("bipartite_gephi_layout", layout_module = "order")
 
 # Tripartite (3-block)
-show_layout("tripartite_layout", layout.module = "order")
-show_layout("tripartite_gephi_layout", layout.module = "order")
-show_layout("tripartite_equal_gephi_layout", layout.module = "order")
+show_layout("tripartite_layout", layout_module = "order")
+show_layout("tripartite_gephi_layout", layout_module = "order")
+show_layout("tripartite_equal_gephi_layout", layout_module = "order")
 
 # Quadripartite (4-block)
-show_layout("quadripartite_gephi_layout", layout.module = "order")
-show_layout("quadripartite_equal_gephi_layout", layout.module = "order")
-show_layout("cross_quadripartite_gephi_layout", layout.module = "order")
-show_layout("cross_quadripartite_equal_gephi_layout", layout.module = "order")
+show_layout("quadripartite_gephi_layout", layout_module = "order")
+show_layout("quadripartite_equal_gephi_layout", layout_module = "order")
+show_layout("cross_quadripartite_gephi_layout", layout_module = "order")
+show_layout("cross_quadripartite_equal_gephi_layout", layout_module = "order")
 
 # Pentapartite (5-block)
-show_layout("pentapartite_gephi_layout", layout.module = "order")
-show_layout("pentapartite_equal_gephi_layout", layout.module = "order")
+show_layout("pentapartite_gephi_layout", layout_module = "order")
+show_layout("pentapartite_equal_gephi_layout", layout_module = "order")
 ```
 
 ## 6. Consensus module layouts
@@ -268,17 +268,17 @@ show_layout("consensus_module_gephi")
 show_layout("consensus_module_equal_gephi")
 ```
 
-## 7. The `layout.module` parameter
+## 7. The `layout_module` parameter
 
-All layouts accept `layout.module` to control how modules are spatially
+All layouts accept `layout_module` to control how modules are spatially
 arranged. Here is the same layout with the three options:
 
-```{r lm-random, fig.cap = "layout.module = 'random'"}
-show_layout("gephi", layout.module = "random")
+```{r lm-random, fig.cap = "layout_module = 'random'"}
+show_layout("gephi", layout_module = "random")
 ```
 
-```{r lm-adjacent, fig.cap = "layout.module = 'adjacent'"}
-show_layout("gephi", layout.module = "adjacent")
+```{r lm-adjacent, fig.cap = "layout_module = 'adjacent'"}
+show_layout("gephi", layout_module = "adjacent")
 ```
 
 ## Quick reference table
@@ -321,7 +321,7 @@ show_layout("gephi", layout.module = "adjacent")
 3. **Use multipartite layouts** when nodes have a meaningful block
    assignment (bacteria/fungi, treatment/control).
 4. **Use `"dendrogram"`** for directed / hierarchical graphs.
-5. **Use `layout.module = "adjacent"`** to pull related modules closer
+5. **Use `layout_module = "adjacent"`** to pull related modules closer
    together.
 6. **All layouts are deterministic** when `seed` is set -- figures are
    reproducible across sessions.

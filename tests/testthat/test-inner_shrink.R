@@ -127,8 +127,8 @@ testthat::test_that("ggNetView dispatch: inner_shrink only flows to WGCNA layout
   # Just check the function returns without error for a non-WGCNA layout
   # when inner_shrink is supplied (it should be ignored silently).
   testthat::expect_silent({
-    p <- ggNetView(g, layout = "fr", layout.module = "random",
-                   inner_shrink = 0.5, plot_line = FALSE, seed = 1)
+    p <- ggNetView(g, layout = "fr", layout_module = "random",
+                   inner_shrink = 0.5, show_edges = FALSE, seed = 1)
   })
   testthat::expect_s3_class(p, "ggplot")
 })

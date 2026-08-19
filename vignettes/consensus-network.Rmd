@@ -231,9 +231,9 @@ ggNetView(
   g_borda,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -242,9 +242,9 @@ ggNetView(
   g_intersect,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 

@@ -119,9 +119,9 @@ ggNetView(
   graph_obj_annot,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -133,8 +133,8 @@ ggNetView(
   graph_obj_annot,
   layout    = "circle",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity"
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity"
 )
 ```
 
@@ -171,9 +171,9 @@ ggNetView(
   double_obj,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 6),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 6),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 

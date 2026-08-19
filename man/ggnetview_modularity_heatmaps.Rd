@@ -22,7 +22,7 @@ ggnetview_modularity_heatmaps(
   mantel.seed = 1115,
   drop_nonsig = FALSE,
   layout = "gephi",
-  layout.module = c("random", "adjacent", "order"),
+  layout_module = c("random", "adjacent", "order"),
   orientation = c("top_right", "bottom_right", "top_left", "bottom_left"),
   distance = 3,
   r = 6,
@@ -38,7 +38,8 @@ ggnetview_modularity_heatmaps(
   HeatmapPointFill = "#de77ae",
   HeatmapTileColor = NA,
   HeatmapTileSize = 0,
-  ...
+  ...,
+  layout.module = deprecated()
 )
 }
 \arguments{
@@ -118,7 +119,7 @@ returned stats data frame is unaffected.}
 underlying \code{\link{ggNetView}} call (e.g. \code{"gephi"},
 \code{"square"}, \code{"WGCNA"}).}
 
-\item{layout.module}{Character (default \code{"random"}). Module
+\item{layout_module}{Character (default \code{"random"}). Module
 ordering strategy passed through to \code{\link{ggNetView}}. One of
 \code{"random"}, \code{"adjacent"}, \code{"order"}.}
 
@@ -187,11 +188,15 @@ for heatmap tiles.}
 \item{...}{Additional arguments forwarded to the underlying
 \code{\link{ggNetView}} network call. Commonly used:
 \code{shrink}, \code{inner_shrink} (intra-module compactness, only
-for \code{layout = "WGCNA"}), \code{jitter}, \code{add_outer},
-\code{add_group_outer}, \code{label} (logical or character -- module
-labels in ggNetView style), \code{labelsize},
-\code{labelsegmentsize}, \code{labelsegmentalpha}, \code{fill},
-\code{color}, \code{pointsize}.}
+for \code{layout = "WGCNA"}), \code{node_jitter}, \code{module_outline},
+\code{network_outline}, \code{module_label} (logical or character --
+module labels in ggNetView style), \code{module_label_size},
+\code{module_label_segment_width}, \code{module_label_segment_alpha},
+\code{node_fill_values}, \code{node_size_range}. Deprecated pre-0.2.0
+names (\code{add_outer}, \code{label}, \code{fill}, ...) are still
+accepted with a lifecycle warning.}
+
+\item{layout.module}{\lifecycle{deprecated} Use \code{layout_module}.}
 }
 \value{
 A list of length 3:

@@ -150,7 +150,7 @@ get_graph_nodes(g_infl) |>
 ```
 
 Because the score is stored as a node column, you can map it onto a
-network figure. `ggNetView()`'s `fill.by` aesthetic uses a discrete
+network figure. `ggNetView()`'s `node_fill` aesthetic uses a discrete
 scale, so bin the signed influence into a small categorical column
 first:
 
@@ -163,7 +163,7 @@ g_infl <- g_infl |>
     TRUE          ~ "Unreached"
   ))
 
-ggNetView(g_infl, layout = "fr", fill.by = "Influence_class")
+ggNetView(g_infl, layout = "fr", node_fill = "Influence_class")
 ```
 
 ## 4. Press perturbation (sustained disturbance)

@@ -1,6 +1,61 @@
-# ggNetView (development version)
+# ggNetView 0.2.0
 
-## Breaking changes
+## Argument renaming in `ggNetView()` (lifecycle-managed)
+
+The plotting arguments of `ggNetView()` now follow a tidyverse-style
+`element_property` naming scheme. **Every old name keeps working** and emits a
+`lifecycle` deprecation warning pointing to the new name; old names will be
+removed in a future major release.
+
+| Old | New |
+|---|---|
+| `fill.by` / `color.by` / `shape` | `node_fill` / `node_color` / `node_shape` |
+| `pointsize` / `pointalpha` / `pointstroke` | `node_size_range` / `node_alpha` / `node_stroke` |
+| `fill` / `color` | `node_fill_values` / `node_color_values` (+ `edge_color_values`) |
+| `jitter` / `jitter_sd` | `node_jitter` / `node_jitter_sd` |
+| `pointlabel` / `pointlabelsize` | `node_label` / `node_label_size` |
+| `plot_line` | `show_edges` |
+| `linecolor` / `mapping_line` | `edge_color` (`mapping_line = TRUE` -> `edge_color = "corr_direction"`) |
+| `linealpha` / `curve` / `curvature` | `edge_alpha` / `edge_curve` / `edge_curvature` |
+| `label` / `labelsize` / `labelsegmentsize` / `labelsegmentalpha` | `module_label` / `module_label_size` / `module_label_segment_width` / `module_label_segment_alpha` |
+| `label_layout` / `label_wrap_width` / `label_outer_pad` | `module_label_layout` / `module_label_wrap` / `module_label_pad` |
+| `add_outer` / `q_outer` / `expand_outer` / `bandwidth_scale` | `module_outline` / `module_outline_q` / `module_outline_expand` / `module_outline_bandwidth` |
+| `outerwidth` / `outerlinetype` / `outeralpha` | `module_outline_width` / `module_outline_linetype` / `module_outline_alpha` |
+| `add_group_outer*` | `network_outline*` (`add_group_outer_linewidth` -> `network_outline_width`) |
+| `layout.module` / `group.by` | `layout_module` / `group_by` |
+| `remove` / `dropOthers` | `hide_others` / `drop_others` |
+| `ring_n` / `nodelabsize` | removed (they had no effect) |
+
+The same renaming applies to arguments forwarded through `...` / `full_args` /
+`sub_args` in `ggNetView_multi()`, `ggnetview_modularity_heatmaps()` and
+`ggnetview_subgraph()` (`ggnetview_subgraph(sub_pointsize)` ->
+`sub_node_size_range`; `ggnetview_modularity_heatmaps(layout.module)` ->
+`layout_module`). `ggNetView_multi()` now forwards plotting arguments via
+`...` instead of mirroring the full `ggNetView()` signature.
+
+## New features
+
+* `node_fill`, `node_color`, `node_shape`, `node_size`, `edge_color`,
+  `edge_width` and `edge_linetype` accept **either a column name (mapping) or a
+  literal value (constant)**.
+* `edge_width` can map a numeric edge attribute (e.g. `"weight"`) to line
+  width (`edge_width_range` controls the range); `edge_linetype` can be
+  mapped or fixed.
+* `node_size` can map any numeric node column (default `"Degree"`) or be a
+  fixed size.
+* Solid point shapes (0-20) now work with a mapped `node_fill`: the mapping
+  is routed to the colour aesthetic and the legend uses the real shape
+  (previously the nodes and the legend rendered grey).
+* Node and edge colour palettes are separate (`node_color_values` vs
+  `edge_color_values`); the old shared `color` is split automatically.
+* `ggNetView()` no longer emits "Coordinate system already present" when
+  module labels / outlines are drawn.
+
+## Dependencies
+
+* New import: `lifecycle`.
+
+## Other breaking changes (accumulated since 0.1.0)
 
 * The module outer boundary drawn by `ggNetView(add_outer = TRUE)` is now
   computed via 2D kernel density estimation followed by a Highest-Density-Region

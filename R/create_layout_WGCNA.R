@@ -34,7 +34,7 @@
 #'     that every other \code{create_layout_*} function uses.
 #' }
 #'
-#' Pair this layout with \code{layout.module = "order"} (which dispatches
+#' Pair this layout with \code{layout_module = "order"} (which dispatches
 #' to \code{module_layout4()}) so the module grouping established here is
 #' preserved during node-to-slot assignment.  Using \code{"random"} or
 #' \code{"adjacent"} will re-shuffle the coordinates via kNN and destroy

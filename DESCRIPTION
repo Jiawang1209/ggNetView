@@ -1,7 +1,7 @@
 Type: Package
 Package: ggNetView
 Title: Reproducible and Deterministic Network Analysis and Visualization
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Yue", "Liu", , "yueliu@iae.ac.cn", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6180-8068")),
@@ -34,6 +34,7 @@ Imports:
     grid,
     huge,
     igraph,
+    lifecycle,
     magrittr,
     MASS,
     Matrix,
@@ -73,3 +74,4 @@ Config/testthat/edition: 3
 URL: https://github.com/Jiawang1209/ggNetView, https://jiawang1209.github.io/ggNetView/
 BugReports: https://github.com/Jiawang1209/ggNetView/issues
 Config/roxygen2/version: 8.0.0
+RdMacros: lifecycle

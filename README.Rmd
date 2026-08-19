@@ -140,18 +140,17 @@ obj                           # tbl_graph with Modularity / Degree / Strength + 
 
 ```{r fig.align='center', fig.width=10, fig.height=10}
 p1 <- ggNetView(
-  graph_obj = obj,             # tbl_graph from build_graph_from_mat()
-  layout = "gephi",            # node-positioning algorithm
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # node attribute used to define groups/modules
-  fill.by = "Modularity",      # node attribute mapped to point fill
-  pointsize = c(1, 5),         # min/max node size range
-  center = F,                  # do NOT pull nodes toward each module centre
-  jitter = F,                  # no positional jitter
-  mapping_line = F,            # do not map edge aesthetics (uniform edges)
-  shrink = 0.9,                # shrink layout inward (smaller = more compact)
-  linealpha = 0.2,             # edge transparency
-  linecolor = "#d9d9d9"        # edge colour
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # node attribute used to define groups/modules
+  node_fill = "Modularity",     # node attribute mapped to point fill
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = F,              # no positional jitter
+  shrink = 0.9,                 # shrink layout inward (smaller = more compact)
+  edge_alpha = 0.2,             # edge transparency
+  edge_color = "#d9d9d9"        # edge colour
 )
 
 p1
@@ -170,21 +169,20 @@ ggsave(file = "Output/p1.pdf",
 
 ```{r fig.align='center', fig.width=15, fig.height=15}
 p2 <- ggNetView(
-  graph_obj = obj,             # tbl_graph from build_graph_from_mat()
-  layout = "gephi",            # node-positioning algorithm
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # node attribute used to define groups/modules
-  fill.by = "Modularity",      # node attribute mapped to point fill
-  pointsize = c(1, 5),         # min/max node size range
-  center = F,                  # do NOT pull nodes toward each module centre
-  jitter = TRUE,               # jitter node positions to reduce overlap
-  jitter_sd = 0.15,            # SD of the jitter (bigger -> more spread)
-  mapping_line = TRUE,         # map edge aesthetics
-  shrink = 0.9,                # shrink layout inward (smaller = more compact)
-  linealpha = 0.2,             # edge transparency
-  linecolor = "#d9d9d9",       # edge colour
-  add_outer = T,               # draw an outer hull/line around each module
-  label = T                    # show node labels
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # node attribute used to define groups/modules
+  node_fill = "Modularity",     # node attribute mapped to point fill
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter (bigger -> more spread)
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward (smaller = more compact)
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
 )
 
 p2
@@ -203,21 +201,20 @@ ggsave(file = "Output/p2.pdf",
 
 ```{r fig.align='center', fig.width=15, fig.height=15}
 p3 <- ggNetView(
-  graph_obj = obj,             # tbl_graph from build_graph_from_mat()
-  layout = "gephi",            # node-positioning algorithm
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # group nodes by module
-  fill.by = "Phylum",          # map point fill to taxonomy (Phylum) instead of module
-  pointsize = c(1, 5),         # min/max node size range
-  center = F,                  # do NOT pull nodes toward each module centre
-  jitter = TRUE,               # jitter node positions to reduce overlap
-  jitter_sd = 0.15,            # SD of the jitter
-  mapping_line = TRUE,         # map edge aesthetics
-  shrink = 0.9,                # shrink layout inward
-  linealpha = 0.2,             # edge transparency
-  linecolor = "#d9d9d9",       # edge colour
-  add_outer = T,               # draw an outer hull/line around each module
-  label = T                    # show node labels
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Phylum",         # map point fill to taxonomy (Phylum) instead of module
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
 )
 
 p3
@@ -238,22 +235,21 @@ ggsave(file = "Output/p3.pdf",
 
 ```{r fig.align='center', fig.width=15, fig.height=15}
 p4 <- ggNetView(
-  graph_obj = obj,             # tbl_graph from build_graph_from_mat()
-  layout = "gephi",            # node-positioning algorithm
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # group nodes by module
-  fill.by = "Phylum",          # map point fill to taxonomy (Phylum)
-  color.by = "Phylum",         # map point border colour to taxonomy (Phylum)
-  pointsize = c(1, 5),         # min/max node size range
-  center = F,                  # do NOT pull nodes toward each module centre
-  jitter = TRUE,               # jitter node positions to reduce overlap
-  jitter_sd = 0.15,            # SD of the jitter
-  mapping_line = TRUE,         # map edge aesthetics
-  shrink = 0.9,                # shrink layout inward
-  linealpha = 0.2,             # edge transparency
-  linecolor = "#d9d9d9",       # edge colour
-  add_outer = T,               # draw an outer hull/line around each module
-  label = T                    # show node labels
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Phylum",         # map point fill to taxonomy (Phylum)
+  node_color = "Phylum",        # map point border colour to taxonomy (Phylum)
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
 )
 
 p4
@@ -274,22 +270,21 @@ ggsave(file = "Output/p4.pdf",
 
 ```{r fig.align='center', fig.width=15, fig.height=15}
 p5 <- ggNetView(
-  graph_obj = obj,             # tbl_graph from build_graph_from_mat()
-  layout = "gephi",            # node-positioning algorithm
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # group nodes by module
-  fill.by = "Modularity",      # map point fill to module
-  pointsize = c(1, 5),         # min/max node size range
-  center = F,                  # do NOT pull nodes toward each module centre
-  jitter = TRUE,               # jitter node positions to reduce overlap
-  jitter_sd = 0.15,            # SD of the jitter
-  mapping_line = TRUE,         # map edge aesthetics
-  shrink = 0.9,                # shrink layout inward
-  linealpha = 0.2,             # edge transparency
-  linecolor = "#d9d9d9",       # edge colour
-  add_outer = T,               # draw an outer hull/line around each module
-  label = T,                   # show node labels
-  pointlabel = "top1"          # label only the top-1 hub node per module
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity",     # map point fill to module
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T,             # show node labels
+  node_label = "top1"           # label only the top-1 hub node per module
 )
 
 p5
@@ -410,24 +405,24 @@ graph_obj                        # resulting tbl_graph
 
 
 p_sub <- ggNetView(
-  graph_obj = graph_obj,       # tbl_graph object
-  layout = "gephi",            # node-positioning algorithm
-  center = T,                  # pull nodes toward each module centre
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # group nodes by module
-  fill.by = "Modularity"       # map point fill to module
+  graph_obj = graph_obj,        # tbl_graph object
+  layout = "gephi",             # node-positioning algorithm
+  center = T,                   # pull nodes toward each module centre
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity"      # map point fill to module
 )
 
 p_sub
 
 
 p_sub2 <- ggNetView(
-  graph_obj = graph_obj,       # tbl_graph object
-  layout = "gephi",            # node-positioning algorithm
-  center = F,                  # do NOT pull nodes toward each module centre (compare with p_sub)
-  layout.module = "adjacent",  # place neighbouring modules close together
-  group.by = "Modularity",     # group nodes by module
-  fill.by = "Modularity"       # map point fill to module
+  graph_obj = graph_obj,        # tbl_graph object
+  layout = "gephi",             # node-positioning algorithm
+  center = F,                   # do NOT pull nodes toward each module centre (compare with p_sub)
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity"      # map point fill to module
 )
 
 p_sub2
@@ -455,13 +450,13 @@ res <- ggnetview_modularity_heatmaps(
     c("#92c5de", "#f4a582")
   ),
   layout = "gephi",                 # node-positioning algorithm
-  layout.module = "adjacent",       # place neighbouring modules close together
-  jitter = T,                       # jitter node positions to reduce overlap
-  add_outer = T,                    # draw an outer hull/line around each module
+  layout_module = "adjacent",       # place neighbouring modules close together
+  node_jitter = T,                       # jitter node positions to reduce overlap
+  module_outline = T,                    # draw an outer hull/line around each module
   HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
-  add_group_outer = T,              # draw an outer boundary around node groups
-  label = F,                        # do not show node labels
-  # labelsize = 5
+  network_outline = T,              # draw an outer boundary around node groups
+  module_label = F,                        # do not show node labels
+  # module_label_size = 5
 )
 
 res[[1]]
@@ -489,13 +484,13 @@ res2 <- ggnetview_modularity_heatmaps(
     c("#92c5de", "#f4a582")
   ),
   layout = "gephi",                 # node-positioning algorithm
-  layout.module = "adjacent",       # place neighbouring modules close together
-  jitter = T,                       # jitter node positions to reduce overlap
-  add_outer = T,                    # draw an outer hull/line around each module
+  layout_module = "adjacent",       # place neighbouring modules close together
+  node_jitter = T,                       # jitter node positions to reduce overlap
+  module_outline = T,                    # draw an outer hull/line around each module
   HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
-  add_group_outer = T,              # draw an outer boundary around node groups
-  label = F,                        # do not show node labels
-  # labelsize = 5
+  network_outline = T,              # draw an outer boundary around node groups
+  module_label = F,                        # do not show node labels
+  # module_label_size = 5
 )
 
 res2[[1]]
@@ -521,14 +516,14 @@ out1 <- ggNetView_multi_link(
   cor.method       = "pearson",         # Pearson correlation
   proc             = "BH",              # multiple-testing correction (Benjamini-Hochberg)
   module.method    = "Fast_greedy",     # community detection per sub-network
-  layout.module    = "adjacent",        # neighbouring modules placed close together
+  layout_module    = "adjacent",        # neighbouring modules placed close together
   center           = T,                 # pull a node toward the centre of each sub-layout
   top_modules      = 15,                # keep top-15 modules per sub-network; rest -> "Others"
   layout           = "gephi",           # global node-positioning algorithm per sub-network
   shrink           = 0.5,               # shrink each sub-network inward (smaller = more compact)
   scale            = F,                 # do NOT normalise each group to a common scale -> sub-networks keep their native size differences
-  jitter           = T,                 # jitter node positions slightly to reduce overlap
-  jitter_sd        = 0.3,               # SD of the jitter (bigger -> more spread)
+  node_jitter           = T,                 # jitter node positions slightly to reduce overlap
+  node_jitter_sd        = 0.3,               # SD of the jitter (bigger -> more spread)
   anchor_dist      = 30,                 # distance between groups on the outer anchor circle
   seed             = 1115,              # fix RNG for reproducibility
   orientation      = "up",              # frame orientation; one of "up"/"down"/"left"/"right"
@@ -558,14 +553,14 @@ out2 <- ggNetView_multi_link(
   cor.method       = "pearson",
   proc             = "BH",
   module.method    = "Fast_greedy",
-  layout.module    = "adjacent",
+  layout_module    = "adjacent",
   center           = T,
   top_modules      = 15,
   layout           = "gephi",
   shrink           = 0.5,
   scale            = T,                 # normalise each group to a comparable coordinate scale
-  jitter           = T,
-  jitter_sd        = 0.01,              # smaller jitter — sub-networks are already on a unified scale
+  node_jitter           = T,
+  node_jitter_sd        = 0.01,              # smaller jitter — sub-networks are already on a unified scale
   anchor_dist      = 1,
   seed             = 1115,
   orientation      = "up",

@@ -297,7 +297,7 @@ data frame and `env_select` specification.
 g <- build_graph_from_mat(mat, method = "cor", ...)
 
 # 2. Visualise
-ggNetView(g, layout = "fr", fill.by = "Modularity")
+ggNetView(g, layout = "fr", node_fill = "Modularity")
 
 # 3. Global topology
 topo <- get_network_topology(g, bootstrap = 100)

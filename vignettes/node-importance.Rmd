@@ -210,11 +210,11 @@ scaling choices.
 If you also want a network plot with IVI as a visual aesthetic, you
 can pass the `IVI`-augmented graph to `ggNetView()`. Two notes:
 
-1. `ggNetView()` is a discrete-fill plotter -- its `fill.by` argument
+1. `ggNetView()` is a discrete-fill plotter -- its `node_fill` argument
    maps to `ggplot2::scale_fill_manual()`, so it expects a factor /
    character column, not raw numeric.
 2. Easiest fix: bin `IVI` into a small ordered factor first (quartiles
-   are usually informative), then pass that bin column as `fill.by`.
+   are usually informative), then pass that bin column as `node_fill`.
 
 ```{r plot-ivi, eval = has_influential, fig.width = 7, fig.height = 6, fig.cap = "Network coloured by IVI quartile; warmer = more influential."}
 obj_plot <- obj_aug %>%
@@ -233,15 +233,15 @@ ggNetView(
   obj_plot,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 8),
-  fill.by   = "IVI_bin",
-  label     = FALSE
+  node_size_range = c(2, 8),
+  node_fill   = "IVI_bin",
+  module_label     = FALSE
 )
 ```
 
 The same recipe works for any other continuous centrality column
 (`Betweenness`, `PageRank`, `Eigenvector`, ...): wrap it in `cut()`
-to produce an ordered factor, then pass that factor as `fill.by`.
+to produce an ordered factor, then pass that factor as `node_fill`.
 
 ## Step 5: Combine with Zi-Pi role classification
 

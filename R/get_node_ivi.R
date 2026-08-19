@@ -103,7 +103,7 @@
 #'
 #' # Map IVI to point fill in ggNetView(): the fill aesthetic uses a
 #' # discrete scale, so bin the continuous IVI into ordered quartile
-#' # factor levels first, then pass the bin column as `fill.by`.
+#' # factor levels first, then pass the bin column as `node_fill`.
 #' obj_plot <- obj_aug %>%
 #'   tidygraph::activate(nodes) %>%
 #'   tidygraph::mutate(IVI_bin = cut(
@@ -113,7 +113,7 @@
 #'     include.lowest = TRUE,
 #'     ordered_result = TRUE
 #'   ))
-#' ggNetView(obj_plot, layout = "fr", fill.by = "IVI_bin")
+#' ggNetView(obj_plot, layout = "fr", node_fill = "IVI_bin")
 #'
 #' # Use z-score scaling when comparing across networks or applying a
 #' # threshold (e.g. "significantly influential" = z > 1.645):

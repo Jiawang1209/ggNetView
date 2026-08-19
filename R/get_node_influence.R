@@ -44,7 +44,7 @@
 #' @returns The input `tbl_graph` with one new node column, `Influence`
 #'   (signed when `signed = TRUE`). Larger magnitude = more strongly
 #'   affected. Map it straight onto a figure with
-#'   `ggNetView(..., fill.by = "Influence")`.
+#'   `ggNetView(..., node_fill = "Influence")`.
 #'
 #' @seealso [get_network_perturbation()] for structural attacks;
 #'   [press_perturbation()] for the press-perturbation approximation.

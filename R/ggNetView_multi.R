@@ -42,125 +42,12 @@
 #' Optional node annotation table, containing metadata such as taxonomy or functional categories.
 #' @param top_modules Integer.
 #' Number of top-ranked modules to retain for downstream visualization or analysis.
-#' @param layout Character string.
-#' Custom layouts; one of "gephi", "square", "square2", "petal",
-#' "petal2", "heart_centered","diamond", "star", "star_concentric","rectangle,
-#' "rightiso_layers" etc.
-#' @param node_add Integer (default = 7).
-#' Number of nodes to add in each layer of the layout.
-#' @param ring_n Numeric (default = 7)
-#' Numbers of ring in rings layout.
-#' @param r Numeric (default = 1).
-#' Radius increment for concentric or layered layouts.
-#' @param center Logical (default = TRUE).
-#' Whether to place a node at the center of the layout.
-#' @param idx Optional.
-#' Index of nodes to be emphasized or centered in the layout
-#' @param shrink Numeric (default = 1).
-#' Shrinkage factor applied to the center points.
-#' @param inner_shrink Numeric (default = 1).
-#' Intra-module compactness factor for \code{layout = "WGCNA"} only.
-#' See \code{\link{ggNetView}} for details.  Ignored by other layouts.
-#' @param k_nn Numeric (default = 8).
-#' Number of nearest neighbors used to build the local adjacency graph.
-#' @param push_others_delta Numeric (default = 0).
-#' Radial offset applied to the "Others" module to slightly
-#' @param layout.module Character  (default = "random")
-#' - random : modules are distributed more randomly and independently.
-#' - adjacent : modules are positioned close to each other, minimizing inter-module gaps.
-#' - order : modules are distributed by order, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`
-#' @param shape Integer  (default = 21).
-#' The point shape likely in ggplot2.
-#' @param pointalpha Integer  (default = 1).
-#' The point alpha
-#' @param pointsize Vector (default =  c(1,10))
-#' The point size rang.
-#' @param pointstroke Integer  (default = 0.3).
-#' @param pointlabel Character (default = NULL).
-#' Optional node label mode for top Degree nodes within each module.
-#' Supported values: \code{"topN"} (e.g. \code{"top1"}, \code{"top7"}, \code{"top20"})
-#' and \code{"ALL"}.
-#' @param pointlabelsize Integer (default = 5).
-#' Change point label size.
-#' @param group.by Character (default = "Modularity").
-#' Change group for nodes
-#' @param fill.by Character (default = "Modularity").
-#' Change fill for nodes
-#' @param color.by Character (default = NULL).
-#' Change color for nodes
-#' @param fill Named vector of colors for node fill.
-#' If \code{NULL} (default), uses \code{scale_fill_ggnetview}; if provided, uses \code{scale_fill_manual(values = fill)}.
-#' @param color Named vector of colors for node/edge/label color.
-#' If \code{NULL} (default), uses \code{scale_color_ggnetview}; if provided, uses \code{scale_color_manual(values = color)}.
-#' @param jitter Logical (default = FALSE).
-#' Whether to apply jitter to points.
-#' @param jitter_sd  Integer  (default = 0.1).
-#' The standard deviation of the jitter applied when `jitter = TRUE`.
-#' @param plot_line  Logical (default = TRUE).
-#' Whether to plot line in net plot.
-#' @param mapping_line  Logical (default = FALSE).
-#' Whether to mapping line in ggNetView.
-#' @param curve  Logical (default = FALSE).
-#' Whether to plot curve line in net plot.
-#' @param curvature Integer (default = 0.25)
-#' The curve level of curve line when curve is TRUE
-#' @param linealpha  Integer  (default = 0.25).
-#' Change  line alpha.
-#' @param linecolor Character  (default = "grey70").
-#' Change  line color.
-#' @param label Logical or Character (default = FALSE).
-#' Whether to display module labels. If a character string, used as legend prefix.
-#' @param labelsize Integer  (default = 10).
-#' Change Module label size.
-#' @param labelsegmentsize Integer  (default = 1).
-#' Change  label segment size.
-#' @param labelsegmentalpha Integer  (default = 1).
-#' Change  label segment alpha.
-#' @param add_group_outer Logical (default = FALSE).
-#' Whether to add a circle boundary around the entire network (mimics \code{ggforce::geom_mark_circle}).
-#' @param add_group_outer_expand Numeric (default = 2).
-#' Expansion in mm for the group circle; passed to \code{geom_mark_circle(expand = ...)}.
-#' @param add_group_outer_color Character (default = "grey50").
-#' Color of the group outer circle border.
-#' @param add_group_outer_fill Character or NULL (default = NULL).
-#' Fill color of the group outer circle. \code{NULL} = no fill (transparent).
-#' @param add_group_outer_fill_alpha Numeric (default = 0.2).
-#' Alpha (transparency) of the group outer circle fill.
-#' @param add_group_outer_linetype Integer or character (default = 1).
-#' Linetype of the group outer circle (e.g. 1 = solid, 2 = dashed).
-#' @param add_group_outer_linewidth Numeric (default = 0.5).
-#' Line width of the group outer circle.
-#' @param add_outer Logical (default = FALSE).
-#' Whether to draw a smooth outer boundary around each module (KDE + HDR
-#' contour). See \code{\link{ggNetView}} for full details.
-#' @param q_outer Numeric (default = 0.88).
-#' HDR coverage of the outer boundary (fraction of the module's empirical
-#' probability mass enclosed by the contour).
-#' @param expand_outer Numeric (default = 1.02).
-#' Multiplicative scaling applied to each polygon from its own centroid.
-#' @param bandwidth_scale Numeric (default = 1.0).
-#' Multiplier on the robust normal-reference 2D KDE bandwidth used to build
-#' the outer boundary.
-#' @param outerwidth Integer  (default = 1.25).
-#' Change  outer linewidth.
-#' @param outerlinetype Integer  (default = 2).
-#' Change  outer linetype.
-#' @param outeralpha Integer  (default = 0.5).
-#' Change  outer alpha.
-#' @param nodelabsize Integer  (default = 5).
-#' Change  node label size.
-#' @param remove Logical (default = FALSE).
-#' Remove nodes that are not modules.
-#' @param dropOthers Logical (default = FALSE).
-#' If TRUE, remove nodes in the \code{"Others"} module before layout and visualization.
-#' @param orientation Character string.
-#' Custom orientation; one of "up","down","left","right".
-#' @param angle Integer  (default = 0).
-#' Change  orientation angle.
-#' @param scale Logical  (default = TRUE).
-#' modules applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout` to scale the radius
-#' @param anchor_dist Integer (default = 6)
-#' the distance of each modules, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`
+#' @param layout Character string naming the layout passed to
+#'   \code{ggNetView()} (e.g. "gephi", "fr", "circle", "square").
+#' @param ... Additional arguments passed to \code{\link{ggNetView}()}
+#'   (node_*, edge_*, module_label_*, module_outline_*, network_outline_*,
+#'   layout geometry, ...). Deprecated pre-0.2.0 names (e.g. \code{fill.by},
+#'   \code{pointsize}) are still accepted with a lifecycle warning.
 #' @param layout_nrow Integer (default = NULL).
 #' Number of layout rows passed to \code{ggNetView} when using consensus-module grid layouts.
 #' @param layout_ncol Integer (default = NULL).
@@ -201,60 +88,7 @@ ggNetView_multi <- function(mat,
                             node_annotation = NULL,
                             top_modules = 15,
                             layout = NULL,
-                            node_add = 7,
-                            ring_n = NULL,
-                            r = 1,
-                            center = TRUE,
-                            idx = NULL,
-                            shrink = 1,
-                            inner_shrink = 1,
-                            k_nn = 12,
-                            push_others_delta = 0,
-                            layout.module = c("random", "adjacent", "order"),
-                            shape = 21,
-                            pointalpha = 1,
-                            pointsize = c(1,10),
-                            pointstroke = 0.3,
-                            pointlabel = NULL,
-                            pointlabelsize = 5,
-                            group.by = "Modularity",
-                            fill.by = "Modularity",
-                            color.by = NULL,
-                            fill = NULL,
-                            color = NULL,
-                            jitter = FALSE,
-                            jitter_sd = 0.1,
-                            plot_line = TRUE,
-                            mapping_line = FALSE,
-                            curve = FALSE,
-                            curvature = 0.25,
-                            linealpha = 0.25,
-                            linecolor = "grey70",
-                            label = FALSE,
-                            labelsize = 10,
-                            labelsegmentsize = 1,
-                            labelsegmentalpha = 1,
-                            add_group_outer = FALSE,
-                            add_group_outer_expand = 2,
-                            add_group_outer_color = "grey50",
-                            add_group_outer_fill = NULL,
-                            add_group_outer_fill_alpha = 0.2,
-                            add_group_outer_linetype = 1,
-                            add_group_outer_linewidth = 0.5,
-                            add_outer = FALSE,
-                            q_outer = 0.88,
-                            expand_outer = 1.02,
-                            bandwidth_scale = 1.0,
-                            outerwidth = 1.25,
-                            outerlinetype = 2,
-                            outeralpha = 0.5,
-                            nodelabsize = 5,
-                            remove = FALSE,
-                            dropOthers = FALSE,
-                            orientation = "up",
-                            angle = 0,
-                            scale = TRUE,
-                            anchor_dist = 6,
+                            ...,
                             layout_nrow = NULL,
                             layout_ncol = NULL,
                             seed = 1115,
@@ -296,67 +130,17 @@ ggNetView_multi <- function(mat,
       seed = seed
     )
 
-    p <- ggNetView(
-      graph_obj = graph,
-      layout = layout,
-      node_add = node_add,
-      ring_n = ring_n,
-      r = r,
-      center = center,
-      idx = idx,
-      shrink = shrink,
-      inner_shrink = inner_shrink,
-      k_nn = k_nn,
-      push_others_delta = push_others_delta,
-      layout.module = layout.module,
-      shape = shape,
-      pointalpha = pointalpha,
-      pointsize = pointsize,
-      pointstroke = pointstroke,
-      pointlabel = pointlabel,
-      pointlabelsize = pointlabelsize,
-      group.by = group.by,
-      fill.by = fill.by,
-      color.by = color.by,
-      fill = fill,
-      color = color,
-      jitter = jitter,
-      jitter_sd = jitter_sd,
-      plot_line = plot_line,
-      mapping_line = mapping_line,
-      curve = curve,
-      curvature = curvature,
-      linealpha = linealpha,
-      linecolor = linecolor,
-      label = label,
-      labelsize = labelsize,
-      labelsegmentsize = labelsegmentsize,
-      labelsegmentalpha = labelsegmentalpha,
-      add_group_outer = add_group_outer,
-      add_group_outer_expand = add_group_outer_expand,
-      add_group_outer_color = add_group_outer_color,
-      add_group_outer_fill = add_group_outer_fill,
-      add_group_outer_fill_alpha = add_group_outer_fill_alpha,
-      add_group_outer_linetype = add_group_outer_linetype,
-      add_group_outer_linewidth = add_group_outer_linewidth,
-      add_outer = add_outer,
-      q_outer = q_outer,
-      expand_outer = expand_outer,
-      bandwidth_scale = bandwidth_scale,
-      outerwidth = outerwidth,
-      outerlinetype = outerlinetype,
-      outeralpha = outeralpha,
-      nodelabsize = nodelabsize,
-      remove = remove,
-      dropOthers = dropOthers,
-      orientation = orientation,
-      angle = angle,
-      scale = scale,
-      anchor_dist = anchor_dist,
-      nrow = layout_nrow,
-      ncol = layout_ncol,
-      seed = seed
+    gv_args <- .ggnv_rename_args(list(...), fn = "ggNetView_multi",
+                                 env = environment(), user_env = parent.frame())
+    gv_args <- utils::modifyList(
+      list(graph_obj = graph,
+           layout = layout,
+           nrow = layout_nrow,
+           ncol = layout_ncol,
+           seed = seed),
+      gv_args
     )
+    p <- do.call(ggNetView, gv_args)
 
     p_list[[g]] <- p
 

@@ -43,7 +43,7 @@ already exists on the input graph, controls whether to overwrite it
 The input `tbl_graph` with one new node column, `Influence`
   (signed when `signed = TRUE`). Larger magnitude = more strongly
   affected. Map it straight onto a figure with
-  `ggNetView(..., fill.by = "Influence")`.
+  `ggNetView(..., node_fill = "Influence")`.
 }
 \description{
 Injects a virtual perturbation at one or more `source` nodes and lets
