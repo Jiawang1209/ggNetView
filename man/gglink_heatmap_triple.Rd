@@ -23,10 +23,17 @@ File path or data frame of environment data.}
 File path or data frame of experiment data.}
 
 \item{edge}{character or data.frame
-File path or data frame of edge data.}
+File path or data frame of edge data. Must contain columns \code{from} and
+\code{to}; an optional numeric \code{weight} column is mapped to edge
+colour/width (defaults to \code{1} when absent).}
 
 \item{node}{character or data.frame
-File path or data frame of node data.}
+File path or data frame of node data. Must contain a \code{node} column
+listing every node referenced by \code{edge}; node names matching columns
+of \code{Experiment} become the hub nodes anchored on the central heatmap.
+An optional \code{annotation} column drives node fill/shape (when absent
+it is derived automatically: \code{"Experiment"} for hub nodes,
+\code{"Environment"} otherwise).}
 
 \item{sample_col}{Character (default = "Sample")
 Column name used as sample ID when input is a data frame or file.}
@@ -35,9 +42,14 @@ Column name used as sample ID when input is a data frame or file.}
 Delimiter for reading input files.}
 
 \item{hub_n}{Integer (default = NULL)
-Number of hub nodes used in layout; if NULL, uses all nodes.}
+If \code{NULL} (recommended), hubs are the \code{Experiment} variables
+present in \code{node}. If an integer, the \code{hub_n} highest
+out-degree nodes are used instead (they must then correspond one-to-one
+to the Experiment variables, and \code{node} rows must list circle nodes
+first).}
 
-\item{r}{numeric (default = 6)}
+\item{r}{numeric (default = 6)
+Radius of the outer node circle.}
 }
 \value{
 a ggplot2 object
@@ -47,11 +59,16 @@ Visualize multi-orientation environmental-species correlation heatmaps2
 }
 \examples{
 \dontrun{
+# Environment / Experiment: samples in rows (with a Sample column),
+# variables in columns. Edges connect Experiment variables (hubs) to
+# any other nodes.
 p <- gglink_heatmap_triple(
-  Environment = env_df,
-  Experiment  = exp_df,
-  edge        = edge_df,
-  node        = node_df
+  Environment = env_df,   # Sample + environmental variables
+  Experiment  = exp_df,   # Sample + experiment variables (become hubs)
+  edge        = data.frame(from = c("ExpA", "ExpB"),
+                           to   = c("pH", "TN"),
+                           weight = c(0.8, 0.5)),
+  node        = data.frame(node = c("pH", "TN", "ExpA", "ExpB"))
 )
 }
 }

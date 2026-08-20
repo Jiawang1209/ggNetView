@@ -112,11 +112,16 @@ get_sample_subgraph_topology_parallel <- function(graph_obj,
     }, add = TRUE)
     options(future.globals.maxSize = 6 * 1024^3)
     future::plan(future::multisession, workers = n_workers)
-    progressr::handlers("txtprogressbar")
-    progressr::handlers(global = TRUE)
-  } else {
-    future::plan(future::sequential)
+    # NOTE: progress display is provided by progressr::with_progress() around
+    # the future_lapply() call below.  Do NOT call
+    # `progressr::handlers(global = TRUE)` here: global handler registration
+    # errors when the function is invoked inside tryCatch()/withCallingHandlers()
+    # ("should not be called with handlers on the stack") and permanently
+    # mutates the user's global progressr state.
   }
+  # The sequential branch uses a plain lapply(), so no future::plan() setup is
+  # needed there (and setting plan(sequential) would clobber the caller's plan
+  # without restoring it).
 
   .compute_one_sample <- function(sid) {
     present_otu <- rownames(mat)[mat[, sid] != 0]

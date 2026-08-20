@@ -5,27 +5,44 @@
 #' @param Experiment character or data.frame
 #' File path or data frame of experiment data.
 #' @param edge character or data.frame
-#' File path or data frame of edge data.
+#' File path or data frame of edge data. Must contain columns \code{from} and
+#' \code{to}; an optional numeric \code{weight} column is mapped to edge
+#' colour/width (defaults to \code{1} when absent).
 #' @param node character or data.frame
-#' File path or data frame of node data.
+#' File path or data frame of node data. Must contain a \code{node} column
+#' listing every node referenced by \code{edge}; node names matching columns
+#' of \code{Experiment} become the hub nodes anchored on the central heatmap.
+#' An optional \code{annotation} column drives node fill/shape (when absent
+#' it is derived automatically: \code{"Experiment"} for hub nodes,
+#' \code{"Environment"} otherwise).
 #' @param sample_col Character (default = "Sample")
 #' Column name used as sample ID when input is a data frame or file.
 #' @param delim Character (default = ",")
 #' Delimiter for reading input files.
 #' @param hub_n Integer (default = NULL)
-#' Number of hub nodes used in layout; if NULL, uses all nodes.
+#' If \code{NULL} (recommended), hubs are the \code{Experiment} variables
+#' present in \code{node}. If an integer, the \code{hub_n} highest
+#' out-degree nodes are used instead (they must then correspond one-to-one
+#' to the Experiment variables, and \code{node} rows must list circle nodes
+#' first).
 #' @param r numeric (default = 6)
+#' Radius of the outer node circle.
 #'
 #' @returns a ggplot2 object
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' # Environment / Experiment: samples in rows (with a Sample column),
+#' # variables in columns. Edges connect Experiment variables (hubs) to
+#' # any other nodes.
 #' p <- gglink_heatmap_triple(
-#'   Environment = env_df,
-#'   Experiment  = exp_df,
-#'   edge        = edge_df,
-#'   node        = node_df
+#'   Environment = env_df,   # Sample + environmental variables
+#'   Experiment  = exp_df,   # Sample + experiment variables (become hubs)
+#'   edge        = data.frame(from = c("ExpA", "ExpB"),
+#'                            to   = c("pH", "TN"),
+#'                            weight = c(0.8, 0.5)),
+#'   node        = data.frame(node = c("pH", "TN", "ExpA", "ExpB"))
 #' )
 #' }
 gglink_heatmap_triple <- function(
@@ -81,16 +98,68 @@ gglink_heatmap_triple <- function(
     stop("`node` must contain column: node.")
   }
 
+  # ---- input hardening (0.2.0) --------------------------------------------
+  # The plot maps edge weight and node annotation; provide sensible defaults
+  # instead of failing at render time with obscure ggplot2 errors.
+  if (!"weight" %in% colnames(edge)) {
+    edge$weight <- 1
+  }
+  exp_vars <- colnames(Experiment)
+  if (!"annotation" %in% colnames(node)) {
+    node$annotation <- ifelse(node$node %in% exp_vars, "Experiment", "Environment")
+  }
+
+  # Hub nodes are anchored onto the Experiment rows of the central heatmap,
+  # so there must be exactly one hub per Experiment variable appearing in the
+  # node table.  Default (`hub_n = NULL`): hubs are the Experiment variables
+  # themselves.  The historical `hub_n = NULL -> every node is a hub` default
+  # made the outer circle empty and crashed in create_layout2().
+  hub_names <- NULL
+  if (is.null(hub_n)) {
+    hub_names <- intersect(node$node, exp_vars)
+    if (length(hub_names) == 0L) {
+      stop("None of `node$node` matches a column of `Experiment`. ",
+           "Hub nodes must be Experiment variables; add them to `node`, ",
+           "or select hubs by degree via `hub_n`.", call. = FALSE)
+    }
+    if (length(hub_names) == nrow(node)) {
+      stop("All nodes are Experiment variables, so no node is left for the ",
+           "outer circle. Add non-Experiment nodes to `node`.", call. = FALSE)
+    }
+    # create_layout2() assigns circle coordinates to the first rows and hub
+    # coordinates to the remaining rows; hub anchor coordinates follow the
+    # Experiment column order.  Reorder accordingly so users don't have to.
+    node <- dplyr::bind_rows(
+      node[!node$node %in% hub_names, , drop = FALSE],
+      node[match(intersect(exp_vars, node$node), node$node), , drop = FALSE]
+    )
+    hub_names <- intersect(exp_vars, node$node)
+  }
 
   # Correlation
   stat_out <- cor_test2(Environment, Experiment)
+
+  n_hub_slots <- stat_out[[3]] %>% dplyr::distinct(Experiment) %>% nrow()
+  n_hubs <- if (!is.null(hub_names)) length(hub_names) else min(hub_n, nrow(node))
+  if (n_hubs != n_hub_slots) {
+    stop(sprintf(paste0(
+      "Number of hub nodes (%d) must equal the number of Experiment ",
+      "variables in the correlation table (%d): each hub is anchored onto ",
+      "one Experiment row of the central heatmap. Include all Experiment ",
+      "variables in `node` (recommended, with `hub_n = NULL`), or pass a ",
+      "matching `hub_n`."), n_hubs, n_hub_slots), call. = FALSE)
+  }
+  if (nrow(node) - n_hubs < 1L) {
+    stop("At least one non-hub node is required for the outer circle.",
+         call. = FALSE)
+  }
 
   graph_obj <- tidygraph::tbl_graph(nodes = node, edges = edge)
 
   # layout
   layout_manual <- create_layout2(graph_obj,
                                  stat_out = stat_out,
-                                 hub_names = NULL,
+                                 hub_names = hub_names,
                                  hub_n = hub_n,
                                  r = r)
 

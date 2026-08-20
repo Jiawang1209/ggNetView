@@ -58,6 +58,24 @@ The same renaming applies to arguments forwarded through `...` / `full_args` /
 * `ggNetView()` no longer emits "Coordinate system already present" when
   module labels / outlines are drawn.
 
+## Bug fixes
+
+* `get_sample_subgraph_topology_parallel()` no longer registers a global
+  `progressr` handler (which errored with "should not be called with handlers
+  on the stack" whenever the function was invoked inside `tryCatch()` /
+  `withCallingHandlers()`, e.g. from testthat or user pipelines) and no longer
+  permanently overwrites the caller's `future::plan()` in the
+  `parallel = FALSE` branch. Progress display is unchanged
+  (`progressr::with_progress()`).
+* `gglink_heatmap_triple()`: hub anchor coordinates became `NA` whenever
+  `ncol(Experiment) > ceiling(ncol(Environment)/2)`, silently dropping every
+  hub node and hub link segment from the figure. Anchors are now generated
+  for any number of Experiment variables (values in the previously working
+  range are unchanged). The function also gained input hardening: `edge$weight`
+  defaults to 1, `node$annotation` is derived automatically
+  (Experiment/Environment), hub nodes default to the Experiment variables with
+  automatic ordering, and mismatched hub counts give an informative error.
+
 ## Dependencies
 
 * New import: `lifecycle`.

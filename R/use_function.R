@@ -43,8 +43,13 @@ cor_test2 <- function(Environment, Experiment){
     dplyr::mutate(
       p_start1 = rep(1:Sample_n, each = Sample_n_2),
       p_end1 = rep(rev(0:(Sample_n-1)), each = Sample_n_2),
-      start2 = rep(seq(1,Sample_n, 2)[1:Sample_n_2], times = Sample_n) - 4,
-      end2 = rev(rep(seq(1,Sample_n, 2)[1:Sample_n_2], times = Sample_n))
+      # One anchor position per Experiment variable (odd positions 1,3,5,...).
+      # The historical `seq(1, Sample_n, 2)[1:Sample_n_2]` ran out of values
+      # (-> NA coordinates -> hubs and their link segments silently dropped)
+      # whenever ncol(Experiment) > ceiling(ncol(Environment)/2); using
+      # length.out keeps the same values in the old range and extends beyond.
+      start2 = rep(seq(1, by = 2, length.out = Sample_n_2), times = Sample_n) - 4,
+      end2 = rev(rep(seq(1, by = 2, length.out = Sample_n_2), times = Sample_n))
     )
 
   ####----Plot----####
