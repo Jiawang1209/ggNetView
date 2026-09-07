@@ -139,7 +139,7 @@ get_network_topology <- function(graph_obj = NULL,
   if (length(seed) != 1L || !is.numeric(seed) || !is.finite(seed)) {
     stop("`seed` must be a single finite numeric.", call. = FALSE)
   }
-  set.seed(as.integer(seed))
+  .ggnv_local_seed(seed)
 
   # create igraph object
   ig <- tidygraph::as.igraph(graph_obj)
@@ -155,13 +155,11 @@ get_network_topology <- function(graph_obj = NULL,
     stop("`sparcc_R` must be a positive integer.", call. = FALSE)
   }
 
+  # Correct over the n(n-1)/2 unique off-diagonal tests, not all n^2 cells:
+  # the duplicated triangle and the uninformative diagonal otherwise distort
+  # the ranks that Benjamini-Hochberg depends on. See .ggnv_adjust_p_matrix().
   adjust_p_matrix <- function(p_mat, proc_method) {
-    matrix(
-      stats::p.adjust(unlist(p_mat), method = proc_method),
-      nrow = nrow(p_mat),
-      ncol = ncol(p_mat),
-      dimnames = dimnames(p_mat)
-    )
+    .ggnv_adjust_p_matrix(p_mat, proc_method)
   }
 
   if (is.null(mat)) {
@@ -252,7 +250,7 @@ get_network_topology <- function(graph_obj = NULL,
     if (method == "cor") {
       sp.ra <- colMeans(t(mat))
       # Cor for correlation
-      occor <- psych::corr.test(t(mat), method = cor.method)
+      occor <- psych::corr.test(t(mat), method = cor.method, adjust = "none")
       occor.p <- adjust_p_matrix(occor$p, proc)
 
       # R and pvalue
@@ -512,16 +510,24 @@ get_network_topology <- function(graph_obj = NULL,
   network_topology
 
   # random topology
-  random_topology <- list()
-  # random network and topology
-  for (i in seq_len(bootstrap)) {
+  #
+  # The null ensemble is drawn through future.apply with `future.seed = TRUE`
+  # so that the L'Ecuyer-CMRG streams -- and hence the numbers reported -- are
+  # identical to get_network_topology_parallel(), whether that function runs
+  # sequentially or on any number of workers. A plain loop here would consume
+  # the global Mersenne-Twister stream instead and silently produce a different
+  # ensemble from the same `seed`.
+  old_plan <- future::plan(future::sequential)
+  on.exit(future::plan(old_plan), add = TRUE)
+
+  random_topology <- future.apply::future_lapply(seq_len(bootstrap), function(i) {
 
     random_graph <- igraph::sample_gnm(n = igraph::vcount(ig),
                                        m = igraph::ecount(ig),
                                        directed = FALSE,
                                        loops = FALSE)
 
-    random_topology[[i]] <- .get_topology(ig = random_graph) %>%
+    .get_topology(ig = random_graph) %>%
       dplyr::mutate(Robustness_weight = NA,
                     Robustness_unweight = NA,
                     Cohension_Positive = NA,
@@ -529,7 +535,7 @@ get_network_topology <- function(graph_obj = NULL,
                     Stability = NA
                     )
 
-  }
+  }, future.seed = TRUE)
 
   random_topology_df <- do.call(rbind, random_topology)
 

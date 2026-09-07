@@ -54,16 +54,14 @@
 #' Random seed for reproducibility.
 #'
 #' @section Reproducibility note:
-#' The observed-network metrics are identical to the serial
-#' \code{\link{get_network_topology}}. The \emph{random-network baseline}
-#' (the \code{Random_nerwork} column), however, is generated with
-#' \code{future.apply::future_lapply(..., future.seed = TRUE)} when
-#' \code{parallel = TRUE}. This uses independent L'Ecuyer-CMRG streams, so for a
-#' given \code{seed} the random-baseline values are reproducible \emph{within}
-#' the parallel path but are \strong{not} bit-for-bit identical to the serial
-#' path's Mersenne-Twister draws. With a sufficient bootstrap count the baseline
-#' means converge; set \code{parallel = FALSE} if you need results that match
-#' \code{get_network_topology} exactly.
+#' For a given \code{seed}, this function returns bit-for-bit identical results
+#' to the serial \code{\link{get_network_topology}}, to itself with
+#' \code{parallel = FALSE}, and to itself for any number of \code{n_workers}.
+#' Both functions draw the random-network baseline (the \code{Random_nerwork}
+#' column) through \code{future.apply::future_lapply(..., future.seed = TRUE)},
+#' which assigns each iteration its own L'Ecuyer-CMRG stream independently of
+#' the backend, so \code{parallel} and \code{n_workers} are purely performance
+#' switches and never change the numbers reported.
 #'
 #' @returns A list containing topology output and robustness output for a single
 #'   network. When \code{graph_obj_list} is provided, returns a named list of
@@ -159,7 +157,7 @@ get_network_topology_parallel <- function(graph_obj = NULL,
     stop("`graph_obj` must be provided unless `graph_obj_list` is used.", call. = FALSE)
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # self network topology attributes
   # create igraph object
@@ -176,13 +174,11 @@ get_network_topology_parallel <- function(graph_obj = NULL,
     stop("`sparcc_R` must be a positive integer.", call. = FALSE)
   }
 
+  # Correct over the n(n-1)/2 unique off-diagonal tests, not all n^2 cells:
+  # the duplicated triangle and the uninformative diagonal otherwise distort
+  # the ranks that Benjamini-Hochberg depends on. See .ggnv_adjust_p_matrix().
   adjust_p_matrix <- function(p_mat, proc_method) {
-    matrix(
-      stats::p.adjust(unlist(p_mat), method = proc_method),
-      nrow = nrow(p_mat),
-      ncol = ncol(p_mat),
-      dimnames = dimnames(p_mat)
-    )
+    .ggnv_adjust_p_matrix(p_mat, proc_method)
   }
 
   if (is.null(mat)) {
@@ -274,7 +270,7 @@ get_network_topology_parallel <- function(graph_obj = NULL,
     if (method == "cor") {
       sp.ra <- colMeans(t(mat))
       # Cor for correlation
-      occor <- psych::corr.test(t(mat), method = cor.method)
+      occor <- psych::corr.test(t(mat), method = cor.method, adjust = "none")
       occor.p <- adjust_p_matrix(occor$p, proc)
 
       # R and pvalue
@@ -537,21 +533,25 @@ get_network_topology_parallel <- function(graph_obj = NULL,
   # single thread
   if (isFALSE(parallel)) {
 
-    # random topology
-    random_topology <- list()
+    # Draw the null ensemble through the same future.apply / L'Ecuyer-CMRG path
+    # as the parallel branch below, under an explicitly sequential plan. This is
+    # what makes `parallel` a pure performance switch: the same `seed` yields
+    # the same ensemble sequentially, on 2 workers, or on 8.
+    old_plan_seq <- future::plan(future::sequential)
+    on.exit(future::plan(old_plan_seq), add = TRUE)
 
     progressr::with_progress({
       p <- progressr::progressor(steps = bootstrap)
 
       # random network and topology
-      for (i in seq_len(bootstrap)) {
+      random_topology <- future.apply::future_lapply(seq_len(bootstrap), function(i) {
 
         random_graph <- igraph::sample_gnm(n = igraph::vcount(ig),
                                            m = igraph::ecount(ig),
                                            directed = FALSE,
                                            loops = FALSE)
 
-        random_topology[[i]] <- .get_topology(ig = random_graph) %>%
+        r_topology <- .get_topology(ig = random_graph) %>%
           dplyr::mutate(Robustness_weight = NA,
                         Robustness_unweight = NA,
                         Cohension_Positive = NA,
@@ -560,8 +560,9 @@ get_network_topology_parallel <- function(graph_obj = NULL,
           )
 
         p()
+        r_topology
 
-      }
+      }, future.seed = TRUE)
     })
 
 
