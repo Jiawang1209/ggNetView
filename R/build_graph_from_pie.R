@@ -25,7 +25,7 @@ build_graph_from_pie <- function(df,
                                  node_annotation = NULL,
                                  directed = FALSE,
                                  seed = 1115){
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
 
   g <- igraph::graph_from_data_frame(

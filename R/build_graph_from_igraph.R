@@ -106,7 +106,7 @@ build_graph_from_igraph <- function(igraph,
     # membership
     # honour the documented `seed`: community detection (e.g. Spinglass) is
     # stochastic, so seed before it to keep module assignment reproducible.
-    set.seed(seed)
+    .ggnv_local_seed(seed)
     membership_vec <- switch(
       module.method,
       Fast_greedy = igraph::membership(igraph::cluster_fast_greedy(g)),

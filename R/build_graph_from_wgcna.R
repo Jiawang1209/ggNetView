@@ -31,7 +31,7 @@ build_graph_from_wgcna <- function(wgcna_tom,
                                    directed = FALSE,
                                    seed = 1115){
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # Build the igraph with `module` as the authoritative vertex list.
   #

@@ -238,7 +238,7 @@ get_network_perturbation <- function(
     curve <- do.call(rbind, rows)
 
   } else {  # random
-    set.seed(seed)
+    .ggnv_local_seed(seed)
     rows <- lapply(c(0, fractions), function(fr) {
       k <- round(n0 * fr)
       if (k == 0L) {

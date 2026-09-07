@@ -199,7 +199,7 @@ build_graph_from_stringdb <- function(stringdb,
     ), call. = FALSE)
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # ---- Build the igraph object ---------------------------------------------
   # We deliberately do NOT call build_graph_from_df() here. That function

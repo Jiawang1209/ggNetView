@@ -63,7 +63,7 @@ get_sample_subgraph_topology_parallel <- function(graph_obj,
                                                   parallel = FALSE,
                                                   n_workers = NULL,
                                                   seed = 1115) {
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   transfrom.method <- match.arg(transfrom.method)
   method <- match.arg(method)

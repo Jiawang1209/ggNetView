@@ -55,7 +55,7 @@ get_sample_subgraph_topology <- function(graph_obj,
                                          sparcc_R = 20,
                                          bootstrap = 100,
                                          seed = 1115) {
-  set.seed(seed)
+  .ggnv_local_seed(seed)
   transfrom.method <- match.arg(transfrom.method)
   method <- match.arg(method)
   cor.method <- match.arg(cor.method)

@@ -210,7 +210,7 @@ build_graph_from_consensus <- function(
     adj_list[[i]] <- m
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # ---- Step 1: align matrices to a common node set -------------------------
   mats <- .consensus_align(adj_list, node_handling)

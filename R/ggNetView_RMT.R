@@ -69,7 +69,7 @@ ggNetView_RMT <- function(
     seed = 1115
 ) {
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   ## ---------- validation ----------
   # argument check

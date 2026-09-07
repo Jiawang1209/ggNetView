@@ -47,7 +47,7 @@ build_graph_from_df <- function(df,
     ))
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # ---- Normalize edge data frame column names ------------------------------
   # igraph::graph_from_data_frame() takes the 1st/2nd columns as from/to by

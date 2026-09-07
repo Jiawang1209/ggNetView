@@ -31,7 +31,7 @@ build_graph_from_module <- function(df,
                                     top_modules = 15,
                                     seed = 1115){
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # df = ppi_module$ppi
   # node_annotation = ppi_module$annotation

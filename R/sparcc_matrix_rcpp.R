@@ -113,10 +113,15 @@ sparcc_pvalue_rcpp <- function(data, iter = 20, inner_iter = 10, th = 0.1, R = 2
   # Reproducible parallel resampling: L'Ecuyer-CMRG gives each worker an
   # independent, deterministic stream. Restore the caller's RNG kind on exit.
   if (!is.null(seed)) {
+    # Capture the caller's RNG kind *and* state up front; the handler restores
+    # both when this function returns, so neither the L'Ecuyer switch below nor
+    # the seed leaks into the user's session.
+    .ggnv_local_seed(seed)
     if (ncpus > 1L) {
-      old_kind <- RNGkind("L'Ecuyer-CMRG")[1L]
-      on.exit(RNGkind(old_kind), add = TRUE)
+      RNGkind("L'Ecuyer-CMRG")
     }
+    # Reseed under the (possibly switched) kind so the stream is the documented,
+    # deterministic one -- identical to the previous behaviour.
     set.seed(as.integer(seed)[1L])
   }
 

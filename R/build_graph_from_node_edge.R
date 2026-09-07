@@ -73,7 +73,7 @@ build_graph_from_node_edge <- function(node,
     ), call. = FALSE)
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # ---- Argument validation -------------------------------------------------
   if (missing(node) || is.null(node)) {

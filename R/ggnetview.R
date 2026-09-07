@@ -458,7 +458,7 @@ ggNetView <- function(graph_obj,
     stop("`edge_width_range` must be a numeric vector of length 2.")
   }
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # drop_others acts on the source graph_obj BEFORE layout:
   # it removes "Others" nodes first, then downstream layout/plot are rebuilt.

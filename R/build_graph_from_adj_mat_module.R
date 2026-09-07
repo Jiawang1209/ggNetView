@@ -28,7 +28,7 @@ build_graph_from_adj_mat_module <- function(adjacency_matrix,
                                             directed = FALSE,
                                             top_modules = 15,
                                             seed = 1115){
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # argument check
   if (is.data.frame(adjacency_matrix)){

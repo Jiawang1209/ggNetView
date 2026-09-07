@@ -35,7 +35,7 @@ build_graph_from_double_mat_with_module <- function(mat1,
 
   # honour the documented `seed` argument so downstream stochastic operations
   # (e.g. community detection on tied modularity scores) are reproducible.
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   df1 = mat1 %>% t() %>% as.data.frame()
   df2 = mat2 %>% t() %>% as.data.frame()
