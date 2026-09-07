@@ -253,9 +253,28 @@ module_layout2 <- function(graph_obj,
   # set.seed(seed)
 
 
+  # A graph left with no nodes (e.g. every edge dropped by the correlation /
+  # p-value thresholds) cannot be laid out. Say so, instead of failing later
+  # with an opaque "Columns `x` and `y` don't exist" from the empty result.
+  if (igraph::vcount(tidygraph::as.igraph(graph_obj)) == 0L) {
+    stop("`graph_obj` has no nodes left to lay out: every edge was removed by the ",
+         "current thresholds. Relax `r.threshold` / `p.threshold`, or drop this ",
+         "sub-network from the comparison.", call. = FALSE)
+  }
+
   xy <- as.matrix(layout[, c("x","y")])
-  nn  <- FNN::get.knn(xy, k = k_nn)$nn.index
-  adj <- lapply(seq_len(nrow(layout)), function(i) unique(stats::na.omit(nn[i,])))
+  # FNN::get.knn() does NOT error when k >= nrow(xy): it warns and returns
+  # out-of-range indices, which downstream turns into an empty region-growing
+  # result and the opaque "Columns `x` and `y` don't exist" failure. Clamp k to
+  # the number of available neighbours, and handle the degenerate 0/1-slot case.
+  n_slot <- nrow(xy)
+  if (n_slot < 2L) {
+    adj <- rep(list(integer(0)), n_slot)
+  } else {
+    k_eff <- max(1L, min(as.integer(k_nn), n_slot - 1L))
+    nn    <- FNN::get.knn(xy, k = k_eff)$nn.index
+    adj   <- lapply(seq_len(n_slot), function(i) unique(stats::na.omit(nn[i, ])))
+  }
 
 
   nodes_tb <- graph_obj %>%
@@ -501,9 +520,28 @@ module_layout3 <- function(graph_obj,
   # }
 
 
+  # A graph left with no nodes (e.g. every edge dropped by the correlation /
+  # p-value thresholds) cannot be laid out. Say so, instead of failing later
+  # with an opaque "Columns `x` and `y` don't exist" from the empty result.
+  if (igraph::vcount(tidygraph::as.igraph(graph_obj)) == 0L) {
+    stop("`graph_obj` has no nodes left to lay out: every edge was removed by the ",
+         "current thresholds. Relax `r.threshold` / `p.threshold`, or drop this ",
+         "sub-network from the comparison.", call. = FALSE)
+  }
+
   xy <- as.matrix(layout[, c("x","y")])
-  nn  <- FNN::get.knn(xy, k = k_nn)$nn.index
-  adj <- lapply(seq_len(nrow(layout)), function(i) unique(stats::na.omit(nn[i,])))
+  # FNN::get.knn() does NOT error when k >= nrow(xy): it warns and returns
+  # out-of-range indices, which downstream turns into an empty region-growing
+  # result and the opaque "Columns `x` and `y` don't exist" failure. Clamp k to
+  # the number of available neighbours, and handle the degenerate 0/1-slot case.
+  n_slot <- nrow(xy)
+  if (n_slot < 2L) {
+    adj <- rep(list(integer(0)), n_slot)
+  } else {
+    k_eff <- max(1L, min(as.integer(k_nn), n_slot - 1L))
+    nn    <- FNN::get.knn(xy, k = k_eff)$nn.index
+    adj   <- lapply(seq_len(n_slot), function(i) unique(stats::na.omit(nn[i, ])))
+  }
 
 
   nodes_tb <- graph_obj %>%
