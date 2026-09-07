@@ -183,29 +183,41 @@ test_that("ggNetView_multi_link accepts new names and translates old ones", {
   data(otu_rare_relative, package = "ggNetView")
   data(otu_sample, package = "ggNetView")
   rlang::local_options(lifecycle_verbosity = "warning")
+  # This test is about argument-name translation, not about statistics, so it
+  # uses `proc = "none"` with a high |r| cutoff: that keeps every per-group
+  # sub-network non-empty and the call fast. `otu_sample` splits the 18 samples
+  # into three groups of six, and six samples cannot support a corrected
+  # correlation network over ~20,000 pairwise tests -- with `proc = "BH"` the
+  # sub-networks are legitimately empty and there is nothing to lay out.
   mat <- otu_rare_relative[seq_len(200), ]
   base <- list(mat = mat, group_info = otu_sample, transfrom.method = "none",
-               r.threshold = 0.7, p.threshold = 0.05, method = "WGCNA",
-               proc = "BH", layout = "gephi", layout_module = "adjacent",
+               r.threshold = 0.95, p.threshold = 0.05, method = "WGCNA",
+               proc = "none", layout = "gephi", layout_module = "adjacent",
                top_modules = 5, seed = 1115)
 
-  p_new <- suppressWarnings(do.call(ggNetView_multi_link, c(base, list(
+  p_new <- suppressMessages(suppressWarnings(do.call(ggNetView_multi_link, c(base, list(
     node_size_range = c(1, 4), edge_color = "corr_direction",
-    module_outline = "circle", link_alpha_node = 0.2, group_label_size = 3))))
+    module_outline = "circle", link_alpha_node = 0.2, group_label_size = 3)))))
   expect_s3_class(p_new$p, "ggplot")
 
   base_old <- base; base_old$layout_module <- NULL
   warns <- character()
-  p_old <- withCallingHandlers(
-    suppressWarnings(do.call(ggNetView_multi_link, c(base_old, list(
+  # NB: do NOT wrap the call in suppressWarnings() here. A calling handler
+  # established inside the expression runs before the ones registered outside
+  # it, so an inner suppressWarnings() muffles every warning before the
+  # collector below can ever see it -- `warns` would silently stay empty and
+  # the assertions would be testing nothing. Swallow the unrelated ggplot2
+  # warnings with a second handler instead.
+  p_old <- suppressMessages(withCallingHandlers(
+    do.call(ggNetView_multi_link, c(base_old, list(
       layout.module = "adjacent", pointsize = c(1, 4), mapping_line = TRUE,
       add_outer = "circle", link_linealpha_node = 0.2, label_size = 3))),
-      classes = "warning"),
     lifecycle_warning_deprecated = function(w) {
       warns <<- c(warns, conditionMessage(w))
       invokeRestart("muffleWarning")
-    }
-  )
+    },
+    warning = function(w) invokeRestart("muffleWarning")
+  ))
   expect_length(warns, 6L)
   expect_true(any(grepl("link_alpha_node", warns, fixed = TRUE)))
   expect_equal(length(p_old$p$layers), length(p_new$p$layers))
