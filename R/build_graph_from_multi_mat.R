@@ -69,7 +69,7 @@ build_graph_from_multi_mat <- function(mat1,
 
   df_all <- do.call(cbind, dfs)
 
-  cor_out_odata <- psych::corr.test(df_all)
+  cor_out_odata <- psych::corr.test(df_all, adjust = "none")
 
   cor_out_odata_r <- cor_out_odata$r %>%
     as.data.frame() %>%
@@ -139,7 +139,7 @@ build_graph_from_multi_mat <- function(mat1,
   module.method <- match.arg(module.method)
   # honour the documented `seed`: community detection (e.g. Spinglass) is
   # stochastic, so seed before it to keep module assignment reproducible.
-  set.seed(seed)
+  .ggnv_local_seed(seed)
   membership_vec <- switch(
     module.method,
     Fast_greedy = igraph::membership(igraph::cluster_fast_greedy(g)),

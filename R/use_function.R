@@ -1,7 +1,7 @@
 #' @noRd
 cor_test2 <- function(Environment, Experiment){
   # Environment self
-  cor_out_self <- psych::corr.test(Environment)
+  cor_out_self <- psych::corr.test(Environment, adjust = "none")
 
   cor_out_self_r <- cor_out_self$r %>%
     as.data.frame() %>%

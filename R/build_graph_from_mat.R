@@ -80,7 +80,7 @@ build_graph_from_mat <- function(mat,
                                  top_modules = 15,
                                  seed = 1115){
 
-  set.seed(seed)
+  .ggnv_local_seed(seed)
 
   # argument check
   if (is.data.frame(mat)){
@@ -149,13 +149,11 @@ build_graph_from_mat <- function(mat,
   mat <- apply_transform_method(mat, transfrom.method)
 
   # calculate correlation
+  # Correct over the n(n-1)/2 unique off-diagonal tests, not all n^2 cells:
+  # the duplicated triangle and the uninformative diagonal otherwise distort
+  # the ranks that Benjamini-Hochberg depends on. See .ggnv_adjust_p_matrix().
   adjust_p_matrix <- function(p_mat, proc_method) {
-    matrix(
-      stats::p.adjust(unlist(p_mat), method = proc_method),
-      nrow = nrow(p_mat),
-      ncol = ncol(p_mat),
-      dimnames = dimnames(p_mat)
-    )
+    .ggnv_adjust_p_matrix(p_mat, proc_method)
   }
 
   # WGCNA
@@ -209,7 +207,7 @@ build_graph_from_mat <- function(mat,
   # cor
   if (method == "cor") {
     # WGCNA for correlation
-    occor <- psych::corr.test(t(mat), method = cor.method)
+    occor <- psych::corr.test(t(mat), method = cor.method, adjust = "none")
     occor.p <- adjust_p_matrix(occor$p, proc)
 
     # R and pvalue
