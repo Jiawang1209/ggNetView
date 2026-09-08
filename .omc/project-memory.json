@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1784159948723,
+  "lastScanned": 1788832223532,
   "projectRoot": "/Users/liuyue/Desktop/R/R_Package_development/ggNetView",
   "techStack": {
     "languages": [],
@@ -29,15 +29,18 @@
       "src",
       "tests"
     ],
-    "gitBranches": null
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
   },
   "customNotes": [],
   "directoryMap": {
     "R": {
       "path": "R",
       "purpose": null,
-      "fileCount": 127,
-      "lastAccessed": 1784159948689,
+      "fileCount": 132,
+      "lastAccessed": 1788832223513,
       "keyFiles": [
         "RcppExports.R",
         "angle_utils.R",
@@ -50,7 +53,7 @@
       "path": "data",
       "purpose": "Data files",
       "fileCount": 18,
-      "lastAccessed": 1784159948696,
+      "lastAccessed": 1788832223513,
       "keyFiles": [
         "BASV_tab.rda",
         "Envdf.rda",
@@ -63,7 +66,7 @@
       "path": "dev",
       "purpose": null,
       "fileCount": 3,
-      "lastAccessed": 1784159948698,
+      "lastAccessed": 1788832223513,
       "keyFiles": [
         "perturbation_design.md",
         "zipi-usage-en.md",
@@ -74,7 +77,7 @@
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 20,
-      "lastAccessed": 1784159948699,
+      "lastAccessed": 1788832223514,
       "keyFiles": [
         "404.html",
         "LICENSE-text.html",
@@ -87,7 +90,7 @@
       "path": "figure",
       "purpose": null,
       "fileCount": 5,
-      "lastAccessed": 1784159948700,
+      "lastAccessed": 1788832223514,
       "keyFiles": [
         "full-power-1.png",
         "lm-adjacent-1.png",
@@ -100,7 +103,7 @@
       "path": "inst",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1784159948700,
+      "lastAccessed": 1788832223514,
       "keyFiles": [
         "CITATION"
       ]
@@ -109,7 +112,7 @@
       "path": "man",
       "purpose": null,
       "fileCount": 81,
-      "lastAccessed": 1784159948701,
+      "lastAccessed": 1788832223514,
       "keyFiles": [
         "BASV_tab.Rd",
         "Envdf.Rd",
@@ -122,14 +125,14 @@
       "path": "pkgdown",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1784159948702,
+      "lastAccessed": 1788832223514,
       "keyFiles": []
     },
     "src": {
       "path": "src",
       "purpose": "Source code",
       "fileCount": 9,
-      "lastAccessed": 1784159948703,
+      "lastAccessed": 1788832223515,
       "keyFiles": [
         "Makevars",
         "Makevars.win",
@@ -142,7 +145,7 @@
       "path": "tests",
       "purpose": "Test files",
       "fileCount": 2,
-      "lastAccessed": 1784159948704,
+      "lastAccessed": 1788832223515,
       "keyFiles": [
         "run_inner_shrink_smoke.R",
         "testthat.R"
@@ -152,7 +155,7 @@
       "path": "vignettes",
       "purpose": null,
       "fileCount": 9,
-      "lastAccessed": 1784159948708,
+      "lastAccessed": 1788832223515,
       "keyFiles": [
         "consensus-network.Rmd",
         "correlation-networks.Rmd",
@@ -164,303 +167,51 @@
   },
   "hotPaths": [
     {
-      "path": "R/ggNetView_multi_link.R",
-      "accessCount": 19,
-      "lastAccessed": 1784185757494,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview.R",
-      "accessCount": 18,
-      "lastAccessed": 1784185528438,
-      "type": "file"
-    },
-    {
-      "path": "R/mantel_utils.R",
-      "accessCount": 17,
-      "lastAccessed": 1784185339742,
-      "type": "file"
-    },
-    {
-      "path": "R/gglink_heatmaps.R",
-      "accessCount": 17,
-      "lastAccessed": 1784185378417,
-      "type": "file"
-    },
-    {
-      "path": "R/gglink_heatmaps_2.R",
-      "accessCount": 14,
-      "lastAccessed": 1784185378832,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview_modularity_heatmaps.R",
-      "accessCount": 12,
-      "lastAccessed": 1784179005849,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview_zipi.R",
-      "accessCount": 10,
-      "lastAccessed": 1784185373374,
-      "type": "file"
-    },
-    {
-      "path": "R/get_geo_neighbors.R",
-      "accessCount": 9,
-      "lastAccessed": 1784185333741,
+      "path": "R/ggnetview_rng.R",
+      "accessCount": 2,
+      "lastAccessed": 1788747248470,
       "type": "file"
     },
     {
       "path": "R/get_network_topology_parallel.R",
-      "accessCount": 9,
-      "lastAccessed": 1784185363479,
-      "type": "file"
-    },
-    {
-      "path": "R/get_node_ivi.R",
-      "accessCount": 9,
-      "lastAccessed": 1784185371826,
-      "type": "file"
-    },
-    {
-      "path": "R/get_node_influence.R",
-      "accessCount": 9,
-      "lastAccessed": 1784185372597,
-      "type": "file"
-    },
-    {
-      "path": "R/get_subgraph.R",
-      "accessCount": 8,
-      "lastAccessed": 1784179729950,
+      "accessCount": 2,
+      "lastAccessed": 1788750432971,
       "type": "file"
     },
     {
       "path": "R/get_network_topology.R",
-      "accessCount": 8,
-      "lastAccessed": 1784185362847,
-      "type": "file"
-    },
-    {
-      "path": "R/update_graph_modules.R",
-      "accessCount": 7,
-      "lastAccessed": 1784185339371,
-      "type": "file"
-    },
-    {
-      "path": "R/globals.R",
-      "accessCount": 4,
-      "lastAccessed": 1784185372935,
-      "type": "file"
-    },
-    {
-      "path": "R/compare_modules_info.R",
-      "accessCount": 4,
-      "lastAccessed": 1784185498777,
-      "type": "file"
-    },
-    {
-      "path": "src/sparcc_rcpp.cpp",
-      "accessCount": 3,
-      "lastAccessed": 1784164080978,
-      "type": "file"
-    },
-    {
-      "path": "R/get_node_centrality.R",
-      "accessCount": 3,
-      "lastAccessed": 1784179172573,
-      "type": "file"
-    },
-    {
-      "path": "R/get_graph_nodes.R",
       "accessCount": 2,
-      "lastAccessed": 1784160210055,
+      "lastAccessed": 1788761745593,
+      "type": "file"
+    },
+    {
+      "path": "CODE_REVIEW_ggNetView.md",
+      "accessCount": 1,
+      "lastAccessed": 1788743586500,
       "type": "file"
     },
     {
       "path": "R/sparcc_matrix_rcpp.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160211045,
-      "type": "file"
-    },
-    {
-      "path": "R/get_graph_adjacency.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160211091,
-      "type": "file"
-    },
-    {
-      "path": "R/spieceasi_matrix_rcpp.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160212020,
-      "type": "file"
-    },
-    {
-      "path": "R/RcppExports.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160212528,
-      "type": "file"
-    },
-    {
-      "path": "R/use_function.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160215044,
-      "type": "file"
-    },
-    {
-      "path": "R/stat_graph.R",
-      "accessCount": 2,
-      "lastAccessed": 1784160219044,
-      "type": "file"
-    },
-    {
-      "path": "R/apply_transform_method.R",
-      "accessCount": 2,
-      "lastAccessed": 1784178014677,
-      "type": "file"
-    },
-    {
-      "path": "R/create_layout_multirings.R",
-      "accessCount": 2,
-      "lastAccessed": 1784181909866,
-      "type": "file"
-    },
-    {
-      "path": "R/trans_TOM_in_WGCNA.R",
       "accessCount": 1,
-      "lastAccessed": 1784160130020,
+      "lastAccessed": 1788747265575,
       "type": "file"
     },
     {
-      "path": "R/trans_adjacency_matrix_to_df.R",
+      "path": "tests/testthat/test-ggnetview-arguments.R",
       "accessCount": 1,
-      "lastAccessed": 1784160130543,
+      "lastAccessed": 1788752202300,
       "type": "file"
     },
     {
-      "path": "R/angle_utils.R",
+      "path": "README.Rmd",
       "accessCount": 1,
-      "lastAccessed": 1784160140376,
+      "lastAccessed": 1788761265917,
       "type": "file"
     },
     {
-      "path": "R/generate_mask.R",
+      "path": "README.md",
       "accessCount": 1,
-      "lastAccessed": 1784160141405,
-      "type": "file"
-    },
-    {
-      "path": "R/order_graph.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160146962,
-      "type": "file"
-    },
-    {
-      "path": "R/create_layout_WGCNA.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160154781,
-      "type": "file"
-    },
-    {
-      "path": "R/get_sample_subgraph.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160164080,
-      "type": "file"
-    },
-    {
-      "path": "R/get_sample_subgraph_topology.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160164276,
-      "type": "file"
-    },
-    {
-      "path": "R/get_sample_subgraph_topology_parallel.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160167849,
-      "type": "file"
-    },
-    {
-      "path": "R/get_info_from_graph.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160168349,
-      "type": "file"
-    },
-    {
-      "path": "R/get_network_perturbation.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160188396,
-      "type": "file"
-    },
-    {
-      "path": "R/press_perturbation.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160188879,
-      "type": "file"
-    },
-    {
-      "path": "R/ggNetView_RMT.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160201019,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview_perturbation_curve.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160201498,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview_subgraph.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160201997,
-      "type": "file"
-    },
-    {
-      "path": "src/spieceasi_rcpp.cpp",
-      "accessCount": 1,
-      "lastAccessed": 1784160206740,
-      "type": "file"
-    },
-    {
-      "path": "src/RcppExports.cpp",
-      "accessCount": 1,
-      "lastAccessed": 1784160207322,
-      "type": "file"
-    },
-    {
-      "path": "R/ggNetView_multi.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160209544,
-      "type": "file"
-    },
-    {
-      "path": "R/rcpp-imports.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160213031,
-      "type": "file"
-    },
-    {
-      "path": "R/zzz.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160213526,
-      "type": "file"
-    },
-    {
-      "path": "R/ggnetview_palette.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160215586,
-      "type": "file"
-    },
-    {
-      "path": "R/theme_ggnetview.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160216604,
-      "type": "file"
-    },
-    {
-      "path": "R/export_ggnetview.R",
-      "accessCount": 1,
-      "lastAccessed": 1784160217062,
+      "lastAccessed": 1788761293722,
       "type": "file"
     }
   ],

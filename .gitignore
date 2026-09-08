@@ -15,3 +15,6 @@ src/*.so
 # docs (generated pkgdown site) — but keep the development history tracked
 docs/*
 !docs/DEVELOPMENT_HISTORY.md
+
+# OMC tool state (kept on disk, not in version control)
+.omc/
