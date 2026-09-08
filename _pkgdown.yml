@@ -37,6 +37,10 @@ navbar:
           href: articles/network-topology.html
         - text: Virtual Perturbation Analysis
           href: articles/network-perturbation.html
+        - text: Consensus Networks Across Inference Methods
+          href: articles/consensus-network.html
+        - text: Node-Importance Analysis
+          href: articles/node-importance.html
         - text: "---"
         - text: Reference
         - text: Layout Gallery
@@ -60,6 +64,9 @@ reference:
       - build_graph_from_wgcna
       - build_graph_from_pie
       - build_graph_from_enrichGO
+      - build_graph_from_consensus
+      - build_graph_from_node_edge
+      - build_graph_from_stringdb
 
   - title: Visualisation
     desc: >
@@ -72,6 +79,7 @@ reference:
       - gglink_heatmaps_2
       - gglink_heatmap_triple
       - ggnetview_modularity_heatmaps
+      - ggnetview_subgraph
       - ggnetview_zipi
       - ggnetview_perturbation_curve
 
@@ -82,10 +90,13 @@ reference:
     contents:
       - get_network_topology
       - get_network_topology_parallel
+      - get_sample_subgraph
       - get_sample_subgraph_topology
       - get_sample_subgraph_topology_parallel
       - get_network_perturbation
       - get_node_influence
+      - get_node_centrality
+      - get_node_ivi
       - press_perturbation
       - ggNetView_RMT
       - mantel_between_blocks
@@ -115,6 +126,8 @@ reference:
       - export_ggnetview
       - trans_adjacency_matrix_to_df
       - trans_TOM_in_WGCNA
+      - angle_utils
+      - deg
 
   - title: Themes & scales
     desc: >
@@ -125,6 +138,30 @@ reference:
       - scale_color_ggnetview
       - scale_fill_ggnetview
       - get_palette
+
+  - title: Datasets
+    desc: >
+      Bundled example data used throughout the documentation, vignettes
+      and `\examples`.
+    contents:
+      - otu_tab
+      - otu_rare
+      - otu_rare_relative
+      - otu_sample
+      - tax_tab
+      - otu_NatureWater
+      - tax_NatureWater
+      - BASV_tab
+      - FASV_tab
+      - Spedf
+      - Envdf
+      - Envdf_4st
+      - Envdf_4st_2
+      - adjacency_matrix_example
+      - double_mat_node_df
+      - double_mat_node_df_with_modularity
+      - ppi_example
+      - ppi_module
 
   - title: Re-exports
     contents:
