@@ -517,8 +517,20 @@ get_network_topology <- function(graph_obj = NULL,
   # sequentially or on any number of workers. A plain loop here would consume
   # the global Mersenne-Twister stream instead and silently produce a different
   # ensemble from the same `seed`.
+  # `.get_topology()` and `.info.centrality.vertex()` are closures over this
+  # function's environment, which holds the abundance matrix and the filtered
+  # adjacency, so future's globals accounting can measure them in the gigabytes
+  # on a large network. Nothing is actually transferred under a sequential plan,
+  # but the default 500 MiB ceiling would abort the call, so raise it for the
+  # duration and restore the caller's option on exit (matching the sibling
+  # get_network_topology_parallel()).
+  old_size <- getOption("future.globals.maxSize")
   old_plan <- future::plan(future::sequential)
-  on.exit(future::plan(old_plan), add = TRUE)
+  on.exit({
+    options(future.globals.maxSize = old_size)
+    future::plan(old_plan)
+  }, add = TRUE)
+  options(future.globals.maxSize = +Inf)
 
   random_topology <- future.apply::future_lapply(seq_len(bootstrap), function(i) {
 
