@@ -36,7 +36,7 @@ ggNetView: An R Package for Reproducible Biological Network Analysis and Visuali
 
 `ggNetView` depends on a number of CRAN packages. We recommend installing the required dependencies first, and then installing `ggNetView` from GitHub.
 
-Current development release: v0.1.0
+Current development release: v0.2.1
 
 ### Step1: install CRAN dependencies
 

@@ -23,7 +23,7 @@ exploring complex biological and ecological networks.
 installing the required dependencies first, and then installing
 `ggNetView` from GitHub.
 
-Current development release: v0.1.0
+Current development release: v0.2.1
 
 ### Step1: install CRAN dependencies
 
@@ -61,7 +61,6 @@ tests):
 
 ``` r
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 4.5.2
 library(ggnewscale)
 library(ggNetView)
 #> 
@@ -77,7 +76,7 @@ library(ggNetView)
 #> 
 #> 
 #> ggNetView: Reproducible and Deterministic Network Analysis and Visualization
-#> Version: 0.1.0
+#> Version: 0.2.1
 #> 
 #>   Authors:     Yue Liu, Chao Wang
 #>   Maintainer:  Yue Liu <yueliu@iae.ac.cn>
@@ -162,34 +161,34 @@ obj <- build_graph_from_mat(
 )
 
 obj                           # tbl_graph with Modularity / Degree / Strength + taxonomy
-#> # A tbl_graph: 2049 nodes and 9602 edges
+#> # A tbl_graph: 1951 nodes and 8732 edges
 #> #
-#> # An undirected simple graph with 100 components
+#> # An undirected simple graph with 120 components
 #> #
-#> # Node Data: 2,049 × 14 (active)
+#> # Node Data: 1,951 × 14 (active)
 #>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
 #>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
-#>  1 ASV_916 1          1           1           1              58     50.5 Bacter…
-#>  2 ASV_777 1          1           1           1              58     48.7 Bacter…
-#>  3 ASV_606 1          1           1           1              55     45.8 Bacter…
-#>  4 ASV_740 1          1           1           1              54     47.2 Bacter…
-#>  5 ASV_14… 1          1           1           1              54     44.5 Bacter…
-#>  6 ASV_23… 1          1           1           1              54     47.4 Bacter…
-#>  7 ASV_15… 1          1           1           1              52     45.3 Bacter…
-#>  8 ASV_24… 1          1           1           1              52     43.0 Bacter…
-#>  9 ASV_19… 1          1           1           1              52     43.0 Bacter…
-#> 10 ASV_568 1          1           1           1              51     45.1 Bacter…
-#> # ℹ 2,039 more rows
+#>  1 ASV_916 1          1           1           1              57     49.7 Bacter…
+#>  2 ASV_777 1          1           1           1              55     46.4 Bacter…
+#>  3 ASV_23… 1          1           1           1              53     46.6 Bacter…
+#>  4 ASV_606 1          1           1           1              51     42.7 Bacter…
+#>  5 ASV_740 1          1           1           1              51     44.9 Bacter…
+#>  6 ASV_15… 1          1           1           1              50     43.8 Bacter…
+#>  7 ASV_568 1          1           1           1              49     43.6 Bacter…
+#>  8 ASV_671 1          1           1           1              49     43.7 Bacter…
+#>  9 ASV_664 1          1           1           1              49     42.9 Bacter…
+#> 10 ASV_10… 1          1           1           1              49     43.6 Bacter…
+#> # ℹ 1,941 more rows
 #> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
 #> #   Genus <chr>, Species <chr>
 #> #
-#> # Edge Data: 9,602 × 5
+#> # Edge Data: 8,732 × 5
 #>    from    to weight correlation corr_direction
 #>   <int> <int>  <dbl>       <dbl> <chr>         
-#> 1  1771  1825  0.793       0.793 Positive      
-#> 2   594   597  0.895       0.895 Positive      
-#> 3   588   597  0.864       0.864 Positive      
-#> # ℹ 9,599 more rows
+#> 1  1656  1703  0.793       0.793 Positive      
+#> 2   782   787  0.895       0.895 Positive      
+#> 3   395   787  0.864       0.864 Positive      
+#> # ℹ 8,729 more rows
 ```
 
 ### Step4: ggNetView to plot
@@ -240,8 +239,6 @@ p2 <- ggNetView(
   module_outline = T,           # draw an outer hull/line around each module
   module_label = T              # show node labels
 )
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 p2
 ```
@@ -272,8 +269,6 @@ p3 <- ggNetView(
   module_outline = T,           # draw an outer hull/line around each module
   module_label = T              # show node labels
 )
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 p3
 ```
@@ -305,8 +300,6 @@ p4 <- ggNetView(
   module_outline = T,           # draw an outer hull/line around each module
   module_label = T              # show node labels
 )
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 p4
 ```
@@ -338,8 +331,6 @@ p5 <- ggNetView(
   module_label = T,             # show node labels
   node_label = "top1"           # label only the top-1 hub node per module
 )
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 p5
 ```
@@ -363,22 +354,22 @@ Sub_module_1 <- get_subgraph(
   select_module = "1"     # extract the subgraph for module "1"
 )
 #>    Module Number
-#> 1       1    416
-#> 2       7    161
-#> 3       6    137
-#> 4       9    121
-#> 5       4    112
-#> 6       2    105
-#> 7       3    104
-#> 8      11    101
-#> 9       8     87
-#> 10     10     80
-#> 11      5     78
-#> 12     13     70
-#> 13     16     52
-#> 14     15     51
-#> 15     14     46
-#> 16 Others    328
+#> 1       1    357
+#> 2       4    268
+#> 3       3    142
+#> 4       6    124
+#> 5       2     96
+#> 6       5     96
+#> 7       7     91
+#> 8       9     80
+#> 9       8     78
+#> 10     12     68
+#> 11     10     67
+#> 12     14     52
+#> 13     15     50
+#> 14     13     37
+#> 15     11     34
+#> 16 Others    311
 
 names(Sub_module_1)       # components returned for the selected module
 #> [1] "sub_graph_all"    "stat_module"      "sub_graph_select"
@@ -475,34 +466,34 @@ graph_obj <- build_graph_from_mat(
 )
 
 graph_obj                        # resulting tbl_graph
-#> # A tbl_graph: 2049 nodes and 9602 edges
+#> # A tbl_graph: 1951 nodes and 8732 edges
 #> #
-#> # An undirected simple graph with 100 components
+#> # An undirected simple graph with 120 components
 #> #
-#> # Node Data: 2,049 × 14 (active)
+#> # Node Data: 1,951 × 14 (active)
 #>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
 #>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
-#>  1 ASV_916 1          1           1           1              58     50.5 Bacter…
-#>  2 ASV_777 1          1           1           1              58     48.7 Bacter…
-#>  3 ASV_606 1          1           1           1              55     45.8 Bacter…
-#>  4 ASV_740 1          1           1           1              54     47.2 Bacter…
-#>  5 ASV_14… 1          1           1           1              54     44.5 Bacter…
-#>  6 ASV_23… 1          1           1           1              54     47.4 Bacter…
-#>  7 ASV_15… 1          1           1           1              52     45.3 Bacter…
-#>  8 ASV_24… 1          1           1           1              52     43.0 Bacter…
-#>  9 ASV_19… 1          1           1           1              52     43.0 Bacter…
-#> 10 ASV_568 1          1           1           1              51     45.1 Bacter…
-#> # ℹ 2,039 more rows
+#>  1 ASV_916 1          1           1           1              57     49.7 Bacter…
+#>  2 ASV_777 1          1           1           1              55     46.4 Bacter…
+#>  3 ASV_23… 1          1           1           1              53     46.6 Bacter…
+#>  4 ASV_606 1          1           1           1              51     42.7 Bacter…
+#>  5 ASV_740 1          1           1           1              51     44.9 Bacter…
+#>  6 ASV_15… 1          1           1           1              50     43.8 Bacter…
+#>  7 ASV_568 1          1           1           1              49     43.6 Bacter…
+#>  8 ASV_671 1          1           1           1              49     43.7 Bacter…
+#>  9 ASV_664 1          1           1           1              49     42.9 Bacter…
+#> 10 ASV_10… 1          1           1           1              49     43.6 Bacter…
+#> # ℹ 1,941 more rows
 #> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
 #> #   Genus <chr>, Species <chr>
 #> #
-#> # Edge Data: 9,602 × 5
+#> # Edge Data: 8,732 × 5
 #>    from    to weight correlation corr_direction
 #>   <int> <int>  <dbl>       <dbl> <chr>         
-#> 1  1771  1825  0.793       0.793 Positive      
-#> 2   594   597  0.895       0.895 Positive      
-#> 3   588   597  0.864       0.864 Positive      
-#> # ℹ 9,599 more rows
+#> 1  1656  1703  0.793       0.793 Positive      
+#> 2   782   787  0.895       0.895 Positive      
+#> 3   395   787  0.864       0.864 Positive      
+#> # ℹ 8,729 more rows
 
 
 p_sub <- ggNetView(
@@ -569,8 +560,6 @@ res <- ggnetview_modularity_heatmaps(
   module_label = F,                        # do not show node labels
   # module_label_size = 5
 )
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 res[[1]]
 ```
@@ -611,8 +600,6 @@ res2 <- ggnetview_modularity_heatmaps(
   # module_label_size = 5
 )
 #> Using `mantel_kind = "block_vs_col"`. Note: prior versions ran the equivalent of `"col_vs_col"` when `relation_method = "mantel"`. The new default is the ecologically standard `"block_vs_col"` (community matrix vs each env column). Pass `mantel_kind = "col_vs_col"` to reproduce old results.
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
 
 res2[[1]]
 ```
@@ -669,20 +656,27 @@ p1
 ``` r
 
 out1$info           # auxiliary table: per-group node/edge counts, module info, etc.
-#> # A tibble: 22 × 11
+#> # A tibble: 18 × 11
 #>    modA   modB   overlap sizeA sizeB overlap_coef  pvalue   FDR Group    GroupA
 #>    <chr>  <chr>    <int> <int> <int>        <dbl>   <dbl> <dbl> <chr>    <chr> 
-#>  1 15     1            2     6    14        0.333 0.0140  0.776 KO_to_OE KO    
-#>  2 16     3            2    19     8        0.25  0.0450  1     KO_to_OE KO    
-#>  3 52     6            1     4     3        0.333 0.0280  0.895 KO_to_OE KO    
-#>  4 4      8            2    16     6        0.333 0.0182  0.776 KO_to_OE KO    
-#>  5 3      9            2    22     3        0.667 0.00741 0.633 KO_to_OE KO    
-#>  6 7      9            1     4     3        0.333 0.0280  0.895 KO_to_OE KO    
-#>  7 3      12           2    22     3        0.667 0.00741 0.633 KO_to_OE KO    
-#>  8 1      15           2    32     3        0.667 0.0157  0.776 KO_to_OE KO    
-#>  9 Others Others     224   263   342        0.852 0.00109 0.279 KO_to_OE KO    
-#> 10 16     1            4    29    28        0.143 0.0415  1     KO_to_WT KO    
-#> # ℹ 12 more rows
+#>  1 1      3            2    15     7        0.286 0.0307  1     KO_to_OE KO    
+#>  2 49     6            1     4     3        0.333 0.0333  1     KO_to_OE KO    
+#>  3 2      8            2    20     3        0.667 0.00867 0.984 KO_to_OE KO    
+#>  4 7      8            1     4     3        0.333 0.0333  1     KO_to_OE KO    
+#>  5 11     9            2    13     5        0.4   0.0115  0.984 KO_to_OE KO    
+#>  6 49     11           1     4     4        0.25  0.0443  1     KO_to_OE KO    
+#>  7 5      15           2    29     3        0.667 0.0182  1     KO_to_OE KO    
+#>  8 Others Others     179   219   276        0.817 0.00896 0.984 KO_to_OE KO    
+#>  9 1      55           4    28    27        0.148 0.0452  1     KO_to_WT KO    
+#> 10 2      2            4    30    22        0.182 0.0286  1     KO_to_WT KO    
+#> 11 97     2            2     8    22        0.25  0.0387  1     KO_to_WT KO    
+#> 12 1      1            5    28    24        0.208 0.00568 0.647 KO_to_WT KO    
+#> 13 4      4            2    18    11        0.182 0.0488  1     KO_to_WT KO    
+#> 14 3      6            2    18     8        0.25  0.0264  1     KO_to_WT KO    
+#> 15 8      16           2    11     7        0.286 0.00759 0.647 KO_to_WT KO    
+#> 16 Others Others     231   309   378        0.748 0.00660 0.647 KO_to_WT KO    
+#> 17 3      55           2     6    12        0.333 0.0233  1     OE_to_WT OE    
+#> 18 9      9            1     3     2        0.5   0.0215  1     OE_to_WT OE    
 #> # ℹ 1 more variable: GroupB <chr>
 ```
 
@@ -746,34 +740,34 @@ graph_obj <- build_graph_from_mat(
 )
 
 graph_obj   # tbl_graph with Modularity / Degree / Strength + taxonomy columns
-#> # A tbl_graph: 213 nodes and 844 edges
+#> # A tbl_graph: 236 nodes and 924 edges
 #> #
-#> # An undirected simple graph with 29 components
+#> # An undirected simple graph with 33 components
 #> #
-#> # Node Data: 213 × 14 (active)
+#> # Node Data: 236 × 14 (active)
 #>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
 #>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
-#>  1 ASV_649 5          5           5           5              27     26.5 Bacter…
-#>  2 ASV_705 5          5           5           5              27     26.5 Bacter…
-#>  3 ASV_12… 5          5           5           5              27     26.5 Bacter…
-#>  4 ASV_13… 5          5           5           5              27     26.5 Bacter…
-#>  5 ASV_14… 5          5           5           5              27     26.5 Bacter…
-#>  6 ASV_14… 5          5           5           5              27     26.5 Bacter…
-#>  7 ASV_24… 5          5           5           5              27     26.5 Bacter…
-#>  8 ASV_25… 5          5           5           5              27     26.4 Bacter…
-#>  9 ASV_28… 5          5           5           5              27     26.5 Bacter…
-#> 10 ASV_28… 5          5           5           5              27     26.5 Bacter…
-#> # ℹ 203 more rows
+#>  1 ASV_12… 6          6           6           6              29     28.3 Bacter…
+#>  2 ASV_14… 6          6           6           6              28     27.4 Bacter…
+#>  3 ASV_649 6          6           6           6              27     26.5 Bacter…
+#>  4 ASV_705 6          6           6           6              27     26.5 Bacter…
+#>  5 ASV_913 6          6           6           6              27     26.2 Bacter…
+#>  6 ASV_13… 6          6           6           6              27     26.5 Bacter…
+#>  7 ASV_14… 6          6           6           6              27     26.5 Bacter…
+#>  8 ASV_17… 6          6           6           6              27     26.3 Bacter…
+#>  9 ASV_24… 6          6           6           6              27     26.5 Bacter…
+#> 10 ASV_25… 6          6           6           6              27     26.4 Bacter…
+#> # ℹ 226 more rows
 #> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
 #> #   Genus <chr>, Species <chr>
 #> #
-#> # Edge Data: 844 × 5
+#> # Edge Data: 924 × 5
 #>    from    to weight correlation corr_direction
 #>   <int> <int>  <dbl>       <dbl> <chr>         
-#> 1   194   195  0.959       0.959 Positive      
-#> 2   185   208  0.954       0.954 Positive      
-#> 3   185   213  0.957       0.957 Positive      
-#> # ℹ 841 more rows
+#> 1   182   183  0.959       0.959 Positive      
+#> 2   182   184  0.941       0.941 Positive      
+#> 3   182   185  0.940       0.940 Positive      
+#> # ℹ 921 more rows
 
 
 
@@ -802,59 +796,59 @@ topology_with_mat
 #> # A tibble: 24 × 3
 #>    Topology            Target_network Random_nerwork
 #>    <chr>                        <dbl>          <dbl>
-#>  1 Node                      213            213     
-#>  2 Edge                      844            844     
-#>  3 Degree                      7.92           7.92  
-#>  4 Distance                    1.45           2.81  
-#>  5 Diameter                    3.83           5.04  
-#>  6 Density                     0.0374         0.0374
-#>  7 Transitivity_global         0.851          0.0371
-#>  8 Transitivity_local          0.783          0.0372
-#>  9 Betweenness                 3.47         191.    
-#> 10 Betweenness_edge            2.58          75.0   
+#>  1 Node                      236            236     
+#>  2 Edge                      924            924     
+#>  3 Degree                      7.83           7.83  
+#>  4 Distance                    1.46           2.87  
+#>  5 Diameter                    4.75           5.11  
+#>  6 Density                     0.0333         0.0333
+#>  7 Transitivity_global         0.849          0.0330
+#>  8 Transitivity_local          0.809          0.0336
+#>  9 Betweenness                 3.56         220.    
+#> 10 Betweenness_edge            2.63          86.1   
 #> # ℹ 14 more rows
 #> 
 #> $Robustness
 #>    Proportion.removed remain.mean   remain.sd    remain.se   weighted
-#> 1                0.05  0.93765258 0.006506724 0.0006506724   weighted
-#> 2                0.10  0.88042254 0.009907812 0.0009907812   weighted
-#> 3                0.15  0.81859155 0.012057928 0.0012057928   weighted
-#> 4                0.20  0.75816901 0.013453813 0.0013453813   weighted
-#> 5                0.25  0.70455399 0.012630308 0.0012630308   weighted
-#> 6                0.30  0.64333333 0.016021401 0.0016021401   weighted
-#> 7                0.35  0.58652582 0.016937398 0.0016937398   weighted
-#> 8                0.40  0.53028169 0.016859929 0.0016859929   weighted
-#> 9                0.45  0.47309859 0.018089169 0.0018089169   weighted
-#> 10               0.50  0.42140845 0.015919144 0.0015919144   weighted
-#> 11               0.55  0.37046948 0.018756744 0.0018756744   weighted
-#> 12               0.60  0.31450704 0.015513637 0.0015513637   weighted
-#> 13               0.65  0.26737089 0.019720511 0.0019720511   weighted
-#> 14               0.70  0.21652582 0.017859085 0.0017859085   weighted
-#> 15               0.75  0.17023474 0.016271873 0.0016271873   weighted
-#> 16               0.80  0.12455399 0.016887373 0.0016887373   weighted
-#> 17               0.85  0.08291080 0.015878534 0.0015878534   weighted
-#> 18               0.90  0.04262911 0.013423744 0.0013423744   weighted
-#> 19               0.95  0.01413146 0.009998184 0.0009998184   weighted
+#> 1                0.05  0.93894068 0.006736051 0.0006736051   weighted
+#> 2                0.10  0.87703390 0.008235367 0.0008235367   weighted
+#> 3                0.15  0.82266949 0.010712392 0.0010712392   weighted
+#> 4                0.20  0.76203390 0.013052837 0.0013052837   weighted
+#> 5                0.25  0.70402542 0.013048043 0.0013048043   weighted
+#> 6                0.30  0.64381356 0.013068112 0.0013068112   weighted
+#> 7                0.35  0.58542373 0.015351419 0.0015351419   weighted
+#> 8                0.40  0.53025424 0.014862819 0.0014862819   weighted
+#> 9                0.45  0.47394068 0.017006569 0.0017006569   weighted
+#> 10               0.50  0.42279661 0.017083231 0.0017083231   weighted
+#> 11               0.55  0.36605932 0.019139188 0.0019139188   weighted
+#> 12               0.60  0.31377119 0.018934170 0.0018934170   weighted
+#> 13               0.65  0.26504237 0.016164591 0.0016164591   weighted
+#> 14               0.70  0.21809322 0.016388331 0.0016388331   weighted
+#> 15               0.75  0.16758475 0.015323690 0.0015323690   weighted
+#> 16               0.80  0.12334746 0.014364862 0.0014364862   weighted
+#> 17               0.85  0.07881356 0.015843037 0.0015843037   weighted
+#> 18               0.90  0.04635593 0.011675496 0.0011675496   weighted
+#> 19               0.95  0.01347458 0.008588939 0.0008588939   weighted
 #> 20               1.00  0.00000000 0.000000000 0.0000000000   weighted
-#> 21               0.05  0.93666667 0.006347900 0.0006347900 unweighted
-#> 22               0.10  0.88004695 0.009586197 0.0009586197 unweighted
-#> 23               0.15  0.81882629 0.011087843 0.0011087843 unweighted
-#> 24               0.20  0.75755869 0.014084823 0.0014084823 unweighted
-#> 25               0.25  0.70258216 0.013923536 0.0013923536 unweighted
-#> 26               0.30  0.64220657 0.014112853 0.0014112853 unweighted
-#> 27               0.35  0.58239437 0.013335467 0.0013335467 unweighted
-#> 28               0.40  0.53103286 0.016600696 0.0016600696 unweighted
-#> 29               0.45  0.47755869 0.015290812 0.0015290812 unweighted
-#> 30               0.50  0.42812207 0.015401290 0.0015401290 unweighted
-#> 31               0.55  0.36694836 0.016218423 0.0016218423 unweighted
-#> 32               0.60  0.31892019 0.018094092 0.0018094092 unweighted
-#> 33               0.65  0.26699531 0.017332399 0.0017332399 unweighted
-#> 34               0.70  0.21441315 0.017260315 0.0017260315 unweighted
-#> 35               0.75  0.16938967 0.018751817 0.0018751817 unweighted
-#> 36               0.80  0.12624413 0.017219505 0.0017219505 unweighted
-#> 37               0.85  0.07910798 0.015222150 0.0015222150 unweighted
-#> 38               0.90  0.04286385 0.012864348 0.0012864348 unweighted
-#> 39               0.95  0.01413146 0.009519073 0.0009519073 unweighted
+#> 21               0.05  0.93877119 0.007084582 0.0007084582 unweighted
+#> 22               0.10  0.87728814 0.009894707 0.0009894707 unweighted
+#> 23               0.15  0.82177966 0.009911189 0.0009911189 unweighted
+#> 24               0.20  0.76169492 0.013495506 0.0013495506 unweighted
+#> 25               0.25  0.70389831 0.013212479 0.0013212479 unweighted
+#> 26               0.30  0.64474576 0.014223075 0.0014223075 unweighted
+#> 27               0.35  0.58618644 0.014962542 0.0014962542 unweighted
+#> 28               0.40  0.53211864 0.015718690 0.0015718690 unweighted
+#> 29               0.45  0.47762712 0.018078695 0.0018078695 unweighted
+#> 30               0.50  0.42050847 0.015057993 0.0015057993 unweighted
+#> 31               0.55  0.36686441 0.018069664 0.0018069664 unweighted
+#> 32               0.60  0.31233051 0.017058956 0.0017058956 unweighted
+#> 33               0.65  0.26661017 0.019761901 0.0019761901 unweighted
+#> 34               0.70  0.21406780 0.018331729 0.0018331729 unweighted
+#> 35               0.75  0.17063559 0.018374961 0.0018374961 unweighted
+#> 36               0.80  0.12317797 0.017838089 0.0017838089 unweighted
+#> 37               0.85  0.08114407 0.015429840 0.0015429840 unweighted
+#> 38               0.90  0.04597458 0.010593220 0.0010593220 unweighted
+#> 39               0.95  0.01440678 0.008602021 0.0008602021 unweighted
 #> 40               1.00  0.00000000 0.000000000 0.0000000000 unweighted
 ```
 
@@ -938,16 +932,16 @@ zp$plot
 
 ``` r
 sessionInfo()
-#> R version 4.5.1 (2025-06-13)
-#> Platform: aarch64-apple-darwin20
+#> R version 4.6.1 (2026-06-24)
+#> Platform: aarch64-apple-darwin23
 #> Running under: macOS Tahoe 26.3.1
 #> 
 #> Matrix products: default
-#> BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
-#> LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+#> [1] zh_CN.UTF-8/zh_CN.UTF-8/zh_CN.UTF-8/C/zh_CN.UTF-8/zh_CN.UTF-8
 #> 
 #> time zone: Asia/Shanghai
 #> tzcode source: internal
@@ -956,39 +950,40 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggNetView_0.1.0  ggnewscale_0.5.2 ggplot2_4.0.3   
+#> [1] future_1.70.0    ggNetView_0.2.1  ggnewscale_0.5.2 ggplot2_4.0.3   
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] tidyselect_1.2.1      psych_2.6.5           WGCNA_1.74           
 #>  [4] viridisLite_0.4.3     dplyr_1.2.1           farver_2.1.2         
 #>  [7] viridis_0.6.5         S7_0.2.2              ggraph_2.2.2         
 #> [10] fastmap_1.2.0         tweenr_2.0.3          digest_0.6.39        
-#> [13] rpart_4.1.24          lifecycle_1.0.5       cluster_2.1.8.1      
-#> [16] survival_3.8-3        magrittr_2.0.5        compiler_4.5.1       
-#> [19] rlang_1.2.0           Hmisc_5.2-5           tools_4.5.1          
-#> [22] igraph_2.3.2          utf8_1.2.6            yaml_2.3.12          
+#> [13] rpart_4.1.27          lifecycle_1.0.5       cluster_2.1.8.2      
+#> [16] survival_3.8-6        magrittr_2.0.5        compiler_4.6.1       
+#> [19] rlang_1.3.0           Hmisc_5.2-6           tools_4.6.1          
+#> [22] igraph_2.3.3          utf8_1.2.6            yaml_2.3.12          
 #> [25] data.table_1.18.4     knitr_1.51            FNN_1.1.4.1          
-#> [28] labeling_0.4.3        graphlayouts_1.2.3    htmlwidgets_1.6.4    
-#> [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.2          
-#> [34] foreign_0.8-90        purrr_1.2.2           nnet_7.3-20          
-#> [37] dynamicTreeCut_1.63-1 grid_4.5.1            polyclip_1.10-7      
-#> [40] preprocessCore_1.70.0 colorspace_2.1-2      fastcluster_1.3.0    
-#> [43] scales_1.4.0          iterators_1.0.14      MASS_7.3-65          
-#> [46] dichromat_2.0-0.1     cli_3.6.6             rmarkdown_2.31       
-#> [49] vegan_2.7-5           generics_0.1.4        otel_0.2.0           
-#> [52] rstudioapi_0.18.0     cachem_1.1.0          ggforce_0.5.0        
-#> [55] stringr_1.6.0         splines_4.5.1         parallel_4.5.1       
-#> [58] impute_1.82.0         matrixStats_1.5.0     base64enc_0.1-6      
-#> [61] vctrs_0.7.3           Matrix_1.7-4          ggrepel_0.9.8        
-#> [64] Formula_1.2-5         htmlTable_2.5.0       foreach_1.5.2        
-#> [67] tidyr_1.3.2           glue_1.8.1            codetools_0.2-20     
-#> [70] stringi_1.8.7         gtable_0.3.6          tibble_3.3.1         
-#> [73] pillar_1.11.1         htmltools_0.5.9       R6_2.6.1             
-#> [76] doParallel_1.0.17     tidygraph_1.3.1       evaluate_1.0.5       
-#> [79] lattice_0.22-7        backports_1.5.1       memoise_2.0.1        
-#> [82] Rcpp_1.1.1-1.1        permute_0.9-10        gridExtra_2.3        
-#> [85] nlme_3.1-168          checkmate_2.3.4       mgcv_1.9-3           
-#> [88] xfun_0.58             pkgconfig_2.0.3
+#> [28] labeling_0.4.3        graphlayouts_1.2.4    htmlwidgets_1.6.4    
+#> [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.3          
+#> [34] foreign_0.8-91        purrr_1.2.2           nnet_7.3-20          
+#> [37] dynamicTreeCut_1.63-1 grid_4.6.1            polyclip_1.10-7      
+#> [40] preprocessCore_1.74.0 colorspace_2.1-3      fastcluster_1.3.0    
+#> [43] globals_0.19.1        scales_1.4.0          iterators_1.0.14     
+#> [46] MASS_7.3-65           dichromat_2.0-0.1     cli_3.6.6            
+#> [49] rmarkdown_2.31        vegan_2.7-5           generics_0.1.4       
+#> [52] otel_0.2.0            future.apply_1.20.2   rstudioapi_0.19.0    
+#> [55] cachem_1.1.0          ggforce_0.5.0         stringr_1.6.0        
+#> [58] splines_4.6.1         parallel_4.6.1        impute_1.86.0        
+#> [61] matrixStats_1.5.0     base64enc_0.1-6       vctrs_0.7.3          
+#> [64] Matrix_1.7-5          ggrepel_0.9.8         Formula_1.2-5        
+#> [67] htmlTable_2.5.0       listenv_1.0.0         foreach_1.5.2        
+#> [70] tidyr_1.3.2           parallelly_1.48.0     glue_1.8.1           
+#> [73] codetools_0.2-20      stringi_1.8.7         gtable_0.3.6         
+#> [76] tibble_3.3.1          pillar_1.11.1         htmltools_0.5.9      
+#> [79] R6_2.6.1              doParallel_1.0.17     tidygraph_1.3.1      
+#> [82] evaluate_1.0.5        lattice_0.22-9        backports_1.5.1      
+#> [85] memoise_2.0.1         Rcpp_1.1.2            permute_0.9-10       
+#> [88] gridExtra_2.3.1       nlme_3.1-169          checkmate_2.3.4      
+#> [91] mgcv_1.9-4            xfun_0.60             pkgconfig_2.0.3
 ```
 
 #### Citation
