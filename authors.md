@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Jiawang1209/ggNetView/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Jiawang1209/ggNetView/blob/v0.2.1/inst/CITATION)
 
 Liu Y, Wang C (2026). *ggNetView: Reproducible and Deterministic Network
 Analysis and Visualization*. R package version 0.2.1,
