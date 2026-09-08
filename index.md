@@ -8,7 +8,7 @@ exploring complex biological and ecological networks.
 
 [User Manual](https://jiawang1209.github.io/ggNetView-manual/)
 
-[Zenodo DOI](https://doi.org/10.5281/zenodo.%3C%E6%96%B0%E5%8F%B7%3E)
+[Zenodo DOI](https://doi.org/10.5281/zenodo.20175075)
 
 ## Installation
 
