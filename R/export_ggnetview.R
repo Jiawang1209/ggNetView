@@ -1,7 +1,7 @@
 #' Save a ggNetView with sensible defaults
 #'
 #' @param p Plot to save, defaults to last plot displayed.
-#' @param filename 	File name to create on disk.
+#' @param filename  File name to create on disk.
 #' @param height Plot size in units expressed by the units argument. If not supplied, uses the size of the current graphics device.
 #' @param width Plot size in units expressed by the units argument. If not supplied, uses the size of the current graphics device.
 #' @param limitsize When TRUE (the default), export_ggnetview() will not save images larger than 50x50 inches, to prevent the common error of specifying dimensions in pixels.

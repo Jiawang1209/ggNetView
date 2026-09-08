@@ -968,7 +968,7 @@ ggNetView <- function(graph_obj,
         label_force                <<- 0
         label_segment_square       <<- FALSE   # ggrepel draws single line
         label_segment_square_shape <<- 1
-        # ★ no padding around aes point: the aes IS the elbow shared
+        # * no padding around aes point: the aes IS the elbow shared
         # with the manual first leg, so ggrepel's segment must reach
         # it exactly or you see a visible gap at the L corner
         label_point_padding        <<- 0

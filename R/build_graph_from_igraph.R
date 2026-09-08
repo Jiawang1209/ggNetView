@@ -53,7 +53,7 @@ build_graph_from_igraph <- function(igraph,
   module_candidates <- c("Modularity", "modularity2", "modularity3", "modularity")
 
   # If the user explicitly named `module_attr` but it is not on the graph, fail
-  # loudly instead of silently re-running community detection — the latter
+  # loudly instead of silently re-running community detection -- the latter
   # ignores the user's intent and was the source of a hidden bug.
   if (!is.null(module_attr)) {
     if (length(module_attr) != 1L || !is.character(module_attr) || is.na(module_attr)) {
