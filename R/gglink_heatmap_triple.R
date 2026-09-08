@@ -258,7 +258,6 @@ gglink_heatmap_triple <- function(
                name = "Env Cor Size") +
     ggplot2::xlab('') +
     ggplot2::ylab('')  +
-    ggplot2::coord_cartesian(clip = "off") +
     ggplot2::geom_segment(data = stat_out[[3]] ,
                  mapping = aes(x = p_start1, y = p_end1, xend = start2, yend = end2,
                                linetype = p_value,

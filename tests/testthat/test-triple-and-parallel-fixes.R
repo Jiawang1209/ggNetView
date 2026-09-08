@@ -75,3 +75,27 @@ test_that("gglink_heatmap_triple works with minimal inputs and validates hubs", 
     gglink_heatmap_triple(envS, expS, edge, data.frame(node = c(ev, xv[1:3]))),
     "must equal the number of Experiment")
 })
+
+# 3. gglink_heatmap_triple() must build its plot with a single coordinate
+#    system; a second coord_*() silently replaces the first and makes ggplot2
+#    emit "Coordinate system already present".
+test_that("gglink_heatmap_triple adds only one coordinate system", {
+  data(Envdf, package = "ggNetView")
+  envS <- data.frame(Sample = rownames(Envdf), Envdf[, 1:6], check.names = FALSE)
+  expS <- data.frame(Sample = rownames(Envdf), Envdf[, 7:14], check.names = FALSE)
+  ev <- colnames(Envdf)[1:6]; xv <- colnames(Envdf)[7:14]
+  set.seed(1)
+  edge <- unique(data.frame(from = sample(xv, 20, TRUE), to = sample(ev, 20, TRUE)))
+  node <- data.frame(node = sample(c(ev, xv)))
+
+  ms <- character()
+  p <- withCallingHandlers(
+    gglink_heatmap_triple(Environment = envS, Experiment = expS,
+                          edge = edge, node = node),
+    message = function(m) {
+      ms <<- c(ms, conditionMessage(m)); invokeRestart("muffleMessage")
+    })
+  expect_length(grep("[Cc]oordinate system", ms), 0)
+  # the surviving coord is the aspect-ratio-preserving one
+  expect_equal(p$coordinates$ratio, 1)
+})

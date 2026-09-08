@@ -47,6 +47,13 @@
   and the caller's `future.globals.maxSize` option is restored on exit, matching
   `get_network_topology_parallel()`.
 
+* `gglink_heatmap_triple()` no longer prints "Coordinate system already
+  present. Adding new coordinate system, which will replace the existing one."
+  The plot chain added `coord_cartesian()` and later `coord_equal()`, and the
+  second silently replaced the first. The redundant `coord_cartesian()` is
+  dropped; the built plot is unchanged (all 11 layers are `all.equal` to the
+  previous output).
+
 # ggNetView 0.2.0
 
 ## Argument renaming in `ggNetView()` (lifecycle-managed)
