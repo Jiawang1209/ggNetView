@@ -101,16 +101,14 @@ pre-built graph object or directly from an adjacency matrix.
 }
 \section{Reproducibility note}{
 
-The observed-network metrics are identical to the serial
-\code{\link{get_network_topology}}. The \emph{random-network baseline}
-(the \code{Random_nerwork} column), however, is generated with
-\code{future.apply::future_lapply(..., future.seed = TRUE)} when
-\code{parallel = TRUE}. This uses independent L'Ecuyer-CMRG streams, so for a
-given \code{seed} the random-baseline values are reproducible \emph{within}
-the parallel path but are \strong{not} bit-for-bit identical to the serial
-path's Mersenne-Twister draws. With a sufficient bootstrap count the baseline
-means converge; set \code{parallel = FALSE} if you need results that match
-\code{get_network_topology} exactly.
+For a given \code{seed}, this function returns bit-for-bit identical results
+to the serial \code{\link{get_network_topology}}, to itself with
+\code{parallel = FALSE}, and to itself for any number of \code{n_workers}.
+Both functions draw the random-network baseline (the \code{Random_nerwork}
+column) through \code{future.apply::future_lapply(..., future.seed = TRUE)},
+which assigns each iteration its own L'Ecuyer-CMRG stream independently of
+the backend, so \code{parallel} and \code{n_workers} are purely performance
+switches and never change the numbers reported.
 }
 
 \examples{
