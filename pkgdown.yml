@@ -1,10 +1,16 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  consensus-network: consensus-network.html
   correlation-networks: correlation-networks.html
   ggNetView-intro: ggNetView-intro.html
-last_built: 2026-04-15T15:53Z
+  layout-gallery: layout-gallery.html
+  network-perturbation: network-perturbation.html
+  network-topology: network-topology.html
+  node-importance: node-importance.html
+  wgcna-pipeline: wgcna-pipeline.html
+last_built: 2026-09-08T04:10Z
 urls:
   reference: https://jiawang1209.github.io/ggNetView/reference
   article: https://jiawang1209.github.io/ggNetView/articles

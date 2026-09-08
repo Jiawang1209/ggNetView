@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Compute Zi-Pi (within-module connectivity and participation coefficient) — ggnetview_zipi"><meta name="description" content="Calculates the within-module degree z-score (Zi) and among-module connectivity
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Compute Zi-Pi (within-module connectivity and participation coefficient) — ggnetview_zipi"><meta name="description" content="Calculates the within-module degree z-score (Zi) and among-module connectivity
 (participation coefficient, Pi) for each node in a modular network.
 These metrics classify nodes into roles such as module hubs, connectors,
 and peripherals."><meta property="og:description" content="Calculates the within-module degree z-score (Zi) and among-module connectivity
@@ -19,7 +19,7 @@ and peripherals."><meta property="og:image" content="https://jiawang1209.github.
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,19 +30,23 @@ and peripherals."><meta property="og:image" content="https://jiawang1209.github.
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="../articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="../articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="../articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="../articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/layout-gallery.html">Layout Gallery</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul></li>
       </ul></div>
 
 
@@ -71,7 +75,15 @@ and peripherals.</p>
 <span>  <span class="va">degree_col</span>,</span>
 <span>  zi_threshold <span class="op">=</span> <span class="fl">2.5</span>,</span>
 <span>  pi_threshold <span class="op">=</span> <span class="fl">0.62</span>,</span>
-<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  point_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Peripherals <span class="op">=</span> <span class="st">"#377eb8"</span>, Connectors <span class="op">=</span> <span class="st">"#4daf4a"</span>, `Module hubs` <span class="op">=</span></span>
+<span>    <span class="st">"#e41a1c"</span>, `Network hubs` <span class="op">=</span> <span class="st">"#ff7f00"</span><span class="op">)</span>,</span>
+<span>  bg_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Peripherals <span class="op">=</span> <span class="st">"#b3cde3"</span>, Connectors <span class="op">=</span> <span class="st">"#ccebc5"</span>, `Module hubs` <span class="op">=</span></span>
+<span>    <span class="st">"#fbb4ae"</span>, `Network hubs` <span class="op">=</span> <span class="st">"#fed9a6"</span><span class="op">)</span>,</span>
+<span>  label_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Peripherals <span class="op">=</span> <span class="st">"black"</span>, Connectors <span class="op">=</span> <span class="st">"black"</span>, `Module hubs` <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    `Network hubs` <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fl">5.5</span>,</span>
+<span>  bg_alpha <span class="op">=</span> <span class="fl">0.25</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -99,7 +111,11 @@ Column name in <code>nodes_bulk</code> containing module labels.</p></dd>
 
 <dt id="arg-degree-col">degree_col<a class="anchor" aria-label="anchor" href="#arg-degree-col"></a></dt>
 <dd><p>Character.
-Column name in <code>nodes_bulk</code> containing node degree (number of edges).</p></dd>
+Column name in <code>nodes_bulk</code> containing node degree (number of edges).
+Note: this column is only <strong>validated</strong> (it must exist and be free of
+<code>NA</code>). The participation coefficient (Pi) derives each node's total
+degree from <code>z_bulk_mat</code> directly, so the values in <code>degree_col</code>
+do not enter the Zi/Pi computation.</p></dd>
 
 
 <dt id="arg-zi-threshold">zi_threshold<a class="anchor" aria-label="anchor" href="#arg-zi-threshold"></a></dt>
@@ -116,6 +132,39 @@ Threshold for among-module connectivity (Pi) in role classification.</p></dd>
 <dd><p>Logical (default = <code>FALSE</code>).
 If <code>TRUE</code>, remove rows with NA in Zi or Pi from the output.
 If <code>FALSE</code>, keep all rows; NA in Zi/Pi results in <code>type = NA</code>.</p></dd>
+
+
+<dt id="arg-point-colors">point_colors<a class="anchor" aria-label="anchor" href="#arg-point-colors"></a></dt>
+<dd><p>Named character vector (or <code>NULL</code>).
+Point/legend colours for the four node roles. Defaults to
+<code>c("Peripherals" = "#377eb8", "Connectors" = "#4daf4a",
+"Module hubs" = "#e41a1c", "Network hubs" = "#ff7f00")</code>.
+You may override all four, a subset (by role name), or pass a single
+colour to apply to every role.</p></dd>
+
+
+<dt id="arg-bg-colors">bg_colors<a class="anchor" aria-label="anchor" href="#arg-bg-colors"></a></dt>
+<dd><p>Named character vector (or <code>NULL</code>).
+Background fill colours for the four quadrants, keyed by role. Defaults to
+<code>c("Peripherals" = "#b3cde3", "Connectors" = "#ccebc5",
+"Module hubs" = "#fbb4ae", "Network hubs" = "#fed9a6")</code>. Same override
+rules as <code>point_colors</code>.</p></dd>
+
+
+<dt id="arg-label-colors">label_colors<a class="anchor" aria-label="anchor" href="#arg-label-colors"></a></dt>
+<dd><p>Named character vector or single colour (or <code>NULL</code>).
+Colours for the four quadrant text labels, keyed by role. Defaults to
+black for all four. Same override rules as <code>point_colors</code>.</p></dd>
+
+
+<dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
+<dd><p>Numeric (default = 5.5).
+Text size of the four quadrant labels.</p></dd>
+
+
+<dt id="arg-bg-alpha">bg_alpha<a class="anchor" aria-label="anchor" href="#arg-bg-alpha"></a></dt>
+<dd><p>Numeric (default = 0.25).
+Opacity of the quadrant background shading (0 = transparent, 1 = opaque).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -171,7 +220,7 @@ modules, facilitating information, material or energy flow across the network.</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -15,7 +15,15 @@ ggnetview_zipi(
   degree_col,
   zi_threshold = 2.5,
   pi_threshold = 0.62,
-  na.rm = FALSE
+  na.rm = FALSE,
+  point_colors = c(Peripherals = "#377eb8", Connectors = "#4daf4a", `Module hubs` =
+    "#e41a1c", `Network hubs` = "#ff7f00"),
+  bg_colors = c(Peripherals = "#b3cde3", Connectors = "#ccebc5", `Module hubs` =
+    "#fbb4ae", `Network hubs` = "#fed9a6"),
+  label_colors = c(Peripherals = "black", Connectors = "black", `Module hubs` = "black",
+    `Network hubs` = "black"),
+  label_size = 5.5,
+  bg_alpha = 0.25
 )
 ```
 
@@ -42,7 +50,10 @@ ggnetview_zipi(
 - degree_col:
 
   Character. Column name in `nodes_bulk` containing node degree (number
-  of edges).
+  of edges). Note: this column is only **validated** (it must exist and
+  be free of `NA`). The participation coefficient (Pi) derives each
+  node's total degree from `z_bulk_mat` directly, so the values in
+  `degree_col` do not enter the Zi/Pi computation.
 
 - zi_threshold:
 
@@ -59,6 +70,36 @@ ggnetview_zipi(
   Logical (default = `FALSE`). If `TRUE`, remove rows with NA in Zi or
   Pi from the output. If `FALSE`, keep all rows; NA in Zi/Pi results in
   `type = NA`.
+
+- point_colors:
+
+  Named character vector (or `NULL`). Point/legend colours for the four
+  node roles. Defaults to
+  `c("Peripherals" = "#377eb8", "Connectors" = "#4daf4a", "Module hubs" = "#e41a1c", "Network hubs" = "#ff7f00")`.
+  You may override all four, a subset (by role name), or pass a single
+  colour to apply to every role.
+
+- bg_colors:
+
+  Named character vector (or `NULL`). Background fill colours for the
+  four quadrants, keyed by role. Defaults to
+  `c("Peripherals" = "#b3cde3", "Connectors" = "#ccebc5", "Module hubs" = "#fbb4ae", "Network hubs" = "#fed9a6")`.
+  Same override rules as `point_colors`.
+
+- label_colors:
+
+  Named character vector or single colour (or `NULL`). Colours for the
+  four quadrant text labels, keyed by role. Defaults to black for all
+  four. Same override rules as `point_colors`.
+
+- label_size:
+
+  Numeric (default = 5.5). Text size of the four quadrant labels.
+
+- bg_alpha:
+
+  Numeric (default = 0.25). Opacity of the quadrant background shading
+  (0 = transparent, 1 = opaque).
 
 ## Value
 

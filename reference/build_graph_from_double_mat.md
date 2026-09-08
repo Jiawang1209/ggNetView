@@ -10,7 +10,7 @@ build_graph_from_double_mat(
   mat2,
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   top_modules = 15,
   seed = 1115
 )

@@ -16,7 +16,9 @@ trans_adjacency_matrix_to_df(adjacency_matrix)
 
 ## Value
 
-a data frame of edge
+A data frame with columns \`from\`, \`to\`, \`weight\` describing the
+edges of the adjacency matrix (one row per edge of the undirected
+graph).
 
 ## Examples
 
@@ -26,6 +28,6 @@ set.seed(1)
 idx <- sample(ncol(adjacency_matrix_example), 50)
 edge_df <- trans_adjacency_matrix_to_df(adjacency_matrix_example[idx, idx])
 head(edge_df)
-#> [1] from to  
+#> [1] from   to     weight
 #> <0 rows> (or 0-length row.names)
 ```

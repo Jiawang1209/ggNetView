@@ -20,7 +20,8 @@ get_network_topology(
   proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
-  bootstrap = 100
+  bootstrap = 100,
+  seed = 1115
 )
 ```
 
@@ -98,6 +99,14 @@ get_network_topology(
   Numeric (default = 100). Number of bootstrap iterations for stability
   analysis
 
+- seed:
+
+  Integer (default = 1115). Random seed for reproducibility. The
+  correlation/network estimation (e.g. SparCC, SpiecEasi, rarefaction)
+  and robustness resampling steps use random number generation; setting
+  this makes results deterministic and consistent with
+  [`get_network_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology_parallel.md).
+
 ## Value
 
 A list containing topology output and robustness output for a single
@@ -121,8 +130,8 @@ head(topo$topology)
 #> 1 Node           100            100     
 #> 2 Edge            50             50     
 #> 3 Degree           1              1     
-#> 4 Distance        59.8            3.43  
-#> 5 Diameter       109.             9.2   
+#> 4 Distance        59.8            3.77  
+#> 5 Diameter       109.             9.6   
 #> 6 Density          0.0101         0.0101
 # }
 ```

@@ -9,7 +9,7 @@ build_graph_from_double_mat_with_module(
   mat1,
   mat2,
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   top_modules = 15,
   seed = 1115
 )

@@ -120,6 +120,19 @@ A list containing topology output and robustness output for a single
 network. When `graph_obj_list` is provided, returns a named list of such
 results.
 
+## Reproducibility note
+
+For a given `seed`, this function returns bit-for-bit identical results
+to the serial
+[`get_network_topology`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md),
+to itself with `parallel = FALSE`, and to itself for any number of
+`n_workers`. Both functions draw the random-network baseline (the
+`Random_nerwork` column) through
+`future.apply::future_lapply(..., future.seed = TRUE)`, which assigns
+each iteration its own L'Ecuyer-CMRG stream independently of the
+backend, so `parallel` and `n_workers` are purely performance switches
+and never change the numbers reported.
+
 ## Examples
 
 ``` r

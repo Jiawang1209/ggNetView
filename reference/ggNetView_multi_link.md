@@ -17,6 +17,7 @@ ggNetView_multi_link(
   method = c("WGCNA", "SpiecEasi", "SPARCC", "cor"),
   cor.method = c("pearson", "kendall", "spearman"),
   proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
+  sig_by = c("pvalue", "FDR"),
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
@@ -24,35 +25,36 @@ ggNetView_multi_link(
   top_modules = 15,
   layout = NULL,
   node_add = 7,
-  ring_n = NULL,
   r = 1,
   center = TRUE,
   idx = NULL,
   shrink = 1,
+  inner_shrink = 1,
   k_nn = 12,
   push_others_delta = 0,
-  layout.module = c("random", "adjacent", "order"),
-  group.by = "Modularity",
-  fill.by = "Modularity",
-  fill = NULL,
-  color = NULL,
-  pointsize = c(1, 5),
-  jitter = FALSE,
-  jitter_sd = 0.01,
-  mapping_line = FALSE,
-  linealpha = 0.25,
-  linecolor = "grey70",
-  inner_curve = FALSE,
-  inner_curvature = 0.12,
-  inner_curve_adaptive = TRUE,
-  inner_curve_adaptive_range = c(0.7, 1.3),
-  inner_curve_adaptive_bins = 7,
-  add_outer = "circle",
-  q_outer = 0.88,
-  expand_outer = 1.02,
-  outerwidth = 1.25,
-  outerlinetype = 2,
-  outeralpha = 0.5,
+  layout_module = c("random", "adjacent", "order"),
+  group_by = "Modularity",
+  node_fill = "Modularity",
+  node_fill_values = NULL,
+  node_color_values = NULL,
+  node_size_range = c(1, 5),
+  node_jitter = FALSE,
+  node_jitter_sd = 0.01,
+  edge_color = "grey70",
+  edge_color_values = NULL,
+  edge_alpha = 0.25,
+  edge_curve = FALSE,
+  edge_curvature = 0.12,
+  edge_curve_adaptive = TRUE,
+  edge_curve_adaptive_range = c(0.7, 1.3),
+  edge_curve_adaptive_bins = 7,
+  module_outline = "circle",
+  module_outline_q = 0.88,
+  module_outline_expand = 1.02,
+  module_outline_bandwidth = 1,
+  module_outline_width = 1.25,
+  module_outline_linetype = 2,
+  module_outline_alpha = 0.5,
   link_level = "Module",
   link_curve = FALSE,
   link_curvature = 0.2,
@@ -62,13 +64,13 @@ ggNetView_multi_link(
   link_curve_adaptive_bins = 7,
   link_color_node = NULL,
   link_color_module = NULL,
-  link_linewidth_node = 1,
-  link_linewidth_module = 1,
+  link_width_node = 1,
+  link_width_module = 1,
   link_linetype_node = 2,
   link_linetype_module = 1,
-  link_linealpha_node = 0.25,
-  link_linealpha_module = 0.5,
-  dropOthers = FALSE,
+  link_alpha_node = 0.25,
+  link_alpha_module = 0.5,
+  drop_others = FALSE,
   calculate_topology = FALSE,
   comparisons = TRUE,
   comparisons_groups = NULL,
@@ -82,16 +84,54 @@ ggNetView_multi_link(
   nrow = NULL,
   ncol = NULL,
   sine_period = 4,
-  label_offset = 0.2,
-  label_size = 4,
-  add_group_outer = FALSE,
-  add_group_outer_expand = 2,
-  add_group_outer_color = "grey50",
-  add_group_outer_fill = NULL,
-  add_group_outer_fill_alpha = 0.2,
-  add_group_outer_linetype = 1,
-  add_group_outer_linewidth = 0.5,
-  seed = 1115
+  group_label_offset = 0.2,
+  group_label_size = 4,
+  network_outline = FALSE,
+  network_outline_expand = 2,
+  network_outline_color = "grey50",
+  network_outline_fill = NULL,
+  network_outline_fill_alpha = 0.2,
+  network_outline_linetype = 1,
+  network_outline_width = 0.5,
+  seed = 1115,
+  ring_n = deprecated(),
+  layout.module = deprecated(),
+  group.by = deprecated(),
+  fill.by = deprecated(),
+  fill = deprecated(),
+  color = deprecated(),
+  pointsize = deprecated(),
+  jitter = deprecated(),
+  jitter_sd = deprecated(),
+  mapping_line = deprecated(),
+  linealpha = deprecated(),
+  linecolor = deprecated(),
+  inner_curve = deprecated(),
+  inner_curvature = deprecated(),
+  inner_curve_adaptive = deprecated(),
+  inner_curve_adaptive_range = deprecated(),
+  inner_curve_adaptive_bins = deprecated(),
+  add_outer = deprecated(),
+  q_outer = deprecated(),
+  expand_outer = deprecated(),
+  bandwidth_scale = deprecated(),
+  outerwidth = deprecated(),
+  outerlinetype = deprecated(),
+  outeralpha = deprecated(),
+  link_linewidth_node = deprecated(),
+  link_linewidth_module = deprecated(),
+  link_linealpha_node = deprecated(),
+  link_linealpha_module = deprecated(),
+  dropOthers = deprecated(),
+  label_offset = deprecated(),
+  label_size = deprecated(),
+  add_group_outer = deprecated(),
+  add_group_outer_expand = deprecated(),
+  add_group_outer_color = deprecated(),
+  add_group_outer_fill = deprecated(),
+  add_group_outer_fill_alpha = deprecated(),
+  add_group_outer_linetype = deprecated(),
+  add_group_outer_linewidth = deprecated()
 )
 ```
 
@@ -155,6 +195,17 @@ ggNetView_multi_link(
   "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", and
   "none".
 
+- sig_by:
+
+  Character (default `"pvalue"`). Which column decides whether a
+  between-module comparison is kept (\< 0.05): the raw `"pvalue"`
+  (default; preserves historical behaviour) or the BH-adjusted `"FDR"`
+  column. The `FDR` is Benjamini-Hochberg adjusted *within each
+  group-pair's* module-vs-module comparison grid (as computed by
+  `compare_modules_by_overlap()`), not pooled globally across all
+  group-pairs; use `"FDR"` to damp false positives from the many module
+  comparisons made within a pair.
+
 - module.method:
 
   Character. Network community detection (module identification) method.
@@ -192,10 +243,6 @@ ggNetView_multi_link(
   Integer (default = 7). Number of nodes to add in each layer of the
   layout.
 
-- ring_n:
-
-  Numeric (default = 7) Numbers of ring in rings layout.
-
 - r:
 
   Numeric (default = 1). Radius increment for concentric or layered
@@ -214,6 +261,13 @@ ggNetView_multi_link(
 
   Numeric (default = 1). Shrinkage factor applied to the center points.
 
+- inner_shrink:
+
+  Numeric (default = 1). Intra-module compactness factor for
+  `layout = "WGCNA"` only. See
+  [`ggNetView`](https://jiawang1209.github.io/ggNetView/reference/ggNetView.md)
+  for details. Ignored by other layouts.
+
 - k_nn:
 
   Numeric (default = 8). Number of nearest neighbors used to build the
@@ -224,7 +278,7 @@ ggNetView_multi_link(
   Numeric (default = 0). Radial offset applied to the "Others" module to
   slightly
 
-- layout.module:
+- layout_module:
 
   Character (default = "random") - random : modules are distributed more
   randomly and independently. - adjacent : modules are positioned close
@@ -232,84 +286,86 @@ ggNetView_multi_link(
   distributed by order, applicable to \`Bipartite, Tripartite,
   Quadripartite, Multipartite, Pentapartite Layout\`
 
-- group.by:
+- group_by:
 
   Character (default = "Modularity"). Change group for nodes
 
-- fill.by:
+- node_fill:
 
   Character (default = "Modularity"). Change fill for nodes
 
-- fill:
+- node_fill_values:
 
   Named vector of colors for node/module fill (e.g.
   `c("M1" = "red", "M2" = "blue")`). If `NULL` (default), uses viridis
   discrete fill scale (`scale_fill_viridis_d`); if provided, uses
-  `scale_fill_manual(values = fill)`.
+  `scale_fill_manual(values = node_fill_values)`.
 
-- color:
+- node_color_values:
 
   Color setting for node/module border. Supports either a single color
   string (fixed border color) or a named vector (module-to-color
-  mapping, similar to `fill`). If `NULL`, mapped borders use viridis
-  discrete color scale (`scale_color_viridis_d`).
+  mapping, similar to `node_fill_values`). If `NULL`, mapped borders use
+  viridis discrete color scale (`scale_color_viridis_d`).
 
-- pointsize:
+- node_size_range:
 
   Numeric vector of length 2 (default = `c(1, 5)`). The range of point
   size when mapping `Degree` to size. First value is minimum size,
   second is maximum size.
 
-- jitter:
+- node_jitter:
 
-  Logical (default = FALSE). Whether to apply jitter to points.
+  Logical (default = FALSE). Whether to apply node_jitter to points.
 
-- jitter_sd:
+- node_jitter_sd:
 
-  Integer (default = 0.1). The standard deviation of the jitter applied
-  when \`jitter = TRUE\`.
+  Integer (default = 0.1). The standard deviation of the node_jitter
+  applied when \`node_jitter = TRUE\`.
 
-- mapping_line:
+- edge_color:
 
-  Logical or Character (default = FALSE). Whether to map line color in
-  ggNetView. If a character string is provided, it must be a variable
-  name in edge data.
+  Character (default = "grey70"). Within-group edge colour: an edge
+  column name (mapping; `"corr_direction"` colours positive/negative
+  edges red/blue and adds the counts to the group label) or a single
+  colour (constant).
 
-- linealpha:
+- edge_color_values:
+
+  Named colour vector or NULL (default = NULL). Manual palette for a
+  categorical `edge_color` mapping.
+
+- edge_alpha:
 
   Integer (default = 0.25). Change line alpha.
 
-- linecolor:
-
-  Character (default = "grey70"). Change line color.
-
-- inner_curve:
+- edge_curve:
 
   Logical (default = FALSE). Whether to draw within-group edges as
   curves.
 
-- inner_curvature:
+- edge_curvature:
 
   Numeric (default = 0.12). Curvature for within-group edges when
-  `inner_curve = TRUE`.
+  `edge_curve = TRUE`.
 
-- inner_curve_adaptive:
+- edge_curve_adaptive:
 
   Logical (default = TRUE). Whether to adapt within-group edge curvature
-  by edge length when `inner_curve = TRUE`.
+  by edge length when `edge_curve = TRUE`.
 
-- inner_curve_adaptive_range:
+- edge_curve_adaptive_range:
 
   Numeric vector of length 2 (default = c(0.7, 1.3)). Multipliers
-  applied to `inner_curvature` for shortest and longest within-group
+  applied to `edge_curvature` for shortest and longest within-group
   edges.
 
-- inner_curve_adaptive_bins:
+- edge_curve_adaptive_bins:
 
   Integer (default = 7). Number of bins used to approximate per-edge
   adaptive curvature for within-group edges.
 
-- add_outer:
+- module_outline:
 
   Logical or Character (default = "circle"). Add outer boundaries for
   matched modules. Supported values: `"circle"` (use
@@ -318,26 +374,34 @@ ggNetView_multi_link(
   `"none"` (disable). Logical `TRUE`/`FALSE` are accepted and mapped to
   `"circle"`/`"none"`.
 
-- q_outer:
+- module_outline_q:
 
-  Numeric (default = 0.88). Quantile of radial distance used to
-  construct the smooth outer boundary when `add_outer = "manual"`.
+  Numeric (default = 0.88). HDR coverage of the outer boundary when
+  `module_outline = "manual"`: the contour is drawn at the density level
+  whose iso-density region contains a fraction `module_outline_q` of the
+  module's empirical probability mass.
 
-- expand_outer:
+- module_outline_expand:
 
-  Numeric (default = 1.02). Global scaling factor applied to the smooth
-  outer boundary when `add_outer = "manual"`.
+  Numeric (default = 1.02). Multiplicative scaling applied to each
+  polygon from its own centroid when `module_outline = "manual"`.
 
-- outerwidth:
+- module_outline_bandwidth:
+
+  Numeric (default = 1.0). Multiplier on the robust normal-reference 2D
+  KDE bandwidth used to build the outer boundary when
+  `module_outline = "manual"`.
+
+- module_outline_width:
 
   Numeric (default = 1.25). Line width for module outer boundaries.
 
-- outerlinetype:
+- module_outline_linetype:
 
   Integer or character (default = 2). Linetype for module outer
   boundaries (e.g. 1 = solid, 2 = dashed).
 
-- outeralpha:
+- module_outline_alpha:
 
   Numeric (default = 0.5). Alpha for module outer boundaries.
 
@@ -399,12 +463,12 @@ ggNetView_multi_link(
   Character or NULL (default = NULL). Colors for module-to-module
   cross-group links. Same rules as `link_color_node`.
 
-- link_linewidth_node:
+- link_width_node:
 
   Numeric (default = 1). Line width for node-to-node cross-group links.
   Single value or vector (by pair index/named).
 
-- link_linewidth_module:
+- link_width_module:
 
   Numeric (default = 1). Line width for module-to-module cross-group
   links. Single value or vector.
@@ -420,21 +484,26 @@ ggNetView_multi_link(
   Integer or character (default = 1). Linetype for module-to-module
   cross-group links. Single value or vector.
 
-- link_linealpha_node:
+- link_alpha_node:
 
   Numeric (default = 0.25). Alpha (transparency) for node-to-node
   cross-group links. Single value or vector.
 
-- link_linealpha_module:
+- link_alpha_module:
 
   Numeric (default = 0.5). Alpha (transparency) for module-to-module
   cross-group links. Single value or vector.
 
-- dropOthers:
+- drop_others:
 
   Logical (default = FALSE). If TRUE, remove nodes in the `"Others"`
-  module from each group's `graph_obj` before layout, plotting, and
-  module-overlap comparison.
+  module from each group's `graph_obj` before layout and plotting. This
+  is a display-only switch: the module-overlap comparison always runs on
+  the complete network (including `"Others"` nodes), so the set of
+  cross-group module links is identical for `drop_others = TRUE` and
+  `FALSE`; only the plotted nodes differ. Note that `"Others"` is a
+  display bucket for every module ranked below `top_modules`, not a
+  community, and never takes part in module links.
 
 - calculate_topology:
 
@@ -540,57 +609,77 @@ ggNetView_multi_link(
   Numeric (default = 4). Groups per wavelength for `snake_vertical*`;
   ignored for `sin`, `cos`, `-sin`, `-cos`.
 
-- label_offset:
+- group_label_offset:
 
   Numeric (default = 0.2). Vertical offset of group labels above each
   group's layout (added to max y).
 
-- label_size:
+- group_label_size:
 
   Numeric (default = 4). Font size for group labels (Group, Node, Edge,
   etc.).
 
-- add_group_outer:
+- network_outline:
 
   Logical (default = FALSE). Whether to add a circle boundary around
   each group (mimics
   [`ggforce::geom_mark_circle`](https://ggforce.data-imaginist.com/reference/geom_mark_circle.html)).
 
-- add_group_outer_expand:
+- network_outline_expand:
 
   Numeric (default = 2). Expansion in mm for the group circle to account
   for point size; passed to `geom_mark_circle(expand = ...)`.
 
-- add_group_outer_color:
+- network_outline_color:
 
   Character (default = "grey50"). Color of the group outer circle
   border. A single value applies to all groups; a named vector maps
   group names to colors (e.g. `c("WT" = "blue", "KO" = "red")`); an
   unnamed vector is used by index (recycled if needed).
 
-- add_group_outer_fill:
+- network_outline_fill:
 
   Character or NULL (default = NULL). Fill color of the group outer
   circle. `NULL` = no fill (transparent). A single value, named vector,
-  or unnamed vector works like `add_group_outer_color`.
+  or unnamed vector works like `network_outline_color`.
 
-- add_group_outer_fill_alpha:
+- network_outline_fill_alpha:
 
   Numeric (default = 0.2). Alpha (transparency) of the group outer
   circle fill; 0 = fully transparent, 1 = opaque.
 
-- add_group_outer_linetype:
+- network_outline_linetype:
 
   Integer or character (default = 1). Linetype of the group outer circle
   (e.g. 1 = solid, 2 = dashed).
 
-- add_group_outer_linewidth:
+- network_outline_width:
 
   Numeric (default = 0.5). Line width of the group outer circle.
 
 - seed:
 
   Integer (default = 1115). Random seed for reproducibility.
+
+- ring_n, layout.module, group.by, fill.by, fill, color, pointsize,
+  jitter, jitter_sd, mapping_line, linealpha, linecolor, inner_curve,
+  inner_curvature, inner_curve_adaptive, inner_curve_adaptive_range,
+  inner_curve_adaptive_bins, add_outer, q_outer, expand_outer,
+  bandwidth_scale, outerwidth, outerlinetype, outeralpha,
+  link_linewidth_node, link_linewidth_module, link_linealpha_node,
+  link_linealpha_module, dropOthers, label_offset, label_size,
+  add_group_outer, add_group_outer_expand, add_group_outer_color,
+  add_group_outer_fill, add_group_outer_fill_alpha,
+  add_group_outer_linetype, add_group_outer_linewidth:
+
+  **\[deprecated\]** Pre-0.2.0 argument names, kept for backward
+  compatibility. They emit a deprecation warning and are forwarded to
+  the new argument (same renaming scheme as
+  [`ggNetView`](https://jiawang1209.github.io/ggNetView/reference/ggNetView.md);
+  in addition `inner_curve*` -\> `edge_curve*`, `link_linewidth_*` -\>
+  `link_width_*`, `link_linealpha_*` -\> `link_alpha_*`,
+  `label_offset`/`label_size` -\> `group_label_offset`/
+  `group_label_size`).
 
 ## Value
 

@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multi-orientation environmental-species correlation heatmaps2 — gglink_heatmap_triple"><meta name="description" content="Visualize multi-orientation environmental-species correlation heatmaps2"><meta property="og:description" content="Visualize multi-orientation environmental-species correlation heatmaps2"><meta property="og:image" content="https://jiawang1209.github.io/ggNetView/logo.png"></head><body>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multi-orientation environmental-species correlation heatmaps2 — gglink_heatmap_triple"><meta name="description" content="Visualize multi-orientation environmental-species correlation heatmaps2"><meta property="og:description" content="Visualize multi-orientation environmental-species correlation heatmaps2"><meta property="og:image" content="https://jiawang1209.github.io/ggNetView/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,19 +24,23 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="../articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="../articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="../articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="../articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/layout-gallery.html">Layout Gallery</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul></li>
       </ul></div>
 
 
@@ -63,7 +67,12 @@
 <span>  sample_col <span class="op">=</span> <span class="st">"Sample"</span>,</span>
 <span>  delim <span class="op">=</span> <span class="st">","</span>,</span>
 <span>  hub_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">6</span></span>
+<span>  r <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>  cor.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span><span class="op">)</span>,</span>
+<span>  cor.use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pairwise"</span>, <span class="st">"everything"</span>, <span class="st">"all"</span>, <span class="st">"complete"</span>, <span class="st">"na"</span><span class="op">)</span>,</span>
+<span>  env_p_adjust <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  link_p_adjust <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  sig_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -83,12 +92,19 @@ File path or data frame of experiment data.</p></dd>
 
 <dt id="arg-edge">edge<a class="anchor" aria-label="anchor" href="#arg-edge"></a></dt>
 <dd><p>character or data.frame
-File path or data frame of edge data.</p></dd>
+File path or data frame of edge data. Must contain columns <code>from</code> and
+<code>to</code>; an optional numeric <code>weight</code> column is mapped to edge
+colour/width (defaults to <code>1</code> when absent).</p></dd>
 
 
 <dt id="arg-node">node<a class="anchor" aria-label="anchor" href="#arg-node"></a></dt>
 <dd><p>character or data.frame
-File path or data frame of node data.</p></dd>
+File path or data frame of node data. Must contain a <code>node</code> column
+listing every node referenced by <code>edge</code>; node names matching columns
+of <code>Experiment</code> become the hub nodes anchored on the central heatmap.
+An optional <code>annotation</code> column drives node fill/shape (when absent
+it is derived automatically: <code>"Experiment"</code> for hub nodes,
+<code>"Environment"</code> otherwise).</p></dd>
 
 
 <dt id="arg-sample-col">sample_col<a class="anchor" aria-label="anchor" href="#arg-sample-col"></a></dt>
@@ -103,11 +119,55 @@ Delimiter for reading input files.</p></dd>
 
 <dt id="arg-hub-n">hub_n<a class="anchor" aria-label="anchor" href="#arg-hub-n"></a></dt>
 <dd><p>Integer (default = NULL)
-Number of hub nodes used in layout; if NULL, uses all nodes.</p></dd>
+If <code>NULL</code> (recommended), hubs are the <code>Experiment</code> variables
+present in <code>node</code>. If an integer, the <code>hub_n</code> highest
+out-degree nodes are used instead (they must then correspond one-to-one
+to the Experiment variables, and <code>node</code> rows must list circle nodes
+first).</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
-<dd><p>numeric (default = 6)</p></dd>
+<dd><p>numeric (default = 6)
+Radius of the outer node circle.</p></dd>
+
+
+<dt id="arg-cor-method">cor.method<a class="anchor" aria-label="anchor" href="#arg-cor-method"></a></dt>
+<dd><p>Character (default = "pearson")
+Correlation method passed to <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test()</a></code>, used for both the
+Environment x Environment heatmap and the Environment x Experiment links.
+One of <code>"pearson"</code>, <code>"kendall"</code>, <code>"spearman"</code>.</p></dd>
+
+
+<dt id="arg-cor-use">cor.use<a class="anchor" aria-label="anchor" href="#arg-cor-use"></a></dt>
+<dd><p>Character (default = "pairwise")
+Missing-value handling passed to <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test()</a></code>; same vocabulary as
+<code><a href="gglink_heatmaps.html">gglink_heatmaps()</a></code>. Note the default differs from that function
+(<code>"everything"</code>) because <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test()</a></code> itself defaults to
+<code>"pairwise"</code>, which is what this plot has always used.</p></dd>
+
+
+<dt id="arg-env-p-adjust">env_p_adjust<a class="anchor" aria-label="anchor" href="#arg-env-p-adjust"></a></dt>
+<dd><p>Character (default = "none")
+Multiple-testing correction for the Environment x Environment correlations
+(the significance stars on the triangular heatmap). Any method accepted by
+<code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code>, or <code>"none"</code>.</p></dd>
+
+
+<dt id="arg-link-p-adjust">link_p_adjust<a class="anchor" aria-label="anchor" href="#arg-link-p-adjust"></a></dt>
+<dd><p>Character (default = "none")
+Multiple-testing correction for the Environment x Experiment correlations
+(the linetype of the link segments). Any method accepted by
+<code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code>, or <code>"none"</code>.
+Note that <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test()</a></code> defaults to <code>"holm"</code> here but still
+reports raw p-values in <code>$p</code>, so the previous hard-coded call was in
+effect uncorrected; <code>"none"</code> keeps that behaviour.</p></dd>
+
+
+<dt id="arg-sig-breaks">sig_breaks<a class="anchor" aria-label="anchor" href="#arg-sig-breaks"></a></dt>
+<dd><p>Numeric vector of length 3 (default = c(0.05, 0.01, 0.001))
+Strictly decreasing p-value cut points shared by the heatmap stars
+(<code>""</code> / <code>"*"</code> / <code>"**"</code> / <code>"***"</code>) and the link-segment
+linetype legend.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -118,11 +178,16 @@ Number of hub nodes used in layout; if NULL, uses all nodes.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Environment / Experiment: samples in rows (with a Sample column),</span></span></span>
+<span class="r-in"><span><span class="co"># variables in columns. Edges connect Experiment variables (hubs) to</span></span></span>
+<span class="r-in"><span><span class="co"># any other nodes.</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gglink_heatmap_triple</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  Environment <span class="op">=</span> <span class="va">env_df</span>,</span></span>
-<span class="r-in"><span>  Experiment  <span class="op">=</span> <span class="va">exp_df</span>,</span></span>
-<span class="r-in"><span>  edge        <span class="op">=</span> <span class="va">edge_df</span>,</span></span>
-<span class="r-in"><span>  node        <span class="op">=</span> <span class="va">node_df</span></span></span>
+<span class="r-in"><span>  Environment <span class="op">=</span> <span class="va">env_df</span>,   <span class="co"># Sample + environmental variables</span></span></span>
+<span class="r-in"><span>  Experiment  <span class="op">=</span> <span class="va">exp_df</span>,   <span class="co"># Sample + experiment variables (become hubs)</span></span></span>
+<span class="r-in"><span>  edge        <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ExpA"</span>, <span class="st">"ExpB"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                           to   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pH"</span>, <span class="st">"TN"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                           weight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  node        <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>node <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pH"</span>, <span class="st">"TN"</span>, <span class="st">"ExpA"</span>, <span class="st">"ExpB"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
@@ -136,7 +201,7 @@ Number of hub nodes used in layout; if NULL, uses all nodes.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

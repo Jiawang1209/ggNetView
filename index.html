@@ -18,8 +18,8 @@
     }
   };
 </script><script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Reproducible and Deterministic Network Analysis and Visualization">
 <meta name="description" content="Provides a unified, reproducible framework for analyzing and visualizing complex biological, ecological, and microbial association networks. Includes tools for building correlation and co-occurrence networks (e.g., WGCNA, SpiecEasi, SparCC), computing topological metrics, performing module-level analyses, and rendering deterministic layouts based on ggraph and ggplot2. The package emphasizes reproducibility, modularity, and publication-quality figures.">
@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,25 +47,27 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="articles/layout-gallery.html">Layout Gallery</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
       </ul>
 </div>
 
@@ -80,24 +82,54 @@
 </div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>ggNetView is an R package for network analysis and visualization. It provides flexible and publication-ready tools for exploring complex biological and ecological networks.</p>
-<p>  </p>
+<p>ggNetView: An R Package for Reproducible Biological Network Analysis and Visualization. It provides flexible and publication-ready tools for exploring complex biological and ecological networks.</p>
+<p><a href="https://github.com/Jiawang1209/ggNetView" class="external-link">GitHub Repository</a></p>
+<p><a href="https://jiawang1209.github.io/ggNetView-manual/">User Manual</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.22635864" class="external-link">Zenodo DOI</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of ggNetView from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># install.packages("devtools")</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"Jiawang1209/ggNetView"</span>)</span></code></pre></div>
+<p><code>ggNetView</code> depends on a number of CRAN packages. We recommend installing the required dependencies first, and then installing <code>ggNetView</code> from GitHub.</p>
+<p>Current development release: v0.2.1</p>
+<div class="section level3">
+<h3 id="step1-install-cran-dependencies">Step1: install CRAN dependencies<a class="anchor" aria-label="anchor" href="#step1-install-cran-dependencies"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>cran_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="st">"boot"</span>, <span class="st">"dplyr"</span>, <span class="st">"FNN"</span>, <span class="st">"future"</span>, <span class="st">"future.apply"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="st">"ggforce"</span>, <span class="st">"ggnewscale"</span>, <span class="st">"ggplot2"</span>, <span class="st">"ggraph"</span>, <span class="st">"ggrepel"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="st">"Hmisc"</span>, <span class="st">"huge"</span>, <span class="st">"igraph"</span>, <span class="st">"magrittr"</span>, <span class="st">"MASS"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="st">"Matrix"</span>, <span class="st">"patchwork"</span>, <span class="st">"progressr"</span>, <span class="st">"psych"</span>, <span class="st">"purrr"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="st">"qgraph"</span>, <span class="st">"Rcpp"</span>, <span class="st">"RcppArmadillo"</span>, <span class="st">"readr"</span>, <span class="st">"rlang"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="st">"scales"</span>, <span class="st">"scatterpie"</span>, <span class="st">"stringr"</span>, <span class="st">"tibble"</span>, <span class="st">"tidygraph"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="st">"tidyr"</span>, <span class="st">"vegan"</span>, <span class="st">"VGAM"</span>, <span class="st">"WGCNA"</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> cran_pkgs[<span class="sc">!</span>cran_pkgs <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>]]</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(new_pkgs)) <span class="fu">install.packages</span>(new_pkgs)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="step2-optional-install-suggested-packages">Step2: (optional) install suggested packages<a class="anchor" aria-label="anchor" href="#step2-optional-install-suggested-packages"></a>
+</h3>
+<p>These packages are not required for the core functionality, but enable additional features (e.g. dynamic tree cut, node influence, vignettes, tests):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"dynamicTreeCut"</span>, <span class="st">"influential"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                   <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                   <span class="st">"RobustRankAggreg"</span>, <span class="st">"testthat"</span>))</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="step3-install-ggnetview-from-github">Step3: install ggNetView from GitHub<a class="anchor" aria-label="anchor" href="#step3-install-ggnetview-from-github"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"Jiawang1209/ggNetView"</span>)</span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
-<h2 id="example1">Example1<a class="anchor" aria-label="anchor" href="#example1"></a>
+<h2 id="example1-co-expression-network">Example1: Co-expression Network<a class="anchor" aria-label="anchor" href="#example1-co-expression-network"></a>
 </h2>
 <div class="section level3">
 <h3 id="step1-load-ggnetview">Step1: load ggNetView<a class="anchor" aria-label="anchor" href="#step1-load-ggnetview"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.5.2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://eliocamp.github.io/ggnewscale/" class="external-link">ggnewscale</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Jiawang1209/ggNetView" class="external-link">ggNetView</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -112,20 +144,17 @@
 <span><span class="co">#&gt;  ░███████   ░███████</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Yue Liu, Chao Wang (2026). ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization.</span></span>
+<span><span class="co">#&gt; ggNetView: Reproducible and Deterministic Network Analysis and Visualization</span></span>
+<span><span class="co">#&gt; Version: 0.2.1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Maintainers:</span></span>
-<span><span class="co">#&gt;    - Yue Liu &lt;yueliu@iae.ac.cn&gt;</span></span>
-<span><span class="co">#&gt;    - Chao Wang &lt;cwang@iae.ac.cn&gt;</span></span>
+<span><span class="co">#&gt;   Authors:     Yue Liu, Chao Wang</span></span>
+<span><span class="co">#&gt;   Maintainer:  Yue Liu &lt;yueliu@iae.ac.cn&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Manual: https://jiawang1209.github.io/ggNetView-manual/</span></span>
-<span><span class="co">#&gt;   GitHub: https://github.com/Jiawang1209/ggNetView</span></span>
+<span><span class="co">#&gt;   Manual:      https://jiawang1209.github.io/ggNetView-manual/</span></span>
+<span><span class="co">#&gt;   GitHub:      https://github.com/Jiawang1209/ggNetView</span></span>
 <span><span class="co">#&gt;   Bug Reports: https://github.com/Jiawang1209/ggNetView/issues</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Type citation('ggNetView') for how to cite this package.</span></span>
-<span><span class="co">#&gt;   Run browseVignettes('ggNetView') for documentation.</span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<span><span class="co">#&gt;   Type citation('ggNetView') for how to cite this package.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step2-load-data">Step2: load Data<a class="anchor" aria-label="anchor" href="#step2-load-data"></a>
@@ -133,10 +162,9 @@
 <blockquote>
 <p>You can load raw matrix</p>
 </blockquote>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_tab"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">otu_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_tab"</span><span class="op">)</span>          <span class="co"># raw OTU/feature count matrix (features x samples)</span></span>
+<span><span class="va">otu_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>        <span class="co"># peek at the first 5 rows/cols</span></span>
 <span><span class="co">#&gt;        KO1  KO2  KO3  KO4  KO5</span></span>
 <span><span class="co">#&gt; ASV_1 1113 1968  816 1372 1062</span></span>
 <span><span class="co">#&gt; ASV_2 1922 1227 2355 2218 2885</span></span>
@@ -146,10 +174,9 @@
 <blockquote>
 <p>You can load rarely matrix. Note : the rownames of <code>otu_rare</code> is the features.</p>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_rare"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">otu_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_rare"</span><span class="op">)</span>         <span class="co"># rarefied count matrix; rownames = features</span></span>
+<span><span class="va">otu_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>        <span class="co"># peek at the first 5 rows/cols</span></span>
 <span><span class="co">#&gt;        KO1  KO2  KO3  KO4  KO5</span></span>
 <span><span class="co">#&gt; ASV_1 1113 1968  816 1372 1062</span></span>
 <span><span class="co">#&gt; ASV_2 1922 1227 2355 2218 2885</span></span>
@@ -159,10 +186,9 @@
 <blockquote>
 
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_rare_relative"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">otu_rare_relative</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_rare_relative"</span><span class="op">)</span>        <span class="co"># rarefied + relative-abundance matrix (features x samples)</span></span>
+<span><span class="va">otu_rare_relative</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>      <span class="co"># peek at the first 5 rows/cols</span></span>
 <span><span class="co">#&gt;              KO1        KO2        KO3        KO4        KO5</span></span>
 <span><span class="co">#&gt; ASV_1 0.03306667 0.05453333 0.02013333 0.03613333 0.02686667</span></span>
 <span><span class="co">#&gt; ASV_2 0.05750000 0.03393333 0.06046667 0.05810000 0.07320000</span></span>
@@ -172,10 +198,9 @@
 <blockquote>
 <p>You can load node annotation. Note : the rownames of <code>tax_tab</code> is NULL.</p>
 </blockquote>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"tax_tab"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tax_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"tax_tab"</span><span class="op">)</span>          <span class="co"># node (taxonomy) annotation table; rownames = NULL</span></span>
+<span><span class="va">tax_tab</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>        <span class="co"># peek at the first 5 rows/cols</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
 <span><span class="co">#&gt;   OTUID  Kingdom  Phylum          Class          Order            </span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;            </span></span>
@@ -188,47 +213,47 @@
 <div class="section level3">
 <h3 id="step3-create-graph-object">Step3: create graph object<a class="anchor" aria-label="anchor" href="#step3-create-graph-object"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/build_graph_from_mat.html">build_graph_from_mat</a></span><span class="op">(</span></span>
-<span>  mat <span class="op">=</span> <span class="va">otu_rare_relative</span>,</span>
-<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"WGCNA"</span>,</span>
-<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
-<span>  proc <span class="op">=</span> <span class="st">"BH"</span>,</span>
-<span>  r.threshold <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span>  p.threshold <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>  node_annotation <span class="op">=</span> <span class="va">tax_tab</span></span>
+<span>  mat <span class="op">=</span> <span class="va">otu_rare_relative</span>,    <span class="co"># variables x samples abundance matrix</span></span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,  <span class="co"># pre-correlation transform; "none" = keep as-is</span></span>
+<span>  method <span class="op">=</span> <span class="st">"WGCNA"</span>,           <span class="co"># correlation backend: WGCNA::corAndPvalue</span></span>
+<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,     <span class="co"># Pearson correlation</span></span>
+<span>  proc <span class="op">=</span> <span class="st">"BH"</span>,                <span class="co"># multiple-testing correction (Benjamini-Hochberg)</span></span>
+<span>  r.threshold <span class="op">=</span> <span class="fl">0.7</span>,          <span class="co"># |r| cutoff for keeping an edge</span></span>
+<span>  p.threshold <span class="op">=</span> <span class="fl">0.05</span>,         <span class="co"># adjusted p-value cutoff</span></span>
+<span>  node_annotation <span class="op">=</span> <span class="va">tax_tab</span>   <span class="co"># taxonomy joined onto each node by name</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">obj</span></span>
-<span><span class="co">#&gt; # A tbl_graph: 2049 nodes and 9602 edges</span></span>
+<span><span class="va">obj</span>                           <span class="co"># tbl_graph with Modularity / Degree / Strength + taxonomy</span></span>
+<span><span class="co">#&gt; # A tbl_graph: 1951 nodes and 8732 edges</span></span>
 <span><span class="co">#&gt; #</span></span>
-<span><span class="co">#&gt; # An undirected simple graph with 100 components</span></span>
+<span><span class="co">#&gt; # An undirected simple graph with 120 components</span></span>
 <span><span class="co">#&gt; #</span></span>
-<span><span class="co">#&gt; # Node Data: 2,049 × 14 (active)</span></span>
+<span><span class="co">#&gt; # Node Data: 1,951 × 14 (active)</span></span>
 <span><span class="co">#&gt;    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;   &lt;fct&gt;      &lt;ord&gt;       &lt;chr&gt;       &lt;ord&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 ASV_916 1          1           1           1              58     50.5 Bacter…</span></span>
-<span><span class="co">#&gt;  2 ASV_777 1          1           1           1              58     48.7 Bacter…</span></span>
-<span><span class="co">#&gt;  3 ASV_606 1          1           1           1              55     45.8 Bacter…</span></span>
-<span><span class="co">#&gt;  4 ASV_740 1          1           1           1              54     47.2 Bacter…</span></span>
-<span><span class="co">#&gt;  5 ASV_14… 1          1           1           1              54     44.5 Bacter…</span></span>
-<span><span class="co">#&gt;  6 ASV_23… 1          1           1           1              54     47.4 Bacter…</span></span>
-<span><span class="co">#&gt;  7 ASV_15… 1          1           1           1              52     45.3 Bacter…</span></span>
-<span><span class="co">#&gt;  8 ASV_24… 1          1           1           1              52     43.0 Bacter…</span></span>
-<span><span class="co">#&gt;  9 ASV_19… 1          1           1           1              52     43.0 Bacter…</span></span>
-<span><span class="co">#&gt; 10 ASV_568 1          1           1           1              51     45.1 Bacter…</span></span>
-<span><span class="co">#&gt; # ℹ 2,039 more rows</span></span>
+<span><span class="co">#&gt;  1 ASV_916 1          1           1           1              57     49.7 Bacter…</span></span>
+<span><span class="co">#&gt;  2 ASV_777 1          1           1           1              55     46.4 Bacter…</span></span>
+<span><span class="co">#&gt;  3 ASV_23… 1          1           1           1              53     46.6 Bacter…</span></span>
+<span><span class="co">#&gt;  4 ASV_606 1          1           1           1              51     42.7 Bacter…</span></span>
+<span><span class="co">#&gt;  5 ASV_740 1          1           1           1              51     44.9 Bacter…</span></span>
+<span><span class="co">#&gt;  6 ASV_15… 1          1           1           1              50     43.8 Bacter…</span></span>
+<span><span class="co">#&gt;  7 ASV_568 1          1           1           1              49     43.6 Bacter…</span></span>
+<span><span class="co">#&gt;  8 ASV_671 1          1           1           1              49     43.7 Bacter…</span></span>
+<span><span class="co">#&gt;  9 ASV_664 1          1           1           1              49     42.9 Bacter…</span></span>
+<span><span class="co">#&gt; 10 ASV_10… 1          1           1           1              49     43.6 Bacter…</span></span>
+<span><span class="co">#&gt; # ℹ 1,941 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: Phylum &lt;chr&gt;, Class &lt;chr&gt;, Order &lt;chr&gt;, Family &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   Genus &lt;chr&gt;, Species &lt;chr&gt;</span></span>
 <span><span class="co">#&gt; #</span></span>
-<span><span class="co">#&gt; # Edge Data: 9,602 × 5</span></span>
+<span><span class="co">#&gt; # Edge Data: 8,732 × 5</span></span>
 <span><span class="co">#&gt;    from    to weight correlation corr_direction</span></span>
 <span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;         </span></span>
-<span><span class="co">#&gt; 1  1771  1825  0.793       0.793 Positive      </span></span>
-<span><span class="co">#&gt; 2   594   597  0.895       0.895 Positive      </span></span>
-<span><span class="co">#&gt; 3   588   597  0.864       0.864 Positive      </span></span>
-<span><span class="co">#&gt; # ℹ 9,599 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  1656  1703  0.793       0.793 Positive      </span></span>
+<span><span class="co">#&gt; 2   782   787  0.895       0.895 Positive      </span></span>
+<span><span class="co">#&gt; 3   395   787  0.864       0.864 Positive      </span></span>
+<span><span class="co">#&gt; # ℹ 8,729 more rows</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step4-ggnetview-to-plot">Step4: ggNetView to plot<a class="anchor" aria-label="anchor" href="#step4-ggnetview-to-plot"></a>
@@ -236,267 +261,719 @@
 <blockquote>
 <p>Basic network plot</p>
 </blockquote>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
-<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span>
-<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"#d9d9d9"</span></span>
-<span><span class="op">)</span> </span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,              <span class="co"># tbl_graph from build_graph_from_mat()</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># node attribute used to define groups/modules</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>,     <span class="co"># node attribute mapped to point fill</span></span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,    <span class="co"># min/max node size range</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre</span></span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">F</span>,              <span class="co"># no positional jitter</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,                 <span class="co"># shrink layout inward (smaller = more compact)</span></span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.2</span>,             <span class="co"># edge transparency</span></span>
+<span>  edge_color <span class="op">=</span> <span class="st">"#d9d9d9"</span>        <span class="co"># edge colour</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-8-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p1.pdf"</span>,</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>       <span class="at">plot =</span> p1,</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
-<blockquote>
-<p>Add outer line in netwotk plot</p>
-</blockquote>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
-<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span>
-<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"#d9d9d9"</span>,</span>
-<span>  add_outer <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">T</span></span>
-<span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Coordinate system already present.</span></span>
-<span><span class="co">#&gt; ℹ Adding new coordinate system, which will replace the existing one.</span></span>
-<span></span>
-<span><span class="va">p2</span></span>
-<span><span class="co">#&gt; Warning: No shared levels found between `names(values)` of the manual scale and the</span></span>
-<span><span class="co">#&gt; data's fill values.</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p2.pdf"</span>,</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>       <span class="at">plot =</span> p2,</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p1.pdf"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>       <span class="at">plot =</span> p1,</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
 <blockquote>
-<p>Change the fill of node points.</p>
+<p>Add outer line in netwotk plot</p>
 </blockquote>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
-<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span>
-<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"#d9d9d9"</span>,</span>
-<span>  add_outer <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">T</span></span>
-<span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Coordinate system already present.</span></span>
-<span><span class="co">#&gt; ℹ Adding new coordinate system, which will replace the existing one.</span></span>
+<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,              <span class="co"># tbl_graph from build_graph_from_mat()</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># node attribute used to define groups/modules</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>,     <span class="co"># node attribute mapped to point fill</span></span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,    <span class="co"># min/max node size range</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre</span></span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  node_jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,        <span class="co"># SD of the jitter (bigger -&gt; more spread)</span></span>
+<span>  edge_color <span class="op">=</span> <span class="st">"corr_direction"</span>, <span class="co"># colour edges by correlation sign</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,                 <span class="co"># shrink layout inward (smaller = more compact)</span></span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.2</span>,             <span class="co"># edge transparency</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,           <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">T</span>              <span class="co"># show node labels</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p3</span></span>
-<span><span class="co">#&gt; Warning: No shared levels found between `names(values)` of the manual scale and the</span></span>
-<span><span class="co">#&gt; data's fill values.</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p3.pdf"</span>,</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>       <span class="at">plot =</span> p3,</span>
+<span><span class="va">p2</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p2.pdf"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>       <span class="at">plot =</span> p2,</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
 <blockquote>
-<p>Change the color of node points.</p>
+<p>Change the fill of node points.</p>
 </blockquote>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
-<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span>
-<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
-<span>  color.by <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"#d9d9d9"</span>,</span>
-<span>  add_outer <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">T</span></span>
-<span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Coordinate system already present.</span></span>
-<span><span class="co">#&gt; ℹ Adding new coordinate system, which will replace the existing one.</span></span>
+<code class="sourceCode R"><span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,              <span class="co"># tbl_graph from build_graph_from_mat()</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># group nodes by module</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Phylum"</span>,         <span class="co"># map point fill to taxonomy (Phylum) instead of module</span></span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,    <span class="co"># min/max node size range</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre</span></span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  node_jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,        <span class="co"># SD of the jitter</span></span>
+<span>  edge_color <span class="op">=</span> <span class="st">"corr_direction"</span>, <span class="co"># colour edges by correlation sign</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,                 <span class="co"># shrink layout inward</span></span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.2</span>,             <span class="co"># edge transparency</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,           <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">T</span>              <span class="co"># show node labels</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p4</span></span>
-<span><span class="co">#&gt; Warning: No shared levels found between `names(values)` of the manual scale and the</span></span>
-<span><span class="co">#&gt; data's fill values.</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p4.pdf"</span>,</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>       <span class="at">plot =</span> p4,</span>
+<span><span class="va">p3</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p3.pdf"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>       <span class="at">plot =</span> p3,</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
 <blockquote>
-<p>Add node label</p>
+<p>Change the color of node points.</p>
 </blockquote>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
-<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,</span>
-<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  center <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"#d9d9d9"</span>,</span>
-<span>  add_outer <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  label <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  pointlabel <span class="op">=</span> <span class="st">"top1"</span></span>
-<span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Coordinate system already present.</span></span>
-<span><span class="co">#&gt; ℹ Adding new coordinate system, which will replace the existing one.</span></span>
+<code class="sourceCode R"><span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,              <span class="co"># tbl_graph from build_graph_from_mat()</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># group nodes by module</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Phylum"</span>,         <span class="co"># map point fill to taxonomy (Phylum)</span></span>
+<span>  node_color <span class="op">=</span> <span class="st">"Phylum"</span>,        <span class="co"># map point border colour to taxonomy (Phylum)</span></span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,    <span class="co"># min/max node size range</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre</span></span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  node_jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,        <span class="co"># SD of the jitter</span></span>
+<span>  edge_color <span class="op">=</span> <span class="st">"corr_direction"</span>, <span class="co"># colour edges by correlation sign</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,                 <span class="co"># shrink layout inward</span></span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.2</span>,             <span class="co"># edge transparency</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,           <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">T</span>              <span class="co"># show node labels</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p5</span></span>
-<span><span class="co">#&gt; Warning: No shared levels found between `names(values)` of the manual scale and the</span></span>
-<span><span class="co">#&gt; data's fill values.</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p3.pdf"</span>, </span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>       <span class="at">plot =</span> p5,</span>
+<span><span class="va">p4</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p4.pdf"</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>       <span class="at">plot =</span> p4,</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
+<blockquote>
+<p>Add node label</p>
+</blockquote>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,              <span class="co"># tbl_graph from build_graph_from_mat()</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># group nodes by module</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>,     <span class="co"># map point fill to module</span></span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,    <span class="co"># min/max node size range</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre</span></span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">TRUE</span>,           <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  node_jitter_sd <span class="op">=</span> <span class="fl">0.15</span>,        <span class="co"># SD of the jitter</span></span>
+<span>  edge_color <span class="op">=</span> <span class="st">"corr_direction"</span>, <span class="co"># colour edges by correlation sign</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.9</span>,                 <span class="co"># shrink layout inward</span></span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.2</span>,             <span class="co"># edge transparency</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,           <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">T</span>,             <span class="co"># show node labels</span></span>
+<span>  node_label <span class="op">=</span> <span class="st">"top1"</span>           <span class="co"># label only the top-1 hub node per module</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p5</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<blockquote>
+<p>Save Plot</p>
+</blockquote>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">file =</span> <span class="st">"Output/p3.pdf"</span>, </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>       <span class="at">plot =</span> p5,</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="example2">Example2<a class="anchor" aria-label="anchor" href="#example2"></a>
+<h2 id="example2-subgraph">Example2: Subgraph<a class="anchor" aria-label="anchor" href="#example2-subgraph"></a>
 </h2>
 <blockquote>
 <p>Get information of graph_object</p>
 </blockquote>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Sub_module_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_subgraph.html">get_subgraph</a></span><span class="op">(</span>graph_obj <span class="op">=</span> <span class="va">obj</span>, select_module <span class="op">=</span> <span class="st">"1"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Sub_module_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_subgraph.html">get_subgraph</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">obj</span>,        <span class="co"># full tbl_graph object</span></span>
+<span>  select_module <span class="op">=</span> <span class="st">"1"</span>     <span class="co"># extract the subgraph for module "1"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Module Number</span></span>
-<span><span class="co">#&gt; 1       1    416</span></span>
-<span><span class="co">#&gt; 2       7    161</span></span>
-<span><span class="co">#&gt; 3       6    137</span></span>
-<span><span class="co">#&gt; 4       9    121</span></span>
-<span><span class="co">#&gt; 5       4    112</span></span>
-<span><span class="co">#&gt; 6       2    105</span></span>
-<span><span class="co">#&gt; 7       3    104</span></span>
-<span><span class="co">#&gt; 8      11    101</span></span>
-<span><span class="co">#&gt; 9       8     87</span></span>
-<span><span class="co">#&gt; 10     10     80</span></span>
-<span><span class="co">#&gt; 11      5     78</span></span>
-<span><span class="co">#&gt; 12     13     70</span></span>
-<span><span class="co">#&gt; 13     16     52</span></span>
-<span><span class="co">#&gt; 14     15     51</span></span>
-<span><span class="co">#&gt; 15     14     46</span></span>
-<span><span class="co">#&gt; 16 Others    328</span></span>
+<span><span class="co">#&gt; 1       1    357</span></span>
+<span><span class="co">#&gt; 2       4    268</span></span>
+<span><span class="co">#&gt; 3       3    142</span></span>
+<span><span class="co">#&gt; 4       6    124</span></span>
+<span><span class="co">#&gt; 5       2     96</span></span>
+<span><span class="co">#&gt; 6       5     96</span></span>
+<span><span class="co">#&gt; 7       7     91</span></span>
+<span><span class="co">#&gt; 8       9     80</span></span>
+<span><span class="co">#&gt; 9       8     78</span></span>
+<span><span class="co">#&gt; 10     12     68</span></span>
+<span><span class="co">#&gt; 11     10     67</span></span>
+<span><span class="co">#&gt; 12     14     52</span></span>
+<span><span class="co">#&gt; 13     15     50</span></span>
+<span><span class="co">#&gt; 14     13     37</span></span>
+<span><span class="co">#&gt; 15     11     34</span></span>
+<span><span class="co">#&gt; 16 Others    311</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">Sub_module_1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">Sub_module_1</span><span class="op">)</span>       <span class="co"># components returned for the selected module</span></span>
 <span><span class="co">#&gt; [1] "sub_graph_all"    "stat_module"      "sub_graph_select"</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example3">Example3<a class="anchor" aria-label="anchor" href="#example3"></a>
+<h2 id="example3-mantel-test-with-environment">Example3: Mantel-test with environment<a class="anchor" aria-label="anchor" href="#example3-mantel-test-with-environment"></a>
 </h2>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load test data in ggNetView</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Envdf_4st"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Spedf"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Envdf_4st"</span><span class="op">)</span>   <span class="co"># environmental factor table (samples x env variables)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Spedf"</span><span class="op">)</span>       <span class="co"># species/community table (samples x taxa)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gglink_heatmaps.html">gglink_heatmaps</a></span><span class="op">(</span></span>
-<span>  env <span class="op">=</span> <span class="va">Envdf_4st</span>,</span>
-<span>  spec <span class="op">=</span> <span class="va">Spedf</span>,</span>
-<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>, </span>
-<span>                    Env02 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>,</span>
-<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">42</span>,</span>
-<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>,</span>
-<span>  spec_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Spec01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span>  relation_method <span class="op">=</span> <span class="st">"correlation"</span>,</span>
-<span>  spec_layout <span class="op">=</span> <span class="st">"circle_outline"</span>,</span>
-<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
-<span>  cor.use <span class="op">=</span> <span class="st">"pairwise"</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>  distance <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  orientation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top_right"</span>, <span class="st">"bottom_right"</span>, <span class="st">"top_left"</span>, <span class="st">"bottom_left"</span><span class="op">)</span></span>
+<span>  env <span class="op">=</span> <span class="va">Envdf_4st</span>,                  <span class="co"># environmental data frame</span></span>
+<span>  spec <span class="op">=</span> <span class="va">Spedf</span>,                     <span class="co"># species/community data frame</span></span>
+<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>,   <span class="co"># group env columns into blocks:  Env01 = cols 1-14</span></span>
+<span>                    Env02 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>,  <span class="co">#                                 Env02 = cols 15-28</span></span>
+<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">42</span>,  <span class="co">#                                 Env03 = cols 29-42</span></span>
+<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>, <span class="co">#                                 Env04 = cols 43-56</span></span>
+<span>  spec_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Spec01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, <span class="co"># species block: Spec01 = cols 1-8</span></span>
+<span>  relation_method <span class="op">=</span> <span class="st">"correlation"</span>,  <span class="co"># env-spec association via correlation (vs "mantel")</span></span>
+<span>  spec_layout <span class="op">=</span> <span class="st">"circle_outline"</span>,   <span class="co"># arrange species heatmap as a circular outline</span></span>
+<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,           <span class="co"># Pearson correlation</span></span>
+<span>  cor.use <span class="op">=</span> <span class="st">"pairwise"</span>,             <span class="co"># pairwise-complete handling of missing values</span></span>
+<span>  r <span class="op">=</span> <span class="fl">6</span>,                            <span class="co"># radius of the circular layout</span></span>
+<span>  distance <span class="op">=</span> <span class="fl">1</span>,                     <span class="co"># spacing between heatmap blocks</span></span>
+<span>  orientation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top_right"</span>, <span class="st">"bottom_right"</span>, <span class="st">"top_left"</span>, <span class="st">"bottom_left"</span><span class="op">)</span>  <span class="co"># placement of each env block</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; The max module in network is 2 we use the 2  modules for next analysis</span></span>
 <span></span>
-<span><span class="va">out1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<span><span class="va">out1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>                           <span class="co"># first plot in the returned list</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-15-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="example4">Example4<a class="anchor" aria-label="anchor" href="#example4"></a>
+<h2 id="example4-mantel-test-with-environment">Example4: Mantel-test with environment<a class="anchor" aria-label="anchor" href="#example4-mantel-test-with-environment"></a>
 </h2>
 <blockquote>
 <p>Leave lines with a significance level less than 0.05, and change the color of heatmap.</p>
 </blockquote>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gglink_heatmaps.html">gglink_heatmaps</a></span><span class="op">(</span></span>
-<span>  env <span class="op">=</span> <span class="va">Envdf_4st</span>,</span>
-<span>  spec <span class="op">=</span> <span class="va">Spedf</span>,</span>
-<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>,</span>
-<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">40</span>,</span>
-<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span>,</span>
-<span>  spec_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Spec01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span>  relation_method <span class="op">=</span> <span class="st">"correlation"</span>,</span>
-<span>  spec_layout <span class="op">=</span> <span class="st">"circle_outline"</span>,</span>
-<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
-<span>  cor.use <span class="op">=</span> <span class="st">"pairwise"</span>,</span>
-<span>  drop_nonsig <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  HeatmapColorBar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#2166ac"</span>, <span class="st">"#b2182b"</span><span class="op">)</span>, </span>
+<span>  env <span class="op">=</span> <span class="va">Envdf_4st</span>,                  <span class="co"># environmental data frame</span></span>
+<span>  spec <span class="op">=</span> <span class="va">Spedf</span>,                     <span class="co"># species/community data frame</span></span>
+<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>,   <span class="co"># env block Env01 = cols 1-14</span></span>
+<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">40</span>,  <span class="co">#           Env03 = cols 29-40</span></span>
+<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span>, <span class="co">#           Env04 = cols 43-50</span></span>
+<span>  spec_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Spec01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, <span class="co"># species block: Spec01 = cols 1-8</span></span>
+<span>  relation_method <span class="op">=</span> <span class="st">"correlation"</span>,  <span class="co"># association via correlation</span></span>
+<span>  spec_layout <span class="op">=</span> <span class="st">"circle_outline"</span>,   <span class="co"># circular outline layout for species heatmap</span></span>
+<span>  cor.method <span class="op">=</span> <span class="st">"pearson"</span>,           <span class="co"># Pearson correlation</span></span>
+<span>  cor.use <span class="op">=</span> <span class="st">"pairwise"</span>,             <span class="co"># pairwise-complete handling of missing values</span></span>
+<span>  drop_nonsig <span class="op">=</span> <span class="cn">TRUE</span>,               <span class="co"># keep only links with p &lt; 0.05 (drop non-significant)</span></span>
+<span>  HeatmapColorBar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#2166ac"</span>, <span class="st">"#b2182b"</span><span class="op">)</span>,   <span class="co"># custom low-&gt;high colour ramp per env block</span></span>
 <span>                         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1b7837"</span>, <span class="st">"#762a83"</span><span class="op">)</span>,</span>
 <span>                         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4393c3"</span>, <span class="st">"#d6604d"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  HeatmapPointFill <span class="op">=</span> <span class="st">"#8c6bb1"</span>,</span>
-<span>  CorePointFill <span class="op">=</span> <span class="st">"#225ea8"</span>,</span>
-<span>  HeatmapLabelOrient <span class="op">=</span> <span class="fl">45</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>  distance <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  orientation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top_right"</span>, <span class="st">"top_left"</span>, <span class="st">"bottom_left"</span><span class="op">)</span></span>
+<span>  HeatmapPointFill <span class="op">=</span> <span class="st">"#8c6bb1"</span>,     <span class="co"># fill colour of heatmap anchor points</span></span>
+<span>  CorePointFill <span class="op">=</span> <span class="st">"#225ea8"</span>,        <span class="co"># fill colour of the central/core point</span></span>
+<span>  HeatmapLabelOrient <span class="op">=</span> <span class="fl">45</span>,          <span class="co"># rotate heatmap labels by 45 degrees</span></span>
+<span>  r <span class="op">=</span> <span class="fl">6</span>,                            <span class="co"># radius of the circular layout</span></span>
+<span>  distance <span class="op">=</span> <span class="fl">1</span>,                     <span class="co"># spacing between heatmap blocks</span></span>
+<span>  orientation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top_right"</span>, <span class="st">"top_left"</span>, <span class="st">"bottom_left"</span><span class="op">)</span>  <span class="co"># placement of each env block</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; The max module in network is 2 we use the 2  modules for next analysis</span></span>
 <span></span>
-<span><span class="va">out2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<span><span class="va">out2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>                           <span class="co"># second plot in the returned list</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-16-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="example5-network-environment">Example5: Network-environment<a class="anchor" aria-label="anchor" href="#example5-network-environment"></a>
+</h2>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">####----load Data----####</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"otu_rare_relative"</span><span class="op">)</span>   <span class="co"># rarefied relative-abundance matrix (features x samples)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"tax_tab"</span><span class="op">)</span>             <span class="co"># node (taxonomy) annotation table</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Envdf_4st_2"</span><span class="op">)</span>         <span class="co"># environmental factor table for the network-env analysis</span></span>
+<span></span>
+<span></span>
+<span><span class="co">####----build graph object----####</span></span>
+<span><span class="va">graph_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/build_graph_from_mat.html">build_graph_from_mat</a></span><span class="op">(</span></span>
+<span>  mat <span class="op">=</span> <span class="va">otu_rare_relative</span>,       <span class="co"># variables x samples abundance matrix</span></span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,     <span class="co"># pre-correlation transform; "none" = keep as-is</span></span>
+<span>  node_annotation <span class="op">=</span> <span class="va">tax_tab</span>,     <span class="co"># taxonomy joined onto each node by name</span></span>
+<span>  p.threshold <span class="op">=</span> <span class="fl">0.05</span>,            <span class="co"># adjusted p-value cutoff</span></span>
+<span>  r.threshold <span class="op">=</span> <span class="fl">0.75</span>,            <span class="co"># |r| cutoff for keeping an edge</span></span>
+<span>  method <span class="op">=</span> <span class="st">"WGCNA"</span>,              <span class="co"># correlation backend: WGCNA::corAndPvalue</span></span>
+<span>  proc <span class="op">=</span> <span class="st">"BH"</span>,                   <span class="co"># multiple-testing correction (Benjamini-Hochberg)</span></span>
+<span>  module.method <span class="op">=</span> <span class="st">"Fast_greedy"</span>, <span class="co"># community detection algorithm</span></span>
+<span>  top_modules <span class="op">=</span> <span class="fl">15</span>,              <span class="co"># keep top-15 modules; rest -&gt; "Others"</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">1115</span>                    <span class="co"># fix RNG for reproducibility</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">graph_obj</span>                        <span class="co"># resulting tbl_graph</span></span>
+<span><span class="co">#&gt; # A tbl_graph: 1951 nodes and 8732 edges</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # An undirected simple graph with 120 components</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # Node Data: 1,951 × 14 (active)</span></span>
+<span><span class="co">#&gt;    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;fct&gt;      &lt;ord&gt;       &lt;chr&gt;       &lt;ord&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1 ASV_916 1          1           1           1              57     49.7 Bacter…</span></span>
+<span><span class="co">#&gt;  2 ASV_777 1          1           1           1              55     46.4 Bacter…</span></span>
+<span><span class="co">#&gt;  3 ASV_23… 1          1           1           1              53     46.6 Bacter…</span></span>
+<span><span class="co">#&gt;  4 ASV_606 1          1           1           1              51     42.7 Bacter…</span></span>
+<span><span class="co">#&gt;  5 ASV_740 1          1           1           1              51     44.9 Bacter…</span></span>
+<span><span class="co">#&gt;  6 ASV_15… 1          1           1           1              50     43.8 Bacter…</span></span>
+<span><span class="co">#&gt;  7 ASV_568 1          1           1           1              49     43.6 Bacter…</span></span>
+<span><span class="co">#&gt;  8 ASV_671 1          1           1           1              49     43.7 Bacter…</span></span>
+<span><span class="co">#&gt;  9 ASV_664 1          1           1           1              49     42.9 Bacter…</span></span>
+<span><span class="co">#&gt; 10 ASV_10… 1          1           1           1              49     43.6 Bacter…</span></span>
+<span><span class="co">#&gt; # ℹ 1,941 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: Phylum &lt;chr&gt;, Class &lt;chr&gt;, Order &lt;chr&gt;, Family &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Genus &lt;chr&gt;, Species &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # Edge Data: 8,732 × 5</span></span>
+<span><span class="co">#&gt;    from    to weight correlation corr_direction</span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt; 1  1656  1703  0.793       0.793 Positive      </span></span>
+<span><span class="co">#&gt; 2   782   787  0.895       0.895 Positive      </span></span>
+<span><span class="co">#&gt; 3   395   787  0.864       0.864 Positive      </span></span>
+<span><span class="co">#&gt; # ℹ 8,729 more rows</span></span>
+<span></span>
+<span></span>
+<span><span class="va">p_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">graph_obj</span>,        <span class="co"># tbl_graph object</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  center <span class="op">=</span> <span class="cn">T</span>,                   <span class="co"># pull nodes toward each module centre</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># group nodes by module</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>      <span class="co"># map point fill to module</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_sub</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">p_sub2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView.html">ggNetView</a></span><span class="op">(</span></span>
+<span>  graph_obj <span class="op">=</span> <span class="va">graph_obj</span>,        <span class="co"># tbl_graph object</span></span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,             <span class="co"># node-positioning algorithm</span></span>
+<span>  center <span class="op">=</span> <span class="cn">F</span>,                   <span class="co"># do NOT pull nodes toward each module centre (compare with p_sub)</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,   <span class="co"># place neighbouring modules close together</span></span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,      <span class="co"># group nodes by module</span></span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>      <span class="co"># map point fill to module</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_sub2</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-17-2.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">####----Network Environment PC1----####</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggnetview_modularity_heatmaps.html">ggnetview_modularity_heatmaps</a></span><span class="op">(</span></span>
+<span>  <span class="va">graph_obj</span>,                        <span class="co"># network tbl_graph object</span></span>
+<span>  <span class="va">Envdf_4st_2</span>,                      <span class="co"># environmental factor table</span></span>
+<span>  <span class="va">otu_rare_relative</span>,                <span class="co"># abundance matrix (used to derive per-module index)</span></span>
+<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>,   <span class="co"># env block Env01 = cols 1-14</span></span>
+<span>                    Env02 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>,   <span class="co">#           Env02 = cols 15-28</span></span>
+<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">42</span>,   <span class="co">#           Env03 = cols 29-42</span></span>
+<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>,  <span class="co">#           Env04 = cols 43-56</span></span>
+<span>  drop_nonsig <span class="op">=</span> <span class="cn">T</span>,                  <span class="co"># keep only significant module-env links</span></span>
+<span>  r <span class="op">=</span> <span class="fl">35</span>,                           <span class="co"># radius of the circular heatmap layout</span></span>
+<span>  distance <span class="op">=</span> <span class="fl">5</span>,                     <span class="co"># spacing between heatmap blocks</span></span>
+<span>  HeatmapLabelOrient <span class="op">=</span> <span class="fl">45</span>,          <span class="co"># rotate heatmap labels by 45 degrees</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.65</span>,                    <span class="co"># shrink the network layout inward</span></span>
+<span>  module_index <span class="op">=</span> <span class="st">"eigengene"</span>,  <span class="co"># 或 "abundance"   # per-module summary: eigengene (PC1)</span></span>
+<span>  relation_method <span class="op">=</span> <span class="st">"correlation"</span>,  <span class="co"># 或 "mantel",  # module-env association method</span></span>
+<span>  HeatmapColorBar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>           <span class="co"># custom low-&gt;high colour ramp per env block</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#2166ac"</span>, <span class="st">"#b2182b"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1b7837"</span>, <span class="st">"#762a83"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4393c3"</span>, <span class="st">"#d6604d"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#92c5de"</span>, <span class="st">"#f4a582"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,                 <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,       <span class="co"># place neighbouring modules close together</span></span>
+<span>  node_jitter    <span class="op">=</span> <span class="cn">T</span>,                       <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,                    <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  HeatmapScale <span class="op">=</span> <span class="fl">1.5</span>,               <span class="co"># scale factor for heatmap point/tile size</span></span>
+<span>  network_outline <span class="op">=</span> <span class="cn">T</span>,              <span class="co"># draw an outer boundary around node groups</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">F</span>,                        <span class="co"># do not show node labels</span></span>
+<span>  <span class="co"># module_label_size = 5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-17-3.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">####----Network Environment abudance----####</span></span>
+<span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggnetview_modularity_heatmaps.html">ggnetview_modularity_heatmaps</a></span><span class="op">(</span></span>
+<span>  <span class="va">graph_obj</span>,                        <span class="co"># network tbl_graph object</span></span>
+<span>  <span class="va">Envdf_4st_2</span>,                      <span class="co"># environmental factor table</span></span>
+<span>  <span class="va">otu_rare_relative</span>,                <span class="co"># abundance matrix (used to derive per-module index)</span></span>
+<span>  env_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Env01 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>,   <span class="co"># env block Env01 = cols 1-14</span></span>
+<span>                    Env02 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>,   <span class="co">#           Env02 = cols 15-28</span></span>
+<span>                    Env03 <span class="op">=</span> <span class="fl">29</span><span class="op">:</span><span class="fl">42</span>,   <span class="co">#           Env03 = cols 29-42</span></span>
+<span>                    Env04 <span class="op">=</span> <span class="fl">43</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>,  <span class="co">#           Env04 = cols 43-56</span></span>
+<span>  drop_nonsig <span class="op">=</span> <span class="cn">T</span>,                  <span class="co"># keep only significant module-env links</span></span>
+<span>  r <span class="op">=</span> <span class="fl">35</span>,                           <span class="co"># radius of the circular heatmap layout</span></span>
+<span>  distance <span class="op">=</span> <span class="fl">5</span>,                     <span class="co"># spacing between heatmap blocks</span></span>
+<span>  HeatmapLabelOrient <span class="op">=</span> <span class="fl">45</span>,          <span class="co"># rotate heatmap labels by 45 degrees</span></span>
+<span>  shrink <span class="op">=</span> <span class="fl">0.65</span>,                    <span class="co"># shrink the network layout inward</span></span>
+<span>  module_index <span class="op">=</span> <span class="st">"abundance"</span>,  <span class="co"># 或 "abundance"   # per-module summary: aggregated abundance</span></span>
+<span>  relation_method <span class="op">=</span> <span class="st">"mantel"</span>,  <span class="co"># 或 "mantel",      # module-env association via Mantel test</span></span>
+<span>  HeatmapColorBar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>           <span class="co"># custom low-&gt;high colour ramp per env block</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#2166ac"</span>, <span class="st">"#b2182b"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1b7837"</span>, <span class="st">"#762a83"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4393c3"</span>, <span class="st">"#d6604d"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#92c5de"</span>, <span class="st">"#f4a582"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  layout <span class="op">=</span> <span class="st">"gephi"</span>,                 <span class="co"># node-positioning algorithm</span></span>
+<span>  layout_module <span class="op">=</span> <span class="st">"adjacent"</span>,       <span class="co"># place neighbouring modules close together</span></span>
+<span>  node_jitter    <span class="op">=</span> <span class="cn">T</span>,                       <span class="co"># jitter node positions to reduce overlap</span></span>
+<span>  module_outline <span class="op">=</span> <span class="cn">T</span>,                    <span class="co"># draw an outer hull/line around each module</span></span>
+<span>  HeatmapScale <span class="op">=</span> <span class="fl">1.5</span>,               <span class="co"># scale factor for heatmap point/tile size</span></span>
+<span>  network_outline <span class="op">=</span> <span class="cn">T</span>,              <span class="co"># draw an outer boundary around node groups</span></span>
+<span>  module_label <span class="op">=</span> <span class="cn">F</span>,                        <span class="co"># do not show node labels</span></span>
+<span>  <span class="co"># module_label_size = 5</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using `mantel_kind = "block_vs_col"`. Note: prior versions ran the equivalent of `"col_vs_col"` when `relation_method = "mantel"`. The new default is the ecologically standard `"block_vs_col"` (community matrix vs each env column). Pass `mantel_kind = "col_vs_col"` to reproduce old results.</span></span>
+<span></span>
+<span><span class="va">res2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-17-4.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res2</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-17-5.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="example6-network-compare">Example6: Network-compare<a class="anchor" aria-label="anchor" href="#example6-network-compare"></a>
+</h2>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ---- Multi-network "linked" view (no per-group scale normalisation) ----</span></span>
+<span><span class="co"># `ggNetView_multi_link()` builds ONE network per group (defined by `group_info`),</span></span>
+<span><span class="co"># lays each one out independently, and places all sub-networks on a circular</span></span>
+<span><span class="co"># anchor frame so that cross-group edges/relationships can be visually compared.</span></span>
+<span><span class="va">out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView_multi_link.html">ggNetView_multi_link</a></span><span class="op">(</span></span>
+<span>  mat              <span class="op">=</span> <span class="va">otu_rare_relative</span>, <span class="co"># variables x samples abundance matrix</span></span>
+<span>  group_info       <span class="op">=</span> <span class="va">otu_sample</span>,        <span class="co"># sample metadata; defines how samples are split into groups</span></span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,            <span class="co"># pre-correlation transform on `mat`; "none" = keep as-is</span></span>
+<span>  r.threshold      <span class="op">=</span> <span class="fl">0.7</span>,               <span class="co"># |r| cutoff for keeping an edge</span></span>
+<span>  p.threshold      <span class="op">=</span> <span class="fl">0.05</span>,              <span class="co"># adjusted p-value cutoff</span></span>
+<span>  method           <span class="op">=</span> <span class="st">"WGCNA"</span>,           <span class="co"># correlation backend: WGCNA::corAndPvalue</span></span>
+<span>  cor.method       <span class="op">=</span> <span class="st">"pearson"</span>,         <span class="co"># Pearson correlation</span></span>
+<span>  proc             <span class="op">=</span> <span class="st">"BH"</span>,              <span class="co"># multiple-testing correction (Benjamini-Hochberg)</span></span>
+<span>  module.method    <span class="op">=</span> <span class="st">"Fast_greedy"</span>,     <span class="co"># community detection per sub-network</span></span>
+<span>  layout_module    <span class="op">=</span> <span class="st">"adjacent"</span>,        <span class="co"># neighbouring modules placed close together</span></span>
+<span>  center           <span class="op">=</span> <span class="cn">T</span>,                 <span class="co"># pull a node toward the centre of each sub-layout</span></span>
+<span>  top_modules      <span class="op">=</span> <span class="fl">15</span>,                <span class="co"># keep top-15 modules per sub-network; rest -&gt; "Others"</span></span>
+<span>  layout           <span class="op">=</span> <span class="st">"gephi"</span>,           <span class="co"># global node-positioning algorithm per sub-network</span></span>
+<span>  shrink           <span class="op">=</span> <span class="fl">0.5</span>,               <span class="co"># shrink each sub-network inward (smaller = more compact)</span></span>
+<span>  scale            <span class="op">=</span> <span class="cn">F</span>,                 <span class="co"># do NOT normalise each group to a common scale -&gt; sub-networks keep their native size differences</span></span>
+<span>  node_jitter      <span class="op">=</span> <span class="cn">T</span>,                 <span class="co"># jitter node positions slightly to reduce overlap</span></span>
+<span>  node_jitter_sd   <span class="op">=</span> <span class="fl">0.3</span>,               <span class="co"># SD of the jitter (bigger -&gt; more spread)</span></span>
+<span>  anchor_dist      <span class="op">=</span> <span class="fl">30</span>,                 <span class="co"># distance between groups on the outer anchor circle</span></span>
+<span>  seed             <span class="op">=</span> <span class="fl">1115</span>,              <span class="co"># fix RNG for reproducibility</span></span>
+<span>  orientation      <span class="op">=</span> <span class="st">"up"</span>,              <span class="co"># frame orientation; one of "up"/"down"/"left"/"right"</span></span>
+<span>  angle            <span class="op">=</span> <span class="fl">0</span>                  <span class="co"># additional rotation angle (degrees)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for size is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for size, which will replace the existing scale.</span></span>
+<span><span class="co">#&gt; Scale for size is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for size, which will replace the existing scale.</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">out1</span><span class="op">[[</span><span class="st">"p"</span><span class="op">]</span><span class="op">]</span>   <span class="co"># the assembled ggplot object</span></span>
+<span><span class="va">p1</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-18-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">out1</span><span class="op">$</span><span class="va">info</span>           <span class="co"># auxiliary table: per-group node/edge counts, module info, etc.</span></span>
+<span><span class="co">#&gt; # A tibble: 18 × 11</span></span>
+<span><span class="co">#&gt;    modA   modB   overlap sizeA sizeB overlap_coef  pvalue   FDR Group    GroupA</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; </span></span>
+<span><span class="co">#&gt;  1 1      3            2    15     7        0.286 0.0307  1     KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  2 49     6            1     4     3        0.333 0.0333  1     KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  3 2      8            2    20     3        0.667 0.00867 0.984 KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  4 7      8            1     4     3        0.333 0.0333  1     KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  5 11     9            2    13     5        0.4   0.0115  0.984 KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  6 49     11           1     4     4        0.25  0.0443  1     KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  7 5      15           2    29     3        0.667 0.0182  1     KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  8 Others Others     179   219   276        0.817 0.00896 0.984 KO_to_OE KO    </span></span>
+<span><span class="co">#&gt;  9 1      55           4    28    27        0.148 0.0452  1     KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 10 2      2            4    30    22        0.182 0.0286  1     KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 11 97     2            2     8    22        0.25  0.0387  1     KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 12 1      1            5    28    24        0.208 0.00568 0.647 KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 13 4      4            2    18    11        0.182 0.0488  1     KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 14 3      6            2    18     8        0.25  0.0264  1     KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 15 8      16           2    11     7        0.286 0.00759 0.647 KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 16 Others Others     231   309   378        0.748 0.00660 0.647 KO_to_WT KO    </span></span>
+<span><span class="co">#&gt; 17 3      55           2     6    12        0.333 0.0233  1     OE_to_WT OE    </span></span>
+<span><span class="co">#&gt; 18 9      9            1     3     2        0.5   0.0215  1     OE_to_WT OE    </span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: GroupB &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">####----Plot2----####</span></span>
+<span><span class="co"># ---- Same setup but with `scale = TRUE` -&gt; each group normalised to a common size ----</span></span>
+<span><span class="co"># Useful when groups have very different network sizes and you want them</span></span>
+<span><span class="co"># visually comparable side-by-side. With `scale = TRUE` the native size</span></span>
+<span><span class="co"># differences are removed, so jitter_sd is also reduced (0.01) accordingly.</span></span>
+<span><span class="va">out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggNetView_multi_link.html">ggNetView_multi_link</a></span><span class="op">(</span></span>
+<span>  mat              <span class="op">=</span> <span class="va">otu_rare_relative</span>,</span>
+<span>  group_info       <span class="op">=</span> <span class="va">otu_sample</span>,</span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  r.threshold      <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>  p.threshold      <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  method           <span class="op">=</span> <span class="st">"WGCNA"</span>,</span>
+<span>  cor.method       <span class="op">=</span> <span class="st">"pearson"</span>,</span>
+<span>  proc             <span class="op">=</span> <span class="st">"BH"</span>,</span>
+<span>  module.method    <span class="op">=</span> <span class="st">"Fast_greedy"</span>,</span>
+<span>  layout_module    <span class="op">=</span> <span class="st">"adjacent"</span>,</span>
+<span>  center           <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  top_modules      <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  layout           <span class="op">=</span> <span class="st">"gephi"</span>,</span>
+<span>  shrink           <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  scale            <span class="op">=</span> <span class="cn">T</span>,                 <span class="co"># normalise each group to a comparable coordinate scale</span></span>
+<span>  node_jitter      <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  node_jitter_sd   <span class="op">=</span> <span class="fl">0.01</span>,              <span class="co"># smaller jitter — sub-networks are already on a unified scale</span></span>
+<span>  anchor_dist      <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  seed             <span class="op">=</span> <span class="fl">1115</span>,</span>
+<span>  orientation      <span class="op">=</span> <span class="st">"up"</span>,</span>
+<span>  angle            <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for size is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for size, which will replace the existing scale.</span></span>
+<span><span class="co">#&gt; Scale for size is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for size, which will replace the existing scale.</span></span>
+<span></span>
+<span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">out2</span><span class="op">[[</span><span class="st">"p"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">p2</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-19-1.png" alt="" width="100%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="example7-network-topology">Example7: Network-topology<a class="anchor" aria-label="anchor" href="#example7-network-topology"></a>
+</h2>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ---- Build a co-occurrence network from an abundance matrix ----</span></span>
+<span><span class="co"># Internal pipeline: transform -&gt; correlation -&gt; p-value adjustment -&gt;</span></span>
+<span><span class="co"># edge filtering -&gt; community detection -&gt; attach taxonomy.</span></span>
+<span><span class="va">graph_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/build_graph_from_mat.html">build_graph_from_mat</a></span><span class="op">(</span></span>
+<span>  mat              <span class="op">=</span> <span class="va">otu_rare_relative</span>,  <span class="co"># variables x samples numeric matrix</span></span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,             <span class="co"># input already relative abundance, no extra transform</span></span>
+<span>  method           <span class="op">=</span> <span class="st">"WGCNA"</span>,            <span class="co"># correlation backend: WGCNA::corAndPvalue</span></span>
+<span>  proc             <span class="op">=</span> <span class="st">"bonferroni"</span>,       <span class="co"># multiple-testing correction</span></span>
+<span>  r.threshold      <span class="op">=</span> <span class="fl">0.7</span>,                <span class="co"># |r| cutoff for keeping an edge</span></span>
+<span>  p.threshold      <span class="op">=</span> <span class="fl">0.05</span>,               <span class="co"># adjusted p-value cutoff</span></span>
+<span>  node_annotation  <span class="op">=</span> <span class="va">tax_tab</span>,            <span class="co"># taxonomy joined onto each node by name</span></span>
+<span>  top_modules      <span class="op">=</span> <span class="fl">15</span>,                 <span class="co"># keep top-15 modules; rest -&gt; "Others"</span></span>
+<span>  seed             <span class="op">=</span> <span class="fl">1115</span>                <span class="co"># fix RNG for reproducibility</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">graph_obj</span>   <span class="co"># tbl_graph with Modularity / Degree / Strength + taxonomy columns</span></span>
+<span><span class="co">#&gt; # A tbl_graph: 236 nodes and 924 edges</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # An undirected simple graph with 33 components</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # Node Data: 236 × 14 (active)</span></span>
+<span><span class="co">#&gt;    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;fct&gt;      &lt;ord&gt;       &lt;chr&gt;       &lt;ord&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1 ASV_12… 6          6           6           6              29     28.3 Bacter…</span></span>
+<span><span class="co">#&gt;  2 ASV_14… 6          6           6           6              28     27.4 Bacter…</span></span>
+<span><span class="co">#&gt;  3 ASV_649 6          6           6           6              27     26.5 Bacter…</span></span>
+<span><span class="co">#&gt;  4 ASV_705 6          6           6           6              27     26.5 Bacter…</span></span>
+<span><span class="co">#&gt;  5 ASV_913 6          6           6           6              27     26.2 Bacter…</span></span>
+<span><span class="co">#&gt;  6 ASV_13… 6          6           6           6              27     26.5 Bacter…</span></span>
+<span><span class="co">#&gt;  7 ASV_14… 6          6           6           6              27     26.5 Bacter…</span></span>
+<span><span class="co">#&gt;  8 ASV_17… 6          6           6           6              27     26.3 Bacter…</span></span>
+<span><span class="co">#&gt;  9 ASV_24… 6          6           6           6              27     26.5 Bacter…</span></span>
+<span><span class="co">#&gt; 10 ASV_25… 6          6           6           6              27     26.4 Bacter…</span></span>
+<span><span class="co">#&gt; # ℹ 226 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: Phylum &lt;chr&gt;, Class &lt;chr&gt;, Order &lt;chr&gt;, Family &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Genus &lt;chr&gt;, Species &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; #</span></span>
+<span><span class="co">#&gt; # Edge Data: 924 × 5</span></span>
+<span><span class="co">#&gt;    from    to weight correlation corr_direction</span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt; 1   182   183  0.959       0.959 Positive      </span></span>
+<span><span class="co">#&gt; 2   182   184  0.941       0.941 Positive      </span></span>
+<span><span class="co">#&gt; 3   182   185  0.940       0.940 Positive      </span></span>
+<span><span class="co">#&gt; # ℹ 921 more rows</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co"># ---- Compute the FULL set of network topology + robustness metrics ----</span></span>
+<span><span class="co"># When `mat` is provided, the function recomputes the thresholded correlation</span></span>
+<span><span class="co"># matrix from `mat` (used as `network.raw`) and ALL topology fields are</span></span>
+<span><span class="co"># returned with real values - including the ones that are NA when mat = NULL:</span></span>
+<span><span class="co">#   Cohension_Positive / Cohension_Negative</span></span>
+<span><span class="co">#   Robustness_weight  / Robustness_unweight</span></span>
+<span><span class="co">#   Stability</span></span>
+<span><span class="co">#   out$Robustness     (the 5%-100% node-removal curve)</span></span>
+<span><span class="va">topology_with_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_network_topology.html">get_network_topology</a></span><span class="op">(</span></span>
+<span>  graph_obj        <span class="op">=</span> <span class="va">graph_obj</span>,         <span class="co"># input tbl_graph (required)</span></span>
+<span>  mat              <span class="op">=</span> <span class="va">otu_rare_relative</span>, <span class="co"># raw abundance matrix used to derive sp.ra and rebuild network.raw</span></span>
+<span>  transfrom.method <span class="op">=</span> <span class="st">"none"</span>,            <span class="co"># pre-correlation transform on `mat`; "none" = keep as-is</span></span>
+<span>  method           <span class="op">=</span> <span class="st">"WGCNA"</span>,           <span class="co"># correlation backend: WGCNA::corAndPvalue</span></span>
+<span>  proc             <span class="op">=</span> <span class="st">"bonferroni"</span>,      <span class="co"># multiple-testing correction</span></span>
+<span>  r.threshold      <span class="op">=</span> <span class="fl">0.7</span>,               <span class="co"># |r| cutoff for keeping an edge in network.raw</span></span>
+<span>  p.threshold      <span class="op">=</span> <span class="fl">0.05</span>,              <span class="co"># adjusted p-value cutoff for keeping an edge</span></span>
+<span>  bootstrap        <span class="op">=</span> <span class="fl">100</span>                <span class="co"># # of bootstrap iterations for robustness AND # of random ER networks for the Random_nerwork column</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">topology_with_mat</span></span>
+<span><span class="co">#&gt; $topology</span></span>
+<span><span class="co">#&gt; # A tibble: 24 × 3</span></span>
+<span><span class="co">#&gt;    Topology            Target_network Random_nerwork</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                        &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Node                      236            236     </span></span>
+<span><span class="co">#&gt;  2 Edge                      924            924     </span></span>
+<span><span class="co">#&gt;  3 Degree                      7.83           7.83  </span></span>
+<span><span class="co">#&gt;  4 Distance                    1.46           2.87  </span></span>
+<span><span class="co">#&gt;  5 Diameter                    4.75           5.11  </span></span>
+<span><span class="co">#&gt;  6 Density                     0.0333         0.0333</span></span>
+<span><span class="co">#&gt;  7 Transitivity_global         0.849          0.0330</span></span>
+<span><span class="co">#&gt;  8 Transitivity_local          0.809          0.0336</span></span>
+<span><span class="co">#&gt;  9 Betweenness                 3.56         220.    </span></span>
+<span><span class="co">#&gt; 10 Betweenness_edge            2.63          86.1   </span></span>
+<span><span class="co">#&gt; # ℹ 14 more rows</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Robustness</span></span>
+<span><span class="co">#&gt;    Proportion.removed remain.mean   remain.sd    remain.se   weighted</span></span>
+<span><span class="co">#&gt; 1                0.05  0.93894068 0.006736051 0.0006736051   weighted</span></span>
+<span><span class="co">#&gt; 2                0.10  0.87703390 0.008235367 0.0008235367   weighted</span></span>
+<span><span class="co">#&gt; 3                0.15  0.82266949 0.010712392 0.0010712392   weighted</span></span>
+<span><span class="co">#&gt; 4                0.20  0.76203390 0.013052837 0.0013052837   weighted</span></span>
+<span><span class="co">#&gt; 5                0.25  0.70402542 0.013048043 0.0013048043   weighted</span></span>
+<span><span class="co">#&gt; 6                0.30  0.64381356 0.013068112 0.0013068112   weighted</span></span>
+<span><span class="co">#&gt; 7                0.35  0.58542373 0.015351419 0.0015351419   weighted</span></span>
+<span><span class="co">#&gt; 8                0.40  0.53025424 0.014862819 0.0014862819   weighted</span></span>
+<span><span class="co">#&gt; 9                0.45  0.47394068 0.017006569 0.0017006569   weighted</span></span>
+<span><span class="co">#&gt; 10               0.50  0.42279661 0.017083231 0.0017083231   weighted</span></span>
+<span><span class="co">#&gt; 11               0.55  0.36605932 0.019139188 0.0019139188   weighted</span></span>
+<span><span class="co">#&gt; 12               0.60  0.31377119 0.018934170 0.0018934170   weighted</span></span>
+<span><span class="co">#&gt; 13               0.65  0.26504237 0.016164591 0.0016164591   weighted</span></span>
+<span><span class="co">#&gt; 14               0.70  0.21809322 0.016388331 0.0016388331   weighted</span></span>
+<span><span class="co">#&gt; 15               0.75  0.16758475 0.015323690 0.0015323690   weighted</span></span>
+<span><span class="co">#&gt; 16               0.80  0.12334746 0.014364862 0.0014364862   weighted</span></span>
+<span><span class="co">#&gt; 17               0.85  0.07881356 0.015843037 0.0015843037   weighted</span></span>
+<span><span class="co">#&gt; 18               0.90  0.04635593 0.011675496 0.0011675496   weighted</span></span>
+<span><span class="co">#&gt; 19               0.95  0.01347458 0.008588939 0.0008588939   weighted</span></span>
+<span><span class="co">#&gt; 20               1.00  0.00000000 0.000000000 0.0000000000   weighted</span></span>
+<span><span class="co">#&gt; 21               0.05  0.93877119 0.007084582 0.0007084582 unweighted</span></span>
+<span><span class="co">#&gt; 22               0.10  0.87728814 0.009894707 0.0009894707 unweighted</span></span>
+<span><span class="co">#&gt; 23               0.15  0.82177966 0.009911189 0.0009911189 unweighted</span></span>
+<span><span class="co">#&gt; 24               0.20  0.76169492 0.013495506 0.0013495506 unweighted</span></span>
+<span><span class="co">#&gt; 25               0.25  0.70389831 0.013212479 0.0013212479 unweighted</span></span>
+<span><span class="co">#&gt; 26               0.30  0.64474576 0.014223075 0.0014223075 unweighted</span></span>
+<span><span class="co">#&gt; 27               0.35  0.58618644 0.014962542 0.0014962542 unweighted</span></span>
+<span><span class="co">#&gt; 28               0.40  0.53211864 0.015718690 0.0015718690 unweighted</span></span>
+<span><span class="co">#&gt; 29               0.45  0.47762712 0.018078695 0.0018078695 unweighted</span></span>
+<span><span class="co">#&gt; 30               0.50  0.42050847 0.015057993 0.0015057993 unweighted</span></span>
+<span><span class="co">#&gt; 31               0.55  0.36686441 0.018069664 0.0018069664 unweighted</span></span>
+<span><span class="co">#&gt; 32               0.60  0.31233051 0.017058956 0.0017058956 unweighted</span></span>
+<span><span class="co">#&gt; 33               0.65  0.26661017 0.019761901 0.0019761901 unweighted</span></span>
+<span><span class="co">#&gt; 34               0.70  0.21406780 0.018331729 0.0018331729 unweighted</span></span>
+<span><span class="co">#&gt; 35               0.75  0.17063559 0.018374961 0.0018374961 unweighted</span></span>
+<span><span class="co">#&gt; 36               0.80  0.12317797 0.017838089 0.0017838089 unweighted</span></span>
+<span><span class="co">#&gt; 37               0.85  0.08114407 0.015429840 0.0015429840 unweighted</span></span>
+<span><span class="co">#&gt; 38               0.90  0.04597458 0.010593220 0.0010593220 unweighted</span></span>
+<span><span class="co">#&gt; 39               0.95  0.01440678 0.008602021 0.0008602021 unweighted</span></span>
+<span><span class="co">#&gt; 40               1.00  0.00000000 0.000000000 0.0000000000 unweighted</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="example8-zi-pi">Example8: Zi-Pi<a class="anchor" aria-label="anchor" href="#example8-zi-pi"></a>
+</h2>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Extract the two inputs Zi-Pi needs from graph object</span></span>
+<span><span class="va">nodes_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_graph_nodes.html">get_graph_nodes</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span>      <span class="co"># node table (module + degree cols)</span></span>
+<span><span class="va">adj_mat</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_graph_adjacency.html">get_graph_adjacency</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span>  <span class="co"># adjacency / correlation matrix</span></span>
+<span></span>
+<span></span>
+<span><span class="va">role_palette</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Peripherals"</span>  <span class="op">=</span> <span class="st">"#377eb8"</span>,</span>
+<span>  <span class="st">"Connectors"</span>   <span class="op">=</span> <span class="st">"#4daf4a"</span>,</span>
+<span>  <span class="st">"Module hubs"</span>  <span class="op">=</span> <span class="st">"#e41a1c"</span>,</span>
+<span>  <span class="st">"Network hubs"</span> <span class="op">=</span> <span class="st">"#ff7f00"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compute Zi-Pi and classify</span></span>
+<span><span class="va">zp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ggnetview_zipi.html">ggnetview_zipi</a></span><span class="op">(</span></span>
+<span>  nodes_bulk     <span class="op">=</span> <span class="va">nodes_bulk</span>,    <span class="co"># node table: IDs in rownames or a `name` col</span></span>
+<span>  z_bulk_mat     <span class="op">=</span> <span class="va">adj_mat</span>,       <span class="co"># adjacency matrix; non-zero entries = edges</span></span>
+<span>  modularity_col <span class="op">=</span> <span class="st">"Modularity"</span>,  <span class="co"># column holding module labels (no NAs)</span></span>
+<span>  degree_col     <span class="op">=</span> <span class="st">"Degree"</span>,      <span class="co"># column holding node degree   (no NAs)</span></span>
+<span>  zi_threshold   <span class="op">=</span> <span class="fl">2.5</span>,           <span class="co"># Zi cutoff for role classification</span></span>
+<span>  pi_threshold   <span class="op">=</span> <span class="fl">0.62</span>,          <span class="co"># Pi cutoff for role classification</span></span>
+<span>  na.rm          <span class="op">=</span> <span class="cn">FALSE</span>,         <span class="co"># FALSE = keep unclassifiable nodes (type = NA)</span></span>
+<span>  point_colors   <span class="op">=</span> <span class="va">role_palette</span>,  <span class="co"># point + legend colours, keyed by role</span></span>
+<span>  bg_colors      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>             <span class="co"># quadrant background fills, keyed by role</span></span>
+<span>    <span class="st">"Peripherals"</span>  <span class="op">=</span> <span class="st">"#f0f0f0"</span>,</span>
+<span>    <span class="st">"Connectors"</span>   <span class="op">=</span> <span class="st">"#d9f0d3"</span>,</span>
+<span>    <span class="st">"Module hubs"</span>  <span class="op">=</span> <span class="st">"#fde0dd"</span>,</span>
+<span>    <span class="st">"Network hubs"</span> <span class="op">=</span> <span class="st">"#fee8c8"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  label_colors   <span class="op">=</span> <span class="va">role_palette</span>,  <span class="co"># quadrant text-label colours (default: black)</span></span>
+<span>  label_size     <span class="op">=</span> <span class="fl">5</span>,             <span class="co"># quadrant text-label size  (default 5.5)</span></span>
+<span>  bg_alpha       <span class="op">=</span> <span class="fl">0.35</span>           <span class="co"># background opacity 0..1    (default 0.25)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">zp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "list"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">zp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "data" "plot"</span></span>
+<span></span>
+<span><span class="va">zp</span><span class="op">$</span><span class="va">plot</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-21-1.png" alt="" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="example9-rmt-threshold">Example9: RMT threshold<a class="anchor" aria-label="anchor" href="#example9-rmt-threshold"></a>
+</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co"># ---- RMT threshold scan #1: WGCNA correlation backend ----</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co"># `ggNetView_RMT()` scans a series of candidate |r| thresholds, builds the</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co"># thresholded correlation matrix at each, computes its eigenvalue spacing</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co"># distribution (NNSD), and picks the threshold at which the NNSD transitions</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co"># from Gaussian Orthogonal Ensemble (signal + noise) to Poisson (noise-free,</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co"># modular network) — this is the RMT-recommended cutoff.</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">ggNetView_RMT</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>  <span class="at">mat              =</span> otu_rare_relative, <span class="co"># input matrix (variables x samples)</span></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>  <span class="at">transfrom.method =</span> <span class="st">"none"</span>,            <span class="co"># already relative-abundance, no extra transform</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>  <span class="at">method           =</span> <span class="st">"WGCNA"</span>,           <span class="co"># use WGCNA::corAndPvalue for correlation</span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>  <span class="at">cor.method       =</span> <span class="st">"pearson"</span>,         <span class="co"># Pearson correlation</span></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>  <span class="at">unfold.method    =</span> <span class="st">"gaussian"</span>,        <span class="co"># Gaussian KDE unfolding of eigenvalues</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>  <span class="at">bandwidth        =</span> <span class="st">"nrd0"</span>,            <span class="co"># KDE bandwidth rule (stats::density default)</span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>  <span class="at">nr.fit.points    =</span> <span class="dv">20</span>,                <span class="co"># support points (only used if unfold.method = "spline")</span></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a>  <span class="at">discard.outliers =</span> <span class="cn">TRUE</span>,              <span class="co"># IQR-trim extreme eigenvalues before unfolding</span></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a>  <span class="at">discard.zeros    =</span> <span class="cn">TRUE</span>,              <span class="co"># drop all-zero rows/cols after thresholding</span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a>  <span class="at">min.mat.dim      =</span> <span class="dv">40</span>,                <span class="co"># early-stop if effective dim drops below 40</span></span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a>  <span class="at">max.ev.spacing   =</span> <span class="dv">3</span>,                 <span class="co"># truncate NNSD tail at spacing = 3</span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a>  <span class="at">save_plots       =</span> <span class="cn">FALSE</span>,             <span class="co"># don't write diagnostic PNGs to disk</span></span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a>  <span class="at">out_dir          =</span> <span class="st">"RMT_plots"</span>,       <span class="co"># (only used when save_plots = TRUE)</span></span>
+<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a>  <span class="at">verbose          =</span> <span class="cn">TRUE</span>,              <span class="co"># print scan progress to console</span></span>
+<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a>  <span class="at">seed             =</span> <span class="dv">1115</span>               <span class="co"># fix RNG for reproducibility</span></span>
+<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a>)</span>
+<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a></span>
+<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a><span class="co"># The chosen threshold to feed downstream into build_graph_from_mat(r.threshold = ...)</span></span>
+<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a>out<span class="sc">$</span>chosen_threshold</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="sessioninfo">sessionInfo<a class="anchor" aria-label="anchor" href="#sessioninfo"></a>
 </h2>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.5.1 (2025-06-13)</span></span>
-<span><span class="co">#&gt; Platform: aarch64-apple-darwin20</span></span>
-<span><span class="co">#&gt; Running under: macOS Tahoe 26.2</span></span>
+<span><span class="co">#&gt; R version 4.6.1 (2026-06-24)</span></span>
+<span><span class="co">#&gt; Platform: aarch64-apple-darwin23</span></span>
+<span><span class="co">#&gt; Running under: macOS Tahoe 26.3.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib </span></span>
-<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; [1] zh_CN.UTF-8/zh_CN.UTF-8/zh_CN.UTF-8/C/zh_CN.UTF-8/zh_CN.UTF-8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; time zone: Asia/Shanghai</span></span>
 <span><span class="co">#&gt; tzcode source: internal</span></span>
@@ -505,50 +982,51 @@
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggNetView_1.4.17 ggnewscale_0.5.2 ggplot2_4.0.2   </span></span>
+<span><span class="co">#&gt; [1] future_1.70.0    ggNetView_0.2.1  ggnewscale_0.5.2 ggplot2_4.0.3   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] psych_2.6.1           tidyselect_1.2.1      WGCNA_1.74           </span></span>
-<span><span class="co">#&gt;  [4] viridisLite_0.4.3     dplyr_1.2.0           farver_2.1.2         </span></span>
-<span><span class="co">#&gt;  [7] viridis_0.6.5         S7_0.2.1              ggraph_2.2.2         </span></span>
+<span><span class="co">#&gt;  [1] tidyselect_1.2.1      psych_2.6.5           WGCNA_1.74           </span></span>
+<span><span class="co">#&gt;  [4] viridisLite_0.4.3     dplyr_1.2.1           farver_2.1.2         </span></span>
+<span><span class="co">#&gt;  [7] viridis_0.6.5         S7_0.2.2              ggraph_2.2.2         </span></span>
 <span><span class="co">#&gt; [10] fastmap_1.2.0         tweenr_2.0.3          digest_0.6.39        </span></span>
-<span><span class="co">#&gt; [13] rpart_4.1.24          lifecycle_1.0.5       cluster_2.1.8.1      </span></span>
-<span><span class="co">#&gt; [16] survival_3.8-3        magrittr_2.0.4        compiler_4.5.1       </span></span>
-<span><span class="co">#&gt; [19] rlang_1.1.7           Hmisc_5.2-5           tools_4.5.1          </span></span>
-<span><span class="co">#&gt; [22] igraph_2.2.2          utf8_1.2.6            yaml_2.3.12          </span></span>
-<span><span class="co">#&gt; [25] data.table_1.18.2.1   knitr_1.51            FNN_1.1.4.1          </span></span>
-<span><span class="co">#&gt; [28] labeling_0.4.3        graphlayouts_1.2.2    htmlwidgets_1.6.4    </span></span>
-<span><span class="co">#&gt; [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.2          </span></span>
-<span><span class="co">#&gt; [34] foreign_0.8-90        purrr_1.2.1           BiocGenerics_0.56.0  </span></span>
-<span><span class="co">#&gt; [37] nnet_7.3-20           dynamicTreeCut_1.63-1 grid_4.5.1           </span></span>
-<span><span class="co">#&gt; [40] polyclip_1.10-7       stats4_4.5.1          preprocessCore_1.70.0</span></span>
-<span><span class="co">#&gt; [43] multtest_2.64.0       colorspace_2.1-2      fastcluster_1.3.0    </span></span>
-<span><span class="co">#&gt; [46] scales_1.4.0          iterators_1.0.14      MASS_7.3-65          </span></span>
-<span><span class="co">#&gt; [49] dichromat_2.0-0.1     cli_3.6.5             rmarkdown_2.30       </span></span>
-<span><span class="co">#&gt; [52] generics_0.1.4        otel_0.2.0            rstudioapi_0.18.0    </span></span>
+<span><span class="co">#&gt; [13] rpart_4.1.27          lifecycle_1.0.5       cluster_2.1.8.2      </span></span>
+<span><span class="co">#&gt; [16] survival_3.8-6        magrittr_2.0.5        compiler_4.6.1       </span></span>
+<span><span class="co">#&gt; [19] rlang_1.3.0           Hmisc_5.2-6           tools_4.6.1          </span></span>
+<span><span class="co">#&gt; [22] igraph_2.3.3          utf8_1.2.6            yaml_2.3.12          </span></span>
+<span><span class="co">#&gt; [25] data.table_1.18.4     knitr_1.51            FNN_1.1.4.1          </span></span>
+<span><span class="co">#&gt; [28] labeling_0.4.3        graphlayouts_1.2.4    htmlwidgets_1.6.4    </span></span>
+<span><span class="co">#&gt; [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.3          </span></span>
+<span><span class="co">#&gt; [34] foreign_0.8-91        purrr_1.2.2           nnet_7.3-20          </span></span>
+<span><span class="co">#&gt; [37] dynamicTreeCut_1.63-1 grid_4.6.1            polyclip_1.10-7      </span></span>
+<span><span class="co">#&gt; [40] preprocessCore_1.74.0 colorspace_2.1-3      fastcluster_1.3.0    </span></span>
+<span><span class="co">#&gt; [43] globals_0.19.1        scales_1.4.0          iterators_1.0.14     </span></span>
+<span><span class="co">#&gt; [46] MASS_7.3-65           dichromat_2.0-0.1     cli_3.6.6            </span></span>
+<span><span class="co">#&gt; [49] rmarkdown_2.31        vegan_2.7-5           generics_0.1.4       </span></span>
+<span><span class="co">#&gt; [52] otel_0.2.0            future.apply_1.20.2   rstudioapi_0.19.0    </span></span>
 <span><span class="co">#&gt; [55] cachem_1.1.0          ggforce_0.5.0         stringr_1.6.0        </span></span>
-<span><span class="co">#&gt; [58] splines_4.5.1         parallel_4.5.1        impute_1.82.0        </span></span>
-<span><span class="co">#&gt; [61] matrixStats_1.5.0     base64enc_0.1-6       vctrs_0.7.1          </span></span>
-<span><span class="co">#&gt; [64] Matrix_1.7-4          ggrepel_0.9.6         Formula_1.2-5        </span></span>
-<span><span class="co">#&gt; [67] htmlTable_2.4.3       foreach_1.5.2         tidyr_1.3.2          </span></span>
-<span><span class="co">#&gt; [70] glue_1.8.0            codetools_0.2-20      stringi_1.8.7        </span></span>
-<span><span class="co">#&gt; [73] gtable_0.3.6          tibble_3.3.1          pillar_1.11.1        </span></span>
-<span><span class="co">#&gt; [76] htmltools_0.5.9       R6_2.6.1              doParallel_1.0.17    </span></span>
-<span><span class="co">#&gt; [79] tidygraph_1.3.1       evaluate_1.0.5        lattice_0.22-7       </span></span>
-<span><span class="co">#&gt; [82] Biobase_2.70.0        backports_1.5.0       memoise_2.0.1        </span></span>
-<span><span class="co">#&gt; [85] Rcpp_1.1.1            nlme_3.1-168          gridExtra_2.3        </span></span>
-<span><span class="co">#&gt; [88] checkmate_2.3.4       xfun_0.56             pkgconfig_2.0.3</span></span></code></pre></div>
+<span><span class="co">#&gt; [58] splines_4.6.1         parallel_4.6.1        impute_1.86.0        </span></span>
+<span><span class="co">#&gt; [61] matrixStats_1.5.0     base64enc_0.1-6       vctrs_0.7.3          </span></span>
+<span><span class="co">#&gt; [64] Matrix_1.7-5          ggrepel_0.9.8         Formula_1.2-5        </span></span>
+<span><span class="co">#&gt; [67] htmlTable_2.5.0       listenv_1.0.0         foreach_1.5.2        </span></span>
+<span><span class="co">#&gt; [70] tidyr_1.3.2           parallelly_1.48.0     glue_1.8.1           </span></span>
+<span><span class="co">#&gt; [73] codetools_0.2-20      stringi_1.8.7         gtable_0.3.6         </span></span>
+<span><span class="co">#&gt; [76] tibble_3.3.1          pillar_1.11.1         htmltools_0.5.9      </span></span>
+<span><span class="co">#&gt; [79] R6_2.6.1              doParallel_1.0.17     tidygraph_1.3.1      </span></span>
+<span><span class="co">#&gt; [82] evaluate_1.0.5        lattice_0.22-9        backports_1.5.1      </span></span>
+<span><span class="co">#&gt; [85] memoise_2.0.1         Rcpp_1.1.2            permute_0.9-10       </span></span>
+<span><span class="co">#&gt; [88] gridExtra_2.3.1       nlme_3.1-169          checkmate_2.3.4      </span></span>
+<span><span class="co">#&gt; [91] mgcv_1.9-4            xfun_0.60             pkgconfig_2.0.3</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h4>
 <p>If you use ggNetView in your research, please cite:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>Yue Liu, Chao <span class="fu">Wang</span> (<span class="dv">2026</span>). ggNetView<span class="sc">:</span> An R Package <span class="cf">for</span> Reproducible and Deterministic Network Analysis and Visualization. </span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>Yue Liu, Chao <span class="fu">Wang</span> (<span class="dv">2026</span>). ggNetView<span class="sc">:</span> An R Package <span class="cf">for</span> Reproducible Biological Network Analysis and Visualization.</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="github--manual">Github &amp; Manual<a class="anchor" aria-label="anchor" href="#github--manual"></a>
 </h4>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>Jiawang1209<span class="sc">/</span>ggNetView</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>jiawang1209.github.io<span class="sc">/</span>ggNetView<span class="sc">-</span>manual<span class="sc">/</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>Jiawang1209<span class="sc">/</span>ggNetView</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>jiawang1209.github.io<span class="sc">/</span>ggNetView<span class="sc">-</span>manual<span class="sc">/</span></span></code></pre></div>
 <h4 align="center" id="github--manual-1">
 ©微信公众号 RPython
 
@@ -600,7 +1078,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

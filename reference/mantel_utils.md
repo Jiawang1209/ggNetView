@@ -18,6 +18,15 @@ is a subset of columns. Uses full distance matrices per block. Output
 format is compatible with downstream processing when blocks are treated
 as single "species" and "env" units.
 
+Treats the whole `spec_df` as a single community matrix: all of its
+columns together form ONE distance matrix
+([`vegan::vegdist`](https://vegandevs.github.io/vegan/reference/vegdist.html)
+with `spec_dist_method`). For each column of `env_df`, that single
+column is converted into its own distance matrix
+([`vegan::vegdist`](https://vegandevs.github.io/vegan/reference/vegdist.html)
+with `env_dist_method`) and a Mantel test is run between the two
+distance matrices.
+
 ## Usage
 
 ``` r
@@ -27,7 +36,8 @@ mantel_pairwise(
   method = c("pearson", "spearman", "kendall"),
   alternative = c("two.sided", "less", "greater"),
   permutations = 999L,
-  na_omit = TRUE
+  na_omit = TRUE,
+  seed = NULL
 )
 
 mantel_between_blocks(
@@ -44,21 +54,38 @@ mantel_between_blocks(
   permutations = 999L,
   seed = NULL
 )
+
+mantel_block_vs_col(
+  spec_df,
+  env_df,
+  block_name = "block",
+  method = c("pearson", "spearman", "kendall"),
+  spec_dist_method = "bray",
+  env_dist_method = "euclidean",
+  permutations = 999L,
+  na_omit = TRUE,
+  seed = NULL
+)
 ```
 
 ## Arguments
 
 - spec_df:
 
-  Data frame or matrix of species abundances (samples as rows).
+  Data frame or matrix; rows = samples, columns = species (or any
+  community variables). The full matrix is converted into ONE distance
+  matrix.
 
 - env_df:
 
-  Data frame or matrix of environmental variables (samples as rows).
+  Data frame or matrix; rows = samples, columns = env variables. Each
+  column is converted into its own distance matrix and tested
+  separately.
 
 - method:
 
-  Correlation method: `"pearson"`, `"spearman"`, or `"kendall"`.
+  Correlation method for the Mantel test. One of `"pearson"`,
+  `"spearman"`, or `"kendall"`.
 
 - alternative:
 
@@ -66,11 +93,16 @@ mantel_between_blocks(
 
 - permutations:
 
-  Number of permutations.
+  Integer. Number of permutations for the test.
 
 - na_omit:
 
-  If `TRUE`, remove incomplete cases.
+  If `TRUE`, drop incomplete cases jointly across `spec_df` and `env_df`
+  before computing distances.
+
+- seed:
+
+  Random seed for reproducibility.
 
 - spec:
 
@@ -100,22 +132,51 @@ mantel_between_blocks(
 
 - spec_dist_method:
 
-  Distance method for species matrix when using `mantel_between_blocks`.
-  One of `"euclidean"`, `"bray"`, `"manhattan"`, etc. (see
-  [`vegan::vegdist`](https://vegandevs.github.io/vegan/reference/vegdist.html)).
+  Distance method for the spec matrix
+  ([`vegan::vegdist`](https://vegandevs.github.io/vegan/reference/vegdist.html)).
+  Common ecological choices: `"bray"`, `"jaccard"`, `"euclidean"`.
 
 - env_dist_method:
 
-  Distance method for environmental matrix.
+  Distance method for each env column
+  ([`vegan::vegdist`](https://vegandevs.github.io/vegan/reference/vegdist.html)).
+  Default `"euclidean"` is the standard choice for continuous env
+  variables.
 
-- seed:
+- block_name:
 
-  Random seed for reproducibility.
+  Character (default `"block"`). Value placed in the `ID` column of the
+  result, useful for tagging which block these rows came from when
+  binding many results together.
 
 ## Value
 
 A data frame with columns `ID` (species/block), `Type` (env/block),
 `Correlation` (Mantel r), and `Pvalue`.
+
+A data frame with one row per env column. Columns: `ID` (=
+`block_name`), `Type` (env column name), `Correlation` (Mantel r),
+`Pvalue` (Mantel p).
+
+## Details
+
+**NOTE (statistical caveat).** This is the **column-vs-column** Mantel
+variant: each species column and each env column is reduced to a
+single-variable distance matrix before the Mantel test. With one
+variable per side,
+[`vegan::mantel`](https://vegandevs.github.io/vegan/reference/mantel.html)
+is mathematically close to a (rank) correlation between the two columns
+and does **not** carry the "community-vs-environment" interpretation
+that ecology papers usually associate with a Mantel test. For the
+standard ecological pattern, where a whole species block (community
+matrix) is tested against each environmental gradient, use
+`mantel_block_vs_col` instead.
+
+This is the **ecologically meaningful** Mantel pattern (also used by
+linkET / ggcor): "community structure of a spec block vs each
+environmental gradient". Use this instead of `mantel_pairwise` when you
+want a Mantel result that carries the standard
+"community-vs-environment" interpretation.
 
 ## References
 

@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multiple networks and show the connections between them to highlight key members within the networks — ggNetView_multi_link"><meta name="description" content="Provide either (mat, group_info) or graph_obj_list as input.
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multiple networks and show the connections between them to highlight key members within the networks — ggNetView_multi_link"><meta name="description" content="Provide either (mat, group_info) or graph_obj_list as input.
 When graph_obj_list is provided, mat and group_info are ignored."><meta property="og:description" content="Provide either (mat, group_info) or graph_obj_list as input.
 When graph_obj_list is provided, mat and group_info are ignored."><meta property="og:image" content="https://jiawang1209.github.io/ggNetView/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -15,7 +15,7 @@ When graph_obj_list is provided, mat and group_info are ignored."><meta property
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,19 +26,23 @@ When graph_obj_list is provided, mat and group_info are ignored."><meta property
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="../articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="../articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="../articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="../articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/layout-gallery.html">Layout Gallery</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul></li>
       </ul></div>
 
 
@@ -69,6 +73,7 @@ When <code>graph_obj_list</code> is provided, <code>mat</code> and <code>group_i
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"WGCNA"</span>, <span class="st">"SpiecEasi"</span>, <span class="st">"SPARCC"</span>, <span class="st">"cor"</span><span class="op">)</span>,</span>
 <span>  cor.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span><span class="op">)</span>,</span>
 <span>  proc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"holm"</span>, <span class="st">"hochberg"</span>, <span class="st">"hommel"</span>, <span class="st">"bonferroni"</span>, <span class="st">"BH"</span>, <span class="st">"BY"</span>, <span class="st">"fdr"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  sig_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pvalue"</span>, <span class="st">"FDR"</span><span class="op">)</span>,</span>
 <span>  module.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Fast_greedy"</span>, <span class="st">"Walktrap"</span>, <span class="st">"Edge_betweenness"</span>, <span class="st">"Spinglass"</span><span class="op">)</span>,</span>
 <span>  SpiecEasi.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mb"</span>, <span class="st">"glasso"</span><span class="op">)</span>,</span>
 <span>  sparcc_R <span class="op">=</span> <span class="fl">20</span>,</span>
@@ -76,35 +81,36 @@ When <code>graph_obj_list</code> is provided, <code>mat</code> and <code>group_i
 <span>  top_modules <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  layout <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  node_add <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>  ring_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  shrink <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  inner_shrink <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  k_nn <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  push_others_delta <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  layout.module <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"random"</span>, <span class="st">"adjacent"</span>, <span class="st">"order"</span><span class="op">)</span>,</span>
-<span>  group.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill.by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  pointsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  jitter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  jitter_sd <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>  mapping_line <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  linealpha <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  linecolor <span class="op">=</span> <span class="st">"grey70"</span>,</span>
-<span>  inner_curve <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  inner_curvature <span class="op">=</span> <span class="fl">0.12</span>,</span>
-<span>  inner_curve_adaptive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  inner_curve_adaptive_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">1.3</span><span class="op">)</span>,</span>
-<span>  inner_curve_adaptive_bins <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>  add_outer <span class="op">=</span> <span class="st">"circle"</span>,</span>
-<span>  q_outer <span class="op">=</span> <span class="fl">0.88</span>,</span>
-<span>  expand_outer <span class="op">=</span> <span class="fl">1.02</span>,</span>
-<span>  outerwidth <span class="op">=</span> <span class="fl">1.25</span>,</span>
-<span>  outerlinetype <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  outeralpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  layout_module <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"random"</span>, <span class="st">"adjacent"</span>, <span class="st">"order"</span><span class="op">)</span>,</span>
+<span>  group_by <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
+<span>  node_fill <span class="op">=</span> <span class="st">"Modularity"</span>,</span>
+<span>  node_fill_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  node_color_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  node_size_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  node_jitter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  node_jitter_sd <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  edge_color <span class="op">=</span> <span class="st">"grey70"</span>,</span>
+<span>  edge_color_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  edge_alpha <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  edge_curve <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  edge_curvature <span class="op">=</span> <span class="fl">0.12</span>,</span>
+<span>  edge_curve_adaptive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  edge_curve_adaptive_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">1.3</span><span class="op">)</span>,</span>
+<span>  edge_curve_adaptive_bins <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>  module_outline <span class="op">=</span> <span class="st">"circle"</span>,</span>
+<span>  module_outline_q <span class="op">=</span> <span class="fl">0.88</span>,</span>
+<span>  module_outline_expand <span class="op">=</span> <span class="fl">1.02</span>,</span>
+<span>  module_outline_bandwidth <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  module_outline_width <span class="op">=</span> <span class="fl">1.25</span>,</span>
+<span>  module_outline_linetype <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  module_outline_alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  link_level <span class="op">=</span> <span class="st">"Module"</span>,</span>
 <span>  link_curve <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  link_curvature <span class="op">=</span> <span class="fl">0.2</span>,</span>
@@ -114,13 +120,13 @@ When <code>graph_obj_list</code> is provided, <code>mat</code> and <code>group_i
 <span>  link_curve_adaptive_bins <span class="op">=</span> <span class="fl">7</span>,</span>
 <span>  link_color_node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  link_color_module <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  link_linewidth_node <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  link_linewidth_module <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  link_width_node <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  link_width_module <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  link_linetype_node <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  link_linetype_module <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  link_linealpha_node <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  link_linealpha_module <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  dropOthers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  link_alpha_node <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  link_alpha_module <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  drop_others <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  calculate_topology <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  comparisons <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  comparisons_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -134,16 +140,54 @@ When <code>graph_obj_list</code> is provided, <code>mat</code> and <code>group_i
 <span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sine_period <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>  label_offset <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  label_size <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>  add_group_outer <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  add_group_outer_expand <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  add_group_outer_color <span class="op">=</span> <span class="st">"grey50"</span>,</span>
-<span>  add_group_outer_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_group_outer_fill_alpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span>  add_group_outer_linetype <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  add_group_outer_linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  seed <span class="op">=</span> <span class="fl">1115</span></span>
+<span>  group_label_offset <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  group_label_size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  network_outline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  network_outline_expand <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  network_outline_color <span class="op">=</span> <span class="st">"grey50"</span>,</span>
+<span>  network_outline_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  network_outline_fill_alpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  network_outline_linetype <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  network_outline_width <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1115</span>,</span>
+<span>  ring_n <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  layout.module <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  group.by <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  fill.by <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  fill <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  color <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  pointsize <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  jitter <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  jitter_sd <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mapping_line <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  linealpha <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  linecolor <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  inner_curve <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  inner_curvature <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  inner_curve_adaptive <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  inner_curve_adaptive_range <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  inner_curve_adaptive_bins <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_outer <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  q_outer <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  expand_outer <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  bandwidth_scale <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  outerwidth <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  outerlinetype <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  outeralpha <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  link_linewidth_node <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  link_linewidth_module <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  link_linealpha_node <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  link_linealpha_module <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  dropOthers <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  label_offset <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_expand <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_color <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_fill <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_fill_alpha <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_linetype <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  add_group_outer_linewidth <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -213,6 +257,17 @@ Options include:
 "BH", "BY", "fdr", and "none".</p></dd>
 
 
+<dt id="arg-sig-by">sig_by<a class="anchor" aria-label="anchor" href="#arg-sig-by"></a></dt>
+<dd><p>Character (default <code>"pvalue"</code>). Which column decides
+whether a between-module comparison is kept (&lt; 0.05): the raw
+<code>"pvalue"</code> (default; preserves historical behaviour) or the
+BH-adjusted <code>"FDR"</code> column. The <code>FDR</code> is Benjamini-Hochberg
+adjusted <em>within each group-pair's</em> module-vs-module comparison grid
+(as computed by <code>compare_modules_by_overlap()</code>), not pooled globally
+across all group-pairs; use <code>"FDR"</code> to damp false positives from the
+many module comparisons made within a pair.</p></dd>
+
+
 <dt id="arg-module-method">module.method<a class="anchor" aria-label="anchor" href="#arg-module-method"></a></dt>
 <dd><p>Character.
 Network community detection (module identification) method.
@@ -252,11 +307,6 @@ Custom layouts; one of "gephi", "square", "square2", "petal",
 Number of nodes to add in each layer of the layout.</p></dd>
 
 
-<dt id="arg-ring-n">ring_n<a class="anchor" aria-label="anchor" href="#arg-ring-n"></a></dt>
-<dd><p>Numeric (default = 7)
-Numbers of ring in rings layout.</p></dd>
-
-
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>Numeric (default = 1).
 Radius increment for concentric or layered layouts.</p></dd>
@@ -277,6 +327,12 @@ Index of nodes to be emphasized or centered in the layout</p></dd>
 Shrinkage factor applied to the center points.</p></dd>
 
 
+<dt id="arg-inner-shrink">inner_shrink<a class="anchor" aria-label="anchor" href="#arg-inner-shrink"></a></dt>
+<dd><p>Numeric (default = 1).
+Intra-module compactness factor for <code>layout = "WGCNA"</code> only.
+See <code><a href="ggNetView.html">ggNetView</a></code> for details.  Ignored by other layouts.</p></dd>
+
+
 <dt id="arg-k-nn">k_nn<a class="anchor" aria-label="anchor" href="#arg-k-nn"></a></dt>
 <dd><p>Numeric (default = 8).
 Number of nearest neighbors used to build the local adjacency graph.</p></dd>
@@ -287,99 +343,100 @@ Number of nearest neighbors used to build the local adjacency graph.</p></dd>
 Radial offset applied to the "Others" module to slightly</p></dd>
 
 
-<dt id="arg-layout-module">layout.module<a class="anchor" aria-label="anchor" href="#arg-layout-module"></a></dt>
+<dt id="arg-layout-module">layout_module<a class="anchor" aria-label="anchor" href="#arg-layout-module"></a></dt>
 <dd><p>Character  (default = "random")
 - random : modules are distributed more randomly and independently.
 - adjacent : modules are positioned close to each other, minimizing inter-module gaps.
 - order : modules are distributed by order, applicable to `Bipartite, Tripartite, Quadripartite, Multipartite, Pentapartite Layout`</p></dd>
 
 
-<dt id="arg-group-by">group.by<a class="anchor" aria-label="anchor" href="#arg-group-by"></a></dt>
+<dt id="arg-group-by">group_by<a class="anchor" aria-label="anchor" href="#arg-group-by"></a></dt>
 <dd><p>Character (default = "Modularity").
 Change group for nodes</p></dd>
 
 
-<dt id="arg-fill-by">fill.by<a class="anchor" aria-label="anchor" href="#arg-fill-by"></a></dt>
+<dt id="arg-node-fill">node_fill<a class="anchor" aria-label="anchor" href="#arg-node-fill"></a></dt>
 <dd><p>Character (default = "Modularity").
 Change fill for nodes</p></dd>
 
 
-<dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
+<dt id="arg-node-fill-values">node_fill_values<a class="anchor" aria-label="anchor" href="#arg-node-fill-values"></a></dt>
 <dd><p>Named vector of colors for node/module fill (e.g. <code>c("M1" = "red", "M2" = "blue")</code>).
 If <code>NULL</code> (default), uses viridis discrete fill scale
 (<code>scale_fill_viridis_d</code>);
-if provided, uses <code>scale_fill_manual(values = fill)</code>.</p></dd>
+if provided, uses <code>scale_fill_manual(values = node_fill_values)</code>.</p></dd>
 
 
-<dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
+<dt id="arg-node-color-values">node_color_values<a class="anchor" aria-label="anchor" href="#arg-node-color-values"></a></dt>
 <dd><p>Color setting for node/module border.
 Supports either a single color string (fixed border color) or a named vector
-(module-to-color mapping, similar to <code>fill</code>).
+(module-to-color mapping, similar to <code>node_fill_values</code>).
 If <code>NULL</code>, mapped borders use viridis discrete color scale
 (<code>scale_color_viridis_d</code>).</p></dd>
 
 
-<dt id="arg-pointsize">pointsize<a class="anchor" aria-label="anchor" href="#arg-pointsize"></a></dt>
+<dt id="arg-node-size-range">node_size_range<a class="anchor" aria-label="anchor" href="#arg-node-size-range"></a></dt>
 <dd><p>Numeric vector of length 2 (default = <code>c(1, 5)</code>).
 The range of point size when mapping <code>Degree</code> to size.
 First value is minimum size, second is maximum size.</p></dd>
 
 
-<dt id="arg-jitter">jitter<a class="anchor" aria-label="anchor" href="#arg-jitter"></a></dt>
+<dt id="arg-node-jitter">node_jitter<a class="anchor" aria-label="anchor" href="#arg-node-jitter"></a></dt>
 <dd><p>Logical (default = FALSE).
-Whether to apply jitter to points.</p></dd>
+Whether to apply node_jitter to points.</p></dd>
 
 
-<dt id="arg-jitter-sd">jitter_sd<a class="anchor" aria-label="anchor" href="#arg-jitter-sd"></a></dt>
+<dt id="arg-node-jitter-sd">node_jitter_sd<a class="anchor" aria-label="anchor" href="#arg-node-jitter-sd"></a></dt>
 <dd><p>Integer  (default = 0.1).
-The standard deviation of the jitter applied when `jitter = TRUE`.</p></dd>
+The standard deviation of the node_jitter applied when `node_jitter = TRUE`.</p></dd>
 
 
-<dt id="arg-mapping-line">mapping_line<a class="anchor" aria-label="anchor" href="#arg-mapping-line"></a></dt>
-<dd><p>Logical or Character (default = FALSE).
-Whether to map line color in ggNetView. If a character string is provided,
-it must be a variable name in edge data.</p></dd>
+<dt id="arg-edge-color">edge_color<a class="anchor" aria-label="anchor" href="#arg-edge-color"></a></dt>
+<dd><p>Character (default = "grey70").
+Within-group edge colour: an edge column name (mapping; <code>"corr_direction"</code>
+colours positive/negative edges red/blue and adds the counts to the group
+label) or a single colour (constant).</p></dd>
 
 
-<dt id="arg-linealpha">linealpha<a class="anchor" aria-label="anchor" href="#arg-linealpha"></a></dt>
+<dt id="arg-edge-color-values">edge_color_values<a class="anchor" aria-label="anchor" href="#arg-edge-color-values"></a></dt>
+<dd><p>Named colour vector or NULL (default = NULL).
+Manual palette for a categorical <code>edge_color</code> mapping.</p></dd>
+
+
+<dt id="arg-edge-alpha">edge_alpha<a class="anchor" aria-label="anchor" href="#arg-edge-alpha"></a></dt>
 <dd><p>Integer  (default = 0.25).
 Change  line alpha.</p></dd>
 
 
-<dt id="arg-linecolor">linecolor<a class="anchor" aria-label="anchor" href="#arg-linecolor"></a></dt>
-<dd><p>Character  (default = "grey70").
-Change  line color.</p></dd>
-
-
-<dt id="arg-inner-curve">inner_curve<a class="anchor" aria-label="anchor" href="#arg-inner-curve"></a></dt>
+<dt id="arg-edge-curve">edge_curve<a class="anchor" aria-label="anchor" href="#arg-edge-curve"></a></dt>
 <dd><p>Logical (default = FALSE).
 Whether to draw within-group edges as curves.</p></dd>
 
 
-<dt id="arg-inner-curvature">inner_curvature<a class="anchor" aria-label="anchor" href="#arg-inner-curvature"></a></dt>
+<dt id="arg-edge-curvature">edge_curvature<a class="anchor" aria-label="anchor" href="#arg-edge-curvature"></a></dt>
 <dd><p>Numeric (default = 0.12).
-Curvature for within-group edges when <code>inner_curve = TRUE</code>.</p></dd>
+Curvature for within-group edges when <code>edge_curve = TRUE</code>.</p></dd>
 
 
-<dt id="arg-inner-curve-adaptive">inner_curve_adaptive<a class="anchor" aria-label="anchor" href="#arg-inner-curve-adaptive"></a></dt>
+<dt id="arg-edge-curve-adaptive">edge_curve_adaptive<a class="anchor" aria-label="anchor" href="#arg-edge-curve-adaptive"></a></dt>
 <dd><p>Logical (default = TRUE).
 Whether to adapt within-group edge curvature by edge length when
-<code>inner_curve = TRUE</code>.</p></dd>
+<code>edge_curve = TRUE</code>.</p></dd>
 
 
-<dt id="arg-inner-curve-adaptive-range">inner_curve_adaptive_range<a class="anchor" aria-label="anchor" href="#arg-inner-curve-adaptive-range"></a></dt>
+<dt id="arg-edge-curve-adaptive-range">edge_curve_adaptive_range<a class="anchor" aria-label="anchor" href="#arg-edge-curve-adaptive-range"></a></dt>
 <dd><p>Numeric vector of length 2 (default = c(0.7, 1.3)).
-Multipliers applied to <code>inner_curvature</code> for shortest and longest
+Multipliers applied to <code>edge_curvature</code> for shortest and longest
 within-group edges.</p></dd>
 
 
-<dt id="arg-inner-curve-adaptive-bins">inner_curve_adaptive_bins<a class="anchor" aria-label="anchor" href="#arg-inner-curve-adaptive-bins"></a></dt>
+<dt id="arg-edge-curve-adaptive-bins">edge_curve_adaptive_bins<a class="anchor" aria-label="anchor" href="#arg-edge-curve-adaptive-bins"></a></dt>
 <dd><p>Integer (default = 7).
 Number of bins used to approximate per-edge adaptive curvature for
 within-group edges.</p></dd>
 
 
-<dt id="arg-add-outer">add_outer<a class="anchor" aria-label="anchor" href="#arg-add-outer"></a></dt>
+<dt id="arg-module-outline">module_outline<a class="anchor" aria-label="anchor" href="#arg-module-outline"></a></dt>
 <dd><p>Logical or Character (default = "circle").
 Add outer boundaries for matched modules.
 Supported values: <code>"circle"</code> (use <code><a href="https://ggforce.data-imaginist.com/reference/geom_mark_circle.html" class="external-link">ggforce::geom_mark_circle</a></code>),
@@ -388,29 +445,36 @@ and <code>"none"</code> (disable). Logical <code>TRUE</code>/<code>FALSE</code> 
 accepted and mapped to <code>"circle"</code>/<code>"none"</code>.</p></dd>
 
 
-<dt id="arg-q-outer">q_outer<a class="anchor" aria-label="anchor" href="#arg-q-outer"></a></dt>
+<dt id="arg-module-outline-q">module_outline_q<a class="anchor" aria-label="anchor" href="#arg-module-outline-q"></a></dt>
 <dd><p>Numeric (default = 0.88).
-Quantile of radial distance used to construct the smooth outer boundary
-when <code>add_outer = "manual"</code>.</p></dd>
+HDR coverage of the outer boundary when <code>module_outline = "manual"</code>: the
+contour is drawn at the density level whose iso-density region contains a
+fraction <code>module_outline_q</code> of the module's empirical probability mass.</p></dd>
 
 
-<dt id="arg-expand-outer">expand_outer<a class="anchor" aria-label="anchor" href="#arg-expand-outer"></a></dt>
+<dt id="arg-module-outline-expand">module_outline_expand<a class="anchor" aria-label="anchor" href="#arg-module-outline-expand"></a></dt>
 <dd><p>Numeric (default = 1.02).
-Global scaling factor applied to the smooth outer boundary when
-<code>add_outer = "manual"</code>.</p></dd>
+Multiplicative scaling applied to each polygon from its own centroid
+when <code>module_outline = "manual"</code>.</p></dd>
 
 
-<dt id="arg-outerwidth">outerwidth<a class="anchor" aria-label="anchor" href="#arg-outerwidth"></a></dt>
+<dt id="arg-module-outline-bandwidth">module_outline_bandwidth<a class="anchor" aria-label="anchor" href="#arg-module-outline-bandwidth"></a></dt>
+<dd><p>Numeric (default = 1.0).
+Multiplier on the robust normal-reference 2D KDE bandwidth used to build
+the outer boundary when <code>module_outline = "manual"</code>.</p></dd>
+
+
+<dt id="arg-module-outline-width">module_outline_width<a class="anchor" aria-label="anchor" href="#arg-module-outline-width"></a></dt>
 <dd><p>Numeric (default = 1.25).
 Line width for module outer boundaries.</p></dd>
 
 
-<dt id="arg-outerlinetype">outerlinetype<a class="anchor" aria-label="anchor" href="#arg-outerlinetype"></a></dt>
+<dt id="arg-module-outline-linetype">module_outline_linetype<a class="anchor" aria-label="anchor" href="#arg-module-outline-linetype"></a></dt>
 <dd><p>Integer or character (default = 2).
 Linetype for module outer boundaries (e.g. 1 = solid, 2 = dashed).</p></dd>
 
 
-<dt id="arg-outeralpha">outeralpha<a class="anchor" aria-label="anchor" href="#arg-outeralpha"></a></dt>
+<dt id="arg-module-outline-alpha">module_outline_alpha<a class="anchor" aria-label="anchor" href="#arg-module-outline-alpha"></a></dt>
 <dd><p>Numeric (default = 0.5).
 Alpha for module outer boundaries.</p></dd>
 
@@ -476,12 +540,12 @@ A single value, named vector (e.g. <code>c("WT|KO" = "red")</code>), or unnamed 
 Colors for module-to-module cross-group links. Same rules as <code>link_color_node</code>.</p></dd>
 
 
-<dt id="arg-link-linewidth-node">link_linewidth_node<a class="anchor" aria-label="anchor" href="#arg-link-linewidth-node"></a></dt>
+<dt id="arg-link-width-node">link_width_node<a class="anchor" aria-label="anchor" href="#arg-link-width-node"></a></dt>
 <dd><p>Numeric (default = 1).
 Line width for node-to-node cross-group links. Single value or vector (by pair index/named).</p></dd>
 
 
-<dt id="arg-link-linewidth-module">link_linewidth_module<a class="anchor" aria-label="anchor" href="#arg-link-linewidth-module"></a></dt>
+<dt id="arg-link-width-module">link_width_module<a class="anchor" aria-label="anchor" href="#arg-link-width-module"></a></dt>
 <dd><p>Numeric (default = 1).
 Line width for module-to-module cross-group links. Single value or vector.</p></dd>
 
@@ -496,20 +560,26 @@ Linetype for node-to-node cross-group links (e.g. 2 = dashed, 1 = solid). Single
 Linetype for module-to-module cross-group links. Single value or vector.</p></dd>
 
 
-<dt id="arg-link-linealpha-node">link_linealpha_node<a class="anchor" aria-label="anchor" href="#arg-link-linealpha-node"></a></dt>
+<dt id="arg-link-alpha-node">link_alpha_node<a class="anchor" aria-label="anchor" href="#arg-link-alpha-node"></a></dt>
 <dd><p>Numeric (default = 0.25).
 Alpha (transparency) for node-to-node cross-group links. Single value or vector.</p></dd>
 
 
-<dt id="arg-link-linealpha-module">link_linealpha_module<a class="anchor" aria-label="anchor" href="#arg-link-linealpha-module"></a></dt>
+<dt id="arg-link-alpha-module">link_alpha_module<a class="anchor" aria-label="anchor" href="#arg-link-alpha-module"></a></dt>
 <dd><p>Numeric (default = 0.5).
 Alpha (transparency) for module-to-module cross-group links. Single value or vector.</p></dd>
 
 
-<dt id="arg-dropothers">dropOthers<a class="anchor" aria-label="anchor" href="#arg-dropothers"></a></dt>
+<dt id="arg-drop-others">drop_others<a class="anchor" aria-label="anchor" href="#arg-drop-others"></a></dt>
 <dd><p>Logical (default = FALSE).
 If TRUE, remove nodes in the <code>"Others"</code> module from each group's
-<code>graph_obj</code> before layout, plotting, and module-overlap comparison.</p></dd>
+<code>graph_obj</code> before layout and plotting.
+This is a display-only switch: the module-overlap comparison always runs on the
+complete network (including <code>"Others"</code> nodes), so the set of cross-group
+module links is identical for <code>drop_others = TRUE</code> and <code>FALSE</code>;
+only the plotted nodes differ.
+Note that <code>"Others"</code> is a display bucket for every module ranked below
+<code>top_modules</code>, not a community, and never takes part in module links.</p></dd>
 
 
 <dt id="arg-calculate-topology">calculate_topology<a class="anchor" aria-label="anchor" href="#arg-calculate-topology"></a></dt>
@@ -613,50 +683,50 @@ Number of columns. Used by: (1) <code>group_layout = "row"</code>, <code>"column
 Groups per wavelength for <code>snake_vertical*</code>; ignored for <code>sin</code>, <code>cos</code>, <code>-sin</code>, <code>-cos</code>.</p></dd>
 
 
-<dt id="arg-label-offset">label_offset<a class="anchor" aria-label="anchor" href="#arg-label-offset"></a></dt>
+<dt id="arg-group-label-offset">group_label_offset<a class="anchor" aria-label="anchor" href="#arg-group-label-offset"></a></dt>
 <dd><p>Numeric (default = 0.2).
 Vertical offset of group labels above each group's layout (added to max y).</p></dd>
 
 
-<dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
+<dt id="arg-group-label-size">group_label_size<a class="anchor" aria-label="anchor" href="#arg-group-label-size"></a></dt>
 <dd><p>Numeric (default = 4).
 Font size for group labels (Group, Node, Edge, etc.).</p></dd>
 
 
-<dt id="arg-add-group-outer">add_group_outer<a class="anchor" aria-label="anchor" href="#arg-add-group-outer"></a></dt>
+<dt id="arg-network-outline">network_outline<a class="anchor" aria-label="anchor" href="#arg-network-outline"></a></dt>
 <dd><p>Logical (default = FALSE).
 Whether to add a circle boundary around each group (mimics <code><a href="https://ggforce.data-imaginist.com/reference/geom_mark_circle.html" class="external-link">ggforce::geom_mark_circle</a></code>).</p></dd>
 
 
-<dt id="arg-add-group-outer-expand">add_group_outer_expand<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-expand"></a></dt>
+<dt id="arg-network-outline-expand">network_outline_expand<a class="anchor" aria-label="anchor" href="#arg-network-outline-expand"></a></dt>
 <dd><p>Numeric (default = 2).
 Expansion in mm for the group circle to account for point size; passed to <code>geom_mark_circle(expand = ...)</code>.</p></dd>
 
 
-<dt id="arg-add-group-outer-color">add_group_outer_color<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-color"></a></dt>
+<dt id="arg-network-outline-color">network_outline_color<a class="anchor" aria-label="anchor" href="#arg-network-outline-color"></a></dt>
 <dd><p>Character (default = "grey50").
 Color of the group outer circle border. A single value applies to all groups;
 a named vector maps group names to colors (e.g. <code>c("WT" = "blue", "KO" = "red")</code>);
 an unnamed vector is used by index (recycled if needed).</p></dd>
 
 
-<dt id="arg-add-group-outer-fill">add_group_outer_fill<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-fill"></a></dt>
+<dt id="arg-network-outline-fill">network_outline_fill<a class="anchor" aria-label="anchor" href="#arg-network-outline-fill"></a></dt>
 <dd><p>Character or NULL (default = NULL).
 Fill color of the group outer circle. <code>NULL</code> = no fill (transparent).
-A single value, named vector, or unnamed vector works like <code>add_group_outer_color</code>.</p></dd>
+A single value, named vector, or unnamed vector works like <code>network_outline_color</code>.</p></dd>
 
 
-<dt id="arg-add-group-outer-fill-alpha">add_group_outer_fill_alpha<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-fill-alpha"></a></dt>
+<dt id="arg-network-outline-fill-alpha">network_outline_fill_alpha<a class="anchor" aria-label="anchor" href="#arg-network-outline-fill-alpha"></a></dt>
 <dd><p>Numeric (default = 0.2).
 Alpha (transparency) of the group outer circle fill; 0 = fully transparent, 1 = opaque.</p></dd>
 
 
-<dt id="arg-add-group-outer-linetype">add_group_outer_linetype<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-linetype"></a></dt>
+<dt id="arg-network-outline-linetype">network_outline_linetype<a class="anchor" aria-label="anchor" href="#arg-network-outline-linetype"></a></dt>
 <dd><p>Integer or character (default = 1).
 Linetype of the group outer circle (e.g. 1 = solid, 2 = dashed).</p></dd>
 
 
-<dt id="arg-add-group-outer-linewidth">add_group_outer_linewidth<a class="anchor" aria-label="anchor" href="#arg-add-group-outer-linewidth"></a></dt>
+<dt id="arg-network-outline-width">network_outline_width<a class="anchor" aria-label="anchor" href="#arg-network-outline-width"></a></dt>
 <dd><p>Numeric (default = 0.5).
 Line width of the group outer circle.</p></dd>
 
@@ -664,6 +734,17 @@ Line width of the group outer circle.</p></dd>
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>Integer (default = 1115).
 Random seed for reproducibility.</p></dd>
+
+
+<dt id="arg-ring-n-layout-module-group-by-fill-by-fill-color-pointsize-jitter-jitter-sd-mapping-line-linealpha-linecolor-inner-curve-inner-curvature-inner-curve-adaptive-inner-curve-adaptive-range-inner-curve-adaptive-bins-add-outer-q-outer-expand-outer-bandwidth-scale-outerwidth-outerlinetype-outeralpha-link-linewidth-node-link-linewidth-module-link-linealpha-node-link-linealpha-module-dropothers-label-offset-label-size-add-group-outer-add-group-outer-expand-add-group-outer-color-add-group-outer-fill-add-group-outer-fill-alpha-add-group-outer-linetype-add-group-outer-linewidth">ring_n, layout.module, group.by, fill.by, fill, color, pointsize, jitter, jitter_sd, mapping_line, linealpha, linecolor, inner_curve, inner_curvature, inner_curve_adaptive, inner_curve_adaptive_range, inner_curve_adaptive_bins, add_outer, q_outer, expand_outer, bandwidth_scale, outerwidth, outerlinetype, outeralpha, link_linewidth_node, link_linewidth_module, link_linealpha_node, link_linealpha_module, dropOthers, label_offset, label_size, add_group_outer, add_group_outer_expand, add_group_outer_color, add_group_outer_fill, add_group_outer_fill_alpha, add_group_outer_linetype, add_group_outer_linewidth<a class="anchor" aria-label="anchor" href="#arg-ring-n-layout-module-group-by-fill-by-fill-color-pointsize-jitter-jitter-sd-mapping-line-linealpha-linecolor-inner-curve-inner-curvature-inner-curve-adaptive-inner-curve-adaptive-range-inner-curve-adaptive-bins-add-outer-q-outer-expand-outer-bandwidth-scale-outerwidth-outerlinetype-outeralpha-link-linewidth-node-link-linewidth-module-link-linealpha-node-link-linealpha-module-dropothers-label-offset-label-size-add-group-outer-add-group-outer-expand-add-group-outer-color-add-group-outer-fill-add-group-outer-fill-alpha-add-group-outer-linetype-add-group-outer-linewidth"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>
+ Pre-0.2.0 argument names, kept for backward
+compatibility. They emit a deprecation warning and are forwarded to the
+new argument (same renaming scheme as <code><a href="ggNetView.html">ggNetView</a></code>; in addition
+<code>inner_curve*</code> -&gt; <code>edge_curve*</code>, <code>link_linewidth_*</code> -&gt;
+<code>link_width_*</code>, <code>link_linealpha_*</code> -&gt; <code>link_alpha_*</code>,
+<code>label_offset</code>/<code>label_size</code> -&gt; <code>group_label_offset</code>/
+<code>group_label_size</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -693,7 +774,7 @@ and optional topology results.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

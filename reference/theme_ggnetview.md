@@ -16,7 +16,7 @@ theme_ggnetview(
   background = "white",
   foreground = NULL,
   border = FALSE,
-  plot_margin = ggplot2::margin(10, 10, 10, 10),
+  plot_margin = ggplot2::margin(20, 20, 20, 20),
   grid = c("none", "x", "y", "both")
 )
 ```
@@ -66,7 +66,11 @@ theme_ggnetview(
 
 - plot_margin:
 
-  Outer plot margin (ggplot2::margin). Default margin(10,10,10,10).
+  Outer plot margin (ggplot2::margin). Default `margin(20, 20, 20, 20)`
+  (in pt). Bumped from `10` to give labels rendered outside the plot
+  panel (`coord_equal(clip = "off")` in
+  [`ggNetView()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView.md))
+  enough room to render without being cropped by the device boundary.
 
 - grid:
 

@@ -8,7 +8,7 @@ Build a graph object from a data frame and module Info
 build_graph_from_module(
   df,
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   top_modules = 15,
   seed = 1115
 )

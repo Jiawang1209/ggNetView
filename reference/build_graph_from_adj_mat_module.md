@@ -8,7 +8,7 @@ Build a graph object from a adjacency matrix and module Info
 build_graph_from_adj_mat_module(
   adjacency_matrix,
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   top_modules = 15,
   seed = 1115
 )

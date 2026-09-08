@@ -23,16 +23,22 @@ All three return a `tidygraph` object carrying correlation sign, edge
 weight, and a deterministic module assignment.
 
 ``` r
+
 library(ggNetView)
 #> 
-#>    ____   ____  _   _      _ __     ___
-#>   / ___| / ___|| \ | | ___| |\ \   / (_) _____      __
-#>  | |  _ | |  _ |  \| |/ _ \ __\ \ / /| |/ _ \ \ /\ / /
-#>  | |_| || |_| || |\  |  __/ |_ \ V / | |  __/\ V  V /
-#>   \____| \____||_| \_|\___|\__| \_/  |_|\___| \_/\_/
+#>                                                ░██               ░██
+#>                                                ░██
+#>  ░████████  ░████████ ░████████   ░███████  ░████████ ░██    ░██ ░██ ░███████  ░██    ░██    ░██
+#> ░██    ░██ ░██    ░██ ░██    ░██ ░██    ░██    ░██    ░██    ░██ ░██░██    ░██ ░██    ░██    ░██
+#> ░██    ░██ ░██    ░██ ░██    ░██ ░█████████    ░██     ░██  ░██  ░██░█████████  ░██  ░████  ░██
+#> ░██   ░███ ░██   ░███ ░██    ░██ ░██           ░██      ░██░██   ░██░██          ░██░██ ░██░██
+#>  ░█████░██  ░█████░██ ░██    ░██  ░███████      ░████    ░███    ░██ ░███████     ░███   ░███
+#>        ░██        ░██
+#>  ░███████   ░███████
+#> 
 #> 
 #> ggNetView: Reproducible and Deterministic Network Analysis and Visualization
-#> Version: 0.1.0
+#> Version: 0.2.1
 #> 
 #>   Authors:     Yue Liu, Chao Wang
 #>   Maintainer:  Yue Liu <yueliu@iae.ac.cn>
@@ -52,6 +58,7 @@ columns**. The package ships `otu_rare_relative`, a relative-abundance
 OTU table. For a fast example we subset to the 60 most abundant OTUs.
 
 ``` r
+
 data(otu_rare_relative)
 
 mat <- as.matrix(otu_rare_relative)
@@ -68,14 +75,14 @@ graph_obj <- build_graph_from_mat(
   module.method = "Fast_greedy",
   seed          = 1
 )
-#> The max module in network is 9 we use the 9  modules for next analysis
+#> The max module in network is 11 we use the 11  modules for next analysis
 
 graph_obj
-#> # A tbl_graph: 34 nodes and 64 edges
+#> # A tbl_graph: 39 nodes and 67 edges
 #> #
-#> # An undirected simple graph with 8 components
+#> # An undirected simple graph with 10 components
 #> #
-#> # Node Data: 34 × 7 (active)
+#> # Node Data: 39 × 7 (active)
 #>    name   modularity modularity2 modularity3 Modularity Degree Strength
 #>    <chr>  <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl>
 #>  1 ASV_41 1          1           1           1              11     8.80
@@ -88,28 +95,28 @@ graph_obj
 #>  8 ASV_56 1          1           1           1               7     5.07
 #>  9 ASV_24 1          1           1           1               4     2.90
 #> 10 ASV_62 1          1           1           1               4     2.92
-#> # ℹ 24 more rows
+#> # ℹ 29 more rows
 #> #
-#> # Edge Data: 64 × 5
+#> # Edge Data: 67 × 5
 #>    from    to weight correlation corr_direction
 #>   <int> <int>  <dbl>       <dbl> <chr>         
 #> 1    15    17  0.750       0.750 Positive      
 #> 2    12    15  0.730       0.730 Positive      
 #> 3     4     5  0.783       0.783 Positive      
-#> # ℹ 61 more rows
+#> # ℹ 64 more rows
 ```
 
 ### Choosing an inference method
 
 The `method` argument selects how edges are inferred:
 
-| `method`      | Engine                                                                     | P-values | Typical use                             |
-|---------------|----------------------------------------------------------------------------|----------|-----------------------------------------|
-| `"cor"`       | [`psych::corr.test()`](https://rdrr.io/pkg/psych/man/corr.test.html)       | yes      | General-purpose                         |
-| `"Hmisc"`     | [`Hmisc::rcorr()`](https://rdrr.io/pkg/Hmisc/man/rcorr.html)               | yes      | Large matrices, Pearson / Spearman only |
-| `"WGCNA"`     | [`WGCNA::corAndPvalue()`](https://rdrr.io/pkg/WGCNA/man/corAndPvalue.html) | yes      | Gene co-expression                      |
-| `"SPARCC"`    | Internal Rcpp SparCC + bootstrap                                           | yes      | Compositional microbiome data           |
-| `"SpiecEasi"` | Internal Rcpp SpiecEasi (`mb` / `glasso`)                                  | no       | Sparse inverse-covariance               |
+| `method` | Engine | P-values | Typical use |
+|----|----|----|----|
+| `"cor"` | [`psych::corr.test()`](https://rdrr.io/pkg/psych/man/corr.test.html) | yes | General-purpose |
+| `"Hmisc"` | [`Hmisc::rcorr()`](https://rdrr.io/pkg/Hmisc/man/rcorr.html) | yes | Large matrices, Pearson / Spearman only |
+| `"WGCNA"` | [`WGCNA::corAndPvalue()`](https://rdrr.io/pkg/WGCNA/man/corAndPvalue.html) | yes | Gene co-expression |
+| `"SPARCC"` | Internal Rcpp SparCC + bootstrap | yes | Compositional microbiome data |
+| `"SpiecEasi"` | Internal Rcpp SpiecEasi (`mb` / `glasso`) | no | Sparse inverse-covariance |
 
 Switch methods by changing a single argument — the rest of the pipeline
 (`r.threshold`, module detection, attribute assembly) stays the same.
@@ -120,6 +127,7 @@ Passing a node annotation table merges metadata onto the vertices. The
 first column of the annotation must match the feature names.
 
 ``` r
+
 data(tax_tab)
 
 annot <- tax_tab[tax_tab$OTUID %in% rownames(mat), ]
@@ -134,7 +142,7 @@ graph_obj_annot <- build_graph_from_mat(
   node_annotation = annot,
   seed            = 1
 )
-#> The max module in network is 9 we use the 9  modules for next analysis
+#> The max module in network is 11 we use the 11  modules for next analysis
 ```
 
 Downstream plots can now colour or facet by any taxonomy column
@@ -148,13 +156,14 @@ automatically; node fill can be driven by `Modularity` or any column
 attached via `node_annotation`.
 
 ``` r
+
 ggNetView(
   graph_obj_annot,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -164,12 +173,13 @@ Swap layouts by changing the `layout` string — every layout uses the
 supplied `seed` so figures are reproducible.
 
 ``` r
+
 ggNetView(
   graph_obj_annot,
   layout    = "circle",
   seed      = 1,
-  pointsize = c(2, 7),
-  fill.by   = "Modularity"
+  node_size_range = c(2, 7),
+  node_fill   = "Modularity"
 )
 ```
 
@@ -186,6 +196,7 @@ microbes ↔︎ metabolites).
 Both matrices must share the same sample column names.
 
 ``` r
+
 data(BASV_tab)
 data(FASV_tab)
 
@@ -235,13 +246,14 @@ same
 call works:
 
 ``` r
+
 ggNetView(
   double_obj,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 6),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 6),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -258,6 +270,7 @@ positionally or via `...`; the function intersects sample names and
 stacks features.
 
 ``` r
+
 set.seed(1)
 nsamp <- 20
 mat_a <- matrix(stats::rnorm(10 * nsamp), nrow = 10)
@@ -314,6 +327,7 @@ and
 [`get_info_from_graph()`](https://jiawang1209.github.io/ggNetView/reference/get_info_from_graph.md):
 
 ``` r
+
 head(get_graph_nodes(graph_obj))
 #>     name modularity modularity2 modularity3 Modularity Degree Strength
 #> 1 ASV_41          1           1           1          1     11 8.800914
@@ -362,6 +376,7 @@ the latter case the builder is re-run internally so that the same
 `r.threshold` / `p.threshold` / `method` combination is applied.
 
 ``` r
+
 topo <- get_network_topology(graph_obj = graph_obj, bootstrap = 20)
 names(topo)
 #> [1] "topology"   "Robustness"
@@ -369,12 +384,12 @@ head(topo$topology)
 #> # A tibble: 6 × 3
 #>   Topology Target_network Random_nerwork
 #>   <chr>             <dbl>          <dbl>
-#> 1 Node             34             34    
-#> 2 Edge             64             64    
-#> 3 Degree            3.76           3.76 
-#> 4 Distance          1.28           2.65 
-#> 5 Diameter          3.04           5.3  
-#> 6 Density           0.114          0.114
+#> 1 Node            39             39     
+#> 2 Edge            67             67     
+#> 3 Degree           3.44           3.44  
+#> 4 Distance         1.27           2.95  
+#> 5 Diameter         3.04           6.45  
+#> 6 Density          0.0904         0.0904
 ```
 
 The return value is a list with at least two elements:
@@ -406,6 +421,7 @@ It takes a node table and an adjacency matrix — both of which are
 accessible directly from a `ggNetView` graph object:
 
 ``` r
+
 nodes_tbl <- get_graph_nodes(graph_obj)
 adj_mat   <- get_graph_adjacency(graph_obj)
 
@@ -431,6 +447,7 @@ The `plot` element in the result is a ready-to-render Zi-Pi scatter plot
 with the four quadrants shaded:
 
 ``` r
+
 zipi$plot
 ```
 
@@ -462,8 +479,9 @@ zipi$plot
 ## Session information
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -484,25 +502,33 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggNetView_0.1.0
+#> [1] future_1.75.0   ggNetView_0.2.1
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] viridis_0.6.5      sass_0.4.10        utf8_1.2.6         generics_0.1.4    
-#>  [5] tidyr_1.3.2        stringi_1.8.7      lattice_0.22-9     digest_0.6.39     
-#>  [9] magrittr_2.0.5     evaluate_1.0.5     grid_4.5.3         RColorBrewer_1.1-3
-#> [13] fastmap_1.2.0      Matrix_1.7-4       jsonlite_2.0.0     ggrepel_0.9.8     
-#> [17] ggnewscale_0.5.2   gridExtra_2.3      purrr_1.2.2        viridisLite_0.4.3 
-#> [21] scales_1.4.0       tweenr_2.0.3       textshaping_1.0.5  jquerylib_0.1.4   
-#> [25] mnormt_2.1.2       cli_3.6.6          graphlayouts_1.2.3 rlang_1.2.0       
-#> [29] polyclip_1.10-7    tidygraph_1.3.1    withr_3.0.2        cachem_1.1.0      
-#> [33] yaml_2.3.12        tools_4.5.3        parallel_4.5.3     memoise_2.0.1     
-#> [37] dplyr_1.2.1        ggplot2_4.0.2      vctrs_0.7.3        R6_2.6.1          
-#> [41] lifecycle_1.0.5    stringr_1.6.0      fs_2.0.1           htmlwidgets_1.6.4 
-#> [45] MASS_7.3-65        psych_2.6.3        ragg_1.5.2         ggraph_2.2.2      
-#> [49] pkgconfig_2.0.3    desc_1.4.3         pkgdown_2.2.0      pillar_1.11.1     
-#> [53] bslib_0.10.0       gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1        
-#> [57] ggforce_0.5.0      systemfonts_1.3.2  xfun_0.57          tibble_3.3.1      
-#> [61] tidyselect_1.2.1   knitr_1.51         farver_2.1.2       htmltools_0.5.9   
-#> [65] nlme_3.1-168       igraph_2.2.3       labeling_0.4.3     rmarkdown_2.31    
-#> [69] compiler_4.5.3     S7_0.2.1
+#>  [1] gtable_0.3.6        xfun_0.60           bslib_0.12.0       
+#>  [4] ggplot2_4.0.3       htmlwidgets_1.6.4   psych_2.6.5        
+#>  [7] ggrepel_0.9.8       lattice_0.22-9      vctrs_0.7.3        
+#> [10] tools_4.6.1         generics_0.1.4      parallel_4.6.1     
+#> [13] tibble_3.3.1        pkgconfig_2.0.3     Matrix_1.7-5       
+#> [16] ggnewscale_0.5.2    RColorBrewer_1.1-3  S7_0.2.2           
+#> [19] desc_1.4.3          lifecycle_1.0.5     compiler_4.6.1     
+#> [22] farver_2.1.2        stringr_1.6.0       textshaping_1.0.5  
+#> [25] mnormt_2.1.2        ggforce_0.5.0       graphlayouts_1.2.5 
+#> [28] codetools_0.2-20    htmltools_0.5.9     sass_0.4.10        
+#> [31] yaml_2.3.12         pillar_1.11.1       pkgdown_2.2.1      
+#> [34] jquerylib_0.1.4     tidyr_1.3.2         MASS_7.3-65        
+#> [37] cachem_1.1.0        viridis_0.6.5       parallelly_1.48.0  
+#> [40] nlme_3.1-169        tidyselect_1.2.1    digest_0.6.39      
+#> [43] stringi_1.8.9       dplyr_1.2.1         purrr_1.2.2        
+#> [46] listenv_1.0.0       labeling_0.4.3      polyclip_1.10-7    
+#> [49] fastmap_1.2.0       grid_4.6.1          cli_3.6.6          
+#> [52] magrittr_2.0.5      ggraph_2.2.2        tidygraph_1.3.1    
+#> [55] utf8_1.2.6          future.apply_1.20.2 withr_3.0.3        
+#> [58] scales_1.4.0        rmarkdown_2.32      globals_0.19.1     
+#> [61] igraph_2.3.3        otel_0.2.0          gridExtra_2.3.1    
+#> [64] ragg_1.5.2          memoise_2.0.1       evaluate_1.0.5     
+#> [67] knitr_1.52          viridisLite_0.4.3   rlang_1.3.0        
+#> [70] Rcpp_1.1.2          glue_1.8.1          tweenr_2.0.3       
+#> [73] jsonlite_2.0.0      R6_2.6.1            systemfonts_1.3.2  
+#> [76] fs_2.1.0
 ```

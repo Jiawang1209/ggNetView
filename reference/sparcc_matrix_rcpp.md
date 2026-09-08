@@ -31,8 +31,8 @@ sparcc_matrix_rcpp(data, iter = 20, inner_iter = 10, th = 0.1, nthreads = 0L)
 
 - nthreads:
 
-  Integer. Number of OpenMP threads for parallel `sparccinner` (0 = use
-  default). Only effective when OpenMP is available.
+  Integer. Number of OpenMP threads for the parallel C++ SparCC inner
+  loop (0 = use default). Only effective when OpenMP is available.
 
 ## Value
 

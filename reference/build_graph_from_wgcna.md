@@ -9,7 +9,7 @@ build_graph_from_wgcna(
   wgcna_tom,
   module = NULL,
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   seed = 1115
 )
 ```

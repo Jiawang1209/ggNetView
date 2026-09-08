@@ -1,6 +1,6 @@
 # SPIEC-EASI fit (Rcpp-accelerated CLR)
 
-Same as `spieceasi_fit` but uses fast C++ CLR transformation.
+Fits the SpiecEasi model using fast C++ CLR transformation.
 
 ## Usage
 

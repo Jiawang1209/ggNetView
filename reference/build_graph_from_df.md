@@ -8,7 +8,7 @@ Build a graph object from a data frame
 build_graph_from_df(
   df,
   node_annotation = NULL,
-  directed = F,
+  directed = FALSE,
   module.method = c("Fast_greedy", "Walktrap", "Edge_betweenness", "Spinglass"),
   top_modules = 15,
   seed = 1115

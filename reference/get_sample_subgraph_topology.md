@@ -22,7 +22,8 @@ get_sample_subgraph_topology(
   proc = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"),
   SpiecEasi.method = c("mb", "glasso"),
   sparcc_R = 20,
-  bootstrap = 100
+  bootstrap = 100,
+  seed = 1115
 )
 ```
 
@@ -83,6 +84,12 @@ get_sample_subgraph_topology(
 
   Numeric (default = 100). Passed to
   [`get_network_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md).
+
+- seed:
+
+  Integer (default = 1115). Random seed for reproducibility, consistent
+  with
+  [`get_sample_subgraph_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology_parallel.md).
 
 ## Value
 

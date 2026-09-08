@@ -1,26 +1,66 @@
 # ggNetView
 
-ggNetView is an R package for network analysis and visualization. It
-provides flexible and publication-ready tools for exploring complex
-biological and ecological networks.
+ggNetView: An R Package for Reproducible Biological Network Analysis and
+Visualization. It provides flexible and publication-ready tools for
+exploring complex biological and ecological networks.
+
+[GitHub Repository](https://github.com/Jiawang1209/ggNetView)
+
+[User Manual](https://jiawang1209.github.io/ggNetView-manual/)
+
+[Zenodo DOI](https://doi.org/10.5281/zenodo.22635864)
 
 ## Installation
 
-You can install the development version of ggNetView from
-[GitHub](https://github.com/) with:
+`ggNetView` depends on a number of CRAN packages. We recommend
+installing the required dependencies first, and then installing
+`ggNetView` from GitHub.
+
+Current development release: v0.2.1
+
+### Step1: install CRAN dependencies
+
+``` R
+cran_pkgs <- c(
+  "boot", "dplyr", "FNN", "future", "future.apply",
+  "ggforce", "ggnewscale", "ggplot2", "ggraph", "ggrepel",
+  "Hmisc", "huge", "igraph", "magrittr", "MASS",
+  "Matrix", "patchwork", "progressr", "psych", "purrr",
+  "qgraph", "Rcpp", "RcppArmadillo", "readr", "rlang",
+  "scales", "scatterpie", "stringr", "tibble", "tidygraph",
+  "tidyr", "vegan", "VGAM", "WGCNA"
+)
+
+new_pkgs <- cran_pkgs[!cran_pkgs %in% installed.packages()[, "Package"]]
+if (length(new_pkgs)) install.packages(new_pkgs)
+```
+
+### Step2: (optional) install suggested packages
+
+These packages are not required for the core functionality, but enable
+additional features (e.g. dynamic tree cut, node influence, vignettes,
+tests):
+
+``` R
+install.packages(c("dynamicTreeCut", "influential",
+                   "knitr", "rmarkdown",
+                   "RobustRankAggreg", "testthat"))
+```
+
+### Step3: install ggNetView from GitHub
 
 ``` R
 # install.packages("devtools")
 devtools::install_github("Jiawang1209/ggNetView")
 ```
 
-## Example1
+## Example1: Co-expression Network
 
 ### Step1: load ggNetView
 
 ``` r
+
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 4.5.2
 library(ggnewscale)
 library(ggNetView)
 #> 
@@ -35,20 +75,17 @@ library(ggNetView)
 #>  ░███████   ░███████
 #> 
 #> 
-#> Yue Liu, Chao Wang (2026). ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization.
+#> ggNetView: Reproducible and Deterministic Network Analysis and Visualization
+#> Version: 0.2.1
 #> 
-#>   Maintainers:
-#>    - Yue Liu <yueliu@iae.ac.cn>
-#>    - Chao Wang <cwang@iae.ac.cn>
+#>   Authors:     Yue Liu, Chao Wang
+#>   Maintainer:  Yue Liu <yueliu@iae.ac.cn>
 #> 
-#>   Manual: https://jiawang1209.github.io/ggNetView-manual/
-#>   GitHub: https://github.com/Jiawang1209/ggNetView
+#>   Manual:      https://jiawang1209.github.io/ggNetView-manual/
+#>   GitHub:      https://github.com/Jiawang1209/ggNetView
 #>   Bug Reports: https://github.com/Jiawang1209/ggNetView/issues
 #> 
-#> 
 #>   Type citation('ggNetView') for how to cite this package.
-#>   Run browseVignettes('ggNetView') for documentation.
-#> 
 ```
 
 ### Step2: load Data
@@ -56,9 +93,9 @@ library(ggNetView)
 > You can load raw matrix
 
 ``` r
-data("otu_tab")
 
-otu_tab[1:5, 1:5]
+data("otu_tab")          # raw OTU/feature count matrix (features x samples)
+otu_tab[1:5, 1:5]        # peek at the first 5 rows/cols
 #>        KO1  KO2  KO3  KO4  KO5
 #> ASV_1 1113 1968  816 1372 1062
 #> ASV_2 1922 1227 2355 2218 2885
@@ -71,9 +108,9 @@ otu_tab[1:5, 1:5]
 > features.
 
 ``` r
-data("otu_rare")
 
-otu_tab[1:5, 1:5]
+data("otu_rare")         # rarefied count matrix; rownames = features
+otu_tab[1:5, 1:5]        # peek at the first 5 rows/cols
 #>        KO1  KO2  KO3  KO4  KO5
 #> ASV_1 1113 1968  816 1372 1062
 #> ASV_2 1922 1227 2355 2218 2885
@@ -82,10 +119,12 @@ otu_tab[1:5, 1:5]
 #> ASV_6  882  673  819  888 1475
 ```
 
-``` r
-data("otu_rare_relative")
+> 
 
-otu_rare_relative[1:5, 1:5]
+``` r
+
+data("otu_rare_relative")        # rarefied + relative-abundance matrix (features x samples)
+otu_rare_relative[1:5, 1:5]      # peek at the first 5 rows/cols
 #>              KO1        KO2        KO3        KO4        KO5
 #> ASV_1 0.03306667 0.05453333 0.02013333 0.03613333 0.02686667
 #> ASV_2 0.05750000 0.03393333 0.06046667 0.05810000 0.07320000
@@ -98,9 +137,9 @@ otu_rare_relative[1:5, 1:5]
 > NULL.
 
 ``` r
-data("tax_tab")
 
-tax_tab[1:5, 1:5]
+data("tax_tab")          # node (taxonomy) annotation table; rownames = NULL
+tax_tab[1:5, 1:5]        # peek at the first 5 rows/cols
 #> # A tibble: 5 × 5
 #>   OTUID  Kingdom  Phylum          Class          Order            
 #>   <chr>  <chr>    <chr>           <chr>          <chr>            
@@ -114,46 +153,47 @@ tax_tab[1:5, 1:5]
 ### Step3: create graph object
 
 ``` r
+
 obj <- build_graph_from_mat(
-  mat = otu_rare_relative,
-  transfrom.method = "none",
-  method = "WGCNA",
-  cor.method = "pearson",
-  proc = "BH",
-  r.threshold = 0.7,
-  p.threshold = 0.05,
-  node_annotation = tax_tab
+  mat = otu_rare_relative,    # variables x samples abundance matrix
+  transfrom.method = "none",  # pre-correlation transform; "none" = keep as-is
+  method = "WGCNA",           # correlation backend: WGCNA::corAndPvalue
+  cor.method = "pearson",     # Pearson correlation
+  proc = "BH",                # multiple-testing correction (Benjamini-Hochberg)
+  r.threshold = 0.7,          # |r| cutoff for keeping an edge
+  p.threshold = 0.05,         # adjusted p-value cutoff
+  node_annotation = tax_tab   # taxonomy joined onto each node by name
 )
 
-obj
-#> # A tbl_graph: 2049 nodes and 9602 edges
+obj                           # tbl_graph with Modularity / Degree / Strength + taxonomy
+#> # A tbl_graph: 1951 nodes and 8732 edges
 #> #
-#> # An undirected simple graph with 100 components
+#> # An undirected simple graph with 120 components
 #> #
-#> # Node Data: 2,049 × 14 (active)
+#> # Node Data: 1,951 × 14 (active)
 #>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
 #>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
-#>  1 ASV_916 1          1           1           1              58     50.5 Bacter…
-#>  2 ASV_777 1          1           1           1              58     48.7 Bacter…
-#>  3 ASV_606 1          1           1           1              55     45.8 Bacter…
-#>  4 ASV_740 1          1           1           1              54     47.2 Bacter…
-#>  5 ASV_14… 1          1           1           1              54     44.5 Bacter…
-#>  6 ASV_23… 1          1           1           1              54     47.4 Bacter…
-#>  7 ASV_15… 1          1           1           1              52     45.3 Bacter…
-#>  8 ASV_24… 1          1           1           1              52     43.0 Bacter…
-#>  9 ASV_19… 1          1           1           1              52     43.0 Bacter…
-#> 10 ASV_568 1          1           1           1              51     45.1 Bacter…
-#> # ℹ 2,039 more rows
+#>  1 ASV_916 1          1           1           1              57     49.7 Bacter…
+#>  2 ASV_777 1          1           1           1              55     46.4 Bacter…
+#>  3 ASV_23… 1          1           1           1              53     46.6 Bacter…
+#>  4 ASV_606 1          1           1           1              51     42.7 Bacter…
+#>  5 ASV_740 1          1           1           1              51     44.9 Bacter…
+#>  6 ASV_15… 1          1           1           1              50     43.8 Bacter…
+#>  7 ASV_568 1          1           1           1              49     43.6 Bacter…
+#>  8 ASV_671 1          1           1           1              49     43.7 Bacter…
+#>  9 ASV_664 1          1           1           1              49     42.9 Bacter…
+#> 10 ASV_10… 1          1           1           1              49     43.6 Bacter…
+#> # ℹ 1,941 more rows
 #> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
 #> #   Genus <chr>, Species <chr>
 #> #
-#> # Edge Data: 9,602 × 5
+#> # Edge Data: 8,732 × 5
 #>    from    to weight correlation corr_direction
 #>   <int> <int>  <dbl>       <dbl> <chr>         
-#> 1  1771  1825  0.793       0.793 Positive      
-#> 2   594   597  0.895       0.895 Positive      
-#> 3   588   597  0.864       0.864 Positive      
-#> # ℹ 9,599 more rows
+#> 1  1656  1703  0.793       0.793 Positive      
+#> 2   782   787  0.895       0.895 Positive      
+#> 3   395   787  0.864       0.864 Positive      
+#> # ℹ 8,729 more rows
 ```
 
 ### Step4: ggNetView to plot
@@ -161,20 +201,20 @@ obj
 > Basic network plot
 
 ``` r
+
 p1 <- ggNetView(
-  graph_obj = obj,
-  layout = "gephi",
-  layout.module = "adjacent",
-  group.by = "Modularity",
-  fill.by = "Modularity",
-  pointsize = c(1, 5),
-  center = F,
-  jitter = F,
-  mapping_line = F,
-  shrink = 0.9,
-  linealpha = 0.2,
-  linecolor = "#d9d9d9"
-) 
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # node attribute used to define groups/modules
+  node_fill = "Modularity",     # node attribute mapped to point fill
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = F,              # no positional jitter
+  shrink = 0.9,                 # shrink layout inward (smaller = more compact)
+  edge_alpha = 0.2,             # edge transparency
+  edge_color = "#d9d9d9"        # edge colour
+)
 
 p1
 ```
@@ -191,29 +231,25 @@ ggsave(file = "Output/p1.pdf",
 > Add outer line in netwotk plot
 
 ``` r
+
 p2 <- ggNetView(
-  graph_obj = obj,
-  layout = "gephi",
-  layout.module = "adjacent",
-  group.by = "Modularity",
-  fill.by = "Modularity",
-  pointsize = c(1, 5),
-  center = F,
-  jitter = TRUE,
-  jitter_sd = 0.15,
-  mapping_line = TRUE,
-  shrink = 0.9,
-  linealpha = 0.2,
-  linecolor = "#d9d9d9",
-  add_outer = T,
-  label = T
-) 
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # node attribute used to define groups/modules
+  node_fill = "Modularity",     # node attribute mapped to point fill
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter (bigger -> more spread)
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward (smaller = more compact)
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
+)
 
 p2
-#> Warning: No shared levels found between `names(values)` of the manual scale and the
-#> data's fill values.
 ```
 
 ![](reference/figures/README-unnamed-chunk-9-1.png)
@@ -228,29 +264,25 @@ ggsave(file = "Output/p2.pdf",
 > Change the fill of node points.
 
 ``` r
+
 p3 <- ggNetView(
-  graph_obj = obj,
-  layout = "gephi",
-  layout.module = "adjacent",
-  group.by = "Modularity",
-  fill.by = "Phylum",
-  pointsize = c(1, 5),
-  center = F,
-  jitter = TRUE,
-  jitter_sd = 0.15,
-  mapping_line = TRUE,
-  shrink = 0.9,
-  linealpha = 0.2,
-  linecolor = "#d9d9d9",
-  add_outer = T,
-  label = T
-) 
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Phylum",         # map point fill to taxonomy (Phylum) instead of module
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
+)
 
 p3
-#> Warning: No shared levels found between `names(values)` of the manual scale and the
-#> data's fill values.
 ```
 
 ![](reference/figures/README-unnamed-chunk-10-1.png)
@@ -265,30 +297,26 @@ ggsave(file = "Output/p3.pdf",
 > Change the color of node points.
 
 ``` r
+
 p4 <- ggNetView(
-  graph_obj = obj,
-  layout = "gephi",
-  layout.module = "adjacent",
-  group.by = "Modularity",
-  fill.by = "Phylum",
-  color.by = "Phylum",
-  pointsize = c(1, 5),
-  center = F,
-  jitter = TRUE,
-  jitter_sd = 0.15,
-  mapping_line = TRUE,
-  shrink = 0.9,
-  linealpha = 0.2,
-  linecolor = "#d9d9d9",
-  add_outer = T,
-  label = T
-) 
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Phylum",         # map point fill to taxonomy (Phylum)
+  node_color = "Phylum",        # map point border colour to taxonomy (Phylum)
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T              # show node labels
+)
 
 p4
-#> Warning: No shared levels found between `names(values)` of the manual scale and the
-#> data's fill values.
 ```
 
 ![](reference/figures/README-unnamed-chunk-11-1.png)
@@ -303,33 +331,31 @@ ggsave(file = "Output/p4.pdf",
 > Add node label
 
 ``` r
+
 p5 <- ggNetView(
-  graph_obj = obj,
-  layout = "gephi",
-  layout.module = "adjacent",
-  group.by = "Modularity",
-  fill.by = "Modularity",
-  pointsize = c(1, 5),
-  center = F,
-  jitter = TRUE,
-  jitter_sd = 0.15,
-  mapping_line = TRUE,
-  shrink = 0.9,
-  linealpha = 0.2,
-  linecolor = "#d9d9d9",
-  add_outer = T,
-  label = T,
-  pointlabel = "top1"
-) 
-#> Coordinate system already present.
-#> ℹ Adding new coordinate system, which will replace the existing one.
+  graph_obj = obj,              # tbl_graph from build_graph_from_mat()
+  layout = "gephi",             # node-positioning algorithm
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity",     # map point fill to module
+  node_size_range = c(1, 5),    # min/max node size range
+  center = F,                   # do NOT pull nodes toward each module centre
+  node_jitter = TRUE,           # jitter node positions to reduce overlap
+  node_jitter_sd = 0.15,        # SD of the jitter
+  edge_color = "corr_direction", # colour edges by correlation sign
+  shrink = 0.9,                 # shrink layout inward
+  edge_alpha = 0.2,             # edge transparency
+  module_outline = T,           # draw an outer hull/line around each module
+  module_label = T,             # show node labels
+  node_label = "top1"           # label only the top-1 hub node per module
+)
 
 p5
-#> Warning: No shared levels found between `names(values)` of the manual scale and the
-#> data's fill values.
 ```
 
 ![](reference/figures/README-unnamed-chunk-12-1.png)
+
+> Save Plot
 
 ``` R
 ggsave(file = "Output/p3.pdf", 
@@ -338,115 +364,621 @@ ggsave(file = "Output/p3.pdf",
        width = 10)
 ```
 
-## Example2
+## Example2: Subgraph
 
 > Get information of graph_object
 
 ``` r
-Sub_module_1 <- get_subgraph(graph_obj = obj, select_module = "1")
-#>    Module Number
-#> 1       1    416
-#> 2       7    161
-#> 3       6    137
-#> 4       9    121
-#> 5       4    112
-#> 6       2    105
-#> 7       3    104
-#> 8      11    101
-#> 9       8     87
-#> 10     10     80
-#> 11      5     78
-#> 12     13     70
-#> 13     16     52
-#> 14     15     51
-#> 15     14     46
-#> 16 Others    328
 
-names(Sub_module_1)
+Sub_module_1 <- get_subgraph(
+  graph_obj = obj,        # full tbl_graph object
+  select_module = "1"     # extract the subgraph for module "1"
+)
+#>    Module Number
+#> 1       1    357
+#> 2       4    268
+#> 3       3    142
+#> 4       6    124
+#> 5       2     96
+#> 6       5     96
+#> 7       7     91
+#> 8       9     80
+#> 9       8     78
+#> 10     12     68
+#> 11     10     67
+#> 12     14     52
+#> 13     15     50
+#> 14     13     37
+#> 15     11     34
+#> 16 Others    311
+
+names(Sub_module_1)       # components returned for the selected module
 #> [1] "sub_graph_all"    "stat_module"      "sub_graph_select"
 ```
 
-## Example3
+## Example3: Mantel-test with environment
 
 ``` r
+
 # load test data in ggNetView
-data("Envdf_4st")
-data("Spedf")
+data("Envdf_4st")   # environmental factor table (samples x env variables)
+data("Spedf")       # species/community table (samples x taxa)
 ```
 
 ``` r
+
 out1 <- gglink_heatmaps(
-  env = Envdf_4st,
-  spec = Spedf,
-  env_select = list(Env01 = 1:14, 
-                    Env02 = 15:28,
-                    Env03 = 29:42,
-                    Env04 = 43:56),
-  spec_select = list(Spec01 = 1:8),
-  relation_method = "correlation",
-  spec_layout = "circle_outline",
-  cor.method = "pearson",
-  cor.use = "pairwise",
-  r = 6,
-  distance = 1,
-  orientation = c("top_right", "bottom_right", "top_left", "bottom_left")
+  env = Envdf_4st,                  # environmental data frame
+  spec = Spedf,                     # species/community data frame
+  env_select = list(Env01 = 1:14,   # group env columns into blocks:  Env01 = cols 1-14
+                    Env02 = 15:28,  #                                 Env02 = cols 15-28
+                    Env03 = 29:42,  #                                 Env03 = cols 29-42
+                    Env04 = 43:56), #                                 Env04 = cols 43-56
+  spec_select = list(Spec01 = 1:8), # species block: Spec01 = cols 1-8
+  relation_method = "correlation",  # env-spec association via correlation (vs "mantel")
+  spec_layout = "circle_outline",   # arrange species heatmap as a circular outline
+  cor.method = "pearson",           # Pearson correlation
+  cor.use = "pairwise",             # pairwise-complete handling of missing values
+  r = 6,                            # radius of the circular layout
+  distance = 1,                     # spacing between heatmap blocks
+  orientation = c("top_right", "bottom_right", "top_left", "bottom_left")  # placement of each env block
 )
 #> The max module in network is 2 we use the 2  modules for next analysis
 
-out1[[1]]
+out1[[1]]                           # first plot in the returned list
 ```
 
 ![](reference/figures/README-unnamed-chunk-15-1.png)
 
-## Example4
+## Example4: Mantel-test with environment
 
 > Leave lines with a significance level less than 0.05, and change the
 > color of heatmap.
 
 ``` r
+
 out2 <- gglink_heatmaps(
-  env = Envdf_4st,
-  spec = Spedf,
-  env_select = list(Env01 = 1:14,
-                    Env03 = 29:40,
-                    Env04 = 43:50),
-  spec_select = list(Spec01 = 1:8),
-  relation_method = "correlation",
-  spec_layout = "circle_outline",
-  cor.method = "pearson",
-  cor.use = "pairwise",
-  drop_nonsig = TRUE,
-  HeatmapColorBar = list(c("#2166ac", "#b2182b"), 
+  env = Envdf_4st,                  # environmental data frame
+  spec = Spedf,                     # species/community data frame
+  env_select = list(Env01 = 1:14,   # env block Env01 = cols 1-14
+                    Env03 = 29:40,  #           Env03 = cols 29-40
+                    Env04 = 43:50), #           Env04 = cols 43-50
+  spec_select = list(Spec01 = 1:8), # species block: Spec01 = cols 1-8
+  relation_method = "correlation",  # association via correlation
+  spec_layout = "circle_outline",   # circular outline layout for species heatmap
+  cor.method = "pearson",           # Pearson correlation
+  cor.use = "pairwise",             # pairwise-complete handling of missing values
+  drop_nonsig = TRUE,               # keep only links with p < 0.05 (drop non-significant)
+  HeatmapColorBar = list(c("#2166ac", "#b2182b"),   # custom low->high colour ramp per env block
                          c("#1b7837", "#762a83"),
                          c("#4393c3", "#d6604d")),
-  HeatmapPointFill = "#8c6bb1",
-  CorePointFill = "#225ea8",
-  HeatmapLabelOrient = 45,
-  r = 6,
-  distance = 1,
-  orientation = c("top_right", "top_left", "bottom_left")
+  HeatmapPointFill = "#8c6bb1",     # fill colour of heatmap anchor points
+  CorePointFill = "#225ea8",        # fill colour of the central/core point
+  HeatmapLabelOrient = 45,          # rotate heatmap labels by 45 degrees
+  r = 6,                            # radius of the circular layout
+  distance = 1,                     # spacing between heatmap blocks
+  orientation = c("top_right", "top_left", "bottom_left")  # placement of each env block
 )
 #> The max module in network is 2 we use the 2  modules for next analysis
 
-out2[[2]]
+out2[[2]]                           # second plot in the returned list
 ```
 
 ![](reference/figures/README-unnamed-chunk-16-1.png)
 
+## Example5: Network-environment
+
+``` r
+
+####----load Data----####
+data("otu_rare_relative")   # rarefied relative-abundance matrix (features x samples)
+data("tax_tab")             # node (taxonomy) annotation table
+data("Envdf_4st_2")         # environmental factor table for the network-env analysis
+
+
+####----build graph object----####
+graph_obj <- build_graph_from_mat(
+  mat = otu_rare_relative,       # variables x samples abundance matrix
+  transfrom.method = "none",     # pre-correlation transform; "none" = keep as-is
+  node_annotation = tax_tab,     # taxonomy joined onto each node by name
+  p.threshold = 0.05,            # adjusted p-value cutoff
+  r.threshold = 0.75,            # |r| cutoff for keeping an edge
+  method = "WGCNA",              # correlation backend: WGCNA::corAndPvalue
+  proc = "BH",                   # multiple-testing correction (Benjamini-Hochberg)
+  module.method = "Fast_greedy", # community detection algorithm
+  top_modules = 15,              # keep top-15 modules; rest -> "Others"
+  seed = 1115                    # fix RNG for reproducibility
+)
+
+graph_obj                        # resulting tbl_graph
+#> # A tbl_graph: 1951 nodes and 8732 edges
+#> #
+#> # An undirected simple graph with 120 components
+#> #
+#> # Node Data: 1,951 × 14 (active)
+#>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
+#>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
+#>  1 ASV_916 1          1           1           1              57     49.7 Bacter…
+#>  2 ASV_777 1          1           1           1              55     46.4 Bacter…
+#>  3 ASV_23… 1          1           1           1              53     46.6 Bacter…
+#>  4 ASV_606 1          1           1           1              51     42.7 Bacter…
+#>  5 ASV_740 1          1           1           1              51     44.9 Bacter…
+#>  6 ASV_15… 1          1           1           1              50     43.8 Bacter…
+#>  7 ASV_568 1          1           1           1              49     43.6 Bacter…
+#>  8 ASV_671 1          1           1           1              49     43.7 Bacter…
+#>  9 ASV_664 1          1           1           1              49     42.9 Bacter…
+#> 10 ASV_10… 1          1           1           1              49     43.6 Bacter…
+#> # ℹ 1,941 more rows
+#> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
+#> #   Genus <chr>, Species <chr>
+#> #
+#> # Edge Data: 8,732 × 5
+#>    from    to weight correlation corr_direction
+#>   <int> <int>  <dbl>       <dbl> <chr>         
+#> 1  1656  1703  0.793       0.793 Positive      
+#> 2   782   787  0.895       0.895 Positive      
+#> 3   395   787  0.864       0.864 Positive      
+#> # ℹ 8,729 more rows
+
+
+p_sub <- ggNetView(
+  graph_obj = graph_obj,        # tbl_graph object
+  layout = "gephi",             # node-positioning algorithm
+  center = T,                   # pull nodes toward each module centre
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity"      # map point fill to module
+)
+
+p_sub
+```
+
+![](reference/figures/README-unnamed-chunk-17-1.png)
+
+``` r
+
+
+
+p_sub2 <- ggNetView(
+  graph_obj = graph_obj,        # tbl_graph object
+  layout = "gephi",             # node-positioning algorithm
+  center = F,                   # do NOT pull nodes toward each module centre (compare with p_sub)
+  layout_module = "adjacent",   # place neighbouring modules close together
+  group_by = "Modularity",      # group nodes by module
+  node_fill = "Modularity"      # map point fill to module
+)
+
+p_sub2
+```
+
+![](reference/figures/README-unnamed-chunk-17-2.png)
+
+``` r
+
+
+####----Network Environment PC1----####
+res <- ggnetview_modularity_heatmaps(
+  graph_obj,                        # network tbl_graph object
+  Envdf_4st_2,                      # environmental factor table
+  otu_rare_relative,                # abundance matrix (used to derive per-module index)
+  env_select = list(Env01 = 1:14,   # env block Env01 = cols 1-14
+                    Env02 = 15:28,   #           Env02 = cols 15-28
+                    Env03 = 29:42,   #           Env03 = cols 29-42
+                    Env04 = 43:56),  #           Env04 = cols 43-56
+  drop_nonsig = T,                  # keep only significant module-env links
+  r = 35,                           # radius of the circular heatmap layout
+  distance = 5,                     # spacing between heatmap blocks
+  HeatmapLabelOrient = 45,          # rotate heatmap labels by 45 degrees
+  shrink = 0.65,                    # shrink the network layout inward
+  module_index = "eigengene",  # 或 "abundance"   # per-module summary: eigengene (PC1)
+  relation_method = "correlation",  # 或 "mantel",  # module-env association method
+  HeatmapColorBar = list(           # custom low->high colour ramp per env block
+    c("#2166ac", "#b2182b"),
+    c("#1b7837", "#762a83"),
+    c("#4393c3", "#d6604d"),
+    c("#92c5de", "#f4a582")
+  ),
+  layout = "gephi",                 # node-positioning algorithm
+  layout_module = "adjacent",       # place neighbouring modules close together
+  node_jitter    = T,                       # jitter node positions to reduce overlap
+  module_outline = T,                    # draw an outer hull/line around each module
+  HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
+  network_outline = T,              # draw an outer boundary around node groups
+  module_label = F,                        # do not show node labels
+  # module_label_size = 5
+)
+
+res[[1]]
+```
+
+![](reference/figures/README-unnamed-chunk-17-3.png)
+
+``` r
+
+
+####----Network Environment abudance----####
+res2 <- ggnetview_modularity_heatmaps(
+  graph_obj,                        # network tbl_graph object
+  Envdf_4st_2,                      # environmental factor table
+  otu_rare_relative,                # abundance matrix (used to derive per-module index)
+  env_select = list(Env01 = 1:14,   # env block Env01 = cols 1-14
+                    Env02 = 15:28,   #           Env02 = cols 15-28
+                    Env03 = 29:42,   #           Env03 = cols 29-42
+                    Env04 = 43:56),  #           Env04 = cols 43-56
+  drop_nonsig = T,                  # keep only significant module-env links
+  r = 35,                           # radius of the circular heatmap layout
+  distance = 5,                     # spacing between heatmap blocks
+  HeatmapLabelOrient = 45,          # rotate heatmap labels by 45 degrees
+  shrink = 0.65,                    # shrink the network layout inward
+  module_index = "abundance",  # 或 "abundance"   # per-module summary: aggregated abundance
+  relation_method = "mantel",  # 或 "mantel",      # module-env association via Mantel test
+  HeatmapColorBar = list(           # custom low->high colour ramp per env block
+    c("#2166ac", "#b2182b"),
+    c("#1b7837", "#762a83"),
+    c("#4393c3", "#d6604d"),
+    c("#92c5de", "#f4a582")
+  ),
+  layout = "gephi",                 # node-positioning algorithm
+  layout_module = "adjacent",       # place neighbouring modules close together
+  node_jitter    = T,                       # jitter node positions to reduce overlap
+  module_outline = T,                    # draw an outer hull/line around each module
+  HeatmapScale = 1.5,               # scale factor for heatmap point/tile size
+  network_outline = T,              # draw an outer boundary around node groups
+  module_label = F,                        # do not show node labels
+  # module_label_size = 5
+)
+#> Using `mantel_kind = "block_vs_col"`. Note: prior versions ran the equivalent of `"col_vs_col"` when `relation_method = "mantel"`. The new default is the ecologically standard `"block_vs_col"` (community matrix vs each env column). Pass `mantel_kind = "col_vs_col"` to reproduce old results.
+
+res2[[1]]
+```
+
+![](reference/figures/README-unnamed-chunk-17-4.png)
+
+``` r
+
+res2[[2]]
+```
+
+![](reference/figures/README-unnamed-chunk-17-5.png)
+
+## Example6: Network-compare
+
+``` r
+
+# ---- Multi-network "linked" view (no per-group scale normalisation) ----
+# `ggNetView_multi_link()` builds ONE network per group (defined by `group_info`),
+# lays each one out independently, and places all sub-networks on a circular
+# anchor frame so that cross-group edges/relationships can be visually compared.
+out1 <- ggNetView_multi_link(
+  mat              = otu_rare_relative, # variables x samples abundance matrix
+  group_info       = otu_sample,        # sample metadata; defines how samples are split into groups
+  transfrom.method = "none",            # pre-correlation transform on `mat`; "none" = keep as-is
+  r.threshold      = 0.7,               # |r| cutoff for keeping an edge
+  p.threshold      = 0.05,              # adjusted p-value cutoff
+  method           = "WGCNA",           # correlation backend: WGCNA::corAndPvalue
+  cor.method       = "pearson",         # Pearson correlation
+  proc             = "BH",              # multiple-testing correction (Benjamini-Hochberg)
+  module.method    = "Fast_greedy",     # community detection per sub-network
+  layout_module    = "adjacent",        # neighbouring modules placed close together
+  center           = T,                 # pull a node toward the centre of each sub-layout
+  top_modules      = 15,                # keep top-15 modules per sub-network; rest -> "Others"
+  layout           = "gephi",           # global node-positioning algorithm per sub-network
+  shrink           = 0.5,               # shrink each sub-network inward (smaller = more compact)
+  scale            = F,                 # do NOT normalise each group to a common scale -> sub-networks keep their native size differences
+  node_jitter      = T,                 # jitter node positions slightly to reduce overlap
+  node_jitter_sd   = 0.3,               # SD of the jitter (bigger -> more spread)
+  anchor_dist      = 30,                 # distance between groups on the outer anchor circle
+  seed             = 1115,              # fix RNG for reproducibility
+  orientation      = "up",              # frame orientation; one of "up"/"down"/"left"/"right"
+  angle            = 0                  # additional rotation angle (degrees)
+)
+#> Scale for size is already present.
+#> Adding another scale for size, which will replace the existing scale.
+#> Scale for size is already present.
+#> Adding another scale for size, which will replace the existing scale.
+
+p1 <- out1[["p"]]   # the assembled ggplot object
+p1
+```
+
+![](reference/figures/README-unnamed-chunk-18-1.png)
+
+``` r
+
+
+out1$info           # auxiliary table: per-group node/edge counts, module info, etc.
+#> # A tibble: 18 × 11
+#>    modA   modB   overlap sizeA sizeB overlap_coef  pvalue   FDR Group    GroupA
+#>    <chr>  <chr>    <int> <int> <int>        <dbl>   <dbl> <dbl> <chr>    <chr> 
+#>  1 1      3            2    15     7        0.286 0.0307  1     KO_to_OE KO    
+#>  2 49     6            1     4     3        0.333 0.0333  1     KO_to_OE KO    
+#>  3 2      8            2    20     3        0.667 0.00867 0.984 KO_to_OE KO    
+#>  4 7      8            1     4     3        0.333 0.0333  1     KO_to_OE KO    
+#>  5 11     9            2    13     5        0.4   0.0115  0.984 KO_to_OE KO    
+#>  6 49     11           1     4     4        0.25  0.0443  1     KO_to_OE KO    
+#>  7 5      15           2    29     3        0.667 0.0182  1     KO_to_OE KO    
+#>  8 Others Others     179   219   276        0.817 0.00896 0.984 KO_to_OE KO    
+#>  9 1      55           4    28    27        0.148 0.0452  1     KO_to_WT KO    
+#> 10 2      2            4    30    22        0.182 0.0286  1     KO_to_WT KO    
+#> 11 97     2            2     8    22        0.25  0.0387  1     KO_to_WT KO    
+#> 12 1      1            5    28    24        0.208 0.00568 0.647 KO_to_WT KO    
+#> 13 4      4            2    18    11        0.182 0.0488  1     KO_to_WT KO    
+#> 14 3      6            2    18     8        0.25  0.0264  1     KO_to_WT KO    
+#> 15 8      16           2    11     7        0.286 0.00759 0.647 KO_to_WT KO    
+#> 16 Others Others     231   309   378        0.748 0.00660 0.647 KO_to_WT KO    
+#> 17 3      55           2     6    12        0.333 0.0233  1     OE_to_WT OE    
+#> 18 9      9            1     3     2        0.5   0.0215  1     OE_to_WT OE    
+#> # ℹ 1 more variable: GroupB <chr>
+```
+
+``` r
+
+####----Plot2----####
+# ---- Same setup but with `scale = TRUE` -> each group normalised to a common size ----
+# Useful when groups have very different network sizes and you want them
+# visually comparable side-by-side. With `scale = TRUE` the native size
+# differences are removed, so jitter_sd is also reduced (0.01) accordingly.
+out2 <- ggNetView_multi_link(
+  mat              = otu_rare_relative,
+  group_info       = otu_sample,
+  transfrom.method = "none",
+  r.threshold      = 0.7,
+  p.threshold      = 0.05,
+  method           = "WGCNA",
+  cor.method       = "pearson",
+  proc             = "BH",
+  module.method    = "Fast_greedy",
+  layout_module    = "adjacent",
+  center           = T,
+  top_modules      = 15,
+  layout           = "gephi",
+  shrink           = 0.5,
+  scale            = T,                 # normalise each group to a comparable coordinate scale
+  node_jitter      = T,
+  node_jitter_sd   = 0.01,              # smaller jitter — sub-networks are already on a unified scale
+  anchor_dist      = 1,
+  seed             = 1115,
+  orientation      = "up",
+  angle            = 0
+)
+#> Scale for size is already present.
+#> Adding another scale for size, which will replace the existing scale.
+#> Scale for size is already present.
+#> Adding another scale for size, which will replace the existing scale.
+
+
+p2 <- out2[["p"]]
+p2
+```
+
+![](reference/figures/README-unnamed-chunk-19-1.png)
+
+## Example7: Network-topology
+
+``` r
+
+# ---- Build a co-occurrence network from an abundance matrix ----
+# Internal pipeline: transform -> correlation -> p-value adjustment ->
+# edge filtering -> community detection -> attach taxonomy.
+graph_obj <- build_graph_from_mat(
+  mat              = otu_rare_relative,  # variables x samples numeric matrix
+  transfrom.method = "none",             # input already relative abundance, no extra transform
+  method           = "WGCNA",            # correlation backend: WGCNA::corAndPvalue
+  proc             = "bonferroni",       # multiple-testing correction
+  r.threshold      = 0.7,                # |r| cutoff for keeping an edge
+  p.threshold      = 0.05,               # adjusted p-value cutoff
+  node_annotation  = tax_tab,            # taxonomy joined onto each node by name
+  top_modules      = 15,                 # keep top-15 modules; rest -> "Others"
+  seed             = 1115                # fix RNG for reproducibility
+)
+
+graph_obj   # tbl_graph with Modularity / Degree / Strength + taxonomy columns
+#> # A tbl_graph: 236 nodes and 924 edges
+#> #
+#> # An undirected simple graph with 33 components
+#> #
+#> # Node Data: 236 × 14 (active)
+#>    name    modularity modularity2 modularity3 Modularity Degree Strength Kingdom
+#>    <chr>   <fct>      <ord>       <chr>       <ord>       <dbl>    <dbl> <chr>  
+#>  1 ASV_12… 6          6           6           6              29     28.3 Bacter…
+#>  2 ASV_14… 6          6           6           6              28     27.4 Bacter…
+#>  3 ASV_649 6          6           6           6              27     26.5 Bacter…
+#>  4 ASV_705 6          6           6           6              27     26.5 Bacter…
+#>  5 ASV_913 6          6           6           6              27     26.2 Bacter…
+#>  6 ASV_13… 6          6           6           6              27     26.5 Bacter…
+#>  7 ASV_14… 6          6           6           6              27     26.5 Bacter…
+#>  8 ASV_17… 6          6           6           6              27     26.3 Bacter…
+#>  9 ASV_24… 6          6           6           6              27     26.5 Bacter…
+#> 10 ASV_25… 6          6           6           6              27     26.4 Bacter…
+#> # ℹ 226 more rows
+#> # ℹ 6 more variables: Phylum <chr>, Class <chr>, Order <chr>, Family <chr>,
+#> #   Genus <chr>, Species <chr>
+#> #
+#> # Edge Data: 924 × 5
+#>    from    to weight correlation corr_direction
+#>   <int> <int>  <dbl>       <dbl> <chr>         
+#> 1   182   183  0.959       0.959 Positive      
+#> 2   182   184  0.941       0.941 Positive      
+#> 3   182   185  0.940       0.940 Positive      
+#> # ℹ 921 more rows
+
+
+
+# ---- Compute the FULL set of network topology + robustness metrics ----
+# When `mat` is provided, the function recomputes the thresholded correlation
+# matrix from `mat` (used as `network.raw`) and ALL topology fields are
+# returned with real values - including the ones that are NA when mat = NULL:
+#   Cohension_Positive / Cohension_Negative
+#   Robustness_weight  / Robustness_unweight
+#   Stability
+#   out$Robustness     (the 5%-100% node-removal curve)
+topology_with_mat <- get_network_topology(
+  graph_obj        = graph_obj,         # input tbl_graph (required)
+  mat              = otu_rare_relative, # raw abundance matrix used to derive sp.ra and rebuild network.raw
+  transfrom.method = "none",            # pre-correlation transform on `mat`; "none" = keep as-is
+  method           = "WGCNA",           # correlation backend: WGCNA::corAndPvalue
+  proc             = "bonferroni",      # multiple-testing correction
+  r.threshold      = 0.7,               # |r| cutoff for keeping an edge in network.raw
+  p.threshold      = 0.05,              # adjusted p-value cutoff for keeping an edge
+  bootstrap        = 100                # # of bootstrap iterations for robustness AND # of random ER networks for the Random_nerwork column
+)
+
+
+topology_with_mat
+#> $topology
+#> # A tibble: 24 × 3
+#>    Topology            Target_network Random_nerwork
+#>    <chr>                        <dbl>          <dbl>
+#>  1 Node                      236            236     
+#>  2 Edge                      924            924     
+#>  3 Degree                      7.83           7.83  
+#>  4 Distance                    1.46           2.87  
+#>  5 Diameter                    4.75           5.11  
+#>  6 Density                     0.0333         0.0333
+#>  7 Transitivity_global         0.849          0.0330
+#>  8 Transitivity_local          0.809          0.0336
+#>  9 Betweenness                 3.56         220.    
+#> 10 Betweenness_edge            2.63          86.1   
+#> # ℹ 14 more rows
+#> 
+#> $Robustness
+#>    Proportion.removed remain.mean   remain.sd    remain.se   weighted
+#> 1                0.05  0.93894068 0.006736051 0.0006736051   weighted
+#> 2                0.10  0.87703390 0.008235367 0.0008235367   weighted
+#> 3                0.15  0.82266949 0.010712392 0.0010712392   weighted
+#> 4                0.20  0.76203390 0.013052837 0.0013052837   weighted
+#> 5                0.25  0.70402542 0.013048043 0.0013048043   weighted
+#> 6                0.30  0.64381356 0.013068112 0.0013068112   weighted
+#> 7                0.35  0.58542373 0.015351419 0.0015351419   weighted
+#> 8                0.40  0.53025424 0.014862819 0.0014862819   weighted
+#> 9                0.45  0.47394068 0.017006569 0.0017006569   weighted
+#> 10               0.50  0.42279661 0.017083231 0.0017083231   weighted
+#> 11               0.55  0.36605932 0.019139188 0.0019139188   weighted
+#> 12               0.60  0.31377119 0.018934170 0.0018934170   weighted
+#> 13               0.65  0.26504237 0.016164591 0.0016164591   weighted
+#> 14               0.70  0.21809322 0.016388331 0.0016388331   weighted
+#> 15               0.75  0.16758475 0.015323690 0.0015323690   weighted
+#> 16               0.80  0.12334746 0.014364862 0.0014364862   weighted
+#> 17               0.85  0.07881356 0.015843037 0.0015843037   weighted
+#> 18               0.90  0.04635593 0.011675496 0.0011675496   weighted
+#> 19               0.95  0.01347458 0.008588939 0.0008588939   weighted
+#> 20               1.00  0.00000000 0.000000000 0.0000000000   weighted
+#> 21               0.05  0.93877119 0.007084582 0.0007084582 unweighted
+#> 22               0.10  0.87728814 0.009894707 0.0009894707 unweighted
+#> 23               0.15  0.82177966 0.009911189 0.0009911189 unweighted
+#> 24               0.20  0.76169492 0.013495506 0.0013495506 unweighted
+#> 25               0.25  0.70389831 0.013212479 0.0013212479 unweighted
+#> 26               0.30  0.64474576 0.014223075 0.0014223075 unweighted
+#> 27               0.35  0.58618644 0.014962542 0.0014962542 unweighted
+#> 28               0.40  0.53211864 0.015718690 0.0015718690 unweighted
+#> 29               0.45  0.47762712 0.018078695 0.0018078695 unweighted
+#> 30               0.50  0.42050847 0.015057993 0.0015057993 unweighted
+#> 31               0.55  0.36686441 0.018069664 0.0018069664 unweighted
+#> 32               0.60  0.31233051 0.017058956 0.0017058956 unweighted
+#> 33               0.65  0.26661017 0.019761901 0.0019761901 unweighted
+#> 34               0.70  0.21406780 0.018331729 0.0018331729 unweighted
+#> 35               0.75  0.17063559 0.018374961 0.0018374961 unweighted
+#> 36               0.80  0.12317797 0.017838089 0.0017838089 unweighted
+#> 37               0.85  0.08114407 0.015429840 0.0015429840 unweighted
+#> 38               0.90  0.04597458 0.010593220 0.0010593220 unweighted
+#> 39               0.95  0.01440678 0.008602021 0.0008602021 unweighted
+#> 40               1.00  0.00000000 0.000000000 0.0000000000 unweighted
+```
+
+## Example8: Zi-Pi
+
+``` r
+
+# Extract the two inputs Zi-Pi needs from graph object
+nodes_bulk <- get_graph_nodes(obj)      # node table (module + degree cols)
+adj_mat    <- get_graph_adjacency(obj)  # adjacency / correlation matrix
+
+
+role_palette <- c(
+  "Peripherals"  = "#377eb8",
+  "Connectors"   = "#4daf4a",
+  "Module hubs"  = "#e41a1c",
+  "Network hubs" = "#ff7f00"
+)
+
+# Compute Zi-Pi and classify
+zp <- ggnetview_zipi(
+  nodes_bulk     = nodes_bulk,    # node table: IDs in rownames or a `name` col
+  z_bulk_mat     = adj_mat,       # adjacency matrix; non-zero entries = edges
+  modularity_col = "Modularity",  # column holding module labels (no NAs)
+  degree_col     = "Degree",      # column holding node degree   (no NAs)
+  zi_threshold   = 2.5,           # Zi cutoff for role classification
+  pi_threshold   = 0.62,          # Pi cutoff for role classification
+  na.rm          = FALSE,         # FALSE = keep unclassifiable nodes (type = NA)
+  point_colors   = role_palette,  # point + legend colours, keyed by role
+  bg_colors      = c(             # quadrant background fills, keyed by role
+    "Peripherals"  = "#f0f0f0",
+    "Connectors"   = "#d9f0d3",
+    "Module hubs"  = "#fde0dd",
+    "Network hubs" = "#fee8c8"
+  ),
+  label_colors   = role_palette,  # quadrant text-label colours (default: black)
+  label_size     = 5,             # quadrant text-label size  (default 5.5)
+  bg_alpha       = 0.35           # background opacity 0..1    (default 0.25)
+)
+
+class(zp)
+#> [1] "list"
+
+names(zp)
+#> [1] "data" "plot"
+
+zp$plot
+```
+
+![](reference/figures/README-unnamed-chunk-21-1.png)
+
+## Example9: RMT threshold
+
+``` R
+# ---- RMT threshold scan #1: WGCNA correlation backend ----
+# `ggNetView_RMT()` scans a series of candidate |r| thresholds, builds the
+# thresholded correlation matrix at each, computes its eigenvalue spacing
+# distribution (NNSD), and picks the threshold at which the NNSD transitions
+# from Gaussian Orthogonal Ensemble (signal + noise) to Poisson (noise-free,
+# modular network) — this is the RMT-recommended cutoff.
+out <- ggNetView_RMT(
+  mat              = otu_rare_relative, # input matrix (variables x samples)
+  transfrom.method = "none",            # already relative-abundance, no extra transform
+  method           = "WGCNA",           # use WGCNA::corAndPvalue for correlation
+  cor.method       = "pearson",         # Pearson correlation
+  unfold.method    = "gaussian",        # Gaussian KDE unfolding of eigenvalues
+  bandwidth        = "nrd0",            # KDE bandwidth rule (stats::density default)
+  nr.fit.points    = 20,                # support points (only used if unfold.method = "spline")
+  discard.outliers = TRUE,              # IQR-trim extreme eigenvalues before unfolding
+  discard.zeros    = TRUE,              # drop all-zero rows/cols after thresholding
+  min.mat.dim      = 40,                # early-stop if effective dim drops below 40
+  max.ev.spacing   = 3,                 # truncate NNSD tail at spacing = 3
+  save_plots       = FALSE,             # don't write diagnostic PNGs to disk
+  out_dir          = "RMT_plots",       # (only used when save_plots = TRUE)
+  verbose          = TRUE,              # print scan progress to console
+  seed             = 1115               # fix RNG for reproducibility
+)
+
+# The chosen threshold to feed downstream into build_graph_from_mat(r.threshold = ...)
+out$chosen_threshold
+```
+
 ## sessionInfo
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.1 (2025-06-13)
-#> Platform: aarch64-apple-darwin20
-#> Running under: macOS Tahoe 26.2
+#> R version 4.6.1 (2026-06-24)
+#> Platform: aarch64-apple-darwin23
+#> Running under: macOS Tahoe 26.3.1
 #> 
 #> Matrix products: default
-#> BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
-#> LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+#> [1] zh_CN.UTF-8/zh_CN.UTF-8/zh_CN.UTF-8/C/zh_CN.UTF-8/zh_CN.UTF-8
 #> 
 #> time zone: Asia/Shanghai
 #> tzcode source: internal
@@ -455,39 +987,40 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggNetView_1.4.17 ggnewscale_0.5.2 ggplot2_4.0.2   
+#> [1] future_1.70.0    ggNetView_0.2.1  ggnewscale_0.5.2 ggplot2_4.0.3   
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] psych_2.6.1           tidyselect_1.2.1      WGCNA_1.74           
-#>  [4] viridisLite_0.4.3     dplyr_1.2.0           farver_2.1.2         
-#>  [7] viridis_0.6.5         S7_0.2.1              ggraph_2.2.2         
+#>  [1] tidyselect_1.2.1      psych_2.6.5           WGCNA_1.74           
+#>  [4] viridisLite_0.4.3     dplyr_1.2.1           farver_2.1.2         
+#>  [7] viridis_0.6.5         S7_0.2.2              ggraph_2.2.2         
 #> [10] fastmap_1.2.0         tweenr_2.0.3          digest_0.6.39        
-#> [13] rpart_4.1.24          lifecycle_1.0.5       cluster_2.1.8.1      
-#> [16] survival_3.8-3        magrittr_2.0.4        compiler_4.5.1       
-#> [19] rlang_1.1.7           Hmisc_5.2-5           tools_4.5.1          
-#> [22] igraph_2.2.2          utf8_1.2.6            yaml_2.3.12          
-#> [25] data.table_1.18.2.1   knitr_1.51            FNN_1.1.4.1          
-#> [28] labeling_0.4.3        graphlayouts_1.2.2    htmlwidgets_1.6.4    
-#> [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.2          
-#> [34] foreign_0.8-90        purrr_1.2.1           BiocGenerics_0.56.0  
-#> [37] nnet_7.3-20           dynamicTreeCut_1.63-1 grid_4.5.1           
-#> [40] polyclip_1.10-7       stats4_4.5.1          preprocessCore_1.70.0
-#> [43] multtest_2.64.0       colorspace_2.1-2      fastcluster_1.3.0    
-#> [46] scales_1.4.0          iterators_1.0.14      MASS_7.3-65          
-#> [49] dichromat_2.0-0.1     cli_3.6.5             rmarkdown_2.30       
-#> [52] generics_0.1.4        otel_0.2.0            rstudioapi_0.18.0    
+#> [13] rpart_4.1.27          lifecycle_1.0.5       cluster_2.1.8.2      
+#> [16] survival_3.8-6        magrittr_2.0.5        compiler_4.6.1       
+#> [19] rlang_1.3.0           Hmisc_5.2-6           tools_4.6.1          
+#> [22] igraph_2.3.3          utf8_1.2.6            yaml_2.3.12          
+#> [25] data.table_1.18.4     knitr_1.51            FNN_1.1.4.1          
+#> [28] labeling_0.4.3        graphlayouts_1.2.4    htmlwidgets_1.6.4    
+#> [31] mnormt_2.1.2          RColorBrewer_1.1-3    withr_3.0.3          
+#> [34] foreign_0.8-91        purrr_1.2.2           nnet_7.3-20          
+#> [37] dynamicTreeCut_1.63-1 grid_4.6.1            polyclip_1.10-7      
+#> [40] preprocessCore_1.74.0 colorspace_2.1-3      fastcluster_1.3.0    
+#> [43] globals_0.19.1        scales_1.4.0          iterators_1.0.14     
+#> [46] MASS_7.3-65           dichromat_2.0-0.1     cli_3.6.6            
+#> [49] rmarkdown_2.31        vegan_2.7-5           generics_0.1.4       
+#> [52] otel_0.2.0            future.apply_1.20.2   rstudioapi_0.19.0    
 #> [55] cachem_1.1.0          ggforce_0.5.0         stringr_1.6.0        
-#> [58] splines_4.5.1         parallel_4.5.1        impute_1.82.0        
-#> [61] matrixStats_1.5.0     base64enc_0.1-6       vctrs_0.7.1          
-#> [64] Matrix_1.7-4          ggrepel_0.9.6         Formula_1.2-5        
-#> [67] htmlTable_2.4.3       foreach_1.5.2         tidyr_1.3.2          
-#> [70] glue_1.8.0            codetools_0.2-20      stringi_1.8.7        
-#> [73] gtable_0.3.6          tibble_3.3.1          pillar_1.11.1        
-#> [76] htmltools_0.5.9       R6_2.6.1              doParallel_1.0.17    
-#> [79] tidygraph_1.3.1       evaluate_1.0.5        lattice_0.22-7       
-#> [82] Biobase_2.70.0        backports_1.5.0       memoise_2.0.1        
-#> [85] Rcpp_1.1.1            nlme_3.1-168          gridExtra_2.3        
-#> [88] checkmate_2.3.4       xfun_0.56             pkgconfig_2.0.3
+#> [58] splines_4.6.1         parallel_4.6.1        impute_1.86.0        
+#> [61] matrixStats_1.5.0     base64enc_0.1-6       vctrs_0.7.3          
+#> [64] Matrix_1.7-5          ggrepel_0.9.8         Formula_1.2-5        
+#> [67] htmlTable_2.5.0       listenv_1.0.0         foreach_1.5.2        
+#> [70] tidyr_1.3.2           parallelly_1.48.0     glue_1.8.1           
+#> [73] codetools_0.2-20      stringi_1.8.7         gtable_0.3.6         
+#> [76] tibble_3.3.1          pillar_1.11.1         htmltools_0.5.9      
+#> [79] R6_2.6.1              doParallel_1.0.17     tidygraph_1.3.1      
+#> [82] evaluate_1.0.5        lattice_0.22-9        backports_1.5.1      
+#> [85] memoise_2.0.1         Rcpp_1.1.2            permute_0.9-10       
+#> [88] gridExtra_2.3.1       nlme_3.1-169          checkmate_2.3.4      
+#> [91] mgcv_1.9-4            xfun_0.60             pkgconfig_2.0.3
 ```
 
 #### Citation
@@ -495,7 +1028,7 @@ sessionInfo()
 If you use ggNetView in your research, please cite:
 
 ``` R
-Yue Liu, Chao Wang (2026). ggNetView: An R Package for Reproducible and Deterministic Network Analysis and Visualization. 
+Yue Liu, Chao Wang (2026). ggNetView: An R Package for Reproducible Biological Network Analysis and Visualization.
 ```
 
 #### Github & Manual
@@ -509,143 +1042,226 @@ https://jiawang1209.github.io/ggNetView-manual/
 
 # Package index
 
-## All functions
+## Network builders
 
-- [`BASV_tab`](https://jiawang1209.github.io/ggNetView/reference/BASV_tab.md)
-  : Bacterial ASV demonstration table
-- [`Envdf`](https://jiawang1209.github.io/ggNetView/reference/Envdf.md)
-  : Environmental variables (single block)
-- [`Envdf_4st`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st.md)
-  : Environmental variables across four sampling stages
-- [`Envdf_4st_2`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st_2.md)
-  : Alternative four-stage environmental dataset
-- [`FASV_tab`](https://jiawang1209.github.io/ggNetView/reference/FASV_tab.md)
-  : Fungal ASV demonstration table
-- [`Spedf`](https://jiawang1209.github.io/ggNetView/reference/Spedf.md)
-  : Species composition table for link-heatmap examples
-- [`adjacency_matrix_example`](https://jiawang1209.github.io/ggNetView/reference/adjacency_matrix_example.md)
-  : Pre-computed adjacency matrix
+Construct a tidygraph network object from various input types. All
+builders return a module-annotated graph ready for
+[`ggNetView()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView.md).
+
+- [`build_graph_from_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_mat.md)
+  : Build a correlation-based network from a matrix
+- [`build_graph_from_double_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat.md)
+  : Build a graph object from Two numeric matrix
+- [`build_graph_from_double_mat_with_module()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat_with_module.md)
+  : Build a graph object from Two numeric matrix
+- [`build_graph_from_multi_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_multi_mat.md)
+  : Build a graph object from multiple numeric matrices
 - [`build_graph_from_adj_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat.md)
   : Build a correlation-based network from a adjacency matrix
 - [`build_graph_from_adj_mat_module()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat_module.md)
   : Build a graph object from a adjacency matrix and module Info
 - [`build_graph_from_df()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_df.md)
   : Build a graph object from a data frame
-- [`build_graph_from_double_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat.md)
-  : Build a graph object from Two numeric matrix
-- [`build_graph_from_double_mat_with_module()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat_with_module.md)
-  : Build a graph object from Two numeric matrix
-- [`build_graph_from_enrichGO()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_enrichGO.md)
-  : Build a graph object from GO enrichment analysis
 - [`build_graph_from_igraph()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_igraph.md)
   : Build a graph object from a graph object
-- [`build_graph_from_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_mat.md)
-  : Build a correlation-based network from a matrix
 - [`build_graph_from_module()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_module.md)
   : Build a graph object from a data frame and module Info
-- [`build_graph_from_multi_mat()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_multi_mat.md)
-  : Build a graph object from multiple numeric matrices
-- [`build_graph_from_pie()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_pie.md)
-  : Build a pie graph object from a data frame
 - [`build_graph_from_wgcna()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_wgcna.md)
   : Build a graph object from WGCNA result
-- [`double_mat_node_df`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df.md)
-  : Two-block node table for double-matrix examples
-- [`double_mat_node_df_with_modularity`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df_with_modularity.md)
-  : Two-block node table with pre-computed modularity
-- [`export_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/export_ggnetview.md)
-  : Save a ggNetView with sensible defaults
-- [`get_graph_adjacency()`](https://jiawang1209.github.io/ggNetView/reference/get_graph_adjacency.md)
-  : Extract adjacency matrix from graph object
-- [`get_graph_nodes()`](https://jiawang1209.github.io/ggNetView/reference/get_graph_nodes.md)
-  : Extract node table from graph object
-- [`get_info_from_graph()`](https://jiawang1209.github.io/ggNetView/reference/get_info_from_graph.md)
-  : Extract node and edge information from graph object
-- [`get_network_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md)
-  : Create network topology
-- [`get_network_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology_parallel.md)
-  : Create network topology in parallel
-- [`get_palette()`](https://jiawang1209.github.io/ggNetView/reference/get_palette.md)
-  : Generate a named color palette for discrete classes
-- [`get_sample_subgraph_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology.md)
-  : Create sample-level subgraph topology from a global network
-- [`get_sample_subgraph_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology_parallel.md)
-  : Create sample-level subgraph topology in parallel
-- [`get_subgraph()`](https://jiawang1209.github.io/ggNetView/reference/get_subgraph.md)
-  : Extract subgrah from graph object
+- [`build_graph_from_pie()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_pie.md)
+  : Build a pie graph object from a data frame
+- [`build_graph_from_enrichGO()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_enrichGO.md)
+  : Build a graph object from GO enrichment analysis
+- [`build_graph_from_consensus()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_consensus.md)
+  : Build a consensus graph object from multiple adjacency matrices
+- [`build_graph_from_node_edge()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_node_edge.md)
+  : Build a graph object from separate node and edge tables
+- [`build_graph_from_stringdb()`](https://jiawang1209.github.io/ggNetView/reference/build_graph_from_stringdb.md)
+  : Build a graph object from a STRING database export
+
+## Visualisation
+
+Plot networks, heatmaps, and multi-network comparisons.
+
 - [`ggNetView()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView.md)
   : Visualize a network with custom layouts
-- [`ggNetView_RMT()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView_RMT.md)
-  : One-shot, non-interactive RMT threshold scan with auto selection
 - [`ggNetView_multi()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView_multi.md)
   : Visualize network with custom layouts in different samples
 - [`ggNetView_multi_link()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView_multi_link.md)
   : Visualize multiple networks and show the connections between them to
   highlight key members within the networks
-- [`gglink_heatmap_triple()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmap_triple.md)
-  : Visualize multi-orientation environmental-species correlation
-  heatmaps2
 - [`gglink_heatmaps()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps.md)
-  : Visualize multi-orientation environmental-species correlation
-  heatmaps
+  : Multi-orientation species-environment correlation / Mantel heatmap
 - [`gglink_heatmaps_2()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps_2.md)
   : Visualize multi-orientation environmental-species correlation
   heatmaps (adaptive sizing)
+- [`gglink_heatmap_triple()`](https://jiawang1209.github.io/ggNetView/reference/gglink_heatmap_triple.md)
+  : Visualize multi-orientation environmental-species correlation
+  heatmaps2
 - [`ggnetview_modularity_heatmaps()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_modularity_heatmaps.md)
-  : Visualize network with module-environment heatmaps
+  : Network + module-environment heatmaps with shared Mantel API
+- [`ggnetview_subgraph()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_subgraph.md)
+  : Visualize a network with a magnified (zoomed) module subgraph
 - [`ggnetview_zipi()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_zipi.md)
   : Compute Zi-Pi (within-module connectivity and participation
   coefficient)
+- [`ggnetview_perturbation_curve()`](https://jiawang1209.github.io/ggNetView/reference/ggnetview_perturbation_curve.md)
+  : Plot a network perturbation (attack) curve
+
+## Network analysis
+
+Compute topology metrics, extract subgraphs, and perform statistical
+tests.
+
+- [`get_network_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology.md)
+  : Create network topology
+- [`get_network_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_network_topology_parallel.md)
+  : Create network topology in parallel
+- [`get_sample_subgraph()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph.md)
+  : Extract sample-level subgraphs from a graph object
+- [`get_sample_subgraph_topology()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology.md)
+  : Create sample-level subgraph topology from a global network
+- [`get_sample_subgraph_topology_parallel()`](https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology_parallel.md)
+  : Create sample-level subgraph topology in parallel
+- [`get_network_perturbation()`](https://jiawang1209.github.io/ggNetView/reference/get_network_perturbation.md)
+  : Structural perturbation ("virtual attack") of a network
+- [`get_node_influence()`](https://jiawang1209.github.io/ggNetView/reference/get_node_influence.md)
+  : Propagate a virtual perturbation from source node(s) across the
+  network
+- [`get_node_centrality()`](https://jiawang1209.github.io/ggNetView/reference/get_node_centrality.md)
+  : Compute per-node centralities and attach them to a graph object
+- [`get_node_ivi()`](https://jiawang1209.github.io/ggNetView/reference/get_node_ivi.md)
+  : Compute the Integrated Value of Influence (IVI) per node
+- [`press_perturbation()`](https://jiawang1209.github.io/ggNetView/reference/press_perturbation.md)
+  : Press-perturbation (sustained-disturbance) analysis
+- [`ggNetView_RMT()`](https://jiawang1209.github.io/ggNetView/reference/ggNetView_RMT.md)
+  : One-shot, non-interactive RMT threshold scan with auto selection
 - [`mantel_pairwise()`](https://jiawang1209.github.io/ggNetView/reference/mantel_utils.md)
   [`mantel_between_blocks()`](https://jiawang1209.github.io/ggNetView/reference/mantel_utils.md)
+  [`mantel_block_vs_col()`](https://jiawang1209.github.io/ggNetView/reference/mantel_utils.md)
   : Mantel test utilities for species-environment distance matrix
   correlation
-- [`order_graph()`](https://jiawang1209.github.io/ggNetView/reference/order_graph.md)
-  : Reorder the Modularity from graph object
-- [`otu_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/otu_NatureWater.md)
-  : Larger OTU table from a published water-quality study
-- [`otu_rare`](https://jiawang1209.github.io/ggNetView/reference/otu_rare.md)
-  : Rarefied OTU abundance table
-- [`otu_rare_relative`](https://jiawang1209.github.io/ggNetView/reference/otu_rare_relative.md)
-  : Relative-abundance OTU table
-- [`otu_sample`](https://jiawang1209.github.io/ggNetView/reference/otu_sample.md)
-  : Sample metadata for the OTU example
-- [`otu_tab`](https://jiawang1209.github.io/ggNetView/reference/otu_tab.md)
-  : Example OTU abundance table
-- [`ppi_example`](https://jiawang1209.github.io/ggNetView/reference/ppi_example.md)
-  : Protein-protein interaction example
-- [`ppi_module`](https://jiawang1209.github.io/ggNetView/reference/ppi_module.md)
-  : Protein-protein interaction example with module assignment
-- [`scale_color_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_color_ggnetview.md)
-  : Custom discrete color scale for ggNetView
-- [`scale_fill_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_fill_ggnetview.md)
-  : Custom discrete fill scale for ggNetView
+
+## Correlation & inference engines
+
+Low-level correlation and network-inference functions powered by Rcpp.
+These are called internally by the builders but can also be used
+directly.
+
 - [`sparcc_matrix_rcpp()`](https://jiawang1209.github.io/ggNetView/reference/sparcc_matrix_rcpp.md)
   : SparCC correlation matrix (Rcpp implementation)
 - [`sparcc_pvalue_rcpp()`](https://jiawang1209.github.io/ggNetView/reference/sparcc_pvalue_rcpp.md)
   : SparCC p-value matrix (Rcpp implementation)
 - [`spieceasi_matrix_rcpp()`](https://jiawang1209.github.io/ggNetView/reference/spieceasi_matrix_rcpp.md)
   : SPIEC-EASI matrix (Rcpp implementation)
-- [`tax_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/tax_NatureWater.md)
-  : Taxonomy table for \[otu_NatureWater\]
-- [`tax_tab`](https://jiawang1209.github.io/ggNetView/reference/tax_tab.md)
-  : Taxonomy annotation table
-- [`theme_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/theme_ggnetview.md)
-  : ggNetView Theme
-- [`trans_TOM_in_WGCNA()`](https://jiawang1209.github.io/ggNetView/reference/trans_TOM_in_WGCNA.md)
-  : Translate TOM matrin to create graph object
-- [`trans_adjacency_matrix_to_df()`](https://jiawang1209.github.io/ggNetView/reference/trans_adjacency_matrix_to_df.md)
-  : Trans adjacency matrix to edge data frame
+
+## Graph utilities
+
+Extract, transform, reorder, and export graph components.
+
+- [`get_graph_nodes()`](https://jiawang1209.github.io/ggNetView/reference/get_graph_nodes.md)
+  : Extract node table from graph object
+- [`get_graph_adjacency()`](https://jiawang1209.github.io/ggNetView/reference/get_graph_adjacency.md)
+  : Extract adjacency matrix from graph object
+- [`get_info_from_graph()`](https://jiawang1209.github.io/ggNetView/reference/get_info_from_graph.md)
+  : Extract node and edge information from graph object
+- [`get_subgraph()`](https://jiawang1209.github.io/ggNetView/reference/get_subgraph.md)
+  : Extract subgrah from graph object
+- [`order_graph()`](https://jiawang1209.github.io/ggNetView/reference/order_graph.md)
+  : Reorder the Modularity from graph object
 - [`update_graph_modules()`](https://jiawang1209.github.io/ggNetView/reference/update_graph_modules.md)
   : Update module names in an existing graph object
 - [`update_graph_modules2()`](https://jiawang1209.github.io/ggNetView/reference/update_graph_modules2.md)
   : Update module assignments from an existing column in graph object
+- [`export_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/export_ggnetview.md)
+  : Save a ggNetView with sensible defaults
+- [`trans_adjacency_matrix_to_df()`](https://jiawang1209.github.io/ggNetView/reference/trans_adjacency_matrix_to_df.md)
+  : Trans adjacency matrix to edge data frame
+- [`trans_TOM_in_WGCNA()`](https://jiawang1209.github.io/ggNetView/reference/trans_TOM_in_WGCNA.md)
+  : Translate TOM matrin to create graph object
+- [`angle_utils`](https://jiawang1209.github.io/ggNetView/reference/angle_utils.md)
+  : Angle helpers for ggNetView layout parameters
+- [`deg()`](https://jiawang1209.github.io/ggNetView/reference/deg.md) :
+  Convert degrees to radians
+
+## Themes & scales
+
+ggplot2 theme and colour/fill scale helpers for consistent network
+aesthetics.
+
+- [`theme_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/theme_ggnetview.md)
+  : ggNetView Theme
+- [`scale_color_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_color_ggnetview.md)
+  : Custom discrete color scale for ggNetView
+- [`scale_fill_ggnetview()`](https://jiawang1209.github.io/ggNetView/reference/scale_fill_ggnetview.md)
+  : Custom discrete fill scale for ggNetView
+- [`get_palette()`](https://jiawang1209.github.io/ggNetView/reference/get_palette.md)
+  : Generate a named color palette for discrete classes
+
+## Datasets
+
+Bundled example data used throughout the documentation, vignettes and
+`\examples`.
+
+- [`otu_tab`](https://jiawang1209.github.io/ggNetView/reference/otu_tab.md)
+  : Example OTU abundance table
+- [`otu_rare`](https://jiawang1209.github.io/ggNetView/reference/otu_rare.md)
+  : Rarefied OTU abundance table
+- [`otu_rare_relative`](https://jiawang1209.github.io/ggNetView/reference/otu_rare_relative.md)
+  : Relative-abundance OTU table
+- [`otu_sample`](https://jiawang1209.github.io/ggNetView/reference/otu_sample.md)
+  : Sample metadata for the OTU example
+- [`tax_tab`](https://jiawang1209.github.io/ggNetView/reference/tax_tab.md)
+  : Taxonomy annotation table
+- [`otu_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/otu_NatureWater.md)
+  : Larger OTU table from a published water-quality study
+- [`tax_NatureWater`](https://jiawang1209.github.io/ggNetView/reference/tax_NatureWater.md)
+  : Taxonomy table for \[otu_NatureWater\]
+- [`BASV_tab`](https://jiawang1209.github.io/ggNetView/reference/BASV_tab.md)
+  : Bacterial ASV demonstration table
+- [`FASV_tab`](https://jiawang1209.github.io/ggNetView/reference/FASV_tab.md)
+  : Fungal ASV demonstration table
+- [`Spedf`](https://jiawang1209.github.io/ggNetView/reference/Spedf.md)
+  : Species composition table for link-heatmap examples
+- [`Envdf`](https://jiawang1209.github.io/ggNetView/reference/Envdf.md)
+  : Environmental variables (single block)
+- [`Envdf_4st`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st.md)
+  : Environmental variables across four sampling stages
+- [`Envdf_4st_2`](https://jiawang1209.github.io/ggNetView/reference/Envdf_4st_2.md)
+  : Alternative four-stage environmental dataset
+- [`adjacency_matrix_example`](https://jiawang1209.github.io/ggNetView/reference/adjacency_matrix_example.md)
+  : Pre-computed adjacency matrix
+- [`double_mat_node_df`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df.md)
+  : Two-block node table for double-matrix examples
+- [`double_mat_node_df_with_modularity`](https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df_with_modularity.md)
+  : Two-block node table with pre-computed modularity
+- [`ppi_example`](https://jiawang1209.github.io/ggNetView/reference/ppi_example.md)
+  : Protein-protein interaction example
+- [`ppi_module`](https://jiawang1209.github.io/ggNetView/reference/ppi_module.md)
+  : Protein-protein interaction example with module assignment
+
+## Re-exports
+
+- [`` `%>%` ``](https://jiawang1209.github.io/ggNetView/reference/pipe.md)
+  : Pipe operator
 
 # Articles
 
 ### All vignettes
 
+- [Consensus Networks Across Multiple Inference
+  Methods](https://jiawang1209.github.io/ggNetView/articles/consensus-network.md):
 - [Correlation-based Network
   Pipelines](https://jiawang1209.github.io/ggNetView/articles/correlation-networks.md):
 - [Introduction to
   ggNetView](https://jiawang1209.github.io/ggNetView/articles/ggNetView-intro.md):
+- [Layout
+  Gallery](https://jiawang1209.github.io/ggNetView/articles/layout-gallery.md):
+- [Virtual Perturbation
+  Analysis](https://jiawang1209.github.io/ggNetView/articles/network-perturbation.md):
+- [Network Topology and Keystone
+  Analysis](https://jiawang1209.github.io/ggNetView/articles/network-topology.md):
+- [Node-Importance Analysis: Multiple Centralities and
+  IVI](https://jiawang1209.github.io/ggNetView/articles/node-importance.md):
+- [WGCNA Network
+  Pipeline](https://jiawang1209.github.io/ggNetView/articles/wgcna-pipeline.md):

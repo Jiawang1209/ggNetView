@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multi-orientation environmental-species correlation heatmaps (adaptive sizing) — gglink_heatmaps_2"><meta name="description" content="An improved version of gglink_heatmaps that sizes each heatmap
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualize multi-orientation environmental-species correlation heatmaps (adaptive sizing) — gglink_heatmaps_2"><meta name="description" content="An improved version of gglink_heatmaps that sizes each heatmap
 quadrant independently according to its own number of variables.
 All tiles share the same size; larger env blocks simply extend further.
 The central species network is always kept at the centre of the canvas."><meta property="og:description" content="An improved version of gglink_heatmaps that sizes each heatmap
@@ -19,7 +19,7 @@ The central species network is always kept at the centre of the canvas."><meta p
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,19 +30,23 @@ The central species network is always kept at the centre of the canvas."><meta p
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="../articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="../articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="../articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="../articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/layout-gallery.html">Layout Gallery</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul></li>
       </ul></div>
 
 
@@ -78,6 +82,7 @@ The central species network is always kept at the centre of the canvas.</p>
 <span>  mantel.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mantel"</span>, <span class="st">"mantel.partial"</span>, <span class="st">"mantelhaen.test"</span>, <span class="st">"mantel.correlog"</span><span class="op">)</span>,</span>
 <span>  mantel.method2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"kendall"</span>, <span class="st">"spearman"</span><span class="op">)</span>,</span>
 <span>  mantel.alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  mantel.seed <span class="op">=</span> <span class="fl">1115</span>,</span>
 <span>  drop_nonsig <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  comparisons <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  comparisons_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -114,234 +119,283 @@ The central species network is always kept at the centre of the canvas.</p>
 
 
 <dl><dt id="arg-env">env<a class="anchor" aria-label="anchor" href="#arg-env"></a></dt>
-<dd><p>Data Frame
-A data frame or matrix containing environmental variables.
-Each column represents an environmental factor.</p></dd>
+<dd><p>Data frame or matrix. Environmental variables, one column per
+factor, one row per sample. Row order must match <code>spec</code>.</p></dd>
 
 
 <dt id="arg-spec">spec<a class="anchor" aria-label="anchor" href="#arg-spec"></a></dt>
-<dd><p>Data Frame
-A data frame or matrix containing species abundance or trait data.
-Each column represents a species or taxonomic unit.</p></dd>
+<dd><p>Data frame or matrix. Species abundance / trait data, one
+column per species (or taxonomic unit), one row per sample. Row order
+must match <code>env</code>.</p></dd>
 
 
 <dt id="arg-env-select">env_select<a class="anchor" aria-label="anchor" href="#arg-env-select"></a></dt>
-<dd><p>Optional list specifying the column indices (or names)
-of environmental variables to include in each environmental block.
-Each list element corresponds to one quadrant of the heatmap layout.</p></dd>
+<dd><p>Named list (required). Each element gives the column
+indices or names of <code>env</code> that form one environmental block; each
+block becomes one heatmap quadrant. The list length must equal
+<code>length(orientation)</code>. Block names (used for
+<code>comparisons_groups</code>) come from <code>names(env_select)</code>, e.g.
+<code>list(Env01 = 1:14, Env02 = 15:28, Env03 = 29:42, Env04 = 43:56)</code>.</p></dd>
 
 
 <dt id="arg-spec-select">spec_select<a class="anchor" aria-label="anchor" href="#arg-spec-select"></a></dt>
-<dd><p>Optional list specifying column indices (or names)
-of species to include. If multiple elements are provided, they define
-separate species clusters in the visualization.</p></dd>
+<dd><p>Named list (required). Each element gives the column
+indices or names of <code>spec</code> that form one species block. Each block
+is rendered as one central network (or one collapsed point if
+<code>spec_collapse = TRUE</code>). Block names come from
+<code>names(spec_select)</code>, e.g. <code>list(Spec01 = 1:15, Spec02 = 16:30)</code>.</p></dd>
 
 
 <dt id="arg-spec-layout">spec_layout<a class="anchor" aria-label="anchor" href="#arg-spec-layout"></a></dt>
-<dd><p>Character or character vector (default = <code>"circle_outline"</code>).
-Spatial arrangement of species nodes for each central network.
-If a single value, applied to all spec blocks.
-If a vector, length must match the number of spec blocks; each element specifies
-the layout for that block in order. Valid options: <code>"circle_outline"</code>,
-<code>"diamond_outline"</code>, <code>"rectangle_outline"</code>, <code>"square_outline"</code>.</p></dd>
+<dd><p>Character or character vector (default
+<code>"circle_outline"</code>). Shape of the per-block node layout. Length 1
+applies to all blocks; a vector must have length equal to
+<code>length(spec_select)</code> and is matched element-wise. Valid values:
+<code>"circle_outline"</code>, <code>"diamond_outline"</code>,
+<code>"rectangle_outline"</code>, <code>"square_outline"</code>.
+Ignored when <code>spec_collapse = TRUE</code>.</p></dd>
 
 
 <dt id="arg-spec-orientation">spec_orientation<a class="anchor" aria-label="anchor" href="#arg-spec-orientation"></a></dt>
-<dd><p>Character
-spec_oritation. Options include: "up","down","left","right"</p></dd>
+<dd><p>Character (default <code>"up"</code>). Base orientation
+passed to the per-block layout function. One of <code>"up"</code>,
+<code>"down"</code>, <code>"left"</code>, <code>"right"</code>.</p></dd>
 
 
 <dt id="arg-spec-relation">spec_relation<a class="anchor" aria-label="anchor" href="#arg-spec-relation"></a></dt>
-<dd><p>Logical (defalt = TRUE)
-Whether to compulate the ralationship of spec</p></dd>
+<dd><p>Logical (default <code>TRUE</code>). Whether to compute
+within-block species-species correlations to drive the per-block layout
+(e.g. modularity of <code>"circle_outline"</code>). Set <code>FALSE</code> for a
+geometry-only layout. Ignored when <code>spec_collapse = TRUE</code>.</p></dd>
 
 
 <dt id="arg-relation-method">relation_method<a class="anchor" aria-label="anchor" href="#arg-relation-method"></a></dt>
-<dd><p>Character
-Method for computing relationships between species and environmental factors. Options are `"correlation"` or `"mantel"`.</p></dd>
+<dd><p>Character (default <code>"correlation"</code>). One of
+<code>"correlation"</code> or <code>"mantel"</code>.</p></dd>
 
 
 <dt id="arg-cor-method">cor.method<a class="anchor" aria-label="anchor" href="#arg-cor-method"></a></dt>
-<dd><p>Character
-Correlation method to use when `relation_method = "correlation"`.
-One of `"pearson"`, `"kendall"`, or `"spearman"`.</p></dd>
+<dd><p>Character (default <code>"pearson"</code>). Correlation
+method used by <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test</a></code> for env-env (the heatmap tiles)
+and, when <code>relation_method = "correlation"</code>, for spec-env links.
+One of <code>"pearson"</code>, <code>"kendall"</code>, <code>"spearman"</code>.</p></dd>
 
 
 <dt id="arg-cor-use">cor.use<a class="anchor" aria-label="anchor" href="#arg-cor-use"></a></dt>
-<dd><p>Character
-Method for handling missing values in correlation computation.
-One of `"everything"`, `"all"`, `"complete"`, `"pairwise"`, or `"na"`.</p></dd>
+<dd><p>Character (default <code>"everything"</code>). Missing-value
+handling for <code><a href="https://rdrr.io/pkg/psych/man/corr.test.html" class="external-link">psych::corr.test</a></code>. One of <code>"everything"</code>,
+<code>"all"</code>, <code>"complete"</code>, <code>"pairwise"</code>, <code>"na"</code>.</p></dd>
 
 
 <dt id="arg-mantel-method">mantel.method<a class="anchor" aria-label="anchor" href="#arg-mantel-method"></a></dt>
-<dd><p>Character
-Type of Mantel test to use when `relation_method = "mantel"`.
-Options include `"mantel"`, `"mantel.partial"`, `"mantelhaen.test"`, and `"mantel.correlog"`.</p></dd>
+<dd><p>Character. Reserved for future use – currently
+accepted for backwards compatibility but <strong>not</strong> consumed by the
+active code path (only <code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">vegan::mantel</a></code> via <code>mantel.method2</code>
+is used).</p></dd>
 
 
 <dt id="arg-mantel-method-">mantel.method2<a class="anchor" aria-label="anchor" href="#arg-mantel-method-"></a></dt>
-<dd><p>Character
-Correlation coefficient used in the Mantel test.
-One of `"pearson"`, `"kendall"`, or `"spearman"`.</p></dd>
+<dd><p>Character (default <code>"pearson"</code>). Correlation
+coefficient passed to <code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">vegan::mantel</a></code> as its <code>method</code>
+argument. One of <code>"pearson"</code>, <code>"kendall"</code>,
+<code>"spearman"</code>.</p></dd>
 
 
 <dt id="arg-mantel-alternative">mantel.alternative<a class="anchor" aria-label="anchor" href="#arg-mantel-alternative"></a></dt>
-<dd><p>Character
-Alternative hypothesis for Mantel test. One of `"two.sided"`, `"less"`, or `"greater"`.</p></dd>
+<dd><p>Character. Same status as <code>mantel.method</code>
+– accepted but not consumed.</p></dd>
+
+
+<dt id="arg-mantel-seed">mantel.seed<a class="anchor" aria-label="anchor" href="#arg-mantel-seed"></a></dt>
+<dd><p>Integer (default <code>1115</code>). Seed forwarded to the
+Mantel helpers so the permutation p-values (and hence the significance
+stars / solid-vs-dashed links) are reproducible across runs.</p></dd>
 
 
 <dt id="arg-drop-nonsig">drop_nonsig<a class="anchor" aria-label="anchor" href="#arg-drop-nonsig"></a></dt>
-<dd><p>Logical
-if `TRUE`, non-significant correlations are dropped from the final visualization.</p></dd>
+<dd><p>Logical (default <code>FALSE</code>). If <code>TRUE</code>,
+non-significant links (<code>Pvalue &gt; sig_threshold</code>) are removed
+from the plot but kept in the returned stats data frame.</p></dd>
 
 
 <dt id="arg-comparisons">comparisons<a class="anchor" aria-label="anchor" href="#arg-comparisons"></a></dt>
-<dd><p>Logical (default = TRUE).
-Whether to perform species-environment correlation or Mantel analysis.
-If <code>FALSE</code>, no spec-env links are computed or drawn.</p></dd>
+<dd><p>Logical (default <code>TRUE</code>). Master switch for
+spec-env analysis. <code>FALSE</code> skips all spec-env stats and links
+(only the env-env heatmaps remain).</p></dd>
 
 
 <dt id="arg-comparisons-groups">comparisons_groups<a class="anchor" aria-label="anchor" href="#arg-comparisons-groups"></a></dt>
-<dd><p>List or NULL (default = NULL).
-When <code>comparisons = TRUE</code>, constrains which (env_block, spec_block) pairs are analyzed.
-Each element must be a length-2 character vector: <code>c(env_block_name, spec_block_name)</code>,
-e.g. <code>list(c("Env01", "Spec01"), c("Env02", "Spec01"))</code>.
-Block names must match <code>names(env_select)</code> and <code>names(spec_select)</code>.
-If <code>NULL</code>, all env-spec block pairs are analyzed (default).</p></dd>
+<dd><p>List or NULL (default <code>NULL</code>). When
+<code>comparisons = TRUE</code>, restricts which (env_block, spec_block)
+pairs are computed and drawn. Each element is a length-2 character
+vector <code>c(env_block_name, spec_block_name)</code>; names must match
+<code>names(env_select)</code> / <code>names(spec_select)</code>. <code>NULL</code>
+means "all pairs". Example:
+<code>list(c("Env01","Spec01"), c("Env02","Spec02"))</code>.</p></dd>
 
 
 <dt id="arg-shape">shape<a class="anchor" aria-label="anchor" href="#arg-shape"></a></dt>
-<dd><p>Intrger
-Integer or numeric specifying the shape of species nodes in the plot (passed to `geom_point()`).</p></dd>
+<dd><p>Integer (default <code>22</code>). Reserved; the rendered point
+shapes are currently hard-coded to <code>21</code> internally.</p></dd>
 
 
 <dt id="arg-distance">distance<a class="anchor" aria-label="anchor" href="#arg-distance"></a></dt>
-<dd><p>Numeric
-the offset distance between central nodes and the environmental heatmaps.</p></dd>
+<dd><p>Numeric (default <code>3</code>). Offset added between the
+central node group and the env heatmaps. Positive pushes heatmaps
+outward; <code>0</code> places them flush against the central group;
+<strong>negative values are allowed</strong> and will pull heatmaps inward
+(may visually overlap the central points). A <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> is
+emitted on negative values, and a <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code> is emitted if the
+value is so negative that an anchor coordinate becomes \(\le 0\)
+(the heatmap will then flip to the opposite side).</p></dd>
 
 
 <dt id="arg-heatmaplabelsize">HeatmapLabelSize<a class="anchor" aria-label="anchor" href="#arg-heatmaplabelsize"></a></dt>
-<dd><p>Numeric (default = 5)
-Text size for heatmap axis labels (ID/Type).</p></dd>
+<dd><p>Numeric (default <code>5</code>). Text size for
+heatmap row/column labels (ID/Type).</p></dd>
 
 
 <dt id="arg-heatmapsigsize">HeatmapSigSize<a class="anchor" aria-label="anchor" href="#arg-heatmapsigsize"></a></dt>
-<dd><p>Numeric (default = 5)
-Text size for significance symbols (e.g. `*`, `**`, `***`) inside heatmap tiles.</p></dd>
+<dd><p>Numeric (default <code>5</code>). Text size for the
+significance marks (<code>*</code>, <code>**</code>, <code>***</code>) inside heatmap
+tiles.</p></dd>
 
 
 <dt id="arg-heatmapcolorbar">HeatmapColorBar<a class="anchor" aria-label="anchor" href="#arg-heatmapcolorbar"></a></dt>
-<dd><p>NULL or list
-Controls the colorbar palettes used by each heatmap quadrant.</p>
-<p>- If `NULL`, the built-in default palettes are used (same as current behavior).
-- If a list of length 2 with names `low` and `high`, each should be a character
-  vector of colors (recycled if shorter) used across quadrants.
-- If a list of length equal to the number of quadrants, each element should be
-  either `c(low, high)` or `list(low=..., high=...)` for that quadrant (in order).
-- example `HeatmapColorBar = list(
- )`</p></dd>
+<dd><p><code>NULL</code> or list (default <code>NULL</code>).
+Per-quadrant colour palettes. Three accepted forms:</p><ul><li><p><code>NULL</code>: use built-in defaults.</p></li>
+<li><p>Length-2 named list <code>list(low = ..., high = ...)</code>: applied
+    to all quadrants (each value can be a vector that is recycled).</p></li>
+<li><p>List of length <code>length(orientation)</code>: each element is
+    either <code>c(low, high)</code> or <code>list(low = ..., high = ...)</code>
+    for that quadrant in order. Example:
+    <code>list(c("#2166ac","#b2182b"), c("#1b7837","#762a83"),
+               c("#4393c3","#d6604d"), c("#92c5de","#f4a582"))</code>.</p></li>
+</ul></dd>
 
 
 <dt id="arg-heatmaplabelorient">HeatmapLabelOrient<a class="anchor" aria-label="anchor" href="#arg-heatmaplabelorient"></a></dt>
-<dd><p>Numeric (default = 0)
-Rotation angle (in degrees) for heatmap axis labels (ID/Type).
-Use this to avoid overlap of the top/bottom labels; e.g. 45 or 90.</p></dd>
+<dd><p>Numeric (default <code>0</code>). Rotation angle (in
+degrees) for heatmap row/column labels. Use 45 or 90 to avoid label
+overlap.</p></dd>
 
 
 <dt id="arg-siglinewidth">SigLineWidth<a class="anchor" aria-label="anchor" href="#arg-siglinewidth"></a></dt>
-<dd><p>Numeric vector of length 2 (default = c(0.5, 2))
-Controls the minimum and maximum line width for species-environment links,
-scaled by significance (p-value). Smaller p leads to thicker lines.</p></dd>
+<dd><p>Numeric vector of length 2 (default <code>c(0.5, 2)</code>).
+Min and max line width for the significant spec-env link segments
+(mapped through <code>link_width_by</code>). The minimum is also used as the
+fixed width for non-significant background lines.</p></dd>
 
 
 <dt id="arg-siglinecolor">SigLineColor<a class="anchor" aria-label="anchor" href="#arg-siglinecolor"></a></dt>
-<dd><p>Character vector (length 2, default = c("#fdbb84", "#d7301f"))
-Colors used for the species-environment link color gradient, corresponding to
-low and high correlation values respectively.</p></dd>
+<dd><p>Character vector of length 2 (default
+<code>c("#fdbb84", "#d7301f")</code>). Colour gradient endpoints (low, high)
+for the significant spec-env link segments (mapped through
+<code>link_color_by</code>).</p></dd>
 
 
 <dt id="arg-heatmappointsize">HeatmapPointSize<a class="anchor" aria-label="anchor" href="#arg-heatmappointsize"></a></dt>
-<dd><p>Numeric (default = 5)
-Point size for the heatmap diagonal nodes.</p></dd>
+<dd><p>Numeric (default <code>5</code>). Point size for the
+diagonal anchor points on each heatmap (where the link lines land).</p></dd>
 
 
 <dt id="arg-corepointsize">CorePointSize<a class="anchor" aria-label="anchor" href="#arg-corepointsize"></a></dt>
-<dd><p>Numeric (default = 8.5)
-Point size for the central species nodes.</p></dd>
+<dd><p>Numeric (default <code>8.5</code>). Point size for the
+central species nodes (or collapsed block points).</p></dd>
 
 
 <dt id="arg-heatmappointfill">HeatmapPointFill<a class="anchor" aria-label="anchor" href="#arg-heatmappointfill"></a></dt>
-<dd><p>Character (default = "#de77ae")
-Fill color for heatmap diagonal points.</p></dd>
+<dd><p>Character vector (default <code>"#de77ae"</code>).
+Fill colour(s) for the heatmap diagonal points.</p><ul><li><p>Length 1: same colour for all quadrants.</p></li>
+<li><p>Length <code>length(orientation)</code>: one colour per quadrant, in
+    the order given by <code>orientation</code>.</p></li>
+<li><p>Other lengths: recycled (modulo) over quadrants.</p></li>
+</ul></dd>
 
 
 <dt id="arg-corepointfill">CorePointFill<a class="anchor" aria-label="anchor" href="#arg-corepointfill"></a></dt>
-<dd><p>Character (default = "#41b6c4")
-Fill color for central species nodes.</p></dd>
+<dd><p>Character vector (default <code>"#41b6c4"</code>). Fill
+colour(s) for the central species nodes.</p><ul><li><p>Length 1: same colour for everyone.</p></li>
+<li><p>Length <code>length(spec_select)</code>: one colour per spec block,
+    in the order of <code>names(spec_select)</code>.</p></li>
+<li><p>Other lengths: recycled (modulo) over spec blocks.</p></li>
+</ul></dd>
 
 
 <dt id="arg-heatmaptilecolor">HeatmapTileColor<a class="anchor" aria-label="anchor" href="#arg-heatmaptilecolor"></a></dt>
-<dd><p>Character or NA (default = NA)
-Border color for heatmap tiles (passed to `geom_tile(colour=...)`).</p></dd>
+<dd><p>Character or <code>NA</code> (default <code>NA</code>).
+Border colour for heatmap tiles (passed to <code>geom_tile(colour =
+...)</code>).</p></dd>
 
 
 <dt id="arg-heatmaptilesize">HeatmapTileSize<a class="anchor" aria-label="anchor" href="#arg-heatmaptilesize"></a></dt>
-<dd><p>Numeric (default = 0)
-Border line width for heatmap tiles (passed to `geom_tile(size=...)`).</p></dd>
+<dd><p>Numeric (default <code>0</code>). Border line width for
+heatmap tiles.</p></dd>
 
 
 <dt id="arg-heatmapscale">HeatmapScale<a class="anchor" aria-label="anchor" href="#arg-heatmapscale"></a></dt>
-<dd><p>Numeric (default = 1)
-Global scale factor for the overall heatmap size. Values &gt; 1 enlarge the
-whole heatmap layout, while values &lt; 1 shrink it.</p></dd>
+<dd><p>Numeric (default <code>1</code>). Global scale for the
+overall heatmap layout (tile spacing). <code>&gt;1</code> enlarges, <code>&lt;1</code>
+shrinks.</p></dd>
 
 
 <dt id="arg-siglinealpha">SigLineAlpha<a class="anchor" aria-label="anchor" href="#arg-siglinealpha"></a></dt>
-<dd><p>Numeric (default = 0.5)
-Transparency for species-network to heatmap link lines. Must be between 0 and 1.</p></dd>
+<dd><p>Numeric in <code>[0, 1]</code> (default <code>0.5</code>).
+Transparency of spec-env link segments (applied to both the significant
+and non-significant layers).</p></dd>
 
 
 <dt id="arg-fontsize">fontsize<a class="anchor" aria-label="anchor" href="#arg-fontsize"></a></dt>
-<dd><p>Numeric (default = 5)
-(Deprecated) Use `HeatmapLabelSize` instead.</p></dd>
+<dd><p>Numeric (default <code>5</code>). Deprecated. Use
+<code>HeatmapLabelSize</code> (which now also drives the central species
+node label size).</p></dd>
 
 
 <dt id="arg-orientation">orientation<a class="anchor" aria-label="anchor" href="#arg-orientation"></a></dt>
-<dd><p>Character
-Character vector defining which heatmap quadrants to display. Can include any combination of `"top_right"`, `"bottom_right"`, `"top_left"`, and `"bottom_left"`.</p></dd>
+<dd><p>Character vector (default
+<code>c("top_right","bottom_right","top_left","bottom_left")</code>). Which
+heatmap quadrants to draw, in the same order as <code>env_select</code>'s
+elements (i.e. <code>env_select[[1]]</code> -&gt; <code>orientation[1]</code>).</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
-<dd><p>Numeric
-radius of the central species layout (in plot units).</p></dd>
+<dd><p>Numeric (default 6). Effective radius of a single central
+network (in plot units). When <code>spec_collapse = TRUE</code> this only
+affects how compact a single block looks before being collapsed and is
+essentially cosmetic.</p></dd>
 
 
 <dt id="arg-group-layout">group_layout<a class="anchor" aria-label="anchor" href="#arg-group-layout"></a></dt>
-<dd><p>Character (default = "circle").
-Arrangement of multiple species networks when <code>spec_select</code> has multiple elements.
-Options: <code>"circle"</code>, <code>"row"</code>, <code>"column"</code>, <code>"square"</code>, <code>"diamond"</code>,
-<code>"triangle"</code>, <code>"triangle_down"</code>, <code>"snake"</code>.</p></dd>
+<dd><p>Character (default <code>"circle"</code>). Arrangement of
+the per-block anchors when <code>spec_select</code> has multiple elements.
+One of <code>"circle"</code>, <code>"row"</code>, <code>"column"</code>,
+<code>"square"</code>, <code>"diamond"</code>, <code>"triangle"</code>,
+<code>"triangle_down"</code>, <code>"snake"</code>, <code>"arc"</code>. <code>"arc"</code>
+places anchors on a circular arc whose chord has the same row-like
+footprint; curvature is controlled by <code>group_arc_angle</code>.</p></dd>
 
 
 <dt id="arg-anchor-dist">anchor_dist<a class="anchor" aria-label="anchor" href="#arg-anchor-dist"></a></dt>
-<dd><p>Numeric (default = 6).
-Distance between species networks when multiple <code>spec_select</code> blocks are used.</p></dd>
+<dd><p>Numeric (default <code>6</code>). Spacing of the anchor
+layout. For <code>row / column / snake</code> this is the centre-to-centre
+distance between adjacent anchors; for <code>circle / square /
+diamond / triangle</code> it is the radius from origin to each anchor; for
+<code>arc</code> it is the chord-projected spacing (chord length =
+<code>(n_blocks - 1) * anchor_dist</code>).</p></dd>
 
 
 <dt id="arg-scale-networks">scale_networks<a class="anchor" aria-label="anchor" href="#arg-scale-networks"></a></dt>
-<dd><p>Logical (default = TRUE).
-If <code>TRUE</code>, normalize each species network to the same scale (radius <code>r</code>) before placing on anchors.
-If <code>FALSE</code>, <code>r</code> is the minimum network radius; larger networks scale proportionally by node count.</p></dd>
+<dd><p>Logical (default <code>TRUE</code>). If <code>TRUE</code>,
+normalise each per-block network to the same visual radius
+(<code>r</code>); if <code>FALSE</code>, <code>r</code> is the minimum network radius and
+larger networks scale proportionally to node count. Ignored when
+<code>spec_collapse = TRUE</code>.</p></dd>
 
 
-<dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
-<dd><p>Integer (default = NULL).
-Number of rows for <code>group_layout = "row"</code>, <code>"column"</code>, or <code>"snake"</code>.</p></dd>
-
-
-<dt id="arg-ncol">ncol<a class="anchor" aria-label="anchor" href="#arg-ncol"></a></dt>
-<dd><p>Integer (default = NULL).
-Number of columns for <code>group_layout = "row"</code>, <code>"column"</code>, or <code>"snake"</code>.</p></dd>
+<dt id="arg-nrow-ncol">nrow, ncol<a class="anchor" aria-label="anchor" href="#arg-nrow-ncol"></a></dt>
+<dd><p>Integer or NULL (default <code>NULL</code>). Grid dimensions
+for <code>group_layout = "row" | "column" | "snake"</code>. If both are
+NULL, defaults are inferred from the layout choice.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -375,7 +429,7 @@ Number of columns for <code>group_layout = "row"</code>, <code>"column"</code>, 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

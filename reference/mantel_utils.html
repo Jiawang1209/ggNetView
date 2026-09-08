@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Mantel test utilities for species-environment distance matrix correlation — mantel_utils"><meta name="description" content="These functions compute Mantel statistics between species and environmental
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Mantel test utilities for species-environment distance matrix correlation — mantel_utils"><meta name="description" content="These functions compute Mantel statistics between species and environmental
 distance matrices. The implementation uses vegan::mantel and
 vegan::mantel.partial directly, with a workflow designed for
 ggNetView's heatmap-link visualization.
@@ -15,7 +15,13 @@ for drop-in use in gglink_heatmaps.
 Runs Mantel test between each (spec_block, env_block) pair. Each block is
 a subset of columns. Uses full distance matrices per block. Output format
 is compatible with downstream processing when blocks are treated as
-single &quot;species&quot; and &quot;env&quot; units."><meta property="og:description" content="These functions compute Mantel statistics between species and environmental
+single &quot;species&quot; and &quot;env&quot; units.
+Treats the whole spec_df as a single community matrix: all of its
+columns together form ONE distance matrix (vegan::vegdist with
+spec_dist_method). For each column of env_df, that single
+column is converted into its own distance matrix
+(vegan::vegdist with env_dist_method) and a Mantel test is
+run between the two distance matrices."><meta property="og:description" content="These functions compute Mantel statistics between species and environmental
 distance matrices. The implementation uses vegan::mantel and
 vegan::mantel.partial directly, with a workflow designed for
 ggNetView's heatmap-link visualization.
@@ -25,7 +31,13 @@ for drop-in use in gglink_heatmaps.
 Runs Mantel test between each (spec_block, env_block) pair. Each block is
 a subset of columns. Uses full distance matrices per block. Output format
 is compatible with downstream processing when blocks are treated as
-single &quot;species&quot; and &quot;env&quot; units."><meta property="og:image" content="https://jiawang1209.github.io/ggNetView/logo.png"></head><body>
+single &quot;species&quot; and &quot;env&quot; units.
+Treats the whole spec_df as a single community matrix: all of its
+columns together form ONE distance matrix (vegan::vegdist with
+spec_dist_method). For each column of env_df, that single
+column is converted into its own distance matrix
+(vegan::vegdist with env_dist_method) and a Mantel test is
+run between the two distance matrices."><meta property="og:image" content="https://jiawang1209.github.io/ggNetView/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -33,7 +45,7 @@ single &quot;species&quot; and &quot;env&quot; units."><meta property="og:image"
 
     <a class="navbar-brand me-2" href="../index.html">ggNetView</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,19 +56,23 @@ single &quot;species&quot; and &quot;env&quot; units."><meta property="og:image"
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Getting Started</h6></li>
     <li><a class="dropdown-item" href="../articles/ggNetView-intro.html">Introduction to ggNetView</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
+    <li><a class="dropdown-item" href="../articles/correlation-networks.html">Correlation-based Network Pipelines</a></li>
+    <li><a class="dropdown-item" href="../articles/wgcna-pipeline.html">WGCNA Network Pipeline</a></li>
+    <li><a class="dropdown-item" href="../articles/network-topology.html">Network Topology and Keystone Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/network-perturbation.html">Virtual Perturbation Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/consensus-network.html">Consensus Networks Across Inference Methods</a></li>
+    <li><a class="dropdown-item" href="../articles/node-importance.html">Node-Importance Analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/layout-gallery.html">Layout Gallery</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Jiawang1209/ggNetView/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul></li>
       </ul></div>
 
 
@@ -81,6 +97,12 @@ for drop-in use in <code>gglink_heatmaps</code>.</p>
 a subset of columns. Uses full distance matrices per block. Output format
 is compatible with downstream processing when blocks are treated as
 single "species" and "env" units.</p>
+<p>Treats the whole <code>spec_df</code> as a single community matrix: all of its
+columns together form ONE distance matrix (<code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist</a></code> with
+<code>spec_dist_method</code>). For each column of <code>env_df</code>, that single
+column is converted into its own distance matrix
+(<code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist</a></code> with <code>env_dist_method</code>) and a Mantel test is
+run between the two distance matrices.</p>
     </div>
 
     <div class="section level2">
@@ -91,7 +113,8 @@ single "species" and "env" units.</p>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"spearman"</span>, <span class="st">"kendall"</span><span class="op">)</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span>,</span>
 <span>  permutations <span class="op">=</span> <span class="fl">999L</span>,</span>
-<span>  na_omit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  na_omit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">mantel_between_blocks</span><span class="op">(</span></span>
@@ -107,6 +130,18 @@ single "species" and "env" units.</p>
 <span>  na_omit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  permutations <span class="op">=</span> <span class="fl">999L</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mantel_block_vs_col</span><span class="op">(</span></span>
+<span>  <span class="va">spec_df</span>,</span>
+<span>  <span class="va">env_df</span>,</span>
+<span>  block_name <span class="op">=</span> <span class="st">"block"</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"spearman"</span>, <span class="st">"kendall"</span><span class="op">)</span>,</span>
+<span>  spec_dist_method <span class="op">=</span> <span class="st">"bray"</span>,</span>
+<span>  env_dist_method <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span>  permutations <span class="op">=</span> <span class="fl">999L</span>,</span>
+<span>  na_omit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -115,15 +150,20 @@ single "species" and "env" units.</p>
 
 
 <dl><dt id="arg-spec-df">spec_df<a class="anchor" aria-label="anchor" href="#arg-spec-df"></a></dt>
-<dd><p>Data frame or matrix of species abundances (samples as rows).</p></dd>
+<dd><p>Data frame or matrix; rows = samples, columns = species
+(or any community variables). The full matrix is converted into ONE
+distance matrix.</p></dd>
 
 
 <dt id="arg-env-df">env_df<a class="anchor" aria-label="anchor" href="#arg-env-df"></a></dt>
-<dd><p>Data frame or matrix of environmental variables (samples as rows).</p></dd>
+<dd><p>Data frame or matrix; rows = samples, columns = env
+variables. Each column is converted into its own distance matrix and
+tested separately.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Correlation method: <code>"pearson"</code>, <code>"spearman"</code>, or <code>"kendall"</code>.</p></dd>
+<dd><p>Correlation method for the Mantel test. One of
+<code>"pearson"</code>, <code>"spearman"</code>, or <code>"kendall"</code>.</p></dd>
 
 
 <dt id="arg-alternative">alternative<a class="anchor" aria-label="anchor" href="#arg-alternative"></a></dt>
@@ -131,11 +171,16 @@ single "species" and "env" units.</p>
 
 
 <dt id="arg-permutations">permutations<a class="anchor" aria-label="anchor" href="#arg-permutations"></a></dt>
-<dd><p>Number of permutations.</p></dd>
+<dd><p>Integer. Number of permutations for the test.</p></dd>
 
 
 <dt id="arg-na-omit">na_omit<a class="anchor" aria-label="anchor" href="#arg-na-omit"></a></dt>
-<dd><p>If <code>TRUE</code>, remove incomplete cases.</p></dd>
+<dd><p>If <code>TRUE</code>, drop incomplete cases jointly across
+<code>spec_df</code> and <code>env_df</code> before computing distances.</p></dd>
+
+
+<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
+<dd><p>Random seed for reproducibility.</p></dd>
 
 
 <dt id="arg-spec">spec<a class="anchor" aria-label="anchor" href="#arg-spec"></a></dt>
@@ -165,23 +210,47 @@ controlling variables (same rows as spec/env).</p></dd>
 
 
 <dt id="arg-spec-dist-method">spec_dist_method<a class="anchor" aria-label="anchor" href="#arg-spec-dist-method"></a></dt>
-<dd><p>Distance method for species matrix when using
-<code>mantel_between_blocks</code>. One of <code>"euclidean"</code>, <code>"bray"</code>,
-<code>"manhattan"</code>, etc. (see <code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist</a></code>).</p></dd>
+<dd><p>Distance method for the spec matrix
+(<code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist</a></code>). Common ecological choices:
+<code>"bray"</code>, <code>"jaccard"</code>, <code>"euclidean"</code>.</p></dd>
 
 
 <dt id="arg-env-dist-method">env_dist_method<a class="anchor" aria-label="anchor" href="#arg-env-dist-method"></a></dt>
-<dd><p>Distance method for environmental matrix.</p></dd>
+<dd><p>Distance method for each env column
+(<code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist</a></code>). Default <code>"euclidean"</code> is the standard
+choice for continuous env variables.</p></dd>
 
 
-<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Random seed for reproducibility.</p></dd>
+<dt id="arg-block-name">block_name<a class="anchor" aria-label="anchor" href="#arg-block-name"></a></dt>
+<dd><p>Character (default <code>"block"</code>). Value placed in the
+<code>ID</code> column of the result, useful for tagging which block these
+rows came from when binding many results together.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with columns <code>ID</code> (species/block), <code>Type</code>
   (env/block), <code>Correlation</code> (Mantel r), and <code>Pvalue</code>.</p>
+<p>A data frame with one row per env column. Columns:
+  <code>ID</code> (= <code>block_name</code>), <code>Type</code> (env column name),
+  <code>Correlation</code> (Mantel r), <code>Pvalue</code> (Mantel p).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><strong>NOTE (statistical caveat).</strong> This is the <strong>column-vs-column</strong>
+Mantel variant: each species column and each env column is reduced to a
+single-variable distance matrix before the Mantel test. With one variable
+per side, <code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">vegan::mantel</a></code> is mathematically close to a (rank)
+correlation between the two columns and does <strong>not</strong> carry the
+"community-vs-environment" interpretation that ecology papers usually
+associate with a Mantel test. For the standard ecological pattern, where
+a whole species block (community matrix) is tested against each
+environmental gradient, use <code>mantel_block_vs_col</code> instead.</p>
+<p>This is the <strong>ecologically meaningful</strong> Mantel pattern (also used by
+linkET / ggcor): "community structure of a spec block vs each
+environmental gradient". Use this instead of
+<code>mantel_pairwise</code> when you want a Mantel result that carries
+the standard "community-vs-environment" interpretation.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -198,7 +267,7 @@ Elsevier.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

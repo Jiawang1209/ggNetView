@@ -1,10 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://jiawang1209.github.io/ggNetView/404.html</loc></url>
-<url><loc>https://jiawang1209.github.io/ggNetView/LICENSE-text.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/LICENSE.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/consensus-network.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/articles/correlation-networks.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/articles/ggNetView-intro.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/articles/index.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/layout-gallery.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/network-perturbation.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/network-topology.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/node-importance.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/articles/wgcna-pipeline.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/authors.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/index.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/news/index.html</loc></url>
@@ -15,8 +20,10 @@
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/FASV_tab.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/Spedf.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/adjacency_matrix_example.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/angle_utils.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_adj_mat_module.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_consensus.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_df.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_double_mat_with_module.html</loc></url>
@@ -25,8 +32,12 @@
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_mat.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_module.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_multi_mat.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_node_edge.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_pie.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_stringdb.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/build_graph_from_wgcna.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/deg.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/dot-normalize_angle.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/double_mat_node_df_with_modularity.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/export_ggnetview.html</loc></url>
@@ -35,9 +46,15 @@
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_info_from_graph.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_module_abundance.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_module_eigengene.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_module_members.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_network_perturbation.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_network_topology.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_network_topology_parallel.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_node_centrality.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_node_influence.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_node_ivi.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_palette.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_sample_subgraph_topology_parallel.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/get_subgraph.html</loc></url>
@@ -50,6 +67,8 @@
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/gglink_heatmaps_2.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/ggnetview_modularity_heatmaps.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/ggnetview_perturbation_curve.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/ggnetview_subgraph.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/ggnetview_zipi.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/index.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/mantel_utils.html</loc></url>
@@ -62,6 +81,7 @@
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/pipe.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/ppi_example.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/ppi_module.html</loc></url>
+<url><loc>https://jiawang1209.github.io/ggNetView/reference/press_perturbation.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/scale_color_ggnetview.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/scale_fill_ggnetview.html</loc></url>
 <url><loc>https://jiawang1209.github.io/ggNetView/reference/sparcc_matrix_rcpp.html</loc></url>

@@ -29,16 +29,22 @@ a plot.
 ## Load the package
 
 ``` r
+
 library(ggNetView)
 #> 
-#>    ____   ____  _   _      _ __     ___
-#>   / ___| / ___|| \ | | ___| |\ \   / (_) _____      __
-#>  | |  _ | |  _ |  \| |/ _ \ __\ \ / /| |/ _ \ \ /\ / /
-#>  | |_| || |_| || |\  |  __/ |_ \ V / | |  __/\ V  V /
-#>   \____| \____||_| \_|\___|\__| \_/  |_|\___| \_/\_/
+#>                                                ░██               ░██
+#>                                                ░██
+#>  ░████████  ░████████ ░████████   ░███████  ░████████ ░██    ░██ ░██ ░███████  ░██    ░██    ░██
+#> ░██    ░██ ░██    ░██ ░██    ░██ ░██    ░██    ░██    ░██    ░██ ░██░██    ░██ ░██    ░██    ░██
+#> ░██    ░██ ░██    ░██ ░██    ░██ ░█████████    ░██     ░██  ░██  ░██░█████████  ░██  ░████  ░██
+#> ░██   ░███ ░██   ░███ ░██    ░██ ░██           ░██      ░██░██   ░██░██          ░██░██ ░██░██
+#>  ░█████░██  ░█████░██ ░██    ░██  ░███████      ░████    ░███    ░██ ░███████     ░███   ░███
+#>        ░██        ░██
+#>  ░███████   ░███████
+#> 
 #> 
 #> ggNetView: Reproducible and Deterministic Network Analysis and Visualization
-#> Version: 0.1.0
+#> Version: 0.2.1
 #> 
 #>   Authors:     Yue Liu, Chao Wang
 #>   Maintainer:  Yue Liu <yueliu@iae.ac.cn>
@@ -65,6 +71,7 @@ library(igraph)
 small protein–protein interaction network with 100 nodes and 200 edges.
 
 ``` r
+
 data(ppi_example)
 
 ig <- igraph::graph_from_data_frame(
@@ -121,6 +128,7 @@ for a quick node tibble, or
 for both nodes and edges as a list.
 
 ``` r
+
 nodes <- get_graph_nodes(graph_obj)
 head(nodes)
 #>   name group modularity modularity2 modularity3 Modularity Degree Strength
@@ -160,13 +168,14 @@ package. Below we render the network with the Fruchterman–Reingold
 layout and color nodes by module.
 
 ``` r
+
 ggNetView(
   graph_obj,
   layout    = "fr",
   seed      = 1,
-  pointsize = c(2, 8),
-  fill.by   = "Modularity",
-  label     = FALSE
+  node_size_range = c(2, 8),
+  node_fill   = "Modularity",
+  module_label     = FALSE
 )
 ```
 
@@ -176,12 +185,13 @@ Switching layouts only requires changing the `layout` string. Here is
 the same graph rendered on a circular layout:
 
 ``` r
+
 ggNetView(
   graph_obj,
   layout    = "circle",
   seed      = 1,
-  pointsize = c(2, 8),
-  fill.by   = "Modularity"
+  node_size_range = c(2, 8),
+  node_fill   = "Modularity"
 )
 ```
 
@@ -207,8 +217,9 @@ and
 ## Session information
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -229,23 +240,23 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] igraph_2.2.3    ggNetView_0.1.0
+#> [1] igraph_2.3.3    ggNetView_0.2.1
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] viridis_0.6.5      sass_0.4.10        utf8_1.2.6         generics_0.1.4    
-#>  [5] tidyr_1.3.2        stringi_1.8.7      digest_0.6.39      magrittr_2.0.5    
-#>  [9] evaluate_1.0.5     grid_4.5.3         RColorBrewer_1.1-3 fastmap_1.2.0     
-#> [13] jsonlite_2.0.0     ggrepel_0.9.8      ggnewscale_0.5.2   gridExtra_2.3     
+#>  [5] tidyr_1.3.2        stringi_1.8.9      digest_0.6.39      magrittr_2.0.5    
+#>  [9] evaluate_1.0.5     grid_4.6.1         RColorBrewer_1.1-3 fastmap_1.2.0     
+#> [13] jsonlite_2.0.0     ggrepel_0.9.8      ggnewscale_0.5.2   gridExtra_2.3.1   
 #> [17] purrr_1.2.2        viridisLite_0.4.3  scales_1.4.0       tweenr_2.0.3      
-#> [21] textshaping_1.0.5  jquerylib_0.1.4    cli_3.6.6          rlang_1.2.0       
-#> [25] graphlayouts_1.2.3 polyclip_1.10-7    tidygraph_1.3.1    withr_3.0.2       
-#> [29] cachem_1.1.0       yaml_2.3.12        tools_4.5.3        memoise_2.0.1     
-#> [33] dplyr_1.2.1        ggplot2_4.0.2      vctrs_0.7.3        R6_2.6.1          
-#> [37] lifecycle_1.0.5    stringr_1.6.0      fs_2.0.1           htmlwidgets_1.6.4 
-#> [41] MASS_7.3-65        ragg_1.5.2         ggraph_2.2.2       pkgconfig_2.0.3   
-#> [45] desc_1.4.3         pkgdown_2.2.0      pillar_1.11.1      bslib_0.10.0      
-#> [49] gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1         ggforce_0.5.0     
-#> [53] systemfonts_1.3.2  xfun_0.57          tibble_3.3.1       tidyselect_1.2.1  
-#> [57] knitr_1.51         farver_2.1.2       htmltools_0.5.9    labeling_0.4.3    
-#> [61] rmarkdown_2.31     compiler_4.5.3     S7_0.2.1
+#> [21] textshaping_1.0.5  jquerylib_0.1.4    cli_3.6.6          graphlayouts_1.2.5
+#> [25] rlang_1.3.0        polyclip_1.10-7    tidygraph_1.3.1    withr_3.0.3       
+#> [29] cachem_1.1.0       yaml_2.3.12        otel_0.2.0         tools_4.6.1       
+#> [33] memoise_2.0.1      dplyr_1.2.1        ggplot2_4.0.3      vctrs_0.7.3       
+#> [37] R6_2.6.1           lifecycle_1.0.5    stringr_1.6.0      fs_2.1.0          
+#> [41] htmlwidgets_1.6.4  MASS_7.3-65        ragg_1.5.2         ggraph_2.2.2      
+#> [45] pkgconfig_2.0.3    desc_1.4.3         pkgdown_2.2.1      pillar_1.11.1     
+#> [49] bslib_0.12.0       gtable_0.3.6       glue_1.8.1         Rcpp_1.1.2        
+#> [53] ggforce_0.5.0      systemfonts_1.3.2  xfun_0.60          tibble_3.3.1      
+#> [57] tidyselect_1.2.1   knitr_1.52         farver_2.1.2       htmltools_0.5.9   
+#> [61] labeling_0.4.3     rmarkdown_2.32     compiler_4.6.1     S7_0.2.2
 ```
