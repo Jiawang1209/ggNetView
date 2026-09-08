@@ -194,7 +194,13 @@
 #' Alpha (transparency) for module-to-module cross-group links. Single value or vector.
 #' @param drop_others Logical (default = FALSE).
 #' If TRUE, remove nodes in the \code{"Others"} module from each group's
-#' \code{graph_obj} before layout, plotting, and module-overlap comparison.
+#' \code{graph_obj} before layout and plotting.
+#' This is a display-only switch: the module-overlap comparison always runs on the
+#' complete network (including \code{"Others"} nodes), so the set of cross-group
+#' module links is identical for \code{drop_others = TRUE} and \code{FALSE};
+#' only the plotted nodes differ.
+#' Note that \code{"Others"} is a display bucket for every module ranked below
+#' \code{top_modules}, not a community, and never takes part in module links.
 #' @param calculate_topology Logical (default = FALSE).
 #' Whether to compute topology for each group using
 #' \code{get_network_topology_parallel()} and
@@ -679,6 +685,12 @@ ggNetView_multi_link <- function(mat = NULL,
 
   graph_info <- list()
 
+  # Node -> module lookup captured from the FULL graph (before `drop_others`
+  # removes the "Others" nodes). The module-overlap test must always run on the
+  # complete network so that `drop_others` stays a display-only switch and does
+  # not silently re-run the hypergeometric test on a shrunken universe.
+  module_ref <- list()
+
   graph_stat <- list()
   topology_network <- list()
   topology_sample <- list()
@@ -717,6 +729,14 @@ ggNetView_multi_link <- function(mat = NULL,
         seed = seed
       )
     }
+
+    # Snapshot name/module from the complete graph before anything is dropped;
+    # `Module_information` below is computed from this, never from the possibly
+    # Others-free plotting graph.
+    full_node_tbl <- graph %>%
+      tidygraph::activate(nodes) %>%
+      tidygraph::as_tibble()
+    module_ref[[g]] <- full_node_tbl
 
     # drop_others acts on the source graph_obj BEFORE layout:
     # it removes "Others" nodes first, then downstream layout/plot are rebuilt.
@@ -946,10 +966,11 @@ ggNetView_multi_link <- function(mat = NULL,
   if (link_level %in% c("module", "nodeinmodule", "module&node", "module&node2") && ncol(compare_matrix) > 0) {
     compare_out_list <- list()
     for (i in seq_len(ncol(compare_matrix))) {
-      tmp <- compare_modules_by_overlap(graph_info[[compare_matrix[1, i]]]$ggplot_node_df %>%
+      # always compare on the full network (see `module_ref` above)
+      tmp <- compare_modules_by_overlap(module_ref[[compare_matrix[1, i]]] %>%
                                           dplyr::select(name, Modularity) %>%
                                           dplyr::mutate(Group = compare_matrix[1, i]),
-                                        graph_info[[compare_matrix[2, i]]]$ggplot_node_df %>%
+                                        module_ref[[compare_matrix[2, i]]] %>%
                                           dplyr::select(name, Modularity) %>%
                                           dplyr::mutate(Group = compare_matrix[2, i])) %>%
         dplyr::mutate(Group = stringr::str_c(compare_matrix[1, i],
@@ -993,12 +1014,11 @@ ggNetView_multi_link <- function(mat = NULL,
   }
 
   Module_information_plot <- if (link_level %in% c("module", "nodeinmodule", "module&node", "module&node2")) {
-    if (isTRUE(drop_others)) {
-      Module_information
-    } else {
-      Module_information %>%
-        dplyr::filter(modA != "Others" | modB != "Others")
-    }
+    # "Others" is a display bucket (everything below `top_modules`), not a real
+    # community, so it never takes part in cross-group module links -- regardless
+    # of `drop_others`. Dropping a pair needs BOTH sides to be real modules.
+    Module_information %>%
+      dplyr::filter(modA != "Others", modB != "Others")
   } else {
     Module_information
   }
@@ -1814,9 +1834,7 @@ ggNetView_multi_link <- function(mat = NULL,
         dplyr::pull(mod_target) %>%
         unique()
 
-      if (!isTRUE(drop_others)) {
-        module_targets <- module_targets[module_targets != "Others"]
-      }
+      module_targets <- module_targets[module_targets != "Others"]
     } else {
       # For link_level = "none"/"node" (or when no module match exists),
       # outer boundaries should still be visible for the current group's modules.

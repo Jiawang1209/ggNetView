@@ -386,7 +386,13 @@ Alpha (transparency) for module-to-module cross-group links. Single value or vec
 
 \item{drop_others}{Logical (default = FALSE).
 If TRUE, remove nodes in the \code{"Others"} module from each group's
-\code{graph_obj} before layout, plotting, and module-overlap comparison.}
+\code{graph_obj} before layout and plotting.
+This is a display-only switch: the module-overlap comparison always runs on the
+complete network (including \code{"Others"} nodes), so the set of cross-group
+module links is identical for \code{drop_others = TRUE} and \code{FALSE};
+only the plotted nodes differ.
+Note that \code{"Others"} is a display bucket for every module ranked below
+\code{top_modules}, not a community, and never takes part in module links.}
 
 \item{calculate_topology}{Logical (default = FALSE).
 Whether to compute topology for each group using

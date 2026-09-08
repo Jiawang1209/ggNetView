@@ -60,6 +60,26 @@ The same renaming applies to arguments forwarded through `...` / `full_args` /
 
 ## Bug fixes
 
+* `ggNetView_multi_link(drop_others = TRUE)` no longer changes which modules are
+  linked across networks. Previously the `"Others"` nodes were removed from each
+  graph *before* `compare_modules_by_overlap()` ran, so the hypergeometric test
+  was re-run on a drastically smaller universe (e.g. 537 -> 81 shared nodes for
+  one group pair). Because module membership is computed per group, a node that
+  is a core member of a module in group A but falls into `"Others"` in group B
+  was dropped from both, shrinking every real module and flipping module pairs in
+  and out of significance -- one example dataset went from 16 module links to 8,
+  keeping only 5 of the original pairs. The module-overlap comparison now always
+  runs on the complete network, making `drop_others` a display-only switch: the
+  cross-group module links are identical for `TRUE` and `FALSE`, and only the
+  plotted nodes differ.
+
+* `ggNetView_multi_link()` now excludes the `"Others"` bucket from cross-group
+  module links unconditionally. The previous filter (`modA != "Others" | modB !=
+  "Others"`) only removed the `Others`-to-`Others` pair and would have drawn a
+  link into `"Others"` -- which is a display bucket for every module ranked below
+  `top_modules`, not a community, and is not given a module outline -- had such a
+  pair ever reached significance.
+
 * `get_sample_subgraph_topology_parallel()` no longer registers a global
   `progressr` handler (which errored with "should not be called with handlers
   on the stack" whenever the function was invoked inside `tryCatch()` /
