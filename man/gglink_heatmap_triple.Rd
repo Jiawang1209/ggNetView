@@ -12,7 +12,12 @@ gglink_heatmap_triple(
   sample_col = "Sample",
   delim = ",",
   hub_n = NULL,
-  r = 6
+  r = 6,
+  cor.method = c("pearson", "kendall", "spearman"),
+  cor.use = c("pairwise", "everything", "all", "complete", "na"),
+  env_p_adjust = "none",
+  link_p_adjust = "none",
+  sig_breaks = c(0.05, 0.01, 0.001)
 )
 }
 \arguments{
@@ -50,6 +55,35 @@ first).}
 
 \item{r}{numeric (default = 6)
 Radius of the outer node circle.}
+
+\item{cor.method}{Character (default = "pearson")
+Correlation method passed to \code{psych::corr.test()}, used for both the
+Environment x Environment heatmap and the Environment x Experiment links.
+One of \code{"pearson"}, \code{"kendall"}, \code{"spearman"}.}
+
+\item{cor.use}{Character (default = "pairwise")
+Missing-value handling passed to \code{psych::corr.test()}; same vocabulary as
+\code{gglink_heatmaps()}. Note the default differs from that function
+(\code{"everything"}) because \code{psych::corr.test()} itself defaults to
+\code{"pairwise"}, which is what this plot has always used.}
+
+\item{env_p_adjust}{Character (default = "none")
+Multiple-testing correction for the Environment x Environment correlations
+(the significance stars on the triangular heatmap). Any method accepted by
+\code{stats::p.adjust()}, or \code{"none"}.}
+
+\item{link_p_adjust}{Character (default = "none")
+Multiple-testing correction for the Environment x Experiment correlations
+(the linetype of the link segments). Any method accepted by
+\code{stats::p.adjust()}, or \code{"none"}.
+Note that \code{psych::corr.test()} defaults to \code{"holm"} here but still
+reports raw p-values in \code{$p}, so the previous hard-coded call was in
+effect uncorrected; \code{"none"} keeps that behaviour.}
+
+\item{sig_breaks}{Numeric vector of length 3 (default = c(0.05, 0.01, 0.001))
+Strictly decreasing p-value cut points shared by the heatmap stars
+(\code{""} / \code{"*"} / \code{"**"} / \code{"***"}) and the link-segment
+linetype legend.}
 }
 \value{
 a ggplot2 object

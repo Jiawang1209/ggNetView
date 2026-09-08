@@ -27,6 +27,30 @@
 #' first).
 #' @param r numeric (default = 6)
 #' Radius of the outer node circle.
+#' @param cor.method Character (default = "pearson")
+#' Correlation method passed to \code{psych::corr.test()}, used for both the
+#' Environment x Environment heatmap and the Environment x Experiment links.
+#' One of \code{"pearson"}, \code{"kendall"}, \code{"spearman"}.
+#' @param cor.use Character (default = "pairwise")
+#' Missing-value handling passed to \code{psych::corr.test()}; same vocabulary as
+#' \code{gglink_heatmaps()}. Note the default differs from that function
+#' (\code{"everything"}) because \code{psych::corr.test()} itself defaults to
+#' \code{"pairwise"}, which is what this plot has always used.
+#' @param env_p_adjust Character (default = "none")
+#' Multiple-testing correction for the Environment x Environment correlations
+#' (the significance stars on the triangular heatmap). Any method accepted by
+#' \code{stats::p.adjust()}, or \code{"none"}.
+#' @param link_p_adjust Character (default = "none")
+#' Multiple-testing correction for the Environment x Experiment correlations
+#' (the linetype of the link segments). Any method accepted by
+#' \code{stats::p.adjust()}, or \code{"none"}.
+#' Note that \code{psych::corr.test()} defaults to \code{"holm"} here but still
+#' reports raw p-values in \code{$p}, so the previous hard-coded call was in
+#' effect uncorrected; \code{"none"} keeps that behaviour.
+#' @param sig_breaks Numeric vector of length 3 (default = c(0.05, 0.01, 0.001))
+#' Strictly decreasing p-value cut points shared by the heatmap stars
+#' (\code{""} / \code{"*"} / \code{"**"} / \code{"***"}) and the link-segment
+#' linetype legend.
 #'
 #' @returns a ggplot2 object
 #' @export
@@ -53,8 +77,27 @@ gglink_heatmap_triple <- function(
     sample_col = "Sample",
     delim = ",",
     hub_n = NULL,
-    r = 6
+    r = 6,
+    cor.method = c("pearson", "kendall", "spearman"),
+    cor.use = c("pairwise", "everything", "all", "complete", "na"),
+    env_p_adjust = "none",
+    link_p_adjust = "none",
+    sig_breaks = c(0.05, 0.01, 0.001)
 ){
+
+  cor.method <- match.arg(cor.method)
+  cor.use <- match.arg(cor.use)
+  p_adjust_choices <- c(stats::p.adjust.methods, "none")
+  if (!is.character(env_p_adjust) || length(env_p_adjust) != 1 ||
+      !env_p_adjust %in% p_adjust_choices) {
+    stop("`env_p_adjust` must be one of: ",
+         paste(unique(p_adjust_choices), collapse = ", "), ".", call. = FALSE)
+  }
+  if (!is.character(link_p_adjust) || length(link_p_adjust) != 1 ||
+      !link_p_adjust %in% p_adjust_choices) {
+    stop("`link_p_adjust` must be one of: ",
+         paste(unique(p_adjust_choices), collapse = ", "), ".", call. = FALSE)
+  }
 
   .read_table <- function(x) {
     if (is.character(x)) {
@@ -137,7 +180,13 @@ gglink_heatmap_triple <- function(
   }
 
   # Correlation
-  stat_out <- cor_test2(Environment, Experiment)
+  stat_out <- cor_test2(Environment,
+                        Experiment,
+                        cor.method = cor.method,
+                        cor.use = cor.use,
+                        env_p_adjust = env_p_adjust,
+                        link_p_adjust = link_p_adjust,
+                        sig_breaks = sig_breaks)
 
   n_hub_slots <- stat_out[[3]] %>% dplyr::distinct(Experiment) %>% nrow()
   n_hubs <- if (!is.null(hub_names)) length(hub_names) else min(hub_n, nrow(node))

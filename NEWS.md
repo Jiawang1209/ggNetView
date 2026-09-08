@@ -42,6 +42,19 @@ The same renaming applies to arguments forwarded through `...` / `full_args` /
 
 ## New features
 
+* `gglink_heatmap_triple()` gains `cor.method`, `cor.use`, `env_p_adjust`,
+  `link_p_adjust` and `sig_breaks`. The correlation step was previously a fixed
+  `psych::corr.test()` call with no way to switch to Spearman/Kendall, control
+  missing-value handling, apply a multiple-testing correction, or move the
+  significance cut points. All defaults reproduce the previous output exactly.
+  `cor.method` / `cor.use` use the same vocabulary as `gglink_heatmaps()`, but
+  `cor.use` defaults to `"pairwise"` (what `psych::corr.test()` itself uses and
+  what this plot has always done) rather than that function's `"everything"`.
+  Note that `psych::corr.test()` reports **raw** p-values in `$p` for the
+  two-matrix call whatever its `adjust` argument says, so its `"holm"` default
+  never reached the plot; `link_p_adjust` reads `$p.adj` instead and therefore
+  actually takes effect.
+
 * `node_fill`, `node_color`, `node_shape`, `node_size`, `edge_color`,
   `edge_width` and `edge_linetype` accept **either a column name (mapping) or a
   literal value (constant)**.
