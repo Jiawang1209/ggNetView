@@ -1,3 +1,52 @@
+# ggNetView 0.2.1
+
+## New features
+
+* `gglink_heatmap_triple()` gains `cor.method`, `cor.use`, `env_p_adjust`,
+  `link_p_adjust` and `sig_breaks`. The correlation step was previously a fixed
+  `psych::corr.test()` call with no way to switch to Spearman/Kendall, control
+  missing-value handling, apply a multiple-testing correction, or move the
+  significance cut points. All defaults reproduce the previous output exactly.
+  `cor.method` / `cor.use` use the same vocabulary as `gglink_heatmaps()`, but
+  `cor.use` defaults to `"pairwise"` (what `psych::corr.test()` itself uses and
+  what this plot has always done) rather than that function's `"everything"`.
+  Note that `psych::corr.test()` reports **raw** p-values in `$p` for the
+  two-matrix call whatever its `adjust` argument says, so its `"holm"` default
+  never reached the plot; `link_p_adjust` reads `$p.adj` instead and therefore
+  actually takes effect.
+
+## Bug fixes
+
+* `ggNetView_multi_link(drop_others = TRUE)` no longer changes which modules are
+  linked across networks. Previously the `"Others"` nodes were removed from each
+  graph *before* `compare_modules_by_overlap()` ran, so the hypergeometric test
+  was re-run on a drastically smaller universe (e.g. 537 -> 81 shared nodes for
+  one group pair). Because module membership is computed per group, a node that
+  is a core member of a module in group A but falls into `"Others"` in group B
+  was dropped from both, shrinking every real module and flipping module pairs in
+  and out of significance -- one example dataset went from 16 module links to 8,
+  keeping only 5 of the original pairs. The module-overlap comparison now always
+  runs on the complete network, making `drop_others` a display-only switch: the
+  cross-group module links are identical for `TRUE` and `FALSE`, and only the
+  plotted nodes differ.
+
+* `ggNetView_multi_link()` now excludes the `"Others"` bucket from cross-group
+  module links unconditionally. The previous filter (`modA != "Others" | modB !=
+  "Others"`) only removed the `Others`-to-`Others` pair and would have drawn a
+  link into `"Others"` -- which is a display bucket for every module ranked below
+  `top_modules`, not a community, and is not given a module outline -- had such a
+  pair ever reached significance.
+
+* `get_network_topology()` no longer aborts on large networks with "The total
+  size of the globals exported ... exceeds the maximum allowed size of 500.00
+  MiB". Since 0.2.0 the null-model loop runs through
+  `future.apply::future_lapply()` under an explicit sequential plan, and its
+  closures capture the abundance matrix and the filtered adjacency, so future's
+  globals accounting can measure gigabytes even though nothing is transferred
+  under a sequential plan. The ceiling is raised for the duration of the call
+  and the caller's `future.globals.maxSize` option is restored on exit, matching
+  `get_network_topology_parallel()`.
+
 # ggNetView 0.2.0
 
 ## Argument renaming in `ggNetView()` (lifecycle-managed)
@@ -42,19 +91,6 @@ The same renaming applies to arguments forwarded through `...` / `full_args` /
 
 ## New features
 
-* `gglink_heatmap_triple()` gains `cor.method`, `cor.use`, `env_p_adjust`,
-  `link_p_adjust` and `sig_breaks`. The correlation step was previously a fixed
-  `psych::corr.test()` call with no way to switch to Spearman/Kendall, control
-  missing-value handling, apply a multiple-testing correction, or move the
-  significance cut points. All defaults reproduce the previous output exactly.
-  `cor.method` / `cor.use` use the same vocabulary as `gglink_heatmaps()`, but
-  `cor.use` defaults to `"pairwise"` (what `psych::corr.test()` itself uses and
-  what this plot has always done) rather than that function's `"everything"`.
-  Note that `psych::corr.test()` reports **raw** p-values in `$p` for the
-  two-matrix call whatever its `adjust` argument says, so its `"holm"` default
-  never reached the plot; `link_p_adjust` reads `$p.adj` instead and therefore
-  actually takes effect.
-
 * `node_fill`, `node_color`, `node_shape`, `node_size`, `edge_color`,
   `edge_width` and `edge_linetype` accept **either a column name (mapping) or a
   literal value (constant)**.
@@ -73,25 +109,55 @@ The same renaming applies to arguments forwarded through `...` / `full_args` /
 
 ## Bug fixes
 
-* `ggNetView_multi_link(drop_others = TRUE)` no longer changes which modules are
-  linked across networks. Previously the `"Others"` nodes were removed from each
-  graph *before* `compare_modules_by_overlap()` ran, so the hypergeometric test
-  was re-run on a drastically smaller universe (e.g. 537 -> 81 shared nodes for
-  one group pair). Because module membership is computed per group, a node that
-  is a core member of a module in group A but falls into `"Others"` in group B
-  was dropped from both, shrinking every real module and flipping module pairs in
-  and out of significance -- one example dataset went from 16 module links to 8,
-  keeping only 5 of the original pairs. The module-overlap comparison now always
-  runs on the complete network, making `drop_others` a display-only switch: the
-  cross-group module links are identical for `TRUE` and `FALSE`, and only the
-  plotted nodes differ.
+* Multiple-testing correction (`proc`) in the graph builders is now applied to
+  the unique off-diagonal tests only. The whole n x n p-value matrix used to be
+  handed to `stats::p.adjust()`, so the n diagonal self-correlations (r = 1,
+  p = 0 for `WGCNA::corAndPvalue()` and `psych::corr.test()`) took the lowest n
+  ranks and pushed every real p-value's rank back by n, shrinking its adjusted
+  value by a factor of `2i / (n + 2i)`. The declared level was therefore looser
+  than the level actually applied -- on `otu_rare_relative` the effective raw-p
+  cutoff was 1.3-3.0x too permissive -- and on pure noise the number of false
+  edges grew with the number of taxa (1.0 / 3.0 / 5.6 at 50 / 100 / 200 taxa),
+  which a correct FDR must not do. Separately, `psych::corr.test()` returns raw
+  p-values below the diagonal and Holm-adjusted ones above it, so `method =
+  "cor"` was correcting twice; it is now called with `adjust = "none"` and
+  corrected exactly once. **Networks built with `proc != "none"` therefore keep
+  fewer edges than in 0.1.0**, and `method = "cor"` and `method = "WGCNA"` now
+  build identical networks -- as they must, since both compute the same Pearson
+  r and p; they differed (785 vs 654 edges) before, which was itself proof of
+  the defect. `Hmisc::rcorr()` was unaffected under BH (its diagonal is `NA`).
+  `build_graph_from_multi_mat()` and `cor_test2()` no longer mix raw and
+  Holm-adjusted values for the same pair.
 
-* `ggNetView_multi_link()` now excludes the `"Others"` bucket from cross-group
-  module links unconditionally. The previous filter (`modA != "Others" | modB !=
-  "Others"`) only removed the `Others`-to-`Others` pair and would have drawn a
-  link into `"Others"` -- which is a display bucket for every module ranked below
-  `top_modules`, not a community, and is not given a module outline -- had such a
-  pair ever reached significance.
+* Functions with a `seed` argument no longer leak `set.seed()` into the caller's
+  session. Every entry point called a bare `set.seed(seed)`, which permanently
+  replaced the state of the user's random number generator: an analysis that
+  interleaved ggNetView calls with the user's own random draws was not
+  reproducible from the user's own `set.seed()`. The seed is now set for the
+  duration of the call only, and the caller's RNG kind and state are restored on
+  exit, including when the call exits via an error. Numerical results are
+  unchanged; only the leak is removed.
+
+* `get_network_topology()` and `get_network_topology_parallel()` now draw the
+  same random-network baseline. The serial function drew its Erdos-Renyi null
+  models from the global Mersenne-Twister stream while `parallel = TRUE` drew
+  from independent L'Ecuyer-CMRG streams, so `parallel` -- a performance switch
+  -- silently changed the reported science (with `seed = 1115`,
+  `Transitivity_global` 0.0693 vs 0.0582 and `Modularity` 0.3794 vs 0.3701 on
+  the same data). Both paths now route through
+  `future.apply::future_lapply(future.seed = TRUE)` under an explicit plan, so
+  the serial function, `parallel = FALSE`, and any number of workers agree
+  bit-for-bit.
+
+* The module-adjacency layout no longer fails with the opaque error "Columns
+  `x` and `y` don't exist". `FNN::get.knn()` does not error when
+  `k >= nrow(xy)` -- it warns and returns out-of-range indices, which left the
+  slot-adjacency graph corrupt and region growing with nothing to place. `k` is
+  now clamped to the number of available neighbours and the degenerate 0/1-slot
+  case is handled directly. A graph left with no nodes (every edge removed by
+  the correlation or p-value thresholds, a legitimate outcome for a small
+  sub-network) now fails early with a message that names the cause and the
+  remedy.
 
 * `get_sample_subgraph_topology_parallel()` no longer registers a global
   `progressr` handler (which errored with "should not be called with handlers
