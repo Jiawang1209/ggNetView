@@ -25,7 +25,7 @@ ggNetView: An R Package for Reproducible Biological Network Analysis and Visuali
 
 [User Manual](https://jiawang1209.github.io/ggNetView-manual/) 
 
-[Zenodo DOI](https://doi.org/10.5281/zenodo.<新号>)
+[Zenodo DOI](https://doi.org/10.5281/zenodo.22653125)
 
 
 
